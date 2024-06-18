@@ -6,14 +6,16 @@ import { AdminDashboard } from '@/pages';
 import {
   Settings,
   Payment,
-  CreateSubject,
-  EditSubject,
+  CreateClass,
+  EditClass,
+  Classes,
   EditChapter,
   ShowChapter,
   Chapter,
   CreateChapter,
-  Courses,
-  CourseEdit,
+  Subject,
+  SubjectEdit,
+  SubjectCreate,
   School,
   // ShowSchool,
   ShowSchoolDetail,
@@ -88,8 +90,8 @@ import {
   EbookElementEdit,
   AssessmentsResult,
   TermTestResult,
-  CourseResult,
   SubjectResult,
+  ClassResult,
   ProjectReportModuleShow,
   ProjectReportModuleCreate,
   ProjectReportSectionShow,
@@ -130,8 +132,6 @@ import {
   Students,
   StudentsShow,
   DinacharyaLogs,
-  CourseCreate,
-  Subjects,
 } from '@/pages/Admin';
 import {
   JobTest,
@@ -152,37 +152,37 @@ const AdminRoutes = [
   { path: 'dashboard', element: <AdminDashboard title="Dashboard" /> },
 
   // Classes Routes
-  { path: 'subjects', element: <Subjects title="Subjects" /> },
-  { path: 'subjects/create', element: <CreateSubject title="Create Subjects" /> },
+  { path: 'classes', element: <Classes title="Classes" /> },
+  { path: 'classes/create', element: <CreateClass title="Create Class" /> },
   {
-    path: 'subjects/:subjectId/edit',
-    element: <EditSubject title="Edit Class" />,
+    path: 'classes/:classId/edit',
+    element: <EditClass title="Edit Class" />,
   },
   {
-    path: 'subjects/:subjectId/results',
-    element: <SubjectResult title="Show Class Results" />,
+    path: 'classes/:classId/results',
+    element: <ClassResult title="Show Class Results" />,
   },
-  // Courses Routes
+  // Subjects Routes
   {
-    path: 'subjects/:subjectId/courses',
-    element: <Courses title="Courses" />,
-  },
-  {
-    path: 'subjects/:subjectId/courses/create',
-    element: <CourseCreate title="Courses" />,
+    path: 'classes/:classId/subjects',
+    element: <Subject title="Subjects" />,
   },
   {
-    path: 'subjects/:subjectId/courses/:courseId/edit',
-    element: <CourseEdit title="Subjects" />,
+    path: 'classes/:classId/subjects/create',
+    element: <SubjectCreate title="Subjects" />,
   },
   {
-    path: 'subjects/:subjectId/courses/:courseId/results',
-    element: <CourseResult title="Show Subject Results" />,
+    path: 'classes/:classId/subjects/:subjectId/edit',
+    element: <SubjectEdit title="Subjects" />,
+  },
+  {
+    path: 'classes/:classId/subjects/:subjectId/results',
+    element: <SubjectResult title="Show Subject Results" />,
   },
 
   // Chapters Routes
   {
-    path: 'subjects/:subjectId/courses/:courseId/chapters',
+    path: 'classes/:classId/subjects/:subjectId/chapters',
     element: <Chapter title="Chapters" />,
   },
   {

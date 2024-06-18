@@ -1,7 +1,7 @@
 const ADMIN_ROUTES = [
   { path: '/admin/dashboard', title: 'Home', icon: 'feather-home' },
-  // { path: '/admin/schools', title: 'Schools', icon: 'feather-monitor' },
-  { path: '/admin/subjects', title: 'Subjects', icon: 'feather-book-open' },
+  { path: '/admin/schools', title: 'Schools', icon: 'feather-monitor' },
+  { path: '/admin/classes', title: 'Classes', icon: 'feather-book-open' },
   { path: '/admin/assessments', title: 'Assessments', icon: 'feather-activity' },
   { path: '/admin/tests', title: 'Tests', icon: 'feather-command' },
   { path: '/admin/mini-projects', title: 'Mini Projects', icon: 'feather-shopping-bag' },

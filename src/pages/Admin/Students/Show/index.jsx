@@ -69,6 +69,14 @@ function Show({ title,isPrivate, isPublic}) {
   return (
     <div className="px-2">
       <ContentHeader title={title} backLink={backLink} />
+
+
+     
+                
+               
+
+
+
       {loading && (
         <div className="row my-5">
           <ContentLoader />
@@ -88,10 +96,10 @@ function Show({ title,isPrivate, isPublic}) {
       )}
       {studentImage && studentImage.images.length > 0 && (
         <ContentCardWrapper>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-lg-12">
-              <div className="mb-4 d-block w-100 rounded-lg border-0 text-center">
-                <div className="image-gallery">
+              <div className="mb-4 d-block w-100 rounded-lg border-0 text-center"> */}
+                {/* <div className="image-gallery"> */}
                   {studentImage.images.map((item, index) => (
                     <div key={index} className="image-card">
                       <img
@@ -117,10 +125,10 @@ function Show({ title,isPrivate, isPublic}) {
                       </div>
                     </div>
                   ))}
-                </div>
+                {/* </div>
               </div>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
         </ContentCardWrapper>
       )}
     </div>

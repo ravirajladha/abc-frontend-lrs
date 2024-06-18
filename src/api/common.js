@@ -1,15 +1,5 @@
 import { apiService } from '@/utils/services';
 
-// new updated
-export const fetchSubjects = async () => {
-  const response = await apiService.fetchData('/subjects');
-  return response.data.subjects;
-};
-
-export const fetchCourses = async (subjectId) => {
-  const response = await apiService.fetchData(`/subjects/${subjectId}/courses`);
-  return response.data;
-};
 export const fetchSchools = async () => {
   const response = await apiService.fetchData('/admin/schools');
   console.log(response.data.schools, "response data")
@@ -25,11 +15,11 @@ export const fetchPrivateSchools = async () => {
   console.log(response.data.schools, "response data")
   return response.data.schools;
 };
-
-// temporary
 export const fetchClasses = async () => {
-
+  const response = await apiService.fetchData('/classes');
+  return response.data.classes;
 };
+
 export const fetchSections = async () => {
   const response = await apiService.fetchData('/sections');
   return response.data.sections;
@@ -46,7 +36,10 @@ export const fetchClassResult = async (classId, term) => {
 };
 
 
-
+export const fetchSubjects = async (classId) => {
+  const response = await apiService.fetchData(`/classes/${classId}/subjects`);
+  return response.data;
+};
 
 export const fetchSubjectResult = async (subjectId, term) => {
   const response = await apiService.fetchData(`/subjects/${subjectId}/results?term=${term}`);

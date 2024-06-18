@@ -5,7 +5,9 @@ import { ContentLoader } from '@/components/common';
 import DefaultProfileImage from '@/assets/images/default/student.png';
 
 const StudentCard = ({ students, loading, baseUrl, toggleModal }) => (
+  
   <div className="row">
+   
     {loading ? (
       <div className="text-center col-12">
         <ContentLoader />

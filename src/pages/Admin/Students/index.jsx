@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 
 import { Accordion, Pagination } from '@/components/common';
 import { getUserDataFromLocalStorage } from '@/utils/services';
-import { fetchClasses, fetchSections, fetchPublicSchools } from '@/api/common';
+import { fetchClasses, fetchSections, fetchPrivateSchools } from '@/api/common';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
 function PublicStudent({ title, isPrivate, isPublic }) {
   console.log('title', title);
@@ -41,7 +41,7 @@ function PublicStudent({ title, isPrivate, isPublic }) {
   const [selectedSection, setSelectedSection] = useState('');
 
   const fetchSchoolDropdownData = useCallback(() => {
-    fetchPublicSchools()
+    fetchPrivateSchools()
       .then((data) => {
         setSchools(data);
         console.log('school data', schools);

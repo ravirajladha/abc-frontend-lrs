@@ -1,19 +1,18 @@
 export { default as AdminDashboard } from './Dashboard';
-
-export { default as Subjects } from './Subject';
-export { default as CreateSubject } from './Subject/Create';
-export { default as EditSubject } from './Subject/Edit';
-export { default as SubjectResult } from './Subject/Result';
+export { default as Classes } from './Classes';
+export { default as CreateClass } from './Classes/Create';
+export { default as EditClass } from './Classes/Edit';
+export { default as ClassResult } from './Classes/Result';
 
 export { default as Chapter } from './Chapter';
 export { default as CreateChapter } from './Chapter/Create';
 export { default as EditChapter } from './Chapter/Edit';
 export { default as ShowChapter } from './Chapter/Show';
 
-export { default as Courses } from './Course';
-export { default as CourseCreate } from './Course/Create';
-export { default as CourseEdit } from './Course/Edit';
-export { default as CourseResult } from './Course/Result';
+export { default as Subject } from './Subject';
+export { default as SubjectCreate } from './Subject/Create';
+export { default as SubjectEdit } from './Subject/Edit';
+export { default as SubjectResult } from './Subject/Result';
 
 export { default as School } from './School';
 export { default as SchoolShowApplication } from './School/Show/Application';

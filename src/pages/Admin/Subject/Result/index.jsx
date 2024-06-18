@@ -9,7 +9,7 @@ import 'datatables.net-buttons/js/dataTables.buttons';
 import 'datatables.net-buttons/js/buttons.html5';
 import 'datatables.net-buttons/js/buttons.print';
 
-import { fetchClassResult } from '@/api/common';
+import { fetchSubjectResult } from '@/api/common';
 
 import {
   ContentCardWrapper,
@@ -20,7 +20,7 @@ import {
 import { formatNumber } from '@/utils/helpers';
 
 function Result() {
-  const { classId } = useParams();
+  const { classId, subjectId } = useParams();
 
   const [error, setError] = useState(null);
   const [results, setResults] = useState([]);
@@ -28,6 +28,11 @@ function Result() {
   const [selectedTerm, setSelectedTerm] = useState('');
 
   const tableRef = useRef(null);
+
+  const handleChangeTerm = (e) => {
+    const selectedValue = parseInt(e.target.value, 10);
+    setSelectedTerm(isNaN(selectedValue) ? '' : selectedValue);
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -42,8 +47,7 @@ function Result() {
         table.destroy();
       }
 
-      const response = await fetchClassResult(classId, selectedTerm);
-
+      const response = await fetchSubjectResult(subjectId, selectedTerm);
       setResults(response?.results);
       setLoading(false);
     } catch (error) {
@@ -52,7 +56,7 @@ function Result() {
       setError(error);
       setLoading(false);
     }
-  }, [classId, selectedTerm]);
+  }, [subjectId, selectedTerm]);
 
   useEffect(() => {
     fetchData();
@@ -74,18 +78,13 @@ function Result() {
   //   }
   // }, [results]);
 
-  const handleChangeTerm = (e) => {
-    const selectedValue = parseInt(e.target.value, 10);
-    setSelectedTerm(isNaN(selectedValue) ? '' : selectedValue);
-  };
-
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
   return (
     <div>
-      <ContentHeader title="Class Results" />
+      <ContentHeader title="Subject Results" />
       <ContentCardWrapper>
         <div className="row justify-content-between mb-4">
           <div className="float-left font-xssss fw-700 text-grey-500 text-uppercase ls-3 mt-2 pt-1">
@@ -108,7 +107,7 @@ function Result() {
           <div className="text-center mt-5 col-12">
             <ContentLoader />
           </div>
-        ) : results && results.length > 0 ? (
+        ) : results && results?.length > 0 ? (
           <div className="table-responsive">
             <table
               ref={tableRef}
@@ -123,12 +122,12 @@ function Result() {
                 </tr>
               </thead>
               <tbody>
-                {results.map((result, index) => (
+                {results?.map((result, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{result.student_name}</td>
-                    <td>{result.rank}</td>
-                    <td>{formatNumber(result.total_score)}</td>
+                    <td>{formatNumber(result.rank)}</td>
+                    <td>{formatNumber(result?.total_score)}</td>
                   </tr>
                 ))}
               </tbody>

@@ -10,15 +10,15 @@ const StudentTable = ({ students, loading, toggleModal }) => (
         <ContentLoader />
       </div>
     ) : students && students.length > 0 ? (
-      <div className="col-lg-12">
-        <div className="card border-0 mt-0 rounded-lg shadow-xs">
-          <div className="card-body d-flex px-4 pt-4 pb-0">
-            <h4 className="font-xss text-grey-700">
-              All <strong className="fw-700">Public Students List</strong>
-            </h4>
-          </div>
-          <div className="card-body p-4">
-            <div className="table-responsive">
+      // <div className="col-lg-12">
+      //   <div className="card border-0 mt-0 rounded-lg shadow-xs">
+      //     <div className="card-body d-flex px-4 pt-4 pb-0">
+      //       <h4 className="font-xss text-grey-700">
+      //         All <strong className="fw-700">Public Students List</strong>
+      //       </h4>
+        
+          <div className="card-body d-flex px-4 pt-4 pb-0 justify-content-between">
+            {/* <div className="table-responsive"> */}
               <table className="table table-admin mb-0">
                 <thead className="bg-greylight rounded-10 ovh border-0">
                   <tr>
@@ -58,9 +58,9 @@ const StudentTable = ({ students, loading, toggleModal }) => (
                   ))}
                 </tbody>
               </table>
-            </div>
+            {/* </div>
           </div>
-        </div>
+        </div> */}
       </div>
     ) : (
       <div className="text-center mt-5 col-12">

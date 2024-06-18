@@ -2,22 +2,6 @@ import { apiService } from '@/utils/services';
 import { stringify } from 'qs';
 import axios from 'axios';
 
-// subject
-export const createSubject = (data) => {
-  return apiService.postData(`/admin/subject/store`, data);
-};
-
-// courses
-export const createCourse = async (data) => {
-  try {
-    const response = await apiService
-      .postData(`/admin/courses/store`, data);
-    return response.data;
-  } catch (error) {
-    // console.error(error);
-    throw error;
-  }
-};
 export const fetchDashboard = async () => {
   const response = await apiService.fetchData(`/admin/dashboard`);
   return response.data;
@@ -28,15 +12,16 @@ export const updateSettings = async (data) => {
   return response;
 };
 
-export const fetchSchools = async () => {
-  try {
-    const response = await apiService
-      .fetchData('/admin/schools');
-    return response.data;
-  } catch (error) {
-    // console.error('Error fetching schools:', error);
-    throw error;
-  }
+export const fetchSchools = () => {
+  return apiService
+    .fetchData('/admin/schools')
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      // console.error('Error fetching schools:', error);
+      throw error;
+    });
 };
 
 export const getSchoolData = async (schoolId) => {
@@ -128,7 +113,9 @@ export const editSchool = async (schoolId, data) => {
     });
 };
 
-
+export const createClass = (data) => {
+  return apiService.postData(`/admin/class/store`, data);
+};
 
 export const updateClass = (classId, data) => {
   return apiService.putData(`/admin/class/${classId}/update`, data);
@@ -139,17 +126,29 @@ export const deleteClass = (classId) => {
 };
 
 
-// Courses APIs
+// Subject APIs
 
+export const createSubject = (data) => {
+  return apiService
+    .postData(`/admin/subjects/store`, data)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      // console.error(error);
+      throw error;
+    });
+};
 
-export const updateSubject = async (subjectId, data) => {
-  try {
-    const response = await apiService
-      .postData(`/admin/subjects/${subjectId}/update`, data, { method: 'POST' });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+export const updateSubject = (subjectId, data) => {
+  return apiService
+    .postData(`/admin/subjects/${subjectId}/update`, data, { method: 'POST' })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 
 export const deleteSubject = (subjectId) => {
@@ -836,15 +835,16 @@ export const fetchReadableCoursesList = async () => {
   return response.data;
 };
 //Video APIs
-export const createVideo = async (data) => {
-  try {
-    const response = await apiService
-      .postData(`/admin/videos/store`, data);
-    return response.data;
-  } catch (error) {
-    // console.error(error);
-    throw error;
-  }
+export const createVideo = (data) => {
+  return apiService
+    .postData(`/admin/videos/store`, data)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      // console.error(error);
+      throw error;
+    });
 };
 
 export const fetchVideoDetails = async (contentId) => {
@@ -852,14 +852,15 @@ export const fetchVideoDetails = async (contentId) => {
   return response.data;
 };
 
-export const updateVideo = async (contentId, data) => {
-  try {
-    const response = await apiService
-      .postData(`/admin/videos/${contentId}/update`, data, { method: 'POST' });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+export const updateVideo = (contentId, data) => {
+  return apiService
+    .postData(`/admin/videos/${contentId}/update`, data, { method: 'POST' })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 
 export const deleteVideo = (contentId) => {
@@ -867,14 +868,15 @@ export const deleteVideo = (contentId) => {
 };
 
 //Job APIs
-export const createJobDetails = async (data) => {
-  try {
-    const response = await apiService
-      .postData(`/admin/jobs`, data);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+export const createJobDetails = (data) => {
+  return apiService
+    .postData(`/admin/jobs`, data)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 export const fetchJobTests = async () => {
   const response = await apiService.fetchData(
@@ -902,15 +904,16 @@ export const fetchJobDetails = async (jobId) => {
   return response.data;
 };
 
-export const updateJobDetails = async (jobId, data) => {
+export const updateJobDetails = (jobId, data) => {
   const stringifiedData = stringify(data);
-  try {
-    const response = await apiService
-      .postData(`/admin/jobs/${jobId}/update`, data, { method: 'POST' });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return apiService
+    .postData(`/admin/jobs/${jobId}/update`, data, { method: 'POST' })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 
 export const deleteJobDetails = (jobId) => {
@@ -1031,15 +1034,16 @@ export const updateElabStatus = async (id, status) => {
   return response;
 };
 
-export const fetchElabs = async () => {
-  try {
-    const response = await apiService
-      .fetchData('/admin/elabs');
-    return response.data;
-  } catch (error) {
-    // console.error('Error fetching schools:', error);
-    throw error;
-  }
+export const fetchElabs = () => {
+  return apiService
+    .fetchData('/admin/elabs')
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      // console.error('Error fetching schools:', error);
+      throw error;
+    });
 };
 
 // mini project
@@ -1092,24 +1096,26 @@ export const getMiniProjectTasks = async (projectId,studentId) => {
 };
 
 
-export const editMiniProjectTask = async (miniProjectTaskId, data) => {
+export const editMiniProjectTask = (miniProjectTaskId, data) => {
   // console.log("minin project",data)
-  try {
-    const response = await apiService
-      .postData(`/admin/mini-project-tasks/${miniProjectTaskId}/update`, data, { method: 'POST' });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return apiService
+    .postData(`/admin/mini-project-tasks/${miniProjectTaskId}/update`, data, { method: 'POST' })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
-export const editInternshipTask = async (internshipTaskId, data) => {
-  try {
-    const response = await apiService
-      .postData(`/admin/internship-tasks/${internshipTaskId}/update`, data, { method: 'POST' });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+export const editInternshipTask = (internshipTaskId, data) => {
+  return apiService
+    .postData(`/admin/internship-tasks/${internshipTaskId}/update`, data, { method: 'POST' })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 
 export const getMiniProjectDetail = async (miniProjectId) => {
@@ -1129,25 +1135,27 @@ export const getInternshipDetail = async (internshipId) => {
 // };
 
 
-export const editMiniProject = async (miniProjectId, data) => {
+export const editMiniProject = (miniProjectId, data) => {
   console.log("minin project",data)
-  try {
-    const response = await apiService
-      .postData(`/admin/mini-projects/${miniProjectId}/update`, data, { method: 'POST' });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return apiService
+    .postData(`/admin/mini-projects/${miniProjectId}/update`, data, { method: 'POST' })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
-export const editInternship = async (internshipId, data) => {
+export const editInternship = (internshipId, data) => {
   console.log("internship",data)
-  try {
-    const response = await apiService
-      .postData(`/admin/internships/${internshipId}/update`, data, { method: 'POST' });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return apiService
+    .postData(`/admin/internships/${internshipId}/update`, data, { method: 'POST' })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 
 
@@ -1270,15 +1278,16 @@ export const deleteTeacher = (recruiterId) => {
   return apiService.deleteData(`/school/teachers/${recruiterId}/delete`);
 };
 
-export const fetchQuotes = async (currentPage) => {
-  try {
-    const response = await apiService
-      .fetchData(`/admin/quotes?page=${currentPage}`);
-    return response.data;
-  } catch (error) {
-    // console.error('Error fetching schools:', error);
-    throw error;
-  }
+export const fetchQuotes = (currentPage) => {
+  return apiService
+    .fetchData(`/admin/quotes?page=${currentPage}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      // console.error('Error fetching schools:', error);
+      throw error;
+    });
 };
 export const createQuote = async (data) => {
   return apiService.postData(`/admin/quotes/store`, data);
