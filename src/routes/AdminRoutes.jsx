@@ -101,6 +101,12 @@ import {
   SchoolShowApplication,
   SchoolShowTeacher,
   SchoolShowStudent,
+  AssignTeacher,
+  CreateTeacher,
+  EditTeacher,
+  SchoolTeachers,
+  ShowTeacher,
+
   Job,
   JobEdit,
   JobShow,
@@ -265,6 +271,16 @@ const AdminRoutes = [
     element: <EditSchool title="Edit School" />,
   },
 
+  //trainers
+
+  { path: 'trainers', element: <SchoolTeachers /> },
+  { path: 'trainers/create', element: <CreateTeacher /> },
+  {
+    path: 'trainers/:teacherId/show',
+    element: <ShowTeacher title="Teacher Details" />,
+  },
+  { path: 'trainers/:teacherId/edit', element: <EditTeacher /> },
+  { path: 'trainers/:teacherId/assign', element: <AssignTeacher /> },
   //Assessments
   { path: 'assessments', element: <Assessments title="Assessments List" /> },
   {

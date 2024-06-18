@@ -131,7 +131,7 @@ function Tests({ title }) {
                     label="name"
                     value={selectedClass || ''}
                     onChange={handleClassChange}
-                    defaultText="All Classes"
+                    defaultText="All Subjects"
                     className="float-right filter mr-2"
                   />
                   <ContentSelectFilter
@@ -140,8 +140,8 @@ function Tests({ title }) {
                     label="name"
                     value={selectedSubject || ''}
                     onChange={handleSubjectChange}
-                    placeholder="Select a Subject"
-                    defaultText="All Subjects"
+                    placeholder="Select a Course"
+                    defaultText="All Courses"
                     className="float-right filter mr-2"
                   />
                 </div>
@@ -161,10 +161,10 @@ function Tests({ title }) {
                           Name
                         </th>
                         <th className="border-0" scope="col">
-                          Class
+                          Subject
                         </th>
                         <th className="border-0" scope="col">
-                          Subject
+                          Course
                         </th>
                         <th
                           scope="col"

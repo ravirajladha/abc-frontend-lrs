@@ -74,8 +74,8 @@ function Create() {
     e.preventDefault();
     try {
       const response = await createTeacher(form); // Use the API function for creating teachers
-      toast.success('Trainer added successfully', response);
-      navigate('/trainers');
+      toast.success('Teacher added successfully', response);
+      navigate('/admin/trainers');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);

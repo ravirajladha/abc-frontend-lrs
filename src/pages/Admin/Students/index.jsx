@@ -251,7 +251,7 @@ function PublicStudent({ title, isPrivate, isPublic }) {
                 label="name"
                 value={selectedClass}
                 onChange={handleClassChange}
-                defaultText="All Classes"
+                defaultText="All Subjects"
                 className="float-right filter mr-2"
               />
               <ContentSelectFilter

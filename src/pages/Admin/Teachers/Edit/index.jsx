@@ -1,27 +1,25 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { createTeacher } from '@/api/school';
-import { fetchClasses } from '@/api/common';
+import { fetchTeacher, editTeacher } from '@/api/school';
 
 import { ContentCardWrapper, ContentHeader } from '@/components/common';
-import { fetchSubjects } from '@/api/dropdown';
 
-function Create() {
+function Edit() {
   const navigate = useNavigate();
+  const { teacherId } = useParams();
 
-  const [classes, setClasses] = useState([]);
-  const [subjects, setSubjects] = useState([]);
+  const fileInputRef = useRef();
+
   const [validationErrors, setValidationErrors] = useState({});
 
   const [form, setForm] = useState({
     name: '',
     email: '',
+    password: '',
     phone_number: '',
     emp_id: '',
-    class_id: '',
-    subject_id: '',
     profile_image: '',
     doj: '',
     address: '',
@@ -31,51 +29,45 @@ function Create() {
     description: '',
   });
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
+  const fetchTeacherData = useCallback(async () => {
+    try {
+      const response = await fetchTeacher(teacherId);
+      const data = response.teacher;
+      if (data) {
+        const updatedForm = {
+          name: data.name || '',
+          emp_id: data.emp_id || '',
+          email: data.email || '',
+          phone_number: data.phone_number || '',
+          password: data.password || '',
+        };
+        setForm(updatedForm);
+      }
+    } catch (error) {
+      console.error('Error fetching teacher data:', error);
+    }
+  }, [teacherId]);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  const handleClassChange = ({ target: { value } }) => {
-    setValidationErrors(({ class_id: _, ...prevErrors }) => prevErrors);
-    setForm((prevForm) => ({
-      ...prevForm,
-      class_id: value,
-    }));
-
-    fetchSubjectsDropdownData(value);
-  };
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
-      .then((data) => {
-        setSubjects(data.subjects);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  const handleSubjectChange = ({ target: { value } }) => {
-    setForm((prevData) => ({ ...prevData, subject: value }));
-    setValidationErrors(({ subject_id: _, ...prevErrors }) => prevErrors);
-  };
+    fetchTeacherData();
+  }, [fetchTeacherData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await createTeacher(form); // Use the API function for creating teachers
-      toast.success('Trainer added successfully', response);
-      navigate('/trainers');
+      const submissionData = new FormData();
+      submissionData.append('_method', 'PUT');
+      submissionData.append('name', form.name || '');
+      submissionData.append('email', form.email || '');
+      submissionData.append('phone_number', form.phone_number || '');
+      submissionData.append('password', form.password || '');
+      if (form.profile_image) {
+        submissionData.append('profile_image', form.profile_image);
+        submissionData.append('profile_image_name', form.profile_image_name);
+      }
+      const response = await editTeacher(teacherId, submissionData);
+      toast.success('Trainer updated successfully', response);
+      navigate('/admin/trainers');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
@@ -97,16 +89,27 @@ function Create() {
     setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
   };
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setForm((prevFormData) => ({
+        ...prevFormData,
+        profile_image: file,
+        profile_image_name: file.name,
+      }));
+    }
+  };
+
   return (
     <div className="px-2">
-      <ContentHeader title="Create" subtitle="Teacher" />
+      <ContentHeader title="Edit" subtitle="Teacher" />
 
       <ContentCardWrapper>
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-lg-6 mb-3">
               <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Name *</label>
+                <label className="mont-font fw-600 font-xsss">Name</label>
                 <input
                   type="text"
                   className="form-control"
@@ -142,7 +145,7 @@ function Create() {
           <div className="row">
             <div className="col-lg-6 mb-3">
               <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Email *</label>
+                <label className="mont-font fw-600 font-xsss">Email</label>
                 <input
                   type="email"
                   name="email"
@@ -158,68 +161,71 @@ function Create() {
             </div>
             <div className="col-lg-6 mb-3">
               <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">
-                  Phone Number *
-                </label>
+                <label className="mont-font fw-600 font-xsss">Password</label>
                 <input
-                  type="number"
-                  name="phone_number"
+                  type="password"
+                  name="password"
                   className="form-control"
-                  value={form.phone_number}
+                  value={form.password}
                   onChange={handleFormChange}
-                  placeholder="Enter Phone Number"
+                  placeholder="Enter Password"
                 />
-                {validationErrors.phone_number && (
+                {validationErrors.password && (
                   <span className="text-danger">
-                    {validationErrors.phone_number}
+                    {validationErrors.password}
                   </span>
                 )}
               </div>
             </div>
           </div>
-          {/* <div className="row">
+          <div className="row">
             <div className="col-lg-6 mb-3">
               <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">
-                  Select Class
+                <label className="mont-font form-label fw-600 font-xsss">
+                  Profile Image
                 </label>
-                <SelectInput
+                <input
+                  type="text"
                   className="form-control"
-                  options={classes}
-                  name="class"
-                  label="name"
-                  value={form.class_id}
-                  onChange={handleClassChange}
-                  placeholder="Select Class"
+                  placeholder="Select Profile Image"
+                  value={form.profile_image_name}
+                  onClick={() => fileInputRef.current.click()}
+                  readOnly
                 />
-                {validationErrors.class_id && (
-                  <span className="text-danger">{validationErrors.class_id}</span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-6 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">
-                  Select Subject
-                </label>
-                <SelectInput
-                  className="form-control"
-                  options={subjects}
-                  name="subject"
-                  label="name"
-                  value={form.subject_id}
-                  onChange={handleSubjectChange}
-                  placeholder="Select Subject"
-                  fallbackPlaceholder="Select a Class first"
+                <input
+                  type="file"
+                  className="custom-file-input"
+                  name="profile_image"
+                  onChange={handleFileChange}
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
                 />
-                {validationErrors.subject && (
+                {validationErrors.profile_image && (
                   <span className="text-danger">
-                    {validationErrors.subject}
+                    {validationErrors.profile_image}
                   </span>
                 )}
               </div>
             </div>
-          </div> */}
+            <div className="col-lg-6 mb-3">
+              <div className="form-group">
+                <label className="mont-font fw-600 font-xsss">
+                  Phone Number
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="phone_number"
+                  value={form.phone_number}
+                  onChange={handleFormChange}
+                  placeholder="Enter Employee ID"
+                />
+                {validationErrors.phone_number && (
+                  <span className="text-danger">{validationErrors.phone_number}</span>
+                )}
+              </div>
+            </div>
+          </div>
           <div className="col-lg-12 mb-0 mt-2 pl-0">
             <button
               type="submit"
@@ -234,4 +240,4 @@ function Create() {
   );
 }
 
-export default Create;
+export default Edit;

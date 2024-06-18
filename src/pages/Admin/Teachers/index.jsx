@@ -30,11 +30,11 @@ function Teachers() {
     <>
       <ContentHeader
         title="All"
-        subtitle="Trainers"
+        subtitle="Teachers"
         buttons={[
           {
             link: 'create',
-            text: 'New Trainer',
+            text: 'New Teacher',
           },
         ]}
       />
@@ -58,8 +58,8 @@ function Teachers() {
                         <th className="border-0" width="10%">Name</th>
                         <th className="border-0" width="10%">Phone Number</th>
                         <th className="border-0" width="10%">Email</th>
-                        <th className="border-0" width="15%">Class</th>
                         <th className="border-0" width="15%">Subject</th>
+                        <th className="border-0" width="15%">Course</th>
                         <th className="border-0 text-right" width="20%">Actions</th>
                       </tr>
                     </thead>
@@ -71,19 +71,28 @@ function Teachers() {
                           <td>{teacher.phone_number}</td>
                           <td>{teacher.email}</td>
                           <td>
-                            {teacher.teacher_classes.map((item) => (
-                              <span key={item.id}>
-                                {item.class_name} &nbsp;
-                              </span>
-                            ))}
-                          </td>
-                          <td>
-                            {teacher.teacher_subjects.map((item) => (
-                              <span key={item.id}>
-                                {item.subject_name} &nbsp;
-                              </span>
-                            ))}
-                          </td>
+  {teacher.teacher_classes.length > 0 ? (
+    teacher.teacher_classes.map((item) => (
+      <span key={item.id}>
+        {item.class_name} &nbsp;
+      </span>
+    ))
+  ) : (
+    <span>Not assigned</span>
+  )}
+</td>
+<td>
+  {teacher.teacher_subjects.length > 0 ? (
+    teacher.teacher_subjects.map((item) => (
+      <span key={item.id}>
+        {item.subject_name} &nbsp;
+      </span>
+    ))
+  ) : (
+    <span>Not assigned</span>
+  )}
+</td>
+
                           <td className="text-right">
                             <Link
                               to={`${teacher.auth_id}/show`}

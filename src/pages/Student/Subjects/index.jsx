@@ -217,34 +217,6 @@ function Subjects() {
                                 : 'Term Test 3'}
                             </button>
 
-                            //                             <Link
-                            // onClick={handleStartTest}
-                            //                               to={
-                            //                                 subject.latest_test_id
-                            //                                   ? `${subject.id}/term-test/${subject.latest_test_id}`
-                            //                                   : '#'
-                            //                               }
-
-                            //                               className={`px-3 py-1 d-inline-block text-uppercase fw-700 lh-30 rounded-lg  text-center font-xsssss ls-3 mr-2 ${
-                            //                                 subject.latest_test_id
-                            //                                   ? 'bg-current text-white'
-                            //                                   : 'd-none'
-                            //                               }`}
-                            //                               style={
-                            //                                 subject.latest_test_id
-                            //                                   ? {}
-                            //                                   : {
-                            //                                       pointerEvents: 'none',
-                            //                                       cursor: 'not-allowed',
-                            //                                     }
-                            //                               }
-                            //                             >
-                            //                               {subject.latest_term === 1
-                            //                                 ? 'Term Test 1'
-                            //                                 : subject.latest_term === 2
-                            //                                 ? 'Term Test 2'
-                            //                                 : 'Term Test 3'}
-                            //                             </Link>
                           )}
                           {subject.results && (
                             <Link
@@ -262,13 +234,13 @@ function Subjects() {
                   )}
                 </div>
               </div>
-
+              {showModal && (
               <div
                 className={`modal modal-test-instructions  ${showModal ? 'show' : ''}`}
                 onClick={handleCloseModal}
               >
                 <div
-                  className="modal-content-lg"
+                  className="modal-content-lg bg-white"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="modal-header modal-test-instructions-header">
@@ -310,6 +282,7 @@ function Subjects() {
                   </div>
                 </div>
               </div>
+              )}
             </div>
           ))
         ) : (

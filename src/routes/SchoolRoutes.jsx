@@ -1,9 +1,9 @@
 import {
-  AssignTeacher,
+  // AssignTeacher,
   CreateStudent,
-  CreateTeacher,
+  // CreateTeacher,
   EditStudent,
-  EditTeacher,
+  // EditTeacher,
   SchoolApplication,
   SchoolApplicationDetails,
   SchoolAssessmentResults,
@@ -15,9 +15,9 @@ import {
   SchoolResults,
   SchoolSettings,
   SchoolStudents,
-  SchoolTeachers,
+  // SchoolTeachers,
   ShowStudent,
-  ShowTeacher,
+  // ShowTeacher,
 } from '@/pages';
 import { getUserDataFromLocalStorage } from '@/utils/services';
 const userData = JSON.parse(getUserDataFromLocalStorage());
@@ -26,14 +26,14 @@ const isAllowed = userData?.school_type !== 0;
 const SchoolRoutes = [
   // Add school routes here
   { path: 'dashboard', element: <SchoolDashboard /> },
-  { path: 'teachers', element: <SchoolTeachers /> },
-  { path: 'teachers/create', element: <CreateTeacher /> },
-  {
-    path: 'teachers/:teacherId/show',
-    element: <ShowTeacher title="Teacher Details" />,
-  },
-  { path: 'teachers/:teacherId/edit', element: <EditTeacher /> },
-  { path: 'teachers/:teacherId/assign', element: <AssignTeacher /> },
+  // { path: 'teachers', element: <SchoolTeachers /> },
+  // { path: 'teachers/create', element: <CreateTeacher /> },
+  // {
+  //   path: 'teachers/:teacherId/show',
+  //   element: <ShowTeacher title="Teacher Details" />,
+  // },
+  // { path: 'teachers/:teacherId/edit', element: <EditTeacher /> },
+  // { path: 'teachers/:teacherId/assign', element: <AssignTeacher /> },
   { path: 'students', element: <SchoolStudents /> },
   isAllowed && { path: 'students/create', element: <CreateStudent /> },
 

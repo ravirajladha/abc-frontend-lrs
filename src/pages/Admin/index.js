@@ -23,6 +23,11 @@ export { default as CreateSchool } from './School/Create';
 // export { default as ShowSchool } from './School/Show';
 export { default as EditSchool } from './School/Edit';
 
+export { default as SchoolTeachers } from './Teachers';
+export { default as CreateTeacher } from './Teachers/Create';
+export { default as EditTeacher } from './Teachers/Edit';
+export { default as ShowTeacher } from './Teachers/Show';
+export { default as AssignTeacher } from './Teachers/Assign';
 
 export { default as Recruiter } from './Recruiter';
 export { default as CreateRecruiter } from './Recruiter/Create';

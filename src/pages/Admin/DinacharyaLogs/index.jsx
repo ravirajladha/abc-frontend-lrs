@@ -252,7 +252,7 @@ function PublicStudent({ title }) {
                 label="name"
                 value={selectedClass}
                 onChange={handleClassChange}
-                defaultText="All Classes"
+                defaultText="All Subjects"
                 className="float-right filter mr-2"
               />
             </div>

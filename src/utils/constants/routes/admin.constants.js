@@ -1,6 +1,7 @@
 const ADMIN_ROUTES = [
   { path: '/admin/dashboard', title: 'Home', icon: 'feather-home' },
   // { path: '/admin/schools', title: 'Schools', icon: 'feather-monitor' },
+  { path: '/admin/trainers', title: 'Trainers', icon: 'feather-monitor' },
   { path: '/admin/classes', title: 'Subjects', icon: 'feather-book-open' },
   { path: '/admin/assessments', title: 'Assessments', icon: 'feather-activity' },
   { path: '/admin/tests', title: 'Tests', icon: 'feather-command' },
