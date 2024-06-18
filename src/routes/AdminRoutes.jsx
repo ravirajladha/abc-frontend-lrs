@@ -2,7 +2,7 @@
 
 // const AdminDashboard = lazy(() => import('@/pages'));
 
-import { AdminDashboard } from '@/pages';
+import { AdminDashboard, EditStudent } from '@/pages';
 import {
   Settings,
   Payment,
@@ -786,6 +786,25 @@ const AdminRoutes = [
   {
     path: 'dinacharya-logs',
     element: <DinacharyaLogs title="All Dinacharya Logs" />,
+  },
+
+  {
+    path: 'public-students/:studentId/show-profile',
+    element: (
+      <StudentProfile
+        title="Student Profile Students"
+        isAdmin="true"
+        isStudent="false"
+      />
+    ),
+  },
+  {
+    path: 'public-students/:studentId/edit-profile',
+    element: (
+      <EditStudent
+        title="Student Profile Students"
+      />
+    ),
   },
 ];
 

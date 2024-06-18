@@ -22,8 +22,8 @@ const ADMIN_ROUTES = [
   // { path: '/admin/zoom-call', title: 'Zoom Call', icon: 'feather-calendar' },
 
   // { path: '/admin/quotes', title: 'Quotes', icon: 'feather-message-circle' },
-  { path: '/admin/public-students', title: 'Public Students', icon: 'feather-user-x' },
-  { path: '/admin/private-students', title: 'School Students', icon: 'feather-users' },
+  { path: '/admin/public-students', title: 'Students', icon: 'feather-user' },
+  // { path: '/admin/private-students', title: 'School Students', icon: 'feather-users' },
   // { path: '/admin/dinacharya-logs', title: 'Dinacharya Logs', icon: 'feather-list' },
 ];
 

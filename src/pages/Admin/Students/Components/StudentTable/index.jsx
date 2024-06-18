@@ -24,9 +24,11 @@ const StudentTable = ({ students, loading, toggleModal }) => (
                   <tr>
                     <th className="border-0">#</th>
                     <th className="border-0">Name</th>
+                    <th className="border-0">Email</th>
+                    <th className="border-0">Number</th>
                     {/* <th className="border-0">Class</th> */}
                     {/* <th className="border-0">Section</th> */}
-                    {/* <th className="border-0">Actions</th> */}
+                    <th className="border-0">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -34,26 +36,24 @@ const StudentTable = ({ students, loading, toggleModal }) => (
                     <tr key={student.id}>
                       <td>{index + 1}</td>
                       <td>{student.name}</td>
+                      <td>{student.email}</td>
+                      <td>{student.phone_number}</td>
                       {/* <td>{student?.class_name}</td> */}
                       {/* <td>{student.section_name}</td> */}
-                      {/* <td>
+                      <td>
                         <Link
-                          to="#"
-                          className="btn btn-outline-primary btn-sm"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleModal(student);
-                          }}
+                          to={`${student.auth_id}/edit-profile`}
+                          className="btn btn-outline-primary btn-sm mx-1"
                         >
-                          <i className="feather-upload"></i>
+                          <i className="feather-edit"></i>
                         </Link>
                         <Link
-                          to={`${student.auth_id}/show`}
-                          className="btn btn-outline-warning btn-icon btn-sm"
+                          to={`${student.student_id}/show-profile`}
+                          className="btn btn-outline-warning btn-icon btn-sm mx-1"
                         >
                           <i className="feather-eye"></i>
                         </Link>
-                      </td> */}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

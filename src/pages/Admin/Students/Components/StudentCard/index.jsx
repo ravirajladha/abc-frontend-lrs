@@ -31,27 +31,27 @@ const StudentCard = ({ students, loading, baseUrl, toggleModal }) => (
                 </figure>
                 <h4 className="fw-700 font-xs my-3">{student?.name}</h4>
                 <div className="clearfix"></div>
-                {/* <span className="font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 alert-success d-inline-block text-success mb-1 mr-1">
-                  {student?.class_name}
+                <span className="font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 alert-success d-inline-block text-success mb-1 mr-1">
+                  {student?.email}
                 </span>
                 <span className="font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 alert-primary d-inline-block text-primary mb-1 mr-1">
-                  Section {student?.section_name}
-                </span> */}
+                  {student?.phone_number}
+                </span>
               </div>
-              {/* <div className="d-flex justify-content-between">
+              <div className="d-flex justify-content-between">
                 <Link
-                  onClick={() => toggleModal(student)}
+                  to={`${student.auth_id}/edit-profile`}
                   className="btn btn-outline-success btn-icon btn-sm mr-2"
                 >
-                  Add Photo
+                  Edit
                 </Link>
                 <Link
-                  to={`${student.auth_id}/show`}
+                  to={`${student.student_id}/show-profile`}
                   className="btn btn-outline-warning btn-icon btn-sm"
                 >
-                  View Photo
+                  View
                 </Link>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

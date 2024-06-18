@@ -72,46 +72,46 @@ function Edit() {
     fetchTeacherData();
   }, [fetchTeacherData]);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-    fetchSectionsDropdownData();
-  }, []);
+  // const fetchClassDropdownData = useCallback(() => {
+  //   fetchClasses()
+  //     .then((data) => {
+  //       setClasses(data);
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.message);
+  //     });
+  //   fetchSectionsDropdownData();
+  // }, []);
 
-  const fetchSectionsDropdownData = useCallback(() => {
-    fetchSections()
-      .then((data) => {
-        setSections(data);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
+  // const fetchSectionsDropdownData = useCallback(() => {
+  //   fetchSections()
+  //     .then((data) => {
+  //       setSections(data);
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.message);
+  //     });
+  // }, []);
 
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+  // useEffect(() => {
+  //   fetchClassDropdownData();
+  // }, [fetchClassDropdownData]);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setValidationErrors(({ class_id: _, ...prevErrors }) => prevErrors);
-    setForm((prevForm) => ({
-      ...prevForm,
-      class_id: value,
-    }));
-  };
+  // const handleClassChange = ({ target: { value } }) => {
+  //   setValidationErrors(({ class_id: _, ...prevErrors }) => prevErrors);
+  //   setForm((prevForm) => ({
+  //     ...prevForm,
+  //     class_id: value,
+  //   }));
+  // };
 
-  const handleSectionChange = ({ target: { value } }) => {
-    setValidationErrors(({ section_id: _, ...prevErrors }) => prevErrors);
-    setForm((prevForm) => ({
-      ...prevForm,
-      section_id: value,
-    }));
-  };
+  // const handleSectionChange = ({ target: { value } }) => {
+  //   setValidationErrors(({ section_id: _, ...prevErrors }) => prevErrors);
+  //   setForm((prevForm) => ({
+  //     ...prevForm,
+  //     section_id: value,
+  //   }));
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,8 +122,8 @@ function Edit() {
       submissionData.append('email', form.email || '');
       submissionData.append('phone_number', form.phone_number || '');
       submissionData.append('password', form.password || '');
-      submissionData.append('class_id', form.class_id || '');
-      submissionData.append('section_id', form.section_id || '');
+      submissionData.append('class_id', form.class_id || null);
+      submissionData.append('section_id', form.section_id || null);
       if (form.profile_image) {
         submissionData.append('profile_image', form.profile_image);
         submissionData.append('profile_image_name', form.profile_image_name);
@@ -134,7 +134,7 @@ function Edit() {
 
       const response = await editStudent(studentId, submissionData);
       toast.success('Student added successfully', response);
-      navigate('/school/students');
+      navigate('/admin/public-students');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
@@ -203,7 +203,7 @@ function Edit() {
                 )}
               </div>
             </div>
-            <div className="col-lg-3 mb-2">
+            {/* <div className="col-lg-3 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
                   Select Class <span className="text-danger">*</span>
@@ -240,9 +240,8 @@ function Edit() {
                   <span className="text-danger">{validationErrors.class}</span>
                 )}
               </div>
-            </div>
-          </div>
-          <div className="row">
+            </div> */}
+          
             <div className="col-lg-6 mb-3">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">Email </label>
