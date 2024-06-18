@@ -1,0 +1,298 @@
+/*-----------------------------------------------------------
+    Theme Name: Elomoas
+    Theme URI: http://uitheme.net/elomoas/
+    Description: Online Course and LMS HTML Template
+    Version: 1.0.0
+-------------------------------------------------------------*/
+
+/*-----------------------------------------------------------
+    Table of Content: 
+
+    
+    2. Bootstrap CSS
+    1. Abstract
+    3. Base
+    4. Component
+    5. Pages
+    7. Header
+    8. Footer
+    
+    
+    
+*/
+@import "./abstract/abstract";
+
+@import "./base/base";
+@import "./components/components";
+@import "./admin/admin";
+
+.course-slider {
+    height: 410px;
+    background-color: #000;
+    @include media-breakpoint-down(lg) {
+        height: 370px;
+    }
+    .card-body {
+        width: 60%;
+        padding: 0px 0 0 70px;
+        z-index: 3;
+        @include media-breakpoint-down(md) {
+            width: 90%;
+            padding: 20px;
+        }
+        .w200 {
+            @include media-breakpoint-down(md) {width: 150px !important;}
+        }
+    }
+    .video-wrap {
+        width: 80%;
+        margin-left: auto;
+        position: relative;
+        height: 100%;
+        @include media-breakpoint-down(md) {
+            width: 100%;
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            top:0;
+            left:-0%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(to right, #000, transparent);
+            z-index: 2;
+        }
+        video {
+            position: absolute;
+            width: 120%;
+            top:0;
+            @include media-breakpoint-down(md) {
+                width: 200%;
+            }
+        }
+    }
+    .card-body {
+        
+    }
+}
+
+.cat-card-hover {
+    cursor: pointer;
+    img {
+        transition: all 0.4s ease !important;
+        position: relative;
+    }
+    &:hover img {
+        transform: scale(1.2);
+    }
+}
+.course-card {
+    .card-image {
+        overflow: hidden;
+        img {
+            transition: all 0.4s ease !important;
+            position: relative;
+        }
+    }
+    &:hover .card-image img {
+        transform: scale(1.1);
+    }
+}
+
+
+
+
+@media (min-width: 991px) {
+    .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+    }
+     .main-wrapper {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+
+    .middle-wrap {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pr-md--2 {padding-right: 0.5rem !important;}
+    .pl-md--2 {padding-left: 0.5rem !important;}
+
+    .pt-lg--5 {padding-top: 30px !important; } 
+    .pb-lg--5 {padding-bottom: 30px !important; }
+    .pt-lg--7 {padding-top: 75px !important; } 
+    .pb-lg--7 {padding-bottom: 75px !important; }
+
+
+
+    .pt-lg--10 {padding-top: 125px !important; } 
+    .pb-lg--10 {padding-bottom: 125px !important; }
+
+    .pl-md--0 {padding-left: 0;}
+
+    .p-md--5 {padding: 3rem !important;}
+
+    .float-right-md {float: right !important;}
+    .vh-lg--100 {height: 100vh;}
+    
+}
+@media (min-width: 768px) {
+    .p-md--5 {padding: 3rem !important;}
+
+    .vh-md-100 {height: 100vh;}
+}
+@media (min-width: 1800px) {
+    .col-xxl-9 {
+        flex: 0 0 73%;
+        max-width: 73%;
+    }
+    .col-xxl-3 {
+        flex: 0 0 27%;
+        max-width: 27%;
+    }
+    .col-xxxl-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    .col-xxxl-7 {
+        flex: 0 0 58.3333333333%;
+        max-width: 58.3333333333%;
+    }
+    .col-xxxl-5 {
+        flex: 0 0 41.6666666667%;
+        max-width: 41.6666666667%;
+    }
+}
+@media (min-width: 1600px) {
+     .container-half-fluid {
+        width: 1400px;
+     }
+     .p-xxl-5 {padding: 3rem !important;}
+
+    
+}
+@media (min-width: 1400px) {
+    .middle-sidebar-left {padding-right: 20px;}
+}
+
+@media (min-width: 1200px) {
+    .vh-lg-100 {height: 100vh;}
+
+    .pl-lg--5 {padding-left: 3rem !important;}
+    .pr-lg--5 {padding-right: 3rem !important;}
+
+    .p-lg--5 {padding: 3rem !important;}
+
+    
+}
+
+
+
+
+@media (max-width: 1600px) {
+    .display5-size {font-size: 60px !important; }
+    .main-content .middle-sidebar-bottom .sidebar-right {visibility: visible; opacity: 1;}
+    .main-content .middle-sidebar-bottom .middle-sidebar-left {width: 100%;}
+    .middle-sidebar-right {
+        position: fixed;
+        top: 0;
+        right:-350px ;
+        z-index: 2;
+        // background-color: #fff;
+        padding: 15px;
+        overflow: scroll;
+        height: calc(100vh);
+        // transition: all 0.4s ease;
+        
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background-color: rgba(255, 255, 255, 0.3);
+        &.active-sidebar {
+            right:0px ;
+        }
+    }
+
+}
+@media (max-width: 1400px) {
+    
+    .overflow-visible-xl,
+    .overflow-visible-xl .owl-stage-outer {overflow: visible !important;}
+
+    .xl-p-5 {padding: 3rem;}
+    
+}
+
+@media (max-width: 1200px) {
+    .coming-soon-card,.login-card {padding-top: 100px; padding-bottom: 100px; }
+
+    
+    .display4-lg-size {font-size: 50px !important; }
+}
+@media (max-width: 991px) {
+    .display2-md-size {font-size: 30px !important; }
+    .display4-md-size {font-size: 40px !important; }
+
+    .coming-soon-card,.login-card {padding-top: 50px; padding-bottom: 50px; } 
+
+    .md-mb-2 {margin-bottom: 1rem !important;}
+    .main-content .middle-sidebar-bottom .sidebar-right {display: none;}
+}
+
+
+@media (max-width: 768px) {
+    .col-xs-6 { flex: 0 0 50%; max-width: 50%; }
+    .col-xs-12 { flex: 0 0 100%; max-width: 100%; }
+    
+    .col-xs-6 {flex: 0 0 50%;max-width: 50%; }
+    .col-xs-3 {flex: 0 0 25%;max-width: 25%; }
+    .col-xs-9 {flex: 0 0 75%;max-width: 75%; }
+
+    .sm-mb-4 {margin-bottom: 2rem !important;}
+    .sm-mt-2 {margin-top: 1rem !important;}
+    .sm-mt-7 {margin-top: 5rem !important;}
+    .sm-mb-5 {margin-bottom: 3rem !important;}
+    .font-md-xxl {font-size: 28px !important; }
+
+    .sm-text-center {text-align: center;}
+    
+
+    .coming-soon-card,
+    .login-card {min-width: 320px; }
+
+    .sm-pt-10 {padding-top: 5rem;}
+
+
+     
+}
+@media (max-width: 576px) {
+    .d-none-xs {display: none !important;}
+    .xs-mb-4 {margin-bottom: 2rem !important;}
+    .xs-mb-2 {margin-bottom: 1rem !important;}
+
+    .xs-p-4 {padding: 2rem;}
+
+    .xs-pt-10 {padding-top: 150px; }
+    .owl-theme.owl-nav-link .owl-nav .icon-nav,
+    .owl-theme.nav-xs-none .owl-nav {display: none !important;}
+
+    .col-xss-6 {flex: 0 0 50%;max-width: 50%; }
+
+    .display4-xs-size {font-size: 40px !important; }
+    .font-md-xs {font-size: 18px !important; }
+
+    .display1-sm-size {font-size: 25px !important;}
+
+
+
+}
