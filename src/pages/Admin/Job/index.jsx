@@ -160,7 +160,7 @@ function Job(props) {
                           Name
                         </th>
                         <th className="border-0" scope="col">
-                          Class
+                         Subject
                         </th>
                         <th className="border-0" scope="col">
                           Test

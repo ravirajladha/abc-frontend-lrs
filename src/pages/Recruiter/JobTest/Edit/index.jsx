@@ -246,7 +246,7 @@ console.log( typeof(data.class_id), "data clas_id");
                 <div className="col-lg-6">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Select Class
+                      Select Subject
                     </label>
                     <SelectMultipleInput
                       className="form-control"
@@ -255,12 +255,12 @@ console.log( typeof(data.class_id), "data clas_id");
                       label="name"
                       value={formData.selectedClass || []}
                       onChange={handleClassChange}
-                      placeholder="Select Class"
+                      placeholder="Select Subject"
                       required
                     />
                     {validationErrors.selectedClass && (
                       <span className="text-danger font-xsss mt-2">
-                        {validationErrors.selectedClass}
+                            Subject empty or not found.
                       </span>
                     )}
                   </div>

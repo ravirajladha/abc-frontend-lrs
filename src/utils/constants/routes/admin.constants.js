@@ -13,7 +13,7 @@ const ADMIN_ROUTES = [
   { path: '/admin/internships', title: 'Internship', icon: 'feather-file-plus' },
   { path: '/admin/jobs', title: 'Jobs', icon: 'feather-briefcase' },
   { path: '/admin/payments', title: 'Payments', icon: 'feather-credit-card' },
-  { path: '/admin/fees', title: 'Fees', icon: 'feather-dollar-sign' },
+  // { path: '/admin/fees', title: 'Fees', icon: 'feather-dollar-sign' },
   { path: '/admin/recruiters', title: 'Recruiters', icon: 'feather-briefcase' },
   // { path: '/admin/quotes', title: 'Quotes', icon: 'feather-activity' },
 

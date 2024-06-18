@@ -120,10 +120,10 @@ function Create({ title,isAdmin }) {
       <ContentFormWrapper formTitle="Job Test Question">
         <form className="contact_form" onSubmit={handleSubmit}>
           <div className="row">
-            <div className="col-lg-6 mb-2">
+            <div className="col-lg-12 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                  Select Class
+                  Select Subject
                 </label>
                 <SelectInput
                   className="form-control"
@@ -132,11 +132,11 @@ function Create({ title,isAdmin }) {
                   label="name"
                   value={formData.selectedClass}
                   onChange={handleClassChange}
-                  placeholder="Select Class"
+                  placeholder="Select Subject"
                 />
                 {validationErrors.selectedClass && (
                   <span className="text-danger">
-                    {validationErrors.selectedClass}
+                    Subject empty or not found
                   </span>
                 )}
               </div>

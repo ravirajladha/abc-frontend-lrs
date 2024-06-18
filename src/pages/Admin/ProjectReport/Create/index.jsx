@@ -131,7 +131,7 @@ function Create() {
             <div className="col-lg-6 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                  Select Class
+                  Select Subject
                 </label>
                 <SelectInput
                   className="form-control"
@@ -140,17 +140,17 @@ function Create() {
                   label="name"
                   value={formData.class}
                   onChange={handleClassChange}
-                  placeholder="Select Class"
+                  placeholder="Select Subject"
                 />
                 {validationErrors.class && (
-                  <span className="text-danger">{validationErrors.class}</span>
+                  <span className="text-danger">Subject empty or not found.</span>
                 )}
               </div>
             </div>
             <div className="col-lg-6 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                  Select Subject
+                  Select Course
                 </label>
                 <SelectInput
                   className="form-control"
@@ -163,7 +163,7 @@ function Create() {
                 />
                 {validationErrors.subject && (
                   <span className="text-danger">
-                    {validationErrors.subject}
+                   Course empty or not found.
                   </span>
                 )}
               </div>

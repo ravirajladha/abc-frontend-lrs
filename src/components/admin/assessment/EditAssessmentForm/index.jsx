@@ -34,7 +34,7 @@ function EditAssessmentForm({
               />
               {validationErrors.selectedClass && (
                 <span className="text-danger">
-                  {validationErrors.selectedClass}
+              Subject empty or not found
                 </span>
               )}
             </div>
@@ -57,7 +57,7 @@ function EditAssessmentForm({
               />
               {validationErrors.selectedSubject && (
                 <span className="text-danger">
-                  {validationErrors.selectedSubject}
+               Course empty or not found
                 </span>
               )}
             </div>

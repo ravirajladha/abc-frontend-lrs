@@ -243,7 +243,7 @@ function Create(props) {
             <div className={props.isRecruiter === false ? 'col-lg-6 mb-2' : 'col-lg-12 mb-2'}>
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                    Select Class *
+                    Select Subject *
                   </label>
                   <SelectMultipleInput
                     className="form-control"
@@ -252,12 +252,12 @@ function Create(props) {
                     label="name"
                     value={formData.selectedClass || []}
                     onChange={handleClassChange}
-                    placeholder="Select Class"
+                    placeholder="Select Subject"
                     required
                   />
                   {validationErrors.selectedClass && (
                     <span className="text-danger font-xsss mt-2">
-                      {validationErrors.selectedClass}
+                       Subject empty or not found
                     </span>
                   )}
                 </div>

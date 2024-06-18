@@ -79,7 +79,7 @@ function Internship({ title }) {
                             Name
                           </th>
                           <th className="border-0" scope="col">
-                            Class
+                Subject
                           </th>
                           {/* <th className="border-0" scope="col">
                             Subject

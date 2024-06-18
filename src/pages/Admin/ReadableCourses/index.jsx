@@ -64,10 +64,10 @@ function Index({ title }) {
                             #
                           </th>
                           <th className="border-0" scope="col">
-                            Class
+                        Subject
                           </th>
                           <th className="border-0" scope="col">
-                            Subject
+                            Course
                           </th>
                           <th className="border-0" scope="col">
                             Ebook Name

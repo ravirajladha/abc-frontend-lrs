@@ -143,7 +143,7 @@ function Create() {
                   placeholder="Select Subject"
                 />
                 {validationErrors.class && (
-                  <span className="text-danger">{validationErrors.class}</span>
+                  <span className="text-danger">Subject empty or not found.</span>
                 )}
               </div>
             </div>
@@ -163,7 +163,7 @@ function Create() {
                 />
                 {validationErrors.subject && (
                   <span className="text-danger">
-                    {validationErrors.subject}
+                    Course empty or not found.
                   </span>
                 )}
               </div>

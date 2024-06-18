@@ -159,7 +159,7 @@ function Edit({ title ,isAdmin}) {
               <div className="col-lg-6 mb-2">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                    Select Class
+                    Select Subject
                   </label>
                   <SelectInput
                     className="form-control"
@@ -168,11 +168,11 @@ function Edit({ title ,isAdmin}) {
                     label="name"
                     value={formData.selectedClass}
                     onChange={handleClassChange}
-                    placeholder="Select Class"
+                    placeholder="Select Subject"
                   />
                   {validationErrors.selectedClass && (
                     <span className="text-danger">
-                      {validationErrors.selectedClass}
+                       Subject empty or not found.
                     </span>
                   )}
                 </div>

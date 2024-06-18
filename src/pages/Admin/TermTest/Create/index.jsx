@@ -226,7 +226,7 @@ function Create({ title }) {
                     />
                     {validationErrors.selectedClass && (
                       <span className="text-danger font-xsss mt-2">
-                        {validationErrors.selectedClass}
+                        Subject empty or not found.
                       </span>
                     )}
                   </div>
@@ -249,7 +249,7 @@ function Create({ title }) {
                     />
                     {validationErrors.selectedSubject && (
                       <span className="text-danger font-xsss mt-2">
-                        {validationErrors.selectedSubject}
+                      Course empty or not found.
                       </span>
                     )}
                   </div>

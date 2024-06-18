@@ -224,7 +224,7 @@ console.log("formData", formData.instruction )
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Select Class
+                      Select Subject
                     </label>
                     <SelectInput
                       className="form-control"
@@ -233,12 +233,12 @@ console.log("formData", formData.instruction )
                       label="name"
                       value={formData.selectedClass || ''}
                       onChange={handleClassChange}
-                      placeholder="Select Class"
+                      placeholder="Select Subject"
                       required
                     />
                     {validationErrors.selectedClass && (
                       <span className="text-danger font-xsss mt-2">
-                        {validationErrors.selectedClass}
+                     Subject empty or not found.
                       </span>
                     )}
                   </div>
@@ -247,7 +247,7 @@ console.log("formData", formData.instruction )
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Select Subject
+                      Select Course
                     </label>
                     <SelectInput
                       className="form-control"
@@ -256,12 +256,12 @@ console.log("formData", formData.instruction )
                       label="name"
                       value={formData.selectedSubject || ''}
                       onChange={handleSubjectChange}
-                      placeholder="Select Subject"
+                      placeholder="Select Course"
                       required
                     />
                     {validationErrors.selectedSubject && (
                       <span className="text-danger font-xsss mt-2">
-                        {validationErrors.selectedSubject}
+                         Course empty or not found.
                       </span>
                     )}
                   </div>
