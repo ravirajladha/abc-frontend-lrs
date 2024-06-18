@@ -170,7 +170,7 @@ function Edit({ title }) {
               <div className="col-lg-6 mb-2">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                    Select Class
+                    Select Subject
                   </label>
                   <SelectInput
                     className="form-control"
@@ -179,7 +179,7 @@ function Edit({ title }) {
                     label="name"
                     value={formData.selectedClass}
                     onChange={handleClassChange}
-                    placeholder="Select Class"
+                    placeholder="Select Subject"
                   />
                   {validationErrors.selectedClass && (
                     <span className="text-danger">
@@ -192,7 +192,7 @@ function Edit({ title }) {
               <div className="col-lg-6 mb-2">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                    Select Subject
+                    Select Course
                   </label>
                   <SelectInput
                     className="form-control"
@@ -201,7 +201,7 @@ function Edit({ title }) {
                     label="name"
                     value={formData.selectedSubject}
                     onChange={handleSubjectChange}
-                    placeholder="Select Subject"
+                    placeholder="Select Course"
                   />
                   {validationErrors.selectedSubject && (
                     <span className="text-danger">

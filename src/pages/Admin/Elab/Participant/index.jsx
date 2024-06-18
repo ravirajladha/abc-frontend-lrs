@@ -80,7 +80,7 @@ function Participants({ title }) {
                           #
                         </th>
                         <th className="border-0" scope="col">
-                          student id
+                          student
                         </th>
                         <th className="border-0" scope="col">
                           summary

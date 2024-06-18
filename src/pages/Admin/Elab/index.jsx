@@ -79,9 +79,9 @@ function Elabs({ title }) {
             <div className="card border-0 mt-0 rounded-lg shadow-sm">
               <div className="card-body d-flex pt-4 px-4 pb-0">
                 <h4 className="font-xss text-grey-800 mt-3 fw-700">{title}</h4>
-                <select className="form-select ml-auto float-right border-0 font-xssss fw-600 text-grey-700 bg-transparent">
+                {/* <select className="form-select ml-auto float-right border-0 font-xssss fw-600 text-grey-700 bg-transparent">
                   <option>Sort by latest</option>
-                </select>
+                </select> */}
               </div>
               <div className="card-body p-4">
                 <div className="table-responsive">
@@ -96,10 +96,10 @@ function Elabs({ title }) {
                         </th>
 
                         <th className="border-0" scope="col">
-                          Class
+                        Subject
                         </th>
                         <th className="border-0" scope="col">
-                          Subject
+                          Course
                         </th>
                         <th className="border-0" scope="col">
                           Language

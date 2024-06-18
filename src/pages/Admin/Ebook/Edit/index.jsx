@@ -159,7 +159,7 @@ function Edit() {
               <div className="col-lg-6 mb-2">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                    Select Class
+                    Select Subject
                   </label>
                   <SelectInput
                     className="form-control"
@@ -168,11 +168,11 @@ function Edit() {
                     label="name"
                     value={formData.class}
                     onChange={handleClassChange}
-                    placeholder="Select Class"
+                    placeholder="Select Subject"
                   />
                   {validationErrors.class && (
                     <span className="text-danger">
-                      {validationErrors.class}
+                      Subject must not be empty
                     </span>
                   )}
                 </div>
@@ -180,7 +180,7 @@ function Edit() {
               <div className="col-lg-6 mb-2">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                    Select Subject
+                    Select Course
                   </label>
                   <SelectInput
                     className="form-control"
@@ -189,11 +189,11 @@ function Edit() {
                     label="name"
                     value={formData.subject || ''}
                     onChange={handleSubjectChange}
-                    placeholder="Select Subject"
+                    placeholder="Select Course"
                   />
                   {validationErrors.subject && (
                     <span className="text-danger">
-                      {validationErrors.subject}
+                     Course must not be empty
                     </span>
                   )}
                 </div>

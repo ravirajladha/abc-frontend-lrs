@@ -21,7 +21,7 @@ function EditAssessmentForm({
         <div className="row">
           <div className="col-lg-6 mb-2">
             <div className="form-group">
-              <label className="mont-font fw-600 font-xsss">Select Class</label>
+              <label className="mont-font fw-600 font-xsss">Select Subject</label>
               <SelectInput
                 className="form-control"
                 options={classes}
@@ -29,7 +29,7 @@ function EditAssessmentForm({
                 label="name"
                 value={formData.selectedClass || ''}
                 onChange={handleClassChange}
-                placeholder="Select Class"
+                placeholder="Select Subject"
                 required
               />
               {validationErrors.selectedClass && (
@@ -43,7 +43,7 @@ function EditAssessmentForm({
           <div className="col-lg-6 mb-2">
             <div className="form-group">
               <label className="mont-font fw-600 font-xsss">
-                Select Subject
+                Select Course
               </label>
               <SelectInput
                 className="form-control"
@@ -52,7 +52,7 @@ function EditAssessmentForm({
                 label="name"
                 value={formData.selectedSubject || ''}
                 onChange={handleSubjectChange}
-                placeholder="Select Subject"
+                placeholder="Select Course"
                 required
               />
               {validationErrors.selectedSubject && (

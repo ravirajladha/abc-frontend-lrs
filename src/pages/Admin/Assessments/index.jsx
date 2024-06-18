@@ -134,7 +134,7 @@ function Assessments({ title }) {
                     label="name"
                     value={selectedClass || ''}
                     onChange={handleClassChange}
-                    defaultText="All Classes"
+                    defaultText="All Subjects"
                     className="float-right filter mr-2"
                   />
                   <ContentSelectFilter
@@ -144,7 +144,7 @@ function Assessments({ title }) {
                     value={selectedSubject || ''}
                     onChange={handleSubjectChange}
                     placeholder="Select a Subject"
-                    defaultText="All Subjects"
+                    defaultText="All Courses"
                     className="float-right filter mr-2"
                   />
                   
@@ -162,10 +162,10 @@ function Assessments({ title }) {
                           Name
                         </th>
                         <th className="border-0" scope="col">
-                          Class
+                        Subject
                         </th>
                         <th className="border-0" scope="col">
-                          Subject
+                          Course
                         </th>
                         <th
                           scope="col"

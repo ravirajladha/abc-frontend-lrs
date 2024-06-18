@@ -1,7 +1,7 @@
 const ADMIN_ROUTES = [
   { path: '/admin/dashboard', title: 'Home', icon: 'feather-home' },
-  { path: '/admin/schools', title: 'Schools', icon: 'feather-monitor' },
-  { path: '/admin/classes', title: 'Classes', icon: 'feather-book-open' },
+  // { path: '/admin/schools', title: 'Schools', icon: 'feather-monitor' },
+  { path: '/admin/classes', title: 'Subjects', icon: 'feather-book-open' },
   { path: '/admin/assessments', title: 'Assessments', icon: 'feather-activity' },
   { path: '/admin/tests', title: 'Tests', icon: 'feather-command' },
   { path: '/admin/mini-projects', title: 'Mini Projects', icon: 'feather-shopping-bag' },
@@ -18,12 +18,12 @@ const ADMIN_ROUTES = [
   // { path: '/admin/quotes', title: 'Quotes', icon: 'feather-activity' },
 
 
-  { path: '/admin/zoom-call', title: 'Zoom Call', icon: 'feather-calendar' },
+  // { path: '/admin/zoom-call', title: 'Zoom Call', icon: 'feather-calendar' },
 
-  { path: '/admin/quotes', title: 'Quotes', icon: 'feather-message-circle' },
+  // { path: '/admin/quotes', title: 'Quotes', icon: 'feather-message-circle' },
   { path: '/admin/public-students', title: 'Public Students', icon: 'feather-user-x' },
   { path: '/admin/private-students', title: 'School Students', icon: 'feather-users' },
-  { path: '/admin/dinacharya-logs', title: 'Dinacharya Logs', icon: 'feather-list' },
+  // { path: '/admin/dinacharya-logs', title: 'Dinacharya Logs', icon: 'feather-list' },
 ];
 
 export default ADMIN_ROUTES;

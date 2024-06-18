@@ -87,10 +87,10 @@ function Index({ title }) {
                             Name
                           </th>
                           <th className="border-0" scope="col">
-                            Class
+                          Subject
                           </th>
                           <th className="border-0" scope="col">
-                            Subject
+                         Course
                           </th>
                           <th scope="col" className="text-right border-0 pl-1" width="20%">
                             Action

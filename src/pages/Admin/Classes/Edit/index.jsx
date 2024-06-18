@@ -75,7 +75,7 @@ function Edit({ title }) {
                   <div className="col-lg-4 col-md-4 mb-3">
                     <div className="form-group">
                       <label className="mont-font fw-600 font-xsss">
-                        Class Name
+                        Subject Name
                       </label>
                       <input
                         type="text"
@@ -83,7 +83,7 @@ function Edit({ title }) {
                         name="class_name"
                         value={formData.class_name}
                         onChange={handleFormChange}
-                        placeholder="Enter Class Name"
+                        placeholder="Enter Subject Name"
                       />
                       {validationErrors.class_name && (
                         <span className="text-danger">

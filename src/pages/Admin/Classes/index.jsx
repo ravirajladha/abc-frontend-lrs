@@ -59,7 +59,7 @@ console.log("from classes");
         buttons={[
           {
             link: 'create',
-            text: 'New Class',
+            text: 'New Subject',
           },
         ]}
       />
@@ -74,7 +74,7 @@ console.log("from classes");
               data={classItem}
               buttons={[
                 {
-                  label: 'Subjects',
+                  label: 'Courses',
                   action: (item) => `/admin/classes/${item.id}/subjects`,
                   style: ' bg-primary-gradiant',
                 },
@@ -91,7 +91,7 @@ console.log("from classes");
         ) : (
           <div className="text-center mt-5 col-12">
             <div className="alert" role="alert">
-              There are no classes available at the moment.
+              There are no subjects available at the moment.
             </div>
           </div>
         )}
