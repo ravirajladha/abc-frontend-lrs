@@ -1,0 +1,66 @@
+/* list.module.css */
+
+.list-icon li,
+.list-icon a {
+  position: relative;
+  padding-left: 23px;
+  margin-bottom: 15px;
+}
+
+.list-icon li:before,
+.list-icon a:before {
+  color: #555555;
+  position: absolute;
+  left: 0;
+  font-size: 0.875rem;
+  /* font-family: 'Font Awesome 5 Free'; */
+  font-family: 'feather' !important;
+  font-weight: 900;
+  line-height: 1.325rem;
+}
+
+.list-arrow li:before,
+.list-arrow a:before {
+  /* content: '\f054'; */
+  content: '\e912';
+}
+
+.list-square li:before,
+.list-square a:before {
+  /* content: '\f00c'; */
+  content: '\e9d4';
+}
+
+.list-check li:before,
+.list-check a:before {
+  /* content: '\f00c'; */
+  content: '\e92b';
+}
+
+.list-close li:before,
+.list-close a:before {
+  content: '\ea02';
+}
+
+.list-bullet li:before,
+.list-bullet a:before {
+  /* content: '\f192'; */
+  content: '\e953';
+}
+
+.list-star li:before,
+.list-star a:before {
+  /* content: '\f005'; */
+  content: '\e9d5';
+}
+
+.list-dollar li:before,
+.list-dollar a:before {
+  /* content: '\f155'; */
+  content: '\e954';
+}
+
+.list-success li:before,
+.list-success a:before {
+  color: #60aa08;
+}

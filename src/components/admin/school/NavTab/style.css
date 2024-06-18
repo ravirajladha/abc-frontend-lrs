@@ -1,0 +1,36 @@
+.nav-tabs.user-profile li {
+  height: auto !important;
+}
+.nav-tabs.user-profile li:first-child {
+  margin-left: 3rem !important;
+}
+.nav-tabs.user-profile li:last-child {
+  margin-right: 3rem !important;
+}
+.nav-tabs.user-profile li a.active {
+  background-color: transparent !important;
+  color: #ffa93b !important;
+  border: 0 !important;
+  font-weight:600;
+  border-bottom: 2px #ffa93baa solid !important;
+}
+.nav-tabs.user-profile li a {
+  border: 0 !important;
+  color: #adb5bd !important;
+  padding: 1.5rem 0 !important;
+  border-radius: 0 !important;
+  text-transform: uppercase !important;
+  background: transparent !important;
+}
+
+@media (max-width: 576px) {
+  .nav-tabs.user-profile {
+    text-align: left;
+  }
+  .nav-tabs.user-profile li:first-child {
+    margin-left: 0rem !important;
+  }
+  .nav-tabs.user-profile li a {
+    padding: 1rem 0 !important;
+  }
+}

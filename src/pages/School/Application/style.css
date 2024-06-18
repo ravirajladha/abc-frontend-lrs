@@ -1,0 +1,6 @@
+.dt-buttons .dt-button:first-child {
+    background-color: #5cacf1;
+    border-radius: 20px;
+    color: white;
+    border: none;
+}

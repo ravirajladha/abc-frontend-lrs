@@ -1,0 +1,9 @@
+export { default as ParentProfile } from './Profile';
+export { default as ParentSettings } from './Settings';
+export { default as ParentDashboard } from './Dashboard';
+export { default as ParentNotification } from './Notification';
+export { default as ParentApplication } from './Applications';
+export { default as ParentStudent } from './Student';
+export { default as ParentPayment } from './Payment';
+export { default as ParentPaymentCreate } from './Payment/Create';
+export { default as ParentStudentCreate } from './Student/create';

@@ -1,0 +1,27 @@
+.dt-buttons .dt-button {
+  border-radius: 5px !important;
+  color: white !important;
+  border: none !important;
+}
+
+.buttons-csv {
+  background-color: #0c69bb !important;
+}
+
+.buttons-print {
+  background-color: #0cbb5b !important;
+}
+
+.dataTables_filter label {
+  font-family: 'Montserrat', sans-serif!important;
+  font-size: 14px !important;
+}
+
+.dataTables_filter input {
+  border: 2px #eee solid!important;
+  font-weight: 600 !important;
+  color: #495057!important;
+  border-radius: 0.25rem!important;
+  margin-left: .5rem!important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out!important;
+}

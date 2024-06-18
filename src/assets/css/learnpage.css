@@ -1,0 +1,315 @@
+.accordion-course .accordion-header {
+  background: #f5f5f5 !important;
+  padding: 25px 30px;
+  margin-bottom: 0px !important;
+  border-bottom: #dfdfdf 0.1rem solid;
+}
+.accordion-course .accordion-header button {
+  border: 0;
+  outline: none;
+  background: #f5f5f5;
+  color: #111;
+  font-size: 14px;
+  font-weight: 600;
+}
+.accordion-course .accordion-body {
+  padding: 0rem !important;
+}
+.accordion .accordion-header button {
+  border: 0;
+  outline: none;
+  background: transparent;
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+.accordion .accordion-header.plus-icon button:after {
+  font-family: 'themify';
+  content: '';
+  font-size: 16px;
+  position: absolute;
+  right: -10px;
+  top: 0px;
+  color: #888;
+  transform: rotate(0deg);
+  transition: all 0.5s ease;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  border-color: rgba(0, 0, 0, 0.125);
+}
+
+.video-playlist .title {
+  padding-left: 1rem;
+  color: #fff;
+}
+
+.video-playlist p {
+  padding: 1rem;
+  color: var(--secondary);
+}
+
+.video-playlist .videos {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.video-playlist .videos::-webkit-scrollbar {
+  width: 0.4rem;
+  border-radius: 0.4rem;
+  background-color: #0005;
+}
+
+.video-playlist .videos::-webkit-scrollbar-thumb {
+  border-radius: 0.4rem;
+  background-color: #fff;
+}
+
+.video-playlist .videos .video {
+  position: relative;
+  width: 100%;
+  height: 5rem;
+
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  /* border-top: #c9c9c9 0.1rem solid; */
+  cursor: pointer;
+
+  /* border-radius: .5rem; */
+}
+
+.video-playlist .videos .video:hover {
+  background-color: #b4b2b233;
+}
+
+.video-playlist .videos .video.active {
+  background-color: #ff95003a;
+}
+
+.main-video video {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+.video img {
+  position: absolute;
+  left: 1rem;
+  top: 30%;
+  transform: translateY(-50%);
+
+  width: 1.5rem;
+  height: 1.5rem;
+
+  filter: invert(100%);
+}
+
+.video-playlist .videos .video.active img {
+  filter: invert(100%) sepia(100%) saturate(2000%) hue-rotate(360deg);
+}
+
+.video p {
+  margin-left: 2.5rem;
+}
+
+.video h3 {
+  width: 23rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  font: 100 1rem sans-serif;
+  padding: 0 0.5rem;
+}
+
+@media (max-width: 992px) {
+  .main-content.menu-active {
+    padding-left: 0;
+  }
+}
+
+/* video tab stylings */
+.custom-tabs .nav-item button {
+  background-color: #fefefe !important;
+  color: #000 !important;
+  /* font-size: 16px !important; */
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}
+.custom-tabs .nav-item button.active {
+  background-color: #ff9500 !important;
+  color: #ffff !important;
+}
+.vjs-marker {
+  position: absolute;
+  background: red;
+  width: 5px;
+  height: 110%;
+  top: -5%;
+  z-index: 30;
+  margin-left: -3px;
+}
+
+.vjs-marker:hover span {
+  opacity: 1;
+}
+
+.vjs-marker span {
+  position: absolute;
+  bottom: 15px;
+  opacity: 0;
+  margin-left: -20px;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 8px;
+  font-size: 13px;
+}
+
+.watermark_image {
+  position: absolute;
+  left: 2%;
+  top: 7%;
+  width: 60px;
+  opacity: 50%;
+}
+.watermark {
+  position: absolute;
+  left: 3%;
+  top: 3%;
+  color: white;
+  animation: 500s moving-watermark infinite;
+  opacity: 50%;
+}
+
+@keyframes moving-watermark {
+  20% {
+    left: 93%;
+    top: 3%;
+  }
+  40% {
+    left: 50%;
+    top: 93%;
+  }
+  60% {
+    left: 3%;
+    top: 93%;
+  }
+  850% {
+    left: 3%;
+    top: 3%;
+  }
+  0% {
+    left: 3%;
+    top: 3%;
+  }
+  25% {
+    left: 50%;
+    top: 3%;
+  }
+  50% {
+    left: 93%;
+    top: 93%;
+  }
+  75% {
+    left: 30%;
+    top: 93%;
+  }
+  100% {
+    left: 3%;
+    top: 3%;
+  }
+}
+
+.custom-tabs .nav-item button {
+  background-color: #ffad39;
+  color: #ffffff;
+  width: 100%;
+}
+
+.custom-tabs .nav-item button.active {
+  background-color: #fefefe;
+  color: #000;
+}
+
+.vjs-marker {
+  position: absolute;
+  background: rgb(202, 0, 0);
+  width: 5px;
+  height: 110%;
+  top: -5%;
+  z-index: 30;
+  margin-left: -3px;
+}
+
+.vjs-marker:hover span {
+  opacity: 1;
+}
+
+.vjs-marker span {
+  position: absolute;
+  bottom: 15px;
+  opacity: 0;
+  margin-left: -20px;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 8px;
+  font-size: 13px;
+}
+
+.watermark_image {
+  position: absolute;
+  left: 2%;
+  top: 7%;
+  width: 60px;
+  opacity: 0.5;
+}
+
+.watermark {
+  position: absolute;
+  left: 3%;
+  top: 3%;
+  color: white;
+  animation: moving-watermark 500s infinite;
+  opacity: 0.5;
+}
+
+@keyframes moving-watermark {
+  20% {
+    left: 93%;
+    top: 3%;
+  }
+  40% {
+    left: 50%;
+    top: 93%;
+  }
+  60% {
+    left: 3%;
+    top: 93%;
+  }
+  850% {
+    left: 3%;
+    top: 3%;
+  }
+  0%,
+  100% {
+    left: 3%;
+    top: 3%;
+  }
+  25% {
+    left: 50%;
+    top: 3%;
+  }
+  50% {
+    left: 93%;
+    top: 93%;
+  }
+  75% {
+    left: 30%;
+    top: 93%;
+  }
+}
+
+.accordion .accordion-header button{
+  justify-content: space-between;
+}
