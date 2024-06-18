@@ -14,7 +14,7 @@ const register = async (userData) => {
 
   setTokenInLocalStorage('access_token', response.data.access_token);
   setUserDataInLocalStorage(response.data.user);
-
+  setStudentDataInLocalStorage(response.data.student_data);
   return response.data;
 };
 

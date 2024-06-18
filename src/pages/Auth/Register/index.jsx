@@ -222,12 +222,7 @@ function Index() {
                     >
                       Accept Term and Conditions
                     </label>
-                    <label className="form-check-label font-xssss text-grey-500" htmlFor="confirmCheckbox">
-  <span>
-    {/* <FaInfoCircle className="mr-1" /> */}
-   <u>The registration is strictly made for Parents</u>
-  </span>
-</label>
+                    <label className="form-check-label font-xssss text-grey-500" htmlFor="confirmCheckbox"></label>
                     <br />
                     {validationErrors.acceptTerms && (
                       <span className="text-danger">

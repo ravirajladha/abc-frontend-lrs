@@ -24,9 +24,9 @@ const StudentTable = ({ students, loading, toggleModal }) => (
                   <tr>
                     <th className="border-0">#</th>
                     <th className="border-0">Name</th>
-                    <th className="border-0">Class</th>
-                    <th className="border-0">Section</th>
-                    <th className="border-0">Actions</th>
+                    {/* <th className="border-0">Class</th> */}
+                    {/* <th className="border-0">Section</th> */}
+                    {/* <th className="border-0">Actions</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -34,9 +34,9 @@ const StudentTable = ({ students, loading, toggleModal }) => (
                     <tr key={student.id}>
                       <td>{index + 1}</td>
                       <td>{student.name}</td>
-                      <td>{student?.class_name}</td>
-                      <td>{student.section_name}</td>
-                      <td>
+                      {/* <td>{student?.class_name}</td> */}
+                      {/* <td>{student.section_name}</td> */}
+                      {/* <td>
                         <Link
                           to="#"
                           className="btn btn-outline-primary btn-sm"
@@ -53,7 +53,7 @@ const StudentTable = ({ students, loading, toggleModal }) => (
                         >
                           <i className="feather-eye"></i>
                         </Link>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>

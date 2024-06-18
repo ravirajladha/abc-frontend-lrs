@@ -31,14 +31,14 @@ const StudentCard = ({ students, loading, baseUrl, toggleModal }) => (
                 </figure>
                 <h4 className="fw-700 font-xs my-3">{student?.name}</h4>
                 <div className="clearfix"></div>
-                <span className="font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 alert-success d-inline-block text-success mb-1 mr-1">
+                {/* <span className="font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 alert-success d-inline-block text-success mb-1 mr-1">
                   {student?.class_name}
                 </span>
                 <span className="font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 alert-primary d-inline-block text-primary mb-1 mr-1">
                   Section {student?.section_name}
-                </span>
+                </span> */}
               </div>
-              <div className="d-flex justify-content-between">
+              {/* <div className="d-flex justify-content-between">
                 <Link
                   onClick={() => toggleModal(student)}
                   className="btn btn-outline-success btn-icon btn-sm mr-2"
@@ -51,7 +51,7 @@ const StudentCard = ({ students, loading, baseUrl, toggleModal }) => (
                 >
                   View Photo
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
