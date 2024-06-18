@@ -152,32 +152,32 @@ const AdminRoutes = [
   { path: 'dashboard', element: <AdminDashboard title="Dashboard" /> },
 
   // Classes Routes
-  { path: 'classes', element: <Classes title="Classes" /> },
-  { path: 'classes/create', element: <CreateClass title="Create Class" /> },
+  { path: 'classes', element: <Classes title="Subjects" /> },
+  { path: 'classes/create', element: <CreateClass title="Create Subject" /> },
   {
     path: 'classes/:classId/edit',
-    element: <EditClass title="Edit Class" />,
+    element: <EditClass title="Edit Subject" />,
   },
   {
     path: 'classes/:classId/results',
-    element: <ClassResult title="Show Class Results" />,
+    element: <ClassResult title="Show Subject Results" />,
   },
   // Subjects Routes
   {
     path: 'classes/:classId/subjects',
-    element: <Subject title="Subjects" />,
+    element: <Subject title="Courses" />,
   },
   {
     path: 'classes/:classId/subjects/create',
-    element: <SubjectCreate title="Subjects" />,
+    element: <SubjectCreate title="Courses" />,
   },
   {
     path: 'classes/:classId/subjects/:subjectId/edit',
-    element: <SubjectEdit title="Subjects" />,
+    element: <SubjectEdit title="Courses" />,
   },
   {
     path: 'classes/:classId/subjects/:subjectId/results',
-    element: <SubjectResult title="Show Subject Results" />,
+    element: <SubjectResult title="Show Course Results" />,
   },
 
   // Chapters Routes

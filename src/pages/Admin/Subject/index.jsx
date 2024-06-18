@@ -39,7 +39,7 @@ function Subjects({ title }) {
       title: 'Confirm!',
       showDenyButton: true,
       confirmButtonText: 'Yes',
-      text: 'Do you want to delete this subject?',
+      text: 'Do you want to delete this course?',
       icon: 'warning',
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -71,7 +71,7 @@ function Subjects({ title }) {
           buttons={[
             {
               link: `create`,
-              text: 'New Subject',
+              text: 'New Course',
             },
           ]}
         />
@@ -108,7 +108,7 @@ function Subjects({ title }) {
         ) : (
           <div className="text-center mt-5 col-12">
             <div className="alert" role="alert">
-               There are no subjects available at the moment.
+               There are no courses available at the moment.
             </div>
           </div>
         )}

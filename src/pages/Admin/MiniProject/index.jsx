@@ -65,22 +65,22 @@ function MiniProject({ title }) {
                             Name
                           </th>
                           <th className="border-0" scope="col">
-                            Class
+                            Subject
                           </th>
                           <th className="border-0" scope="col">
-                            Subject
+                            Course
                           </th>
                           <th className="border-0" scope="col">
                             Image
                           </th>
                           <th className="border-0" scope="col">
-                       Participant
+                            Participant
                           </th>
                           <th className="border-0" scope="col">
-                       Tasks
+                            Tasks
                           </th>
                           <th className="border-0" scope="col">
-                       Status
+                            Status
                           </th>
                           <th
                             scope="col"
@@ -112,23 +112,22 @@ function MiniProject({ title }) {
                               )}
                             </td>
                             <td>
-                            <Link
+                              <Link
                                 to={`/admin/mini-project/${item.id}/participants`}
                                 className="btn btn-outline-warning btn-icon btn-sm mr-2"
                               >
-                                    <i className="feather-eye"></i> View {item.participant_count}
+                                <i className="feather-eye"></i> View{' '}
+                                {item.participant_count}
                               </Link>
                             </td>
                             <td>
-                            <Link
+                              <Link
                                 to={`/admin/mini-project-tasks/${item.id}`}
                                 className="btn btn-outline-warning btn-icon btn-sm mr-2"
                               >
-   <i className="feather-eye"></i> View (
+                                <i className="feather-eye"></i> View (
                                 {item.task_count})
                               </Link>
-
-                             
                             </td>
                             <td>
                               {item.is_active ? (

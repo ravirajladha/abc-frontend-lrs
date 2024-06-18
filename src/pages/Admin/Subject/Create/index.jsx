@@ -60,12 +60,12 @@ function Create({ title }) {
     submissionData.append('subject_name', formData.subject_name);
     submissionData.append('subject_image', formData.subject_image);
     submissionData.append('class_id', classId);
-    submissionData.append('subject_type', formData.subject_type);
-    submissionData.append('super_subject_id', formData.super_subject);
+    submissionData.append('subject_type', 1);
+    submissionData.append('super_subject_id', null);
 
     try {
       const response = await createSubject(submissionData);
-      toast.success('Subject added successfully', response);
+      toast.success('Course added successfully', response);
       navigate(`/admin/classes/${classId}/subjects`);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
@@ -107,7 +107,7 @@ function Create({ title }) {
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Subject Name
+                    Course Name
                     </label>
                     <input
                       type="text"
@@ -115,7 +115,7 @@ function Create({ title }) {
                       name="subject_name"
                       value={formData.subject_name}
                       onChange={handleFormChange}
-                      placeholder="Enter Subject Name"
+                      placeholder="Enter Course Name"
                     />
                     {validationErrors.subject_name && (
                       <span className="text-danger">
@@ -127,12 +127,12 @@ function Create({ title }) {
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font form-label fw-600 font-xsss">
-                      Subject Image
+                    Course Image
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Select Subject Image"
+                      placeholder="Select Course Image"
                       value={formData.subject_image_name}
                       onClick={() =>
                         document.getElementById('subjectImageInput').click()
@@ -155,10 +155,10 @@ function Create({ title }) {
                     )}
                   </div>
                 </div>
-                <div className="col-lg-6 col-md-12 mb-3">
+                {/* <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="form-label mont-font fw-600 font-xsss">
-                      Subject Type
+                    Course Type
                     </label>
                     <select
                       className="form-control"
@@ -168,7 +168,7 @@ function Create({ title }) {
                       required
                     >
                       <option value=""  readOnly>
-                        Select Subject Type
+                        Select Course Type
                       </option>
                       {SUBJECT_TYPES.map((type) => (
                         <option value={type.id} key={type.id}>
@@ -212,7 +212,7 @@ function Create({ title }) {
                       )}
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
               <div className="col-lg-12 mb-0 mt-2 pl-0">
                 <button

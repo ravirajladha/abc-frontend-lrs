@@ -248,7 +248,7 @@ function Edit({ title }) {
             <div className="col-6">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                Class: <span class="font-italic text-dark">{formData.className.toUpperCase()}</span>
+                Subject: <span class="font-italic text-dark">{formData.className.toUpperCase()}</span>
                 </label>
                
               </div>
@@ -258,7 +258,7 @@ function Edit({ title }) {
             <div className="col-6">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                  Subject: <span class="font-italic text-dark">{formData.subjectName.toUpperCase()}</span>
+                  Course: <span class="font-italic text-dark">{formData.subjectName.toUpperCase()}</span>
                 </label>
             
               </div>

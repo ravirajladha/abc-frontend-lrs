@@ -29,7 +29,7 @@ function Create({ title }) {
     
     try {
       const response = await createClass(formData);
-      toast.success('Class added successfully', response);
+      toast.success('Subject added successfully', response);
       // setLoading(false);
       navigate('/admin/classes');
   
@@ -57,7 +57,7 @@ function Create({ title }) {
                 <div className="col-lg-12 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Class Name
+                      Subject Name
                     </label>
                     <input
                       type="text"
@@ -65,7 +65,7 @@ function Create({ title }) {
                       name="class_name"
                       value={formData.class_name}
                       onChange={handleFormChange}
-                      placeholder="Enter Class Name"
+                      placeholder="Enter Subject Name"
                     />
                     {validationErrors.class_name && (
                       <span className="text-danger">

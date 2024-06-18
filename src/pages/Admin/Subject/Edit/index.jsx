@@ -72,7 +72,7 @@ function Edit({ title }) {
       }
       const response = await updateSubject(subjectId, submissionData);
 
-      toast.success('Subject updated successfully', response);
+      toast.success('Course updated successfully', response);
       navigate(`/admin/classes/${classId}/subjects`);
       setFormData({
         subject_name: '',
@@ -106,7 +106,7 @@ function Edit({ title }) {
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Subject Name
+                      Course Name
                     </label>
                     <input
                       type="text"
@@ -114,7 +114,7 @@ function Edit({ title }) {
                       name="subject_name"
                       value={formData.subject_name}
                       onChange={handleFormChange}
-                      placeholder="Enter Subject Name"
+                      placeholder="Enter Course Name"
                     />
                     {validationErrors.subject_name && (
                       <span className="text-danger">
@@ -127,7 +127,7 @@ function Edit({ title }) {
                 <div className="col-lg-6 mb-2">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Subject Image
+                      Course Image
                     </label>
                     <input
                       type="file"

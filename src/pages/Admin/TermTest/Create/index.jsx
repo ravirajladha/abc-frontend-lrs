@@ -212,7 +212,7 @@ function Create({ title }) {
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Select Class *
+                      Select Subject *
                     </label>
                     <SelectInput
                       className="form-control"
@@ -221,7 +221,7 @@ function Create({ title }) {
                       label="name"
                       value={formData.selectedClass || ''}
                       onChange={handleClassChange}
-                      placeholder="Select Class"
+                      placeholder="Select Subject"
                       required
                     />
                     {validationErrors.selectedClass && (
@@ -235,7 +235,7 @@ function Create({ title }) {
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Select Subject *
+                      Select Course *
                     </label>
                     <SelectInput
                       className="form-control"
@@ -244,7 +244,7 @@ function Create({ title }) {
                       label="name"
                       value={formData.selectedSubject || ''}
                       onChange={handleSubjectChange}
-                      placeholder="Select Subject"
+                      placeholder="Select Course"
                       required
                     />
                     {validationErrors.selectedSubject && (

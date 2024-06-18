@@ -143,7 +143,7 @@ function AssessmentQuestionBank({ title }) {
                     label="name"
                     value={selectedClass || ''}
                     onChange={handleClassChange}
-                    defaultText="All Classes"
+                    defaultText="All Subjects"
                     className="float-right filter mr-2"
                   />
                   <ContentSelectFilter
@@ -152,8 +152,8 @@ function AssessmentQuestionBank({ title }) {
                     label="name"
                     value={selectedSubject || ''}
                     onChange={handleSubjectChange}
-                    placeholder="Select a Subject"
-                    defaultText="All Subjects"
+                    placeholder="Select a Course"
+                    defaultText="All Courses"
                     className="float-right filter mr-2"
                   />
                 </div>
@@ -170,10 +170,10 @@ function AssessmentQuestionBank({ title }) {
                           Question
                         </th>
                         <th className="border-0" scope="col" width="10%">
-                          Class
+                          Subject
                         </th>
                         <th className="border-0" scope="col" width="10%">
-                          Subject
+                          Course
                         </th>
                         <th
                           scope="col"
