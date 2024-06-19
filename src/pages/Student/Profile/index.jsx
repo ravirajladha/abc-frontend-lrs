@@ -152,7 +152,7 @@ function Profile({ isAdmin, isStudent }) {
           <Tab eventKey="about" title="ABOUT">
             <AboutCard studentData={studentData} />
           </Tab>
-          <Tab eventKey="subject" title="SUBJECT">
+          <Tab eventKey="subject" title="Courses">
             <SubjectCard subjects={studentData?.subjects} />
           </Tab>
           <Tab eventKey="ranks" title="RANKS">

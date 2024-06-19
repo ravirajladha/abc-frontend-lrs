@@ -58,7 +58,7 @@ function ReportCard({ studentData, reportData, loading }) {
                       <div className="clearfix"></div>
 
                       <ul className="list-inline border-0 mt-4">
-                        <li className="list-inline-item text-center mr-4">
+                        {/* <li className="list-inline-item text-center mr-4">
                           <h4 className="fw-700 font-md">
                             {studentData['class_name']}
                             <span className="font-xsssss fw-500 mt-1 text-grey-500 d-block">
@@ -73,7 +73,7 @@ function ReportCard({ studentData, reportData, loading }) {
                               Section
                             </span>
                           </h4>
-                        </li>
+                        </li> */}
                         <li className="list-inline-item text-center">
                           <h4 className="fw-700 font-md">
                             {year}
@@ -92,7 +92,7 @@ function ReportCard({ studentData, reportData, loading }) {
                       <div className="item w-100 h50 bg-gold-gradiant rounded-xxl overflow-hidden text-left shadow-md pl-3 pt-3 align-items-end d-flex">
                         <h4 className="text-white font-sm fw-700 mont-font mb-3 ">
                           <span className="d-block fw-500 text-white font-xssss mt-1">
-                            Class Rank
+                            Subject Rank
                           </span>
                           {reportData?.class_rank && reportData?.class_rank}
                         </h4>
@@ -100,7 +100,7 @@ function ReportCard({ studentData, reportData, loading }) {
                     </div>
                   </div>
 
-                  <div className="card border-0 mb-4 shadow-none">
+                  {/* <div className="card border-0 mb-4 shadow-none">
                     <div className="card-body d-block text-left p-0">
                       <div className="item w-100 h50 bg-primary rounded-xxl text-left shadow-md pl-3 pt-3 align-items-end d-flex">
                         <h4 className="text-white mb-3 font-sm fw-700 mont-font">
@@ -111,7 +111,7 @@ function ReportCard({ studentData, reportData, loading }) {
                         </h4>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <p
                     to="#"
@@ -217,7 +217,7 @@ function ReportCard({ studentData, reportData, loading }) {
                       <thead className="bg-greylight ovh">
                         <tr>
                           <th className="border-0" scope="col">
-                            Subject
+                            Course
                           </th>
 
                           <th className="border-0 text-center" scope="col">
@@ -293,7 +293,7 @@ function ReportCard({ studentData, reportData, loading }) {
                       <thead className="bg-greylight ovh">
                         <tr>
                           <th className="border-0" scope="col">
-                            Subject
+                            Course
                           </th>
                           <th className="border-0 text-center" scope="col">
                             Average Score

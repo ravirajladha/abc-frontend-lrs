@@ -67,20 +67,20 @@ function AboutCard({ studentData }) {
               </div>
               
             </div>
-            {/* <div className="col-lg-4">
+            <div className="col-lg-4">
               <div className="form-group">
                 <label className="mont-font fw-500 font-xsss">
-                  <span className="fw-600 ">School: </span>{' '}
-                  {student?.school_name || 'N/A'}
+                  <span className="fw-600 ">Email: </span>{' '}
+                  {student?.email || 'N/A'}
                 </label>
               </div>
               <div className="form-group">
                 <label className="mont-font fw-500 font-xsss">
-                  <span className="fw-600 ">Section: </span>{' '}
-                  {student?.section_name|| 'N/A'}
+                  <span className="fw-600 ">Phone number: </span>{' '}
+                  {student?.phone_number|| 'N/A'}
                 </label>
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label className="mont-font fw-500 font-xsss">
                   <span className="fw-600 ">Parent ID: </span>{' '}
                   {student?.parent_code|| 'N/A'}
@@ -91,8 +91,8 @@ function AboutCard({ studentData }) {
                   <span className="fw-600 ">Parent Name: </span>{' '}
                   {student?.parent_name || 'N/A'}
                 </label>
-              </div>
-            </div> */}
+              </div> */}
+            </div>
           </div>
         </div>
       )}

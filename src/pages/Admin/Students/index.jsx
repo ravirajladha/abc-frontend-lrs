@@ -234,7 +234,7 @@ function PublicStudent({ title, isPrivate, isPublic }) {
             <h4 className="font-xssss text-grey-700">
                {''}
             </h4>
-            <div className="d-flex">
+            {/* <div className="d-flex">
               {isPrivate &&( 
               <ContentSelectFilter
                 options={schools}
@@ -263,7 +263,7 @@ function PublicStudent({ title, isPrivate, isPublic }) {
                 defaultText="All Sections"
                 className="float-right filter mr-2"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

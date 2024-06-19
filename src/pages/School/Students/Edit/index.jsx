@@ -20,11 +20,13 @@ function Edit() {
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const [validationErrors, setValidationErrors] = useState({});
+  const [passwordMatch, setPasswordMatch] = useState(true);
 
   const [form, setForm] = useState({
     name: '',
     email: '',
     password: '',
+    confirmPassword:'',
     phone_number: '',
     class_id: '',
     section_id: '',
@@ -48,7 +50,8 @@ function Edit() {
         const updatedForm = {
           name: data.name || '',
           username: data.username || '',
-          password: data.password || '',
+          password: '',
+          confirmPassword: '',
           email: data.email || '',
           phone_number: data.phone_number || '',
           class_id: data.class_id || '',
@@ -122,6 +125,7 @@ function Edit() {
       submissionData.append('email', form.email || '');
       submissionData.append('phone_number', form.phone_number || '');
       submissionData.append('password', form.password || '');
+      submissionData.append('confirmPassword', form.confirmPassword || '');
       submissionData.append('class_id', form.class_id || null);
       submissionData.append('section_id', form.section_id || null);
       if (form.profile_image) {
@@ -161,6 +165,11 @@ function Edit() {
     }
 
     setForm((prevState) => ({ ...prevState, [name]: newValue }));
+    if (name === 'confirmPassword') {
+      setPasswordMatch(value === form.password);
+    } else if (name === 'password') {
+      setPasswordMatch(value === form.confirmPassword);
+    }
     setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
   };
 
@@ -355,7 +364,7 @@ function Edit() {
                 )}
               </div>
             </div>
-            <div className="col-lg-6 mb-3">
+            <div className="col-lg-12 mb-3">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">Address <span className="text-danger">*</span> </label>
                 <textarea
@@ -373,6 +382,54 @@ function Edit() {
                 )}
               </div>
             </div>
+            <div className="col-lg-6 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">
+                      Password *
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      className="form-control"
+                      value={form.password}
+                      onChange={handleFormChange}
+                      placeholder="Enter new password"
+                    />
+                    {validationErrors.password && (
+                      <span className="text-danger">
+                        {validationErrors.password}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="col-lg-6 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">
+                      Confirm Password *
+                    </label>
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      className={`form-control ${
+                        !passwordMatch && 'border-danger'
+                      }`}
+                      value={form.confirmPassword}
+                      onChange={handleFormChange}
+                      placeholder="Confirm new password"
+                    />
+                    {!passwordMatch && (
+                      <small className="text-danger">
+                        Passwords do not match.
+                      </small>
+                    )}
+                    {validationErrors.confirmPassword && (
+                      <span className="text-danger">
+                        {validationErrors.confirmPassword}
+                      </span>
+                    )}
+                  </div>
+                </div>
           </div>
 
           <div className="row"></div>
