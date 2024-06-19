@@ -152,7 +152,7 @@ export { default as JobCreate } from './Job/Create';
 export { default as JobEdit } from './Job/Edit';
 
 export { default as Fees } from './Fees';
-export { default as FeesCreate } from './Fees/Create';
+// export { default as FeesCreate } from './Fees/Edit';
 export { default as FeesEdit } from './Fees/Edit';
 
 //Quote

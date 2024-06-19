@@ -131,7 +131,7 @@ import {
   ReadableCourseCreate,
   Fees,
   FeesEdit,
-  FeesCreate,
+  // FeesCreate,
   ZoomCall,
   CreateZoomCall,
   EditZoomCall,
@@ -741,8 +741,8 @@ const AdminRoutes = [
 
   // fees routes
   { path: 'fees', element: <Fees title="Fees" /> },
-  { path: 'fees/create', element: <FeesCreate title="Create Fees" /> },
-  { path: 'fees/:feeId/edit', element: <FeesEdit title="Update Fees" /> },
+  // { path: 'fees/create', element: <FeesCreate title="Create Fees" /> },
+  { path: 'fees/edit', element: <FeesEdit title="Update Fees" /> },
   {
     path: 'public-students',
     element: (

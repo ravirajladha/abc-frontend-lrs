@@ -1206,6 +1206,16 @@ export const getAllMiniProjectTasks = async (miniProjectId) => {
 // };
 
 
+export const fetchFeeDetails = async () => {
+  const response = await apiService.fetchData(`/admin/fee`);
+  return response.data;
+};
+
+export const updateFeeDetails = async (data) => {
+  const response = await apiService.postData(`/admin/fees/update`, data);
+  return response.data;
+
+};
 export const createFees = async (data) => {
   const response = await apiService.postData(`/admin/fees/store`, data);
   return response.data;

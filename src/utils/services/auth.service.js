@@ -25,7 +25,7 @@ const login = async (userData) => {
   setUserDataInLocalStorage(response.data.user);
   setStudentDataInLocalStorage(response.data.student_data);
   setUserTypeInLocalStorage(response.data.user_type);
-
+  console.log(response, 'response from auth service');
   return response.data;
 };
 
@@ -35,6 +35,7 @@ const logout = async () => {
     const response = await axiosInstance.post('logout');
     if (response) {
       removeAuthFromLocalStorage();
+      localStorage.removeItem('is_paid');
     }
     return response;
   } catch (error) {
@@ -70,6 +71,29 @@ const resetPassword = async (userData) => {
     throw error;
   }
 }
+// Update payment status
+
+const updatePaymentStatus = async (studentId, data) => {
+  const response = await axiosInstance.post(`/update-payment-status/${studentId}`, data);
+  if (response.status === 200) {
+    // Get the current student data from local storage
+    const studentData = JSON.parse(localStorage.getItem('student_data'));
+
+    // Update the is_paid field
+    studentData.is_paid = true;
+
+    // Save the updated student data back to local storage
+    setStudentDataInLocalStorage(studentData);
+
+    // Also update the separate is_paid item in local storage
+    localStorage.setItem('is_paid', 'true');
+
+    return response.data;
+  } else {
+    throw new Error('Failed to update payment status');
+  }
+};
+
 
 const authService = {
   register,
@@ -77,7 +101,8 @@ const authService = {
   logout,
   verifyEmailAndSendOtp,
   verifyOtp,
-  resetPassword
+  resetPassword,
+  updatePaymentStatus,
 };
 
 export default authService;

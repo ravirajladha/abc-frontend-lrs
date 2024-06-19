@@ -1,18 +1,21 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { updateFee, fetchFeeDetail } from '@/api/admin';
+import { fetchFeeDetails, updateFeeDetails } from '@/api/admin'; // Assuming you have these API functions
 import { ContentHeader } from '@/components/common';
-import { SelectInput } from '@/components/common/form';
-import { fetchClasses } from '@/api/dropdown';
 
-function Edit({ title }) {
-  const { feeId } = useParams();
-  const [formData, setFormData] = useState({ class: '', amount: '' });
+function EditFee({ title }) {
+  const [formData, setFormData] = useState({
+    amount: '',
+    slashAmount: '',
+    totalAmount: '',
+    referralAmount: '',
+    referrerAmount: '',
+    benefits: '',
+    description: ''
+  });
   const [validationErrors, setValidationErrors] = useState({});
-  const [classes, setClasses] = useState([]);
-
   const navigate = useNavigate();
 
   const handleFormChange = (event) => {
@@ -23,25 +26,11 @@ function Edit({ title }) {
     }));
   };
 
-  const fetchData = async () => {
-    try {
-      const response = await fetchFeeDetail(feeId);
-      console.log(response);
-      setFormData({
-        class: response.fee.class_name,
-        amount: response.fee.amount,
-      });
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-    }
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await updateFee(formData, feeId);
-      toast.success('Fees Updated successfully', response);
+      const response = await updateFeeDetails(formData);
+      toast.success('Fee details updated successfully', response);
       navigate('/admin/fees');
     } catch (error) {
       if (error.validationErrors) {
@@ -49,39 +38,37 @@ function Edit({ title }) {
       }
       toast.error(error.message);
     }
-    setFormData({ ...formData, className: '' });
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { fee } = await fetchFeeDetails();
+        console.log("fee data", fee);
+        setFormData({
+          amount: fee.amount,
+          slashAmount: fee.slash_amount,
+          totalAmount: fee.total_amount,
+          referralAmount: fee.referral_amount,
+          referrerAmount: fee.referrer_amount,
+          benefits: fee.benefits,
+          description: fee.description
+        });
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
     fetchData();
   }, []);
+
   return (
     <div className="px-2">
       <ContentHeader title={title} backLink="/admin/fees" />
-
       <div className="row">
         <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
           <div className="card-body p-lg-5 p-4 w-100 border-0 mb-0">
             <form onSubmit={handleSubmit}>
               <div className="row">
-                <div className="col-lg-6 col-md-12 mb-3">
-                  <div className="form-group">
-                    <label className="mont-font fw-600 font-xsss">Class</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="class"
-                      value={formData.class}
-                      placeholder="Enter Class Name"
-                      readOnly
-                    />
-                    {validationErrors.class && (
-                      <span className="text-danger">
-                        {validationErrors.class}
-                      </span>
-                    )}
-                  </div>
-                </div>
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">Amount</label>
@@ -91,11 +78,118 @@ function Edit({ title }) {
                       name="amount"
                       value={formData.amount}
                       onChange={handleFormChange}
-                      placeholder="Enter Class Name"
+                      placeholder="Enter Amount"
                     />
                     {validationErrors.amount && (
                       <span className="text-danger">
                         {validationErrors.amount}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-12 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">Slash Amount</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="slashAmount"
+                      value={formData.slashAmount}
+                      onChange={handleFormChange}
+                      placeholder="Enter Slash Amount"
+                    />
+                    {validationErrors.slashAmount && (
+                      <span className="text-danger">
+                        {validationErrors.slashAmount}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-12 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">Total Amount</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="totalAmount"
+                      value={formData.totalAmount}
+                      onChange={handleFormChange}
+                      placeholder="Enter Total Amount"
+                    />
+                    {validationErrors.totalAmount && (
+                      <span className="text-danger">
+                        {validationErrors.totalAmount}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-12 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">Referral Amount</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="referralAmount"
+                      value={formData.referralAmount}
+                      onChange={handleFormChange}
+                      placeholder="Enter Referral Amount"
+                    />
+                    {validationErrors.referralAmount && (
+                      <span className="text-danger">
+                        {validationErrors.referralAmount}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-12 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">Referrer Amount</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="referrerAmount"
+                      value={formData.referrerAmount}
+                      onChange={handleFormChange}
+                      placeholder="Enter Referrer Amount"
+                    />
+                    {validationErrors.referrerAmount && (
+                      <span className="text-danger">
+                        {validationErrors.referrerAmount}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-12 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">Benefits</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="benefits"
+                      value={formData.benefits}
+                      onChange={handleFormChange}
+                      placeholder="Enter Benefits"
+                    />
+                    {validationErrors.benefits && (
+                      <span className="text-danger">
+                        {validationErrors.benefits}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="col-lg-12 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">Description</label>
+                    <textarea
+                      className="form-control"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleFormChange}
+                      placeholder="Enter Description"
+                    />
+                    {validationErrors.description && (
+                      <span className="text-danger">
+                        {validationErrors.description}
                       </span>
                     )}
                   </div>
@@ -117,4 +211,4 @@ function Edit({ title }) {
   );
 }
 
-export default Edit;
+export default EditFee;
