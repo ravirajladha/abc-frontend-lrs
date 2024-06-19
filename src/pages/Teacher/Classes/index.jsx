@@ -30,7 +30,7 @@ function Classes() {
 
   return (
     <div>
-      <ContentHeader title="All" subtitle="Classes" />
+      <ContentHeader title="All" subtitle="Subjects" />
       <div className="row">
         {loading ? (
           <ContentLoader />
@@ -41,7 +41,7 @@ function Classes() {
               data={item}
               buttons={[
                 {
-                  label: 'Subjects',
+                  label: 'Courses',
                   action: (item) => `/teacher/classes/${item.id}/subjects`,
                   style: ' bg-primary-gradiant',
                 },

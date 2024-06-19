@@ -63,12 +63,12 @@ function Chapters({ title }) {
         title={subjectName}
         subtitle={title}
         backLink={`/teacher/classes/${classId}/subjects`}
-        buttons={[
-          {
-            link: 'create',
-            text: 'New Chapter',
-          },
-        ]}
+        // buttons={[
+        //   {
+        //     link: 'create',
+        //     text: 'New Chapter',
+        //   },
+        // ]}
       />
 
       <div className="row">
@@ -97,7 +97,7 @@ function Chapters({ title }) {
                           <td>{index + 1}</td>
                           <td>{chapter.title}</td>
                           <td className="text-right">
-                            {chapter.lock_status == 0 ? (
+                            {/* {chapter.lock_status == 0 ? (
                               <button
                                 className="btn btn-outline-success btn-icon btn-sm mx-1"
                                 onClick={() =>
@@ -115,7 +115,7 @@ function Chapters({ title }) {
                               >
                                 <i className="feather-unlock"></i> Lock
                               </button>
-                            )}
+                            )} */}
                             <Link
                               to={`/teacher/classes/${classId}/subjects/${subjectId}/chapters/${chapter.id}`}
                               className="btn btn-outline-primary mx-1 btn-icon btn-sm"

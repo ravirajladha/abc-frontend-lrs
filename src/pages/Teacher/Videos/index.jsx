@@ -35,13 +35,13 @@ function Show() {
     <div>
       <ContentHeader
         title="Content"
-        buttons={[
-          {
-            iconClassName: 'feather-edit mr-2',
-            link: 'edit',
-            text: 'Edit',
-          },
-        ]}
+        // buttons={[
+        //   {
+        //     iconClassName: 'feather-edit mr-2',
+        //     link: 'edit',
+        //     text: 'Edit',
+        //   },
+        // ]}
       />
       <>
         {isLoading ? (

@@ -60,22 +60,22 @@ function Dashboard() {
         </div>
       ) : (
         <div className="row mb-4">
-          <Card
+          {/* <Card
             itemIcon="layers"
             itemValue={dashboard?.schools}
             itemLink="/admin/schools"
             itemName="Schools"
-          />
+          /> */}
           <Card
             itemIcon="package"
             itemValue={dashboard?.class}
             itemLink="/admin/classes"
-            itemName="Classes"
+            itemName="Subjects"
           />
           <Card
             itemIcon="command"
             itemValue={dashboard?.subjects}
-            itemName="Subjects"
+            itemName="Courses"
           />
           <Card itemIcon="tv" itemValue={dashboard?.videos} itemName="Videos" />
           <Card

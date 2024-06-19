@@ -42,13 +42,13 @@ function Dashboard() {
         <>
           <div className="row">
             <Card
-              itemName="Classes"
+              itemName="Subjects"
               itemIcon="codepen"
               itemValue={dashboard?.classes}
               itemLink="/teacher/classes"
             />
             <Card
-              itemName="Subjects"
+              itemName="Courses"
               itemIcon="book"
               itemValue={dashboard?.subjects}
             />
@@ -69,7 +69,7 @@ function Dashboard() {
               dashboard.class_subjects.map((item, index) => (
                 <div className="row" key={index}>
                   <Card
-                    itemName="Subject"
+                    itemName="Course"
                     itemIcon="book"
                     itemValue={item.subject_name}
                     itemLink={`/teacher/classes/${item.class_id}/subjects/${item.subject_id}/results`}

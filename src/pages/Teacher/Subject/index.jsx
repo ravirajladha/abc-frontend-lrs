@@ -40,7 +40,7 @@ function Subject() {
 
   return (
     <div>
-      <ContentHeader title={className} subtitle="Subjects" />
+      <ContentHeader title="All" subtitle="Courses" />
       <div className="row">
         {loading ? (
           <ContentLoader />
