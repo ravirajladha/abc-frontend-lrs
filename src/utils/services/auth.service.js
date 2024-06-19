@@ -43,10 +43,41 @@ const logout = async () => {
   }
 };
 
+const verifyEmailAndSendOtp = async (userData) => {
+  try {
+    const response = await axiosInstance.post('verify-email-and-send-otp', userData);
+    return response;
+  } catch (error) {
+    console.error('Error during verify:', error);
+    throw error;
+  }
+}
+const verifyOtp = async (userData) => {
+  try {
+    const response = await axiosInstance.post('verify-otp', userData);
+    return response;
+  } catch (error) {
+    console.error('Error during verify:', error);
+    throw error;
+  }
+}
+const resetPassword = async (userData) => {
+  try {
+    const response = await axiosInstance.post('reset-password', userData);
+    return response;
+  } catch (error) {
+    console.error('Error during reset:', error);
+    throw error;
+  }
+}
+
 const authService = {
   register,
   login,
   logout,
+  verifyEmailAndSendOtp,
+  verifyOtp,
+  resetPassword
 };
 
 export default authService;

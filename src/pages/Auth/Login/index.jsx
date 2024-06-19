@@ -105,7 +105,7 @@ function Login() {
                     <input
                       type="text"
                       className="style2-input pl-5 form-control text-grey-900 font-xssss fw-600"
-                      placeholder="Email Address/User ID"
+                      placeholder="Email Address"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -146,6 +146,12 @@ function Login() {
                         Don&apos;t have account{' '}
                         <Link to="/register" className="fw-700 ml-1">
                           Register
+                        </Link>
+                      </h6>
+
+                      <h6 className="text-primary font-xssss fw-500 mt-0 mb-0 lh-32">
+                        <Link to="/forgot-password" className="fw-700 ml-1">
+                          Forgot Password
                         </Link>
                       </h6>
                     </div>

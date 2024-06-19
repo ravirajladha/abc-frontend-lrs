@@ -9,11 +9,13 @@ import {
   EbookPreview,
   CaseStudyPreview,
   ProjectReportPreview,
+  ForgotPassword,
 } from '@/pages';
 
 const GuestRoutes = [
   // Add guest routes here
   { path: '/login', element: <Login  title="" /> },
+  { path: '/forgot-password', element: <ForgotPassword  title="" /> },
   { path: '/register', element: <Register title=""  /> },
   { path: '/mobile/ebooks/:ebookId/preview/:moduleId?/:sectionId?', element: <EbookPreview title="Show eBook" isAdmin={false} isMobile={true} /> },
 
