@@ -16,7 +16,7 @@ const TeacherRoutes = [
   // Add teacher routes here
   { path: 'dashboard', element: <TeacherDashboard /> },
   { path: 'qna', element: <TeacherQna /> },
-  { path: 'classes', element: <TeacherClasses /> },
+  { path: 'subjects', element: <TeacherClasses /> },
   { path: 'subjects/:classId/results', element: <TeacherClassResults /> },
   { path: 'subjects/:classId/courses', element: <TeacherSubjects /> },
   {

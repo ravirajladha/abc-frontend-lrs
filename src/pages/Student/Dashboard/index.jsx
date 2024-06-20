@@ -7,6 +7,7 @@ import { Highlight } from '@/components/Dashboard';
 import { fetchDashboard } from '@/api/student';
 
 import {
+  CoursesCard,
   QuickAnalyticsCard,
   VideoAnalyticsCard,
   ZoomCallCard,
@@ -68,6 +69,7 @@ function Dashboard() {
             third_term_total_marks={dashboard.third_term_total_marks}
           />
           <VideoAnalyticsCard stats={dashboard.video_stats} />
+          <CoursesCard/>
         </>
       )}
     </div>
