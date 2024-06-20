@@ -42,12 +42,12 @@ function Classes() {
               buttons={[
                 {
                   label: 'Courses',
-                  action: (item) => `/teacher/classes/${item.id}/subjects`,
+                  action: (item) => `/teacher/subjects/${item.id}/courses`,
                   style: ' bg-primary-gradiant',
                 },
                 {
                   label: 'Results',
-                  action: (item) => `/teacher/classes/${item.id}/results`,
+                  action: (item) => `/teacher/subjects/${item.id}/results`,
                   style: ' bg-success ml-2',
                 },
               ]}

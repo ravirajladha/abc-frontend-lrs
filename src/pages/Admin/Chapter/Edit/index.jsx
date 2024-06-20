@@ -85,7 +85,7 @@ function Edit() {
     try {
       const response = await updateChapter(chapterId, submissionData);
       toast.success('Chapter updated successfully', response);
-      navigate(`/admin/classes/${classId}/subjects/${subjectId}/chapters`);
+      navigate(`/admin/subjects/${classId}/courses/${subjectId}/chapters`);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }

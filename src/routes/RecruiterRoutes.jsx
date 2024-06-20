@@ -28,14 +28,14 @@ const RecruiterRoutes = [
   { path: 'dashboard', element: <RecruiterDashboard /> },
   // { path: 'qna', element: <RecruiterQna /> },
   // { path: 'classes', element: <RecruiterClasses /> },
-  // { path: 'classes/:classId/results', element: <RecruiterClassResults /> },
-  // { path: 'classes/:classId/subjects', element: <RecruiterSubjects /> },
+  // { path: 'subjects/:classId/results', element: <RecruiterClassResults /> },
+  // { path: 'subjects/:classId/courses', element: <RecruiterSubjects /> },
   // {
-  //   path: 'classes/:classId/subjects/:subjectId/results',
+  //   path: 'subjects/:classId/courses/:subjectId/results',
   //   element: <RecruiterSubjectResults />,
   // },
   { path: 'settings', element: <RecruiterSettings title="Settings" /> },
-  // { path: 'classes/:classId/results/:studentId/assessment-result', element: <RecruiterAssessmentResult title="Assessment Result" /> },
+  // { path: 'subjects/:classId/results/:studentId/assessment-result', element: <RecruiterAssessmentResult title="Assessment Result" /> },
   
   //Term Tests
   { path: 'tests', element: <JobTest title="All Job Tests" /> },

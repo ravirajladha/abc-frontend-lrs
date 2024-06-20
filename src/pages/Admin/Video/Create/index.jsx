@@ -182,7 +182,7 @@ function CreateContentForm() {
       clearSelectedVideo();
       setIsSubmitting(false);
       navigate(
-        `/admin/classes/${classId}/subjects/${subjectId}/chapters/${chapterId}`
+        `/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapterId}`
       );
     } catch (error) {
       if (error.validationErrors) {

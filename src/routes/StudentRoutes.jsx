@@ -25,25 +25,25 @@ import Editor1 from '@/pages/e_lab/components/Editor1';
 const StudentRoutes = [
   { path: 'dashboard', element: <StudentDashboard /> },
 
-  { path: 'subjects', element: <StudentSubjects /> },
-  { path: 'subjects/:subjectId/results', element: <StudentSubjectResults /> },
+  { path: 'courses', element: <StudentSubjects /> },
+  { path: 'courses/:subjectId/results', element: <StudentSubjectResults /> },
 
-  { path: 'subjects/:subjectId/learn', element: <StudentLearn /> },
+  { path: 'courses/:subjectId/learn', element: <StudentLearn /> },
   {
-    path: 'subjects/:subjectId/learn/:videoId/assessment/:assessmentId',
+    path: 'courses/:subjectId/learn/:videoId/assessment/:assessmentId',
     element: <StudentAssessmentTest />,
   },
   {
-    path: 'subjects/:subjectId/term-test/:testId/results',
+    path: 'courses/:subjectId/term-test/:testId/results',
     element: <StudentTermTestDetails />,
   },
   //test element
   {
-    // path: 'subjects/:subjectId/term-test/:testId',
+    // path: 'courses/:subjectId/term-test/:testId',
     // element: <StudentTermTest />,
   },
   {
-    path: 'subjects/:subjectId/mini-project/:miniProjectId',
+    path: 'courses/:subjectId/mini-project/:miniProjectId',
     element: <StudentMiniProject title="My Mini Projects" />,
   },
   { path: 'internship', element: <StudentInternship /> },
@@ -51,8 +51,8 @@ const StudentRoutes = [
   { path: 'internship/participate/:internshipId', element: <InternshipParticipate  title="My Internship Tasks"/> },
 
 
-  // { path: 'subjects/:subjectId/elab/:eLabId', element: <StudentElab /> },
-  // { path: 'subjects/:subjectId/ebook', element: <StudentElab /> },
+  // { path: 'courses/:subjectId/elab/:eLabId', element: <StudentElab /> },
+  // { path: 'courses/:subjectId/ebook', element: <StudentElab /> },
 
 
 // { path: 'elab/show/:type/:redirecting_id/:type_id/:labId', element: <Editor1 title="Elab" /> },

@@ -69,7 +69,7 @@ function Dashboard() {
           <Card
             itemIcon="package"
             itemValue={dashboard?.class}
-            itemLink="/admin/classes"
+            itemLink="/admin/subjects"
             itemName="Subjects"
           />
           <Card

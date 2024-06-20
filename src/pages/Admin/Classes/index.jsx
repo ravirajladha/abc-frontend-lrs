@@ -23,7 +23,7 @@ console.log("from classes");
     } catch (error) {
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      setLoading(false);    
     }
   };
 
@@ -67,7 +67,7 @@ console.log("from classes");
       <div className="row">
         {loading ? (
           <ContentLoader />
-        ) : classesData !== null && classesData.length > 0 ? (
+        ) : classesData && classesData.length > 0 ? (
           classesData.map((classItem, index) => (
             <ContentItemCard
               key={index}
@@ -75,17 +75,17 @@ console.log("from classes");
               buttons={[
                 {
                   label: 'Courses',
-                  action: (item) => `/admin/classes/${item.id}/subjects`,
+                  action: (item) => `/admin/subjects/${item.id}/courses`,
                   style: ' bg-primary-gradiant',
                 },
                 {
                   label: 'Results',
-                  action: (item) => `/admin/classes/${item.id}/results`,
+                  action: (item) => `/admin/subjects/${item.id}/results`,
                   style: ' bg-success ml-2',
                 },
               ]}
               handleDelete={() => handleDelete(classItem.id)}
-              handleEdit={(item) => `/admin/classes/${item.id}/edit`}
+              handleEdit={(item) => `/admin/subjects/${item.id}/edit`}
             />
           ))
         ) : (

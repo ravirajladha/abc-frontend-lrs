@@ -249,10 +249,10 @@ function Editor1({ title, studentView, isTestCode, isShowCodebase }) {
 
     switch (type) {
       case '1':
-        redirectPath = `/student/subjects/${redirecting_id}/learn`;
+        redirectPath = `/student/courses/${redirecting_id}/learn`;
         break;
       case '2':
-        redirectPath = `/student/subjects/${subjectId}/mini-project/${miniProjectId}`;
+        redirectPath = `/student/courses/${subjectId}/mini-project/${miniProjectId}`;
         break;
       case '3':
         redirectPath = `/student/internship/participate/${internshipId}`; // Define your own redirection path for type 3

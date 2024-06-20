@@ -31,7 +31,7 @@ function Create({ title }) {
       const response = await createClass(formData);
       toast.success('Subject added successfully', response);
       // setLoading(false);
-      navigate('/admin/classes');
+      navigate('/admin/subjects');
   
 
     } catch (error) {
@@ -47,7 +47,7 @@ function Create({ title }) {
 
   return (
     <div className="px-2">
-      <ContentHeader title={title} backLink='/admin/classes' />
+      <ContentHeader title={title} backLink='/admin/subjects' />
 
       <div className="row">
         <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">

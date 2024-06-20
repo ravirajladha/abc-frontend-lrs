@@ -15,7 +15,7 @@ function SubjectCard({ subjects }) {
           <div className="row">
             {subjects?.map((subject) => (
               <Link
-                to={'/student/subjects/' + subject.id + '/learn'}
+                to={'/student/courses/' + subject.id + '/learn'}
                 key={subject.id}
                 className="col-3 border-0"
               >

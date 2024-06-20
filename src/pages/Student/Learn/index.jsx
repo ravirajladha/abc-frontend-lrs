@@ -185,7 +185,7 @@ function Learn() {
     <div className="pb-2">
       <ContentHeader
         title={subject.name ? subject.name : 'Learn'}
-        backLink="/student/subjects"
+        backLink="/student/courses"
       />
       <div className="row">
         <div className="col-xl-8 col-xxl-9">

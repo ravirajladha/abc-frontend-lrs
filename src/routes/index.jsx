@@ -209,7 +209,7 @@ function Index() {
               }
             />
             <Route
-              path="student/subjects/term-test/:token/:testId"  
+              path="student/courses/term-test/:token/:testId"  
               element={
                 <StudentTermTest />
               }

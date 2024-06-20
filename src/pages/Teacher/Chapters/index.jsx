@@ -62,7 +62,7 @@ function Chapters({ title }) {
       <ContentHeader
         title={subjectName}
         subtitle={title}
-        backLink={`/teacher/classes/${classId}/subjects`}
+        backLink={`/teacher/subjects/${classId}/courses`}
         // buttons={[
         //   {
         //     link: 'create',
@@ -117,7 +117,7 @@ function Chapters({ title }) {
                               </button>
                             )} */}
                             <Link
-                              to={`/teacher/classes/${classId}/subjects/${subjectId}/chapters/${chapter.id}`}
+                              to={`/teacher/subjects/${classId}/courses/${subjectId}/chapters/${chapter.id}`}
                               className="btn btn-outline-primary mx-1 btn-icon btn-sm"
                             >
                               <i className="feather-eye"></i>

@@ -69,7 +69,7 @@ function TermTest() {
       if (!data.status) {
         toast.error(data.data.message); // Show error message from the server as a toast
         console.log('navigatesd');
-        navigate('/student/subjects'); // Navigate back
+        navigate('/student/courses'); // Navigate back
         return;
       }
       setSubjectId(data.data.term_test.subject_id);

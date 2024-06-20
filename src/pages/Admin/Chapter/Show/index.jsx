@@ -68,12 +68,12 @@ function Show() {
             text: `Edit Chapter`,
           },
           {
-            link: `/admin/classes/${classId}/subjects/${subjectId}/chapters/${chapterId}/create`,
+            link: `/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapterId}/create`,
             text: 'New Content',
           },
         ]}
         buttonText="Add Contents"
-        backLink={`/admin/classes/${classId}/subjects/${subjectId}/chapters`}
+        backLink={`/admin/subjects/${classId}/courses/${subjectId}/chapters`}
       />
       {loading ? (
         <div className="text-center mt-5 col-12">
