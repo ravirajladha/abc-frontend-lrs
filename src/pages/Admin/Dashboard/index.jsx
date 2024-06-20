@@ -76,6 +76,25 @@ function Dashboard() {
             itemIcon="command"
             itemValue={dashboard?.subjects}
             itemName="Courses"
+        
+          />
+          <Card
+            itemIcon="command"
+            itemValue={dashboard?.subscribed_students}
+            itemName="Subscribed Students"
+             itemLink="/admin/public-students"
+          />
+
+          <Card
+            itemIcon="command"
+            itemValue={dashboard?.unsubscribed_students}
+            itemName="Unsubscribed Students"
+          />
+          <Card
+            itemIcon="command"
+            itemValue={dashboard?.trainers}
+            itemLink="/admin/trainers"
+            itemName="Trainers"
           />
           <Card itemIcon="tv" itemValue={dashboard?.videos} itemName="Videos" />
           <Card

@@ -15,6 +15,7 @@ import { getStudentDataFromLocalStorage } from '@/utils/services';
 
 function Dashboard() {
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
+  console.log("student data from the local storage", studentData);
   const studentId = studentData.student_auth_id;
 
   const [dashboard, setDashboard] = React.useState([]);

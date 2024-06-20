@@ -10,15 +10,18 @@ import {
   RankCard,
   SubjectCard,
   AboutCard,
+  Wallet,
 } from '@/components/student/profile';
 
-import { fetchReportCard } from '@/api/student';
+import { fetchReportCard, fetchWalletDetails } from '@/api/student';
 import { fetchStudentFromStudents } from '@/api/school';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 function Profile({ isAdmin, isStudent }) {
   const { studentId: studentIdFromParams } = useParams();
   const navigate = useNavigate();
   const [reportCard, setReportCard] = useState([]);
+  const [walletData, setWalletData] = useState(null);
+  const [walletLogs, setWalletLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [studentData, setStudentData] = useState(() => {
@@ -45,10 +48,7 @@ function Profile({ isAdmin, isStudent }) {
       return null;
     }
   });
-  // const studentData1 = JSON.parse(getStudentDataFromLocalStorage());
-  // console.log("student data: " + studentData1.student_id)
 
-  console.log('studentidparama', studentData);
 
   // Fetches student basic data for admin
   const fetchStudentData = useCallback(async () => {
@@ -56,7 +56,7 @@ function Profile({ isAdmin, isStudent }) {
       setError(new Error('No student ID provided in URL parameters.'));
       return;
     }
-  
+
     try {
       const data = await fetchStudentFromStudents(studentIdFromParams);
       if (data && data.student) {
@@ -74,24 +74,39 @@ function Profile({ isAdmin, isStudent }) {
   }, [studentIdFromParams]);
 
   const fetchStudentReportCard = useCallback(async () => {
-    // if (!studentData || !studentData.id) return;
     console.log('Fetching student', studentData);
     const studentId = studentData.student_id;
     const classId = studentData.class_id;
     const sectionId = studentData.section_id;
-    console.log('Fetching student full data', studentId, classId, sectionId);
-    // setLoading(true);
     try {
       const data = await fetchReportCard(studentId, classId, sectionId);
       if (data) {
         setReportCard(data.report_card);
-      setLoading(false);
-
+        setLoading(false);
       }
     } catch (error) {
       console.error('Failed to fetch report card:', error);
       setError(true);
       toast.error('Failed to load report card: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [studentData]);
+  const fetchWalletDetailsCard = useCallback(async () => {
+    console.log('Fetching wallet student details', studentData);
+    const studentAuthId = studentData.student_auth_id;
+    try {
+      const data = await fetchWalletDetails(studentAuthId);
+      if (data) {
+        console.log('wallet details', data);
+        setWalletData(data.wallet_details);
+        setWalletLogs(data.wallet_logs);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Failed to fetch wallet details:', error);
+      setError(true);
+      toast.error('Failed to load wallet details: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -121,11 +136,13 @@ function Profile({ isAdmin, isStudent }) {
   useEffect(() => {
     if (studentData && studentData.student_id) {
       const studentId = studentData.student_id;
+      const studentAuthId = studentData.student_auth_id;
       const classId = studentData.class_id;
       const sectionId = studentData.section_id;
       fetchStudentReportCard(studentId, classId, sectionId);
+      fetchWalletDetailsCard(studentAuthId);
     }
-  }, [studentData, fetchStudentReportCard]);
+  }, [studentData, fetchStudentReportCard, fetchWalletDetailsCard]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -157,6 +174,14 @@ function Profile({ isAdmin, isStudent }) {
           </Tab>
           <Tab eventKey="ranks" title="RANKS">
             <RankCard reportData={reportCard} />
+          </Tab>
+          <Tab eventKey="wallet" title="WALLET">
+            <Wallet
+              studentData={studentData}
+              walletLogs={walletLogs}
+              walletData={walletData}
+              loading={loading}
+            />
           </Tab>
         </Tabs>
       </div>

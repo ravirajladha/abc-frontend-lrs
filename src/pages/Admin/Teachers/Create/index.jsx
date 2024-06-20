@@ -99,7 +99,7 @@ function Create() {
 
   return (
     <div className="px-2">
-      <ContentHeader title="Create" subtitle="Teacher" />
+      <ContentHeader title="Create" subtitle="Trainer" />
 
       <ContentCardWrapper>
         <form onSubmit={handleSubmit}>
