@@ -90,6 +90,9 @@ function Index() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    if (name === 'phone_number' && !/^\d*$/.test(value)) {
+      return;
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === 'checkbox' ? checked : value,
@@ -151,6 +154,11 @@ function Index() {
                         value={formData.phone_number}
                         onChange={handleChange}
                         maxLength="10"
+                        onKeyPress={(e) => {
+                          if (!/^\d*$/.test(e.key)) {
+                            e.preventDefault();
+                          }
+                        }}
                       />
                       {validationErrors.phone_number && (
                         <span className="text-danger">

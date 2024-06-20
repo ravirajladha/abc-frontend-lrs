@@ -18535,4 +18535,12 @@ body.theme-dark .page-item .page-link i {
 .strikethrough {
   text-decoration: line-through;
 }
+.custom-modal .modal-dialog {
+  max-width: 80%; /* or any size you prefer */
+}
+
+.custom-modal .modal-body {
+  max-height: 80vh; /* or any size you prefer */
+  overflow-y: auto;
+}
 

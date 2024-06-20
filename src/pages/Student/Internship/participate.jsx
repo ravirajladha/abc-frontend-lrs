@@ -39,7 +39,7 @@ function InternshipParticipate({ title }) {
         setTodoTasks(allTasks.filter((task) => !task.status));
         setInProgressTasks(allTasks.filter((task) => task.status === 1));
         setCompletedTasks(allTasks.filter((task) => task.status === 2));
-
+console.log("todotasks",todoTasks);
         if (response.certificateGenerated) {
           setCertificate(response.certificateGenerated.certificate);
         }
@@ -128,8 +128,8 @@ function InternshipParticipate({ title }) {
                   <option>Sort by latest</option>
                 </select>
               </div>
-              <div className="middle-sidebar-bottom theme-dark-bg">
-                <div className="middle-sidebar-left">
+              <div className="p-5 theme-dark-bg">
+                <div className="">
                   <div className="row">
                     <div className="col-lg-12 pt-0 mb-3 mt-4 d-flex justify-content-between">
                       <h2 className="fw-400 font-lg d-block">
@@ -174,7 +174,7 @@ function InternshipParticipate({ title }) {
                       </div>
                     </div>
 
-                    <div className="col-lg-6 col-xl-4 col-md-6 mb-2 mt-2">
+                    <div className="col-lg-4 col-xl-4 col-md-4 mb-2 mt-2">
                       <div className="card p-0 bg-white rounded-lg shadow-xs border-0">
                         <div className="card-body p-3 border-top-lg border-size-lg border-warning p-0">
                           <h4>
@@ -199,7 +199,7 @@ function InternshipParticipate({ title }) {
                             </p>
 
                             <Link
-                              to={`/student/elab/show/3/${internshipId}&${task.submission_id}/${task.elab_id}`}
+                              to={`/student/elab/show/3/${internshipId}&${task.id}/${task.elab_id}`}
                               // target="_blank"
                               rel="noopener noreferrer"
                             >

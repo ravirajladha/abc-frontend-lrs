@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 
 import { fetchFeeDetails, updateFeeDetails } from '@/api/admin'; // Assuming you have these API functions
 import { ContentHeader } from '@/components/common';
+import { TextEditor } from '@/components/common';
 
 function EditFee({ title }) {
   const [formData, setFormData] = useState({
@@ -25,13 +26,25 @@ function EditFee({ title }) {
       [name]: value,
     }));
   };
+  const handleTextEditorChange = (field, content) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: content,
+    }));
+  };
+
+//   <TextEditor
+//   initialValue={formData.benefits || 'default value'}
+//   onContentChange={(html) => handleInstructionChange('benefits', html)}
+// />
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      console.log("fresh form data", formData);
       const response = await updateFeeDetails(formData);
       toast.success('Fee details updated successfully', response);
-      navigate('/admin/fees');
+      // navigate('/admin/fees');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
@@ -145,14 +158,19 @@ function EditFee({ title }) {
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">Benefits</label>
-                    <input
+                    {/* <input
                       type="text"
                       className="form-control"
                       name="benefits"
                       value={formData.benefits}
                       onChange={handleFormChange}
                       placeholder="Enter Benefits"
+                    /> */}
+                       <TextEditor
+                      initialValue={formData.benefits || 'default value'}
+                      onContentChange={(html) => handleTextEditorChange('benefits', html)}
                     />
+
                     {validationErrors.benefits && (
                       <span className="text-danger">
                         {validationErrors.benefits}
@@ -163,13 +181,18 @@ function EditFee({ title }) {
                 <div className="col-lg-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">Description</label>
-                    <textarea
+                    {/* <textarea
                       className="form-control"
                       name="description"
                       value={formData.description}
                       onChange={handleFormChange}
                       placeholder="Enter Description"
+                    /> */}
+                       <TextEditor
+                      initialValue={formData.description || 'default value'}
+                      onContentChange={(html) => handleTextEditorChange('description', html)}
                     />
+
                     {validationErrors.description && (
                       <span className="text-danger">
                         {validationErrors.description}

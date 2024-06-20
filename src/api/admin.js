@@ -1211,6 +1211,13 @@ export const fetchFeeDetails = async () => {
   return response.data;
 };
 
+export const validateReferralCode = async (data) => {
+  console.log("referal code", data)
+  const response = await apiService.postData('/admin/fee/validate-referral-name', data);
+  return response.data;
+};
+
+
 export const updateFeeDetails = async (data) => {
   const response = await apiService.postData(`/admin/fees/update`, data);
   return response.data;

@@ -4,7 +4,7 @@ import { authService } from '@/utils/services';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 import LogoutButton from '@/components/common/LogoutButton';
 import { toast } from 'react-toastify';
-import { fetchFeeDetails } from '@/api/admin';
+import { fetchFeeDetails,validateReferralCode } from '@/api/admin';
 const PaymentModal = ({
   showModal,
   handleCloseModal,
@@ -12,8 +12,9 @@ const PaymentModal = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [referralCode, setReferralCode] = useState('');
+  const [referralName, setReferralName] = useState('');
   const [feesData, setFeesData] = useState(null);
-
+  const [isReferralValid, setIsReferralValid] = useState(false);
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
   const studentId = studentData.student_id;
   const [validationErrors, setValidationErrors] = useState({});
@@ -30,14 +31,29 @@ const PaymentModal = ({
     fetchData();
   }, []);
 
+  const handleValidateReferral = async () => {
+    try {
+      const response = await validateReferralCode({ referral_code: referralCode });
+      setValidationErrors({ referral_code: '' });
+      setReferralName(`Referral code validated. Referrer: ${response.referrer_name}`);
+      toast.success(`Referral code validated. Referrer: ${response.referrer_name}`);
+      setIsReferralValid(true);
+    } catch (error) {
+      setReferralName('Invalid referral code.');
+      toast.error('Invalid referral code.');
+      setIsReferralValid(false);
+    }
+  };
+
   const handlePayment = async () => {
+
     setLoading(true);
     try {
       // Call the API to update payment status
       const response = await authService.updatePaymentStatus(studentId, {
-        referral_code: referralCode,
-        referral_amount: feesData.referral_amount,
-        referrer_amount: feesData.referrer_amount,
+        referral_code:  referralCode , // Only include if valid
+        referral_amount:  feesData.referral_amount,
+        referrer_amount:  feesData.referrer_amount ,
       });
       setLoading(false);
 
@@ -69,6 +85,8 @@ const PaymentModal = ({
       onHide={() => {}}
       backdrop="static"
       keyboard={false}
+      size="xl" // Use "lg" or "xl" for larger modal
+      dialogClassName="custom-modal"
     >
       <Modal.Header>
         {/* <Modal.Title>Complete Your Payment</Modal.Title> */}
@@ -83,44 +101,67 @@ const PaymentModal = ({
               Please complete the payment to continue using the application.
             </p>
 
-            <div className="mb-3">
+            <div className="mb-1">
               <h4 className="font-xss fw-500 pt-2 text-black">Benefits:</h4>
-              <p className="font-xsss fw-500">{feesData.benefits}</p>
+              <p
+                className="font-xsss fw-500"
+                dangerouslySetInnerHTML={{ __html: feesData.benefits }}
+              ></p>
             </div>
-            <div className="mb-3">
-              <h4 className="font-xss fw-500 pt-2 text-black">Description:</h4>
-              <p className="font-xsss fw-500">{feesData.description}</p>
+            <div className="mb-1">
+              <h4 className="font-xss fw-500 pt-0 text-black">Description:</h4>
+              <p
+                className="font-xsss fw-500"
+                dangerouslySetInnerHTML={{ __html: feesData.description }}
+              ></p>
             </div>
             <Form.Group controlId="formReferralCode" className="mb-3">
               <h4 className="font-xss fw-500 pt-2 text-black">
                 Referral Code:
               </h4>
-              <Form.Control
-                type="text"
-                placeholder="Enter referral code"
-                value={referralCode}
-                onChange={(e) => setReferralCode(e.target.value)}
-              />
+              <div className="d-flex">
+                <Form.Control
+                  type="text"
+                  placeholder="Enter referral code"
+                  value={referralCode}
+                  onChange={(e) => {
+                    setReferralCode(e.target.value);
+                    setIsReferralValid(false); // Reset validation if the code changes
+                  }}
+                  disabled={isReferralValid} // Disable input if validated
+                />
+                {!isReferralValid && (
+                  <Button onClick={handleValidateReferral} className="w-100 btn bg-primary text-white">
+                    Validate
+                  </Button>
+                )}
+              </div>
               {validationErrors.referral_code && (
                 <span className="text-danger">
                   {validationErrors.referral_code}
                 </span>
               )}
+              {referralName && (
+                <span className={`text-${isReferralValid ? 'success' : 'danger'}`}>
+                  {referralName}
+                </span>
+              )}
             </Form.Group>
-            <div className="mb-3">
-              <h4 className="font-xss fw-500 pt-2 text-black">Price:</h4>
-              <p className="text-black font-xss fw-500">
-                <s className="text-muted">{feesData.slash_amount}</s>{' '}
-                {feesData.amount}
-              </p>
-            </div>
+
             <button
               onClick={handlePayment}
               disabled={loading}
               className="w-100 btn bg-success text-white"
             >
               <i className="feather-check-square font-xsss"> </i>
-              {loading ? 'Processing...' : 'Pay Now'}
+              {loading ? (
+                'Processing...'
+              ) : (
+                <>
+                  <s className="text-muted">{feesData.slash_amount}</s>{' '}
+                  {feesData.amount} <u>PAY NOW</u>
+                </>
+              )}
             </button>
           </>
         ) : (
