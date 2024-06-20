@@ -67,7 +67,7 @@ function Edit() {
       }
       const response = await editTeacher(teacherId, submissionData);
       toast.success('Teacher updated successfully', response);
-      navigate('/school/teachers');
+      navigate('/school/trainers');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);

@@ -241,7 +241,7 @@ const AdminRoutes = [
     element: <SchoolShowApplication title="School Applications" />,
   },
   {
-    path: 'schools/:schoolId/teachers',
+    path: 'schools/:schoolId/trainers',
     element: <SchoolShowTeacher title="School Teachers" />,
   },
   {

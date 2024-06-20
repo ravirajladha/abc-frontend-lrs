@@ -18532,4 +18532,7 @@ body.theme-dark .page-item .page-link i {
     padding: 1rem 0 !important;
   }
 }
+.strikethrough {
+  text-decoration: line-through;
+}
 

@@ -61,7 +61,6 @@ function InternshipParticipate({ title }) {
       formData.append('internshipTaskId', taskId);
       formData.append('studentId', studentId);
       formData.append('elabId', elabId);
-
       formData.append('internshipId', internshipId);
       //need to pass subject id later, else the same taask with same user id will be shown completed
       console.log('formdata', formData);

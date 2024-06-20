@@ -20,7 +20,7 @@ function NavTab({ schoolId }) {
         </li>
         <li className="nav-item">
           <NavLink
-            to={`/admin/schools/${schoolId}/teachers`}
+            to={`/admin/schools/${schoolId}/trainers`}
             className="nav-link"
           >
             Teachers

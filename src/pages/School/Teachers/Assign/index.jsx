@@ -96,7 +96,7 @@ function Assign() {
         teacher_data: formData,
       });
       toast.success('Teacher subjects added successfully');
-      navigate('/school/teachers');
+      navigate('/school/trainers');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);

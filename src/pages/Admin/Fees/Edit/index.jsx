@@ -9,7 +9,7 @@ function EditFee({ title }) {
   const [formData, setFormData] = useState({
     amount: '',
     slashAmount: '',
-    totalAmount: '',
+
     referralAmount: '',
     referrerAmount: '',
     benefits: '',
@@ -48,7 +48,7 @@ function EditFee({ title }) {
         setFormData({
           amount: fee.amount,
           slashAmount: fee.slash_amount,
-          totalAmount: fee.total_amount,
+      
           referralAmount: fee.referral_amount,
           referrerAmount: fee.referrer_amount,
           benefits: fee.benefits,
@@ -105,24 +105,7 @@ function EditFee({ title }) {
                     )}
                   </div>
                 </div>
-                <div className="col-lg-6 col-md-12 mb-3">
-                  <div className="form-group">
-                    <label className="mont-font fw-600 font-xsss">Total Amount</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="totalAmount"
-                      value={formData.totalAmount}
-                      onChange={handleFormChange}
-                      placeholder="Enter Total Amount"
-                    />
-                    {validationErrors.totalAmount && (
-                      <span className="text-danger">
-                        {validationErrors.totalAmount}
-                      </span>
-                    )}
-                  </div>
-                </div>
+               
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">Referral Amount</label>

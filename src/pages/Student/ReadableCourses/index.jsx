@@ -17,18 +17,18 @@ function Index() {
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
-  const classId = studentData.class_id;
+  // const classId = studentData.class_id;
 
   const [readableCourses, setreadableCourses] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
-    fetchReadableCourses(classId)
+    fetchReadableCourses()
       .then((data) => {
         if (data) {
           setreadableCourses(data.readableCourses);
-          console.log(data.readableCourses);
+          console.log(data,"readable courses");
         }
         setLoading(false);
       })
@@ -81,17 +81,29 @@ function Index() {
                     </Link>
                   </div>
                   <div className="mb-2">
-                    <Link
+                  <Link
                       to={`/project-reports/${readableCourse.project_report_id}/preview`}
-                      className={`mt-3 d-inline-block fw-700 text-white rounded-lg text-center font-xsssss shadow-xs py-2 px-3 text-uppercase ls-3 lh-4 bg-current mx-1`}
+                      className={`mt-3 d-inline-block fw-700 text-white rounded-lg text-center font-xsssss shadow-xs py-2 px-3 text-uppercase ls-3 lh-4 ${readableCourse.project_report_id ? 'bg-current' : 'bg-dark'} mx-1`}
+                      style={{
+                        pointerEvents: readableCourse.project_report_id ? 'auto' : 'none',
+                        cursor: readableCourse.project_report_id ? 'pointer' : 'not-allowed',
+                      }}
                     >
-                      Project Report
+                      <span className={`${readableCourse.project_report_id ? '' : 'strikethrough'}`}>
+                        Project Report
+                      </span>
                     </Link>
                     <Link
                       to={`/case-studies/${readableCourse?.case_study_id}/preview`}
-                      className={`mt-3 d-inline-block fw-700 text-white rounded-lg text-center font-xsssss shadow-xs py-2 px-3 text-uppercase ls-3 lh-4 bg-current mx-1`}
+                      className={`mt-3 d-inline-block fw-700 text-white rounded-lg text-center font-xsssss shadow-xs py-2 px-3 text-uppercase ls-3 lh-4 ${readableCourse.case_study_id ? 'bg-current' : 'bg-dark'} mx-1`}
+                      style={{
+                        pointerEvents: readableCourse.case_study_id ? 'auto' : 'none',
+                        cursor: readableCourse.case_study_id ? 'pointer' : 'not-allowed',
+                      }}
                     >
-                      Case Study
+                      <span className={`${readableCourse.case_study_id ? '' : 'strikethrough'}`}>
+                        Case Study
+                      </span>
                     </Link>
                   </div>
                 </div>

@@ -124,13 +124,14 @@ function Job(props) {
 
         buttons={[
           {
+            link: 'create',
+            text: 'JOB',
+          },
+          {
             link: 'tests',
             text: 'Tests',
           },
-          {
-            link: 'create',
-            text: 'New Job Post',
-          },
+          
         ]}
       />
 

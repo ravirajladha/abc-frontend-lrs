@@ -27,13 +27,13 @@ const SchoolRoutes = [
   // Add school routes here
   { path: 'dashboard', element: <SchoolDashboard /> },
   // { path: 'teachers', element: <SchoolTeachers /> },
-  // { path: 'teachers/create', element: <CreateTeacher /> },
+  // { path: 'trainers/create', element: <CreateTeacher /> },
   // {
-  //   path: 'teachers/:teacherId/show',
+  //   path: 'trainers/:teacherId/show',
   //   element: <ShowTeacher title="Teacher Details" />,
   // },
-  // { path: 'teachers/:teacherId/edit', element: <EditTeacher /> },
-  // { path: 'teachers/:teacherId/assign', element: <AssignTeacher /> },
+  // { path: 'trainers/:teacherId/edit', element: <EditTeacher /> },
+  // { path: 'trainers/:teacherId/assign', element: <AssignTeacher /> },
   { path: 'students', element: <SchoolStudents /> },
   isAllowed && { path: 'students/create', element: <CreateStudent /> },
 

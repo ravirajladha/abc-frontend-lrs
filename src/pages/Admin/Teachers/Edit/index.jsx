@@ -44,7 +44,7 @@ function Edit() {
         setForm(updatedForm);
       }
     } catch (error) {
-      console.error('Error fetching teacher data:', error);
+      console.error('Error fetching trainer data:', error);
     }
   }, [teacherId]);
 
@@ -102,7 +102,7 @@ function Edit() {
 
   return (
     <div className="px-2">
-      <ContentHeader title="Edit" subtitle="Teacher" />
+      <ContentHeader title="Edit" subtitle="Trainer" />
 
       <ContentCardWrapper>
         <form onSubmit={handleSubmit}>

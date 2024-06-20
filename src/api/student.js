@@ -234,8 +234,9 @@ export const getElabSubmissionByStudent = async (userId,elabId) => {
 };
 
 // fetch all the ebook , case studies, and project reports for student of that class
-export const fetchReadableCourses = async (classId) => {
-  const response = await apiService.fetchData(`student/readable-courses/${classId}`);
+export const fetchReadableCourses = async () => {
+  const response = await apiService.fetchData(`student/readable-courses`);
+  console.log(response.data,"response for readable-courses");
   return response.data;
 }
 //later shift to the student api, currently sending to the admin
@@ -249,15 +250,18 @@ export const getParentDetails = async (studentId) => {
   const response = await apiService.fetchData(`student/parent-details/${studentId}`);
   return response.data;
 }
+
 export const startInternship = async (data) => {
   const response = await apiService.postData(`/admin/internship-task-processes/start-internship`, data);
   return response.data;
 };
+
 export const generateCertificateForInternship = async (data) => {
   const response = await apiService.postData(`/student/internship/generate-certificate`, data);
   console.log("response for certificate", response);
   return response;
 };
+
 export const completeMiniProject = async (data) => {
   const response = await apiService.postData(`/student/mini-project-tasks/complete-status-for-student`, data);
   console.log("response for mini projectg complete", response);

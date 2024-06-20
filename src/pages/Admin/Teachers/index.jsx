@@ -30,11 +30,11 @@ function Teachers() {
     <>
       <ContentHeader
         title="All"
-        subtitle="Teachers"
+        subtitle="Trainers"
         buttons={[
           {
             link: 'create',
-            text: 'New Teacher',
+            text: 'New Trainer',
           },
         ]}
       />
