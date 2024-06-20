@@ -158,63 +158,63 @@ const AdminRoutes = [
   { path: 'dashboard', element: <AdminDashboard title="Dashboard" /> },
 
   // Classes Routes
-  { path: 'classes', element: <Classes title="Subjects" /> },
-  { path: 'classes/create', element: <CreateClass title="Create Subject" /> },
+  { path: 'subjects', element: <Classes title="Subjects" /> },
+  { path: 'subjects/create', element: <CreateClass title="Create Subject" /> },
   {
-    path: 'classes/:classId/edit',
+    path: 'subjects/:classId/edit',
     element: <EditClass title="Edit Subject" />,
   },
   {
-    path: 'classes/:classId/results',
+    path: 'subjects/:classId/results',
     element: <ClassResult title="Show Subject Results" />,
   },
   // Subjects Routes
   {
-    path: 'classes/:classId/subjects',
+    path: 'subjects/:classId/courses',
     element: <Subject title="Courses" />,
   },
   {
-    path: 'classes/:classId/subjects/create',
+    path: 'subjects/:classId/courses/create',
     element: <SubjectCreate title="Courses" />,
   },
   {
-    path: 'classes/:classId/subjects/:subjectId/edit',
+    path: 'subjects/:classId/courses/:subjectId/edit',
     element: <SubjectEdit title="Courses" />,
   },
   {
-    path: 'classes/:classId/subjects/:subjectId/results',
+    path: 'subjects/:classId/courses/:subjectId/results',
     element: <SubjectResult title="Show Course Results" />,
   },
 
   // Chapters Routes
   {
-    path: 'classes/:classId/subjects/:subjectId/chapters',
+    path: 'subjects/:classId/courses/:subjectId/chapters',
     element: <Chapter title="Chapters" />,
   },
   {
-    path: 'classes/:classId/subjects/:subjectId/chapters/create',
+    path: 'subjects/:classId/courses/:subjectId/chapters/create',
     element: <CreateChapter title="Add New Chapter" />,
   },
   {
-    path: 'classes/:classId/subjects/:subjectId/chapters/:chapterId/edit',
+    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId/edit',
     element: <EditChapter title="Edit Chapter Details" />,
   },
   {
-    path: 'classes/:classId/subjects/:subjectId/chapters/:chapterId',
+    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId',
     element: <ShowChapter title="Show Chapter Details" />,
   },
 
   //Contents
   {
-    path: 'classes/:classId/subjects/:subjectId/chapters/:chapterId/create',
+    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId/create',
     element: <VideoCreate title="Create New Content" />,
   },
   {
-    path: 'classes/:classId/subjects/:subjectId/chapters/:chapterId/content/:contentId',
+    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId/content/:contentId',
     element: <VideoDetails title="Show Content" />,
   },
   {
-    path: 'classes/:classId/subjects/:subjectId/chapters/:chapterId/content/:contentId/edit',
+    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId/content/:contentId/edit',
     element: <VideoEdit title="Edit Content" />,
   },
 

@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ContentLoader } from '@/components/common';
-
+const Badge = ({ isPaid }) => {
+  return (
+    <span className={`badge ${isPaid ? 'badge-success' : 'badge-danger'}`}>
+      {isPaid ? 'Yes' : 'No'}
+    </span>
+  );
+};
 const StudentTable = ({ students, loading, toggleModal }) => (
   <div className="row">
     {loading ? (
@@ -25,6 +31,7 @@ const StudentTable = ({ students, loading, toggleModal }) => (
                     <th className="border-0">#</th>
                     <th className="border-0">Name</th>
                     <th className="border-0">Email</th>
+                    <th className="border-0">Subscription</th>
                     <th className="border-0">Number</th>
                     {/* <th className="border-0">Class</th> */}
                     {/* <th className="border-0">Section</th> */}
@@ -37,6 +44,8 @@ const StudentTable = ({ students, loading, toggleModal }) => (
                       <td>{index + 1}</td>
                       <td>{student.name}</td>
                       <td>{student.email}</td>
+                      <td>  <Badge isPaid={student.is_paid} /></td>
+              
                       <td>{student.phone_number}</td>
                       {/* <td>{student?.class_name}</td> */}
                       {/* <td>{student.section_name}</td> */}

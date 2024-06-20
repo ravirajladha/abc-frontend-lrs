@@ -18,10 +18,10 @@ function AppHeader({ toggleNav }) {
         <h1
           style={{ letterSpacing: '2px', fontSize: '25px', fontWeight: '700' , userSelect: 'none' }}
         >
-          &nbsp;ATOMS&nbsp;
+          &nbsp;ABC&nbsp;
         </h1>
       </div>
-
+{/* atoms header */}
       <ul className="d-flex ml-auto right-menu-icon">
         <DarkButton />
         {/* <li>

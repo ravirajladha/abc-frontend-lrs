@@ -17,25 +17,25 @@ const TeacherRoutes = [
   { path: 'dashboard', element: <TeacherDashboard /> },
   { path: 'qna', element: <TeacherQna /> },
   { path: 'classes', element: <TeacherClasses /> },
-  { path: 'classes/:classId/results', element: <TeacherClassResults /> },
-  { path: 'classes/:classId/subjects', element: <TeacherSubjects /> },
+  { path: 'subjects/:classId/results', element: <TeacherClassResults /> },
+  { path: 'subjects/:classId/courses', element: <TeacherSubjects /> },
   {
-    path: 'classes/:classId/subjects/:subjectId/results',
+    path: 'subjects/:classId/courses/:subjectId/results',
     element: <TeacherSubjectResults />,
   },
   { path: 'settings', element: <TeacherSettings title="Settings" /> },
-  { path: 'classes/:classId/results/:studentId/assessment-result', element: <TeacherAssessmentResult title="Assessment Result" /> },
+  { path: 'subjects/:classId/results/:studentId/assessment-result', element: <TeacherAssessmentResult title="Assessment Result" /> },
 
   {
-    path: 'classes/:classId/subjects/:subjectId/chapters',
+    path: 'subjects/:classId/courses/:subjectId/chapters',
     element: <TeacherChapters title='Chapters' />,
   },
   {
-    path: 'classes/:classId/subjects/:subjectId/chapters/:chapterId',
+    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId',
     element: <TeacherShowChapter title="Show Chapter Details" />,
   },
   {
-    path: 'classes/:classId/subjects/:subjectId/chapters/:chapterId/content/:contentId',
+    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId/content/:contentId',
     element: <TeacherVideoDetails title="Show Content" />,
   },
 ];

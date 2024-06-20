@@ -62,7 +62,7 @@ function Show() {
         title="Chapter :"
         subtitle={chapterData?.chapter_name}
         buttonText="Add Contents"
-        backLink={`/teacher/classes/${classId}/subjects/${subjectId}/chapters`}
+        backLink={`/teacher/subjects/${classId}/courses/${subjectId}/chapters`}
       />
       {loading ? (
         <div className="text-center mt-5 col-12">

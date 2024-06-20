@@ -49,7 +49,7 @@ function Edit({ title }) {
     try {
       const response = await updateClass(classId, formData);
       toast.success('Class updated successfully', response);
-      navigate('/admin/classes');
+      navigate('/admin/subjects');
       setFormData({ ...formData, class_name: '' });
     } catch (error) {
       if (error.validationErrors) {
@@ -61,7 +61,7 @@ function Edit({ title }) {
 
   return (
     <div className="px-2">
-      <ContentHeader title={title}  backLink='/admin/classes'/>
+      <ContentHeader title={title}  backLink='/admin/subjects'/>
       {loading ? (
         <div className="my-5">
           <ContentLoader />

@@ -53,13 +53,13 @@ function Subject() {
                 {
                   label: 'Chapters',
                   action: () =>
-                    `/teacher/classes/${classId}/subjects/${item.id}/chapters`,
+                    `/teacher/subjects/${classId}/courses/${item.id}/chapters`,
                   style: ' bg-primary-gradiant',
                 },
                 {
                   label: 'Results',
                   action: (item) =>
-                    `/teacher/classes/${classId}/subjects/${item.id}/results`,
+                    `/teacher/subjects/${classId}/courses/${item.id}/results`,
                   style: ' bg-success ml-2',
                 },
               ]}

@@ -89,19 +89,19 @@ function Subjects({ title }) {
                 {
                   label: 'Chapters',
                   action: () =>
-                    `/admin/classes/${classId}/subjects/${subject.id}/chapters`,
+                    `/admin/subjects/${classId}/courses/${subject.id}/chapters`,
                   style: ' bg-primary-gradiant',
                 },
                 {
                   label: 'Results',
                   action: () =>
-                    `/admin/classes/${classId}/subjects/${subject.id}/results`,
+                    `/admin/subjects/${classId}/courses/${subject.id}/results`,
                   style: ' bg-success ml-2',
                 },
               ]}
               handleDelete={() => handleDelete(subject.id)}
               handleEdit={() =>
-                `/admin/classes/${classId}/subjects/${subject.id}/edit`
+                `/admin/subjects/${classId}/courses/${subject.id}/edit`
               }
             />
           ))

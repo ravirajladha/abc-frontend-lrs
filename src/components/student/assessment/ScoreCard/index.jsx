@@ -58,10 +58,10 @@ function ScoreCard({ result, submitting, retakeAction, subjectId }) {
                   ''
                 )}
                 <Link
-                  to={`/student/subjects/${subjectId}/learn`}
+                  to={`/student/courses/${subjectId}/learn`}
                   className="py-2 px-3 text-uppercase mt-3 d-inline-block text-white fw-700 lh-30 rounded-lg  text-center font-xssss ls-3 bg-current"
                 >
-                  Go To Subject
+                  Go To Course
                 </Link>{' '}
               </>
             )}

@@ -73,7 +73,7 @@ function Edit({ title }) {
       const response = await updateSubject(subjectId, submissionData);
 
       toast.success('Course updated successfully', response);
-      navigate(`/admin/classes/${classId}/subjects`);
+      navigate(`/admin/subjects/${classId}/courses`);
       setFormData({
         subject_name: '',
         subject_image: null,
@@ -118,7 +118,7 @@ function Edit({ title }) {
                     />
                     {validationErrors.subject_name && (
                       <span className="text-danger">
-                        {validationErrors.subject_name}
+                    Course empty or not found
                       </span>
                     )}
                   </div>

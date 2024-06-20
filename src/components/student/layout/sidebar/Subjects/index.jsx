@@ -32,7 +32,7 @@ function Subjects({ subjects }) {
                   {value.per}%
                 </span> */}
                 <Link
-                  to={`/student/subjects/${value.id}/learn`}
+                  to={`/student/courses/${value.id}/learn`}
                   className="position-absolute right-0 mr-3"
                 >
                   <i className="ti-arrow-circle-right text-grey-500 font-xs"></i>

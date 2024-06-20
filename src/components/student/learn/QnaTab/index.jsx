@@ -223,7 +223,7 @@ function QnaTab({
         {!isTeacherAvailable && (
           <>
             <span className="text-center w-100 font-xss text-warning p-3">
-              Chat Unavailable <br /> No teacher assigned
+              Chat Unavailable <br /> No Trainer Assigned
             </span>
           </>
         )}

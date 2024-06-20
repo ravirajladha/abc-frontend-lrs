@@ -206,9 +206,10 @@ function Show({ title, isAdmin, isMobile }) {
                     userSelect: 'none',
                   }}
                 >
-                  &nbsp;ATOMS&nbsp;
+                  &nbsp;ABC&nbsp;
                 </h1>
               </div>
+{/* atoms header */}
 
               <ul className="d-flex ml-auto right-menu-icon">
                 <DarkButton />

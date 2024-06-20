@@ -62,7 +62,7 @@ function Create({ title }) {
       }
       if (response) {
         toast.success('Chapter added successfully', response);
-        navigate(`/admin/classes/${classId}/subjects/${subjectId}/chapters`);
+        navigate(`/admin/subjects/${classId}/courses/${subjectId}/chapters`);
       }
     } catch (error) {
       if (error.validationErrors) {

@@ -62,7 +62,7 @@ function Chapters({ title }) {
       <ContentHeader
         title={subjectName}
         subtitle={title}
-        backLink={`/admin/classes/${classId}/subjects`}
+        backLink={`/admin/subjects/${classId}/courses`}
         buttons={[
           {
             link: 'create',
@@ -98,19 +98,19 @@ function Chapters({ title }) {
                           <td>{chapter.title}</td>
                           <td className="text-right">
                             <Link
-                              to={`/admin/classes/${classId}/subjects/${subjectId}/chapters/${chapter.id}/create`}
+                              to={`/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapter.id}/create`}
                               className="btn btn-outline-info mr-2 btn-icon btn-sm"
                             >
                               <i className="feather-plus"></i>
                             </Link>
                             <Link
-                              to={`/admin/classes/${classId}/subjects/${subjectId}/chapters/${chapter.id}`}
+                              to={`/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapter.id}`}
                               className="btn btn-outline-primary mr-2 btn-icon btn-sm"
                             >
                               <i className="feather-eye"></i>
                             </Link>
                             <Link
-                              to={`/admin/classes/${classId}/subjects/${subjectId}/chapters/${chapter.id}/edit`}
+                              to={`/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapter.id}/edit`}
                               className="btn btn-outline-warning btn-icon mr-2 btn-sm"
                             >
                               <i className="feather-edit"></i>

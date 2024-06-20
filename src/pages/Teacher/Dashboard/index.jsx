@@ -45,7 +45,7 @@ function Dashboard() {
               itemName="Subjects"
               itemIcon="codepen"
               itemValue={dashboard?.classes}
-              itemLink="/teacher/classes"
+              itemLink="/teacher/subjects"
             />
             <Card
               itemName="Courses"
@@ -72,7 +72,7 @@ function Dashboard() {
                     itemName="Course"
                     itemIcon="book"
                     itemValue={item.subject_name}
-                    itemLink={`/teacher/classes/${item.class_id}/subjects/${item.subject_id}/results`}
+                    itemLink={`/teacher/subjects/${item.class_id}/courses/${item.subject_id}/results`}
                   />
                   <Card
                     itemName="Students"

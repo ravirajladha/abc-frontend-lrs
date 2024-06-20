@@ -124,7 +124,7 @@ function Teachers() {
         ) : (
           <div className="text-center mt-5 col-12">
             <div className="alert" role="alert">
-              There are no teachers available at the moment.
+              There are no trainers available at the moment.
             </div>
           </div>
         )}

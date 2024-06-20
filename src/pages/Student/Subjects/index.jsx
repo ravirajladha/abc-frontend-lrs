@@ -101,7 +101,7 @@ function Subjects() {
           </div>
         ) : error ? (
           <ContentError message={error.message} />
-        ) : subjects !== null ? (
+        ) : subjects && subjects.length > 0 ? (
           subjects?.map((subject, index) => (
             <div
               className={`${

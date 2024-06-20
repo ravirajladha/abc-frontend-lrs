@@ -40,10 +40,10 @@ function ScoreCard({ result, submitting, is_job }) {
                   Your score: <span>{result?.score}</span>
                 </h3>
                 <Link
-                  to={is_job ? "/student/jobs" : "/student/subjects"}
+                  to={is_job ? "/student/jobs" : "/student/courses"}
                   className="py-2 px-3 text-uppercase mt-3 d-inline-block text-white fw-700 lh-30 rounded-lg text-center font-xssss ls-3 bg-current"
                 >
-                  Go To {is_job ? "Jobs" : "Subjects"}
+                  Go To {is_job ? "Jobs" : "Courses"}
                 </Link>{' '}
                 {' '}
               </>

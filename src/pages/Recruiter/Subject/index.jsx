@@ -53,7 +53,7 @@ function Subject() {
                 {
                   label: 'Results',
                   action: (item) =>
-                    `/teacher/classes/${classId}/subjects/${item.id}/results`,
+                    `/teacher/subjects/${classId}/courses/${item.id}/results`,
                   style: ' bg-success ml-2',
                 },
               ]}

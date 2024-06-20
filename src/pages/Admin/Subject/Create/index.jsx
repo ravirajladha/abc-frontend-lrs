@@ -66,7 +66,7 @@ function Create({ title }) {
     try {
       const response = await createSubject(submissionData);
       toast.success('Course added successfully', response);
-      navigate(`/admin/classes/${classId}/subjects`);
+      navigate(`/admin/subjects/${classId}/courses`);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -119,7 +119,7 @@ function Create({ title }) {
                     />
                     {validationErrors.subject_name && (
                       <span className="text-danger">
-                        {validationErrors.subject_name}
+                          Course empty or not found
                       </span>
                     )}
                   </div>

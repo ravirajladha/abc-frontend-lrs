@@ -40,13 +40,13 @@ function Classes() {
               data={item}
               buttons={[
                 {
-                  label: 'Subjects',
-                  action: (item) => `/teacher/classes/${item.id}/subjects`,
+                  label: 'Courses',
+                  action: (item) => `/teacher/subjects/${item.id}/courses`,
                   style: ' bg-primary-gradiant',
                 },
                 {
                   label: 'Results',
-                  action: (item) => `/teacher/classes/${item.id}/results`,
+                  action: (item) => `/teacher/subjects/${item.id}/results`,
                   style: ' bg-success ml-2',
                 },
               ]}

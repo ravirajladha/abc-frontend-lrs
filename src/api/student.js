@@ -7,6 +7,18 @@ export const fetchDashboard = async (studentId) => {
   return response.data;
 };
 
+export const fetchWalletDetails  = async (studentAuthId) => {
+  const response = await apiService.fetchData(
+    `/student/wallet-details/${studentAuthId}`
+  );
+  return response.data;
+};
+// export const fetchWalletLogs   = async (studentAuthId) => {
+//   const response = await apiService.fetchData(
+//     `/student/wallets?studentId=${studentAuthId}/logs`
+//   );
+//   return response.data;
+// };
 export const fetchReportCard = async (studentId, classId, sectionId) => {
   const response = await apiService.fetchData(
     `/student/get-report-card?studentId=${studentId}&classId=${classId}&sectionId=${sectionId}`

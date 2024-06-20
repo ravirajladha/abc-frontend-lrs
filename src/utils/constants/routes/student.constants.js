@@ -1,7 +1,7 @@
 const STUDENT_ROUTES = [
   { path: '/student/dashboard', title: 'Home', icon: 'feather-home' },
   // { path: '/student/learn', title: 'Learn', icon: 'feather-book' },
-  { path: '/student/subjects', title: 'Subjects', icon: 'feather-layers' },
+  { path: '/student/courses', title: 'Subjects', icon: 'feather-layers' },
   { path: '/student/forum', title: 'Forum', icon: 'feather-book' },
   {
     path: '/student/internship',

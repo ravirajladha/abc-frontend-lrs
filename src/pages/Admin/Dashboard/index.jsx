@@ -69,13 +69,32 @@ function Dashboard() {
           <Card
             itemIcon="package"
             itemValue={dashboard?.class}
-            itemLink="/admin/classes"
+            itemLink="/admin/subjects"
             itemName="Subjects"
           />
           <Card
             itemIcon="command"
             itemValue={dashboard?.subjects}
             itemName="Courses"
+        
+          />
+          <Card
+            itemIcon="command"
+            itemValue={dashboard?.subscribed_students}
+            itemName="Subscribed Students"
+             itemLink="/admin/public-students"
+          />
+
+          <Card
+            itemIcon="command"
+            itemValue={dashboard?.unsubscribed_students}
+            itemName="Unsubscribed Students"
+          />
+          <Card
+            itemIcon="command"
+            itemValue={dashboard?.trainers}
+            itemLink="/admin/trainers"
+            itemName="Trainers"
           />
           <Card itemIcon="tv" itemValue={dashboard?.videos} itemName="Videos" />
           <Card
