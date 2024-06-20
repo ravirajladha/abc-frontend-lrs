@@ -3,6 +3,7 @@ import { ContentHeader } from '@/components/common';
 import { ChatInterface, ChatUserList } from '@/components/teacher/qna';
 import { fetchStudents, fetchQnA, storeQnA } from '@/api/teacher';
 import { getUserDataFromLocalStorage } from '@/utils/services';
+import { Spinner } from 'react-bootstrap';
 
 function Qna() {
   const userData = JSON.parse(getUserDataFromLocalStorage());
@@ -20,6 +21,8 @@ function Qna() {
   const [formData, setFormData] = useState({ answer: '', student_id: '' });
 
   const [filteredStudents, setFilteredStudents] = useState([]);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const getStudents = useCallback(async () => {
     try {
@@ -82,6 +85,7 @@ function Qna() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitting(true);
     try {
       const lastMessage = messages[messages.length - 1];
       const qnaId = lastMessage.qna_id;
@@ -95,8 +99,10 @@ function Qna() {
       if (response.message) {
         setMessages((prevMessages) => [...prevMessages, response.message]);
       }
+      setIsSubmitting(false);
     } catch (error) {
       console.error('Error submitting answer:', error.message);
+      setIsSubmitting(false);
     }
     setFormData({ ...formData, answer: '' });
   };
@@ -202,9 +208,22 @@ function Qna() {
                     required
                   />
                 </div>
-                <button className="bg-current" type="submit">
-                  <i className="ti-arrow-right text-white"></i>
-                </button>
+                <button
+                    type="submit"
+                    className={`bg-current ${isSubmitting ? 'disabled' : ''}`}
+                  >
+                    {isSubmitting ? (
+                      <Spinner
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        className="mr-2"
+                      />
+                    ) : (
+                      <i className="ti-arrow-right text-white"></i>
+                    )}
+                  </button>
               </form>
             </div>
           )}
