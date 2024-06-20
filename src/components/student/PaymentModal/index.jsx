@@ -4,14 +4,19 @@ import { authService } from '@/utils/services';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 import LogoutButton from '@/components/common/LogoutButton';
 import { toast } from 'react-toastify';
-import { fetchFeeDetails }  from '@/api/admin'
-const PaymentModal = ({ showModal, handleCloseModal, handlePaymentComplete }) => {
+import { fetchFeeDetails } from '@/api/admin';
+const PaymentModal = ({
+  showModal,
+  handleCloseModal,
+  handlePaymentComplete,
+}) => {
   const [loading, setLoading] = useState(false);
   const [referralCode, setReferralCode] = useState('');
   const [feesData, setFeesData] = useState(null);
 
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
   const studentId = studentData.student_id;
+  const [validationErrors, setValidationErrors] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,15 +43,20 @@ const PaymentModal = ({ showModal, handleCloseModal, handlePaymentComplete }) =>
 
       // Show success toast
       if (response.referrer_name) {
-        toast.success(`Successfully subscribed. Amount referred to ${response.referrer_name}`);
+        toast.success(
+          `Successfully subscribed. Amount referred to ${response.referrer_name}`
+        );
       } else {
-        toast.success("Successfully subscribed");
+        toast.success('Successfully subscribed');
       }
 
       // Call the parent function to handle payment completion
       handlePaymentComplete();
-
+      setValidationErrors({});
     } catch (error) {
+      if (error.response.status === 400 && error.response.data.data) {
+        setValidationErrors(error.response.data.data);
+      }
       setLoading(false);
       console.error('Payment failed:', error);
       toast.error('Payment failed. Please try again.');
@@ -54,39 +64,64 @@ const PaymentModal = ({ showModal, handleCloseModal, handlePaymentComplete }) =>
   };
 
   return (
-    <Modal show={showModal} onHide={() => {}} backdrop="static" keyboard={false}>
+    <Modal
+      show={showModal}
+      onHide={() => {}}
+      backdrop="static"
+      keyboard={false}
+    >
       <Modal.Header>
-        <Modal.Title>Complete Your Payment</Modal.Title>
+        {/* <Modal.Title>Complete Your Payment</Modal.Title> */}
+        <h4 className="font-xs fw-700 pt-2">Complete Your Payment</h4>
         <LogoutButton className="ml-auto" />
       </Modal.Header>
       <Modal.Body>
         {feesData ? (
           <>
-            <p>Please complete the payment to continue using the application.</p>
+            <p className="font-xsss fw-500">
+              <i className="feather-info"> </i>
+              Please complete the payment to continue using the application.
+            </p>
+
             <div className="mb-3">
-              <Form.Label>Amount:</Form.Label>
-              <p className="text-danger"><s>{feesData.slash_amount}</s> {feesData.amount}</p>
+              <h4 className="font-xss fw-500 pt-2 text-black">Benefits:</h4>
+              <p className="font-xsss fw-500">{feesData.benefits}</p>
             </div>
             <div className="mb-3">
-              <Form.Label>Benefits:</Form.Label>
-              <p>{feesData.benefits}</p>
-            </div>
-            <div className="mb-3">
-              <Form.Label>Description:</Form.Label>
-              <p>{feesData.description}</p>
+              <h4 className="font-xss fw-500 pt-2 text-black">Description:</h4>
+              <p className="font-xsss fw-500">{feesData.description}</p>
             </div>
             <Form.Group controlId="formReferralCode" className="mb-3">
-              <Form.Label>Referral Code</Form.Label>
+              <h4 className="font-xss fw-500 pt-2 text-black">
+                Referral Code:
+              </h4>
               <Form.Control
                 type="text"
                 placeholder="Enter referral code"
                 value={referralCode}
                 onChange={(e) => setReferralCode(e.target.value)}
               />
+              {validationErrors.referral_code && (
+                <span className="text-danger">
+                  {validationErrors.referral_code}
+                </span>
+              )}
             </Form.Group>
-            <Button variant="primary" onClick={handlePayment} disabled={loading} className="w-100">
+            <div className="mb-3">
+              <h4 className="font-xss fw-500 pt-2 text-black">Price:</h4>
+              <p className="text-black font-xss fw-500">
+                <s className="text-muted">{feesData.slash_amount}</s>{' '}
+                {feesData.amount}
+              </p>
+            </div>
+            <button
+              onClick={handlePayment}
+              disabled={loading}
+              className="w-100 btn bg-success text-white"
+            >
+              <i className="feather-check-square font-xsss"> </i>
               {loading ? 'Processing...' : 'Pay Now'}
-            </Button>
+            </button>
           </>
         ) : (
           <p>Loading fee details...</p>

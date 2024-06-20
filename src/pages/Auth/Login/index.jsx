@@ -145,12 +145,12 @@ function Login() {
                       <h6 className="text-grey-500 font-xssss fw-500 mt-0 mb-0 lh-32">
                         Don&apos;t have account{' '}
                         <Link to="/register" className="fw-700 ml-1">
-                          Register
+                          Register as student
                         </Link>
                       </h6>
 
                       <h6 className="text-primary font-xssss fw-500 mt-0 mb-0 lh-32">
-                        <Link to="/forgot-password" className="fw-700 ml-1">
+                        <Link to="/forgot-password" className="fw-700">
                           Forgot Password
                         </Link>
                       </h6>

@@ -47,6 +47,9 @@ function ContentItemCard({
         {data?.subject_type && data.subject_type == 3 && (
           <h4 className="fw-500 font-xss">{data.super_subject_name}</h4>
         )}
+        {data?.class_name && (
+          <h4 className="fw-500 font-xss">{data.class_name}</h4>
+        )}
         <div className="clearfix"></div>
 
         {buttons && buttons.length > 0 && (

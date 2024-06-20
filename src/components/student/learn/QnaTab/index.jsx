@@ -9,6 +9,7 @@ import DefaultTeacherImage from '@/assets/images/default/teacher.png';
 
 import { formatTimestamp } from '@/utils/helpers';
 import { fetchQnA, storeQnA, searchQuestion } from '@/api/student';
+import { Spinner } from 'react-bootstrap';
 
 function QnaTab({
   subjectId,
@@ -22,6 +23,7 @@ function QnaTab({
   const [chat, setChat] = useState([]);
   const [qnaSearchResult, setQnaSearchResult] = useState([]);
   const [selectedQnaId, setSelectedQnaId] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const inputRef = useRef(null);
   const chatContainerRef = useRef(null);
@@ -78,6 +80,7 @@ function QnaTab({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitting(true);
     try {
       const updatedFormData = {
         ...formData,
@@ -87,6 +90,7 @@ function QnaTab({
       console.log(updatedFormData);
       const response = await storeQnA(updatedFormData);
       getMessages();
+      setIsSubmitting(false);
       // setChat((prevChat) => ({
       //   ...prevChat,
       //   merged_messages: {
@@ -96,6 +100,7 @@ function QnaTab({
       // }));
     } catch (error) {
       console.error(error.message);
+      setIsSubmitting(false);
     }
     setFormData({ ...formData, question: '' });
   };
@@ -111,7 +116,7 @@ function QnaTab({
         setLoading(false);
       }
     }
-    if(!teacherId){
+    if (!teacherId) {
       setLoading(false);
     }
   }, [isTabActive, studentId, teacherId, subjectId]);
@@ -190,8 +195,21 @@ function QnaTab({
                       onChange={(e) => searchLive(e.target.value)}
                     />
                   </div>
-                  <button type="submit" className="bg-current">
-                    <i className="ti-arrow-right text-white"></i>
+                  <button
+                    type="submit"
+                    className={`bg-current ${isSubmitting ? 'disabled' : ''}`}
+                  >
+                    {isSubmitting ? (
+                      <Spinner
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        className="mr-2"
+                      />
+                    ) : (
+                      <i className="ti-arrow-right text-white"></i>
+                    )}
                   </button>
                 </form>
               </>
