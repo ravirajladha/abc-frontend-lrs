@@ -186,43 +186,51 @@ function AssessmentQuestionBank({ title }) {
                     </thead>
                     <tbody>
                       {questions && questions?.length > 0 ? (
-                        questions.map((question, index) => (
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>
-                              <strong>{question.text}</strong>
-                            </td>
-                            <td>{question.class}</td>
-                            <td>{question.subject}</td>
-                            <td className="text-right">
-                              <Link
-                                to="#"
-                                onClick={() => handleShowModal(question)}
-                                className="btn btn-outline-warning btn-icon btn-sm mr-2"
-                              >
-                                <i className="feather-eye"></i>
-                              </Link>
-                              <Link
-                                to={`${question.id}/edit`}
-                                className="btn btn-outline-primary btn-icon btn-sm mr-2"
-                              >
-                                <i className="feather-edit"></i>
-                              </Link>
-                              <Link
-                                to="#"
-                                className="btn btn-outline-danger btn-icon btn-sm"
-                                onClick={() => handleDelete(question.id)}
-                              >
-                                <i className="feather-trash"></i>
-                              </Link>
-                            </td>
-                          </tr>
-                        ))
+                        questions.map((question, index) => {
+                          let truncatedQuestion = question.text;
+                          if (truncatedQuestion.split(' ').length > 20) {
+                            truncatedQuestion =
+                              truncatedQuestion.split(' ', 20).join(' ') +
+                              '...';
+                          }
+                          return (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>
+                                <strong>{truncatedQuestion}</strong>
+                              </td>
+                              <td>{question.class}</td>
+                              <td>{question.subject}</td>
+                              <td className="text-right">
+                                <Link
+                                  to="#"
+                                  onClick={() => handleShowModal(question)}
+                                  className="btn btn-outline-warning btn-icon btn-sm mr-2"
+                                >
+                                  <i className="feather-eye"></i>
+                                </Link>
+                                <Link
+                                  to={`${question.id}/edit`}
+                                  className="btn btn-outline-primary btn-icon btn-sm mr-2"
+                                >
+                                  <i className="feather-edit"></i>
+                                </Link>
+                                <Link
+                                  to="#"
+                                  className="btn btn-outline-danger btn-icon btn-sm"
+                                  onClick={() => handleDelete(question.id)}
+                                >
+                                  <i className="feather-trash"></i>
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })
                       ) : (
                         <tr>
                           <td colSpan="4" className="text-center">
-                            There are no assessment questions
-                            available at the moment.
+                            There are no assessment questions available at the
+                            moment.
                           </td>
                         </tr>
                       )}
