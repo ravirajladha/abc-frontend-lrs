@@ -815,7 +815,7 @@ const AdminRoutes = [
   },
   {
     path: 'forums/:forumId/answers',
-    element: <ForumQuestionAnswers title="Forum Questions" />,
+    element: <ForumQuestionAnswers title="Forum Answers" />,
   },
 ];
 

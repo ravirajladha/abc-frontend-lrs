@@ -1,93 +1,124 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ContentHeader } from '@/components/common';
+import {
+  ContentFallback,
+  ContentHeader,
+  ContentLoader,
+} from '@/components/common';
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { fetchTransactions } from '@/api/admin';
+import { formatDateTime } from '@/utils/helpers';
 
 function Payment({ title }) {
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetchTransactions();
+      setTransactions(response.transactions);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
       <ContentHeader
         title="Payments"
-        buttons={[
-          {
-            link: `create`,
-            text: 'New Payment',
-          },
-        ]}
+        // buttons={[
+        //   {
+        //     link: `create`,
+        //     text: 'New Payment',
+        //   },
+        // ]}
       />
-      <div className="row">
-        <div className="col-lg-12">
-          <div className="card border-0 mt-0 rounded-lg shadow-sm">
-            <div className="card-body d-flex pt-4 px-4 pb-0">
-              <h4 className="font-xss text-grey-800 mt-3 fw-700">{title}</h4>
-              <select className="form-select ml-auto float-right border-0 font-xssss fw-600 text-grey-700 bg-transparent">
-                <option>Sort by latest</option>
-              </select>
-            </div>
-            <div className="card-body p-4">
-              <div className="table-responsive">
-                <table className="table table-admin mb-0 ">
-                  <thead className="bg-greylight rounded-10 ">
-                    <tr>
-                      <th className="border-0" scope="col">
-                        #
-                      </th>
-                      <th className="border-0" scope="col">
-                        Name
-                      </th>
-                      <th className="border-0" scope="col">
-                        Class
-                      </th>
-                      <th className="border-0" scope="col">
-                        Section
-                      </th>
-                      <th className="border-0" scope="col">
-                        Amount
-                      </th>
-                      <th className="border-0" scope="col">
-                        Date
-                      </th>
-                      <th className="border-0" scope="col">
-                        School Name
-                      </th>
-                      {/* <th scope="col" className="text-right border-0 pl-1" width="20%">
-                        Action
-                      </th> */}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td>
-                        <strong>Name</strong>
-                      </td>
-                      <td>Class 6</td>
-                      <td>A</td>
-                      <td>9999</td>
-                      <td>29/3/2024</td>
-                      <td>Agasthya Vidyanikethan</td>
-                      {/* <td className="text-right">
-                        <Link
-                          to="1/edit"
-                          className="btn btn-outline-primary btn-icon btn-sm mr-2"
-                        >
-                          <i className="feather-edit"></i>
-                        </Link>
-                        <Link
-                          to="#"
-                          className="btn btn-outline-danger btn-icon btn-sm"
-                        >
-                          <i className="feather-trash"></i>
-                        </Link>
-                      </td> */}
-                    </tr>
-                  </tbody>
-                </table>
+      {loading ? (
+        <ContentLoader />
+      ) : (
+        transactions &&
+        (transactions.length > 0 ? (
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="card border-0 mt-0 rounded-lg shadow-sm">
+                <div className="card-body d-flex pt-4 px-4 pb-0">
+                  <h4 className="font-xss text-grey-800 mt-3 fw-700">
+                    {title}
+                  </h4>
+                  <select className="form-select ml-auto float-right border-0 font-xssss fw-600 text-grey-700 bg-transparent">
+                    <option>Sort by latest</option>
+                  </select>
+                </div>
+                <div className="card-body p-4">
+                  <div className="table-responsive">
+                    <table className="table table-admin mb-0 ">
+                      <thead className="bg-greylight rounded-10 ">
+                        <tr>
+                          <th className="border-0" scope="col">
+                            #
+                          </th>
+                          <th className="border-0" scope="col">
+                            Name
+                          </th>
+                          <th className="border-0" scope="col">
+                            Phone Number
+                          </th>
+                          <th className="border-0" scope="col">
+                            Email
+                          </th>
+                          <th className="border-0" scope="col">
+                            Transaction Id
+                          </th>
+                          <th className="border-0" scope="col">
+                            Amount
+                          </th>
+                          <th className="border-0" scope="col">
+                            Status
+                          </th>
+                          <th className="border-0" scope="col">
+                            IP Address
+                          </th>
+                          <th className="border-0" scope="col">
+                            Date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {transactions.map((item, index) => (
+                          <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>
+                              <strong>{item.student_name}</strong>
+                            </td>
+                            <td>
+                              <strong>{item.phone_number}</strong>
+                            </td>
+                            <td>
+                              <strong>{item.email}</strong>
+                            </td>
+                            <td>{item.transaction_id}</td>
+                            <td>{item.amount}</td>
+                            <td className='text-success'>{item.status}</td>
+                            <td>{item.ip_address}</td>
+                            <td>{formatDateTime(item.created_at)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        ) : (
+          <ContentFallback />
+        ))
+      )}
     </>
   );
 }

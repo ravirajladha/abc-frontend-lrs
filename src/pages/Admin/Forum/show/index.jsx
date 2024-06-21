@@ -54,7 +54,7 @@ function Show() {
   if (error) return <div>Error: {error.message}</div>;
   return (
     <div>
-      <ContentHeader title={`Forum`} />
+      <ContentHeader title={`Forum`} subtitle={'Answers'}/>
       <ContentCardWrapper>
         {forum && !loading ? (
           <>
