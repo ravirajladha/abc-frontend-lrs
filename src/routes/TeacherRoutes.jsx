@@ -1,4 +1,5 @@
 import {
+  AssessmentsShow,
   TeacherAssessmentResult,
   TeacherChapters,
   TeacherClassResults,
@@ -37,6 +38,10 @@ const TeacherRoutes = [
   {
     path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId/content/:contentId',
     element: <TeacherVideoDetails title="Show Content" />,
+  },
+  {
+    path: 'assessments/:assessmentId',
+    element: <AssessmentsShow title="Show Content" />,
   },
 ];
 

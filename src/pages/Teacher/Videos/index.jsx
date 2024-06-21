@@ -87,7 +87,7 @@ function Show() {
                       Assessment: {video?.assessment_title}{' '}
                       {video?.assessment_id && (
                         <Link
-                          to={`/admin/assessments/${video.assessment_id}`}
+                          to={`/teacher/assessments/${video.assessment_id}`}
                           className=" btn-icon btn-sm mr-2"
                         >
                           <i className="feather-eye"></i>

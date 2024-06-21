@@ -34,6 +34,7 @@ const ADMIN_ROUTES = [
   { path: '/admin/elabs', title: 'eLab', icon: 'feather-code' },
   { path: '/admin/ebooks', title: 'eBook', icon: 'feather-book' },
   { path: '/admin/fees', title: 'Fees', icon: 'feather-dollar-sign' },
+  { path: '/admin/forums', title: 'Forums', icon: 'feather-book' },
   { path: '/admin/internships', title: 'Internship', icon: 'feather-file-plus' },
   { path: '/admin/jobs', title: 'Jobs', icon: 'feather-briefcase' },
   { path: '/admin/mini-projects', title: 'Mini Projects', icon: 'feather-shopping-bag' },
