@@ -8,8 +8,12 @@ const JobInstructionsModal = ({ showModal, handleCloseModal, currentJob, handleS
       show={showModal}
       onRequestClose={handleCloseModal}
       contentLabel="Job Instructions"
-      className="modal-content-lg"
+      className="modal-content-xl"
       overlayClassName="modal-overlay"
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      scrollable
     >
       <div className="modal-header">
         <h3 className="modal-title">Job Instructions</h3>
