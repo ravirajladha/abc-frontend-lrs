@@ -11,7 +11,7 @@ import { ContentHeader, ContentLoader } from '@/components/common';
 import { TestQuestionShowModal } from '@/components/admin/term-test';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
 
-function TermTestQuestionBank({ title ,isAdmin}) {
+function TermTestQuestionBank({ title, isAdmin }) {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -133,9 +133,9 @@ function TermTestQuestionBank({ title ,isAdmin}) {
                           Question
                         </th>
                         <th className="border-0" scope="col" width="10%">
-                      Subject
+                          Subject
                         </th>
-                       
+
                         <th
                           scope="col"
                           className="text-right border-0 pl-1"
@@ -147,38 +147,46 @@ function TermTestQuestionBank({ title ,isAdmin}) {
                     </thead>
                     <tbody>
                       {questions && questions?.length > 0 ? (
-                        questions.map((question, index) => (
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>
-                              <strong>{question.question}</strong>
-                            </td>
-                            <td>{question.class}</td>
-                          
-                            <td className="text-right">
-                              <Link
-                                to="#"
-                                onClick={() => handleShowModal(question)}
-                                className="btn btn-outline-warning btn-icon btn-sm mr-2"
-                              >
-                                <i className="feather-eye"></i>
-                              </Link>
-                              <Link
-                                to={`${question.id}/edit`}
-                                className="btn btn-outline-primary btn-icon btn-sm mr-2"
-                              >
-                                <i className="feather-edit"></i>
-                              </Link>
-                              <Link
-                                to="#"
-                                className="btn btn-outline-danger btn-icon btn-sm"
-                                onClick={() => handleDelete(question.id)}
-                              >
-                                <i className="feather-trash"></i>
-                              </Link>
-                            </td>
-                          </tr>
-                        ))
+                        questions.map((question, index) => {
+                          let truncatedQuestion = question.question;
+                          if (truncatedQuestion.split(' ').length > 20) {
+                            truncatedQuestion =
+                              truncatedQuestion.split(' ', 20).join(' ') +
+                              '...';
+                          }
+                          return (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>
+                                <strong>{truncatedQuestion}</strong>
+                              </td>
+                              <td>{question.class}</td>
+
+                              <td className="text-right">
+                                <Link
+                                  to="#"
+                                  onClick={() => handleShowModal(question)}
+                                  className="btn btn-outline-warning btn-icon btn-sm mr-2"
+                                >
+                                  <i className="feather-eye"></i>
+                                </Link>
+                                <Link
+                                  to={`${question.id}/edit`}
+                                  className="btn btn-outline-primary btn-icon btn-sm mr-2"
+                                >
+                                  <i className="feather-edit"></i>
+                                </Link>
+                                <Link
+                                  to="#"
+                                  className="btn btn-outline-danger btn-icon btn-sm"
+                                  onClick={() => handleDelete(question.id)}
+                                >
+                                  <i className="feather-trash"></i>
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })
                       ) : (
                         <tr>
                           <td colSpan="4" className="text-center">
