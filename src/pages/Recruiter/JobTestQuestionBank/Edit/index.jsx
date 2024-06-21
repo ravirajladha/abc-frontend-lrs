@@ -91,7 +91,7 @@ function Edit({ title ,isAdmin}) {
       if (isAdmin) {
         navigate('/admin/jobs/tests/question-bank');
       } else {
-        navigate('/recruiter/tests/question-bank');
+        navigate('/recruiter/jobs/tests/question-bank');
       }
     } catch (error) {
       if (error.validationErrors) {

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { fetchFeeDetails, updateFeeDetails } from '@/api/admin'; // Assuming you have these API functions
 import { ContentHeader } from '@/components/common';
-import { TextEditor } from '@/components/common';
+import { TextEditor} from '@/components/common';
 
 function EditFee({ title }) {
   const [formData, setFormData] = useState({
@@ -44,7 +44,7 @@ function EditFee({ title }) {
       console.log("fresh form data", formData);
       const response = await updateFeeDetails(formData);
       toast.success('Fee details updated successfully', response);
-      // navigate('/admin/fees');
+      navigate('/admin/fees');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
@@ -121,7 +121,10 @@ function EditFee({ title }) {
                
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
-                    <label className="mont-font fw-600 font-xsss">Referral Amount</label>
+                    <label className="mont-font fw-600 font-xsss">Referral Amount (New User Incentive)
+                    {/* <Tooltip id="referralAmountTooltip" message="Referral Amount is the amount credited to the user who referred you." /> */}
+                    {/* <Tooltip {...props}>Go Back</Tooltip> */}
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -139,7 +142,7 @@ function EditFee({ title }) {
                 </div>
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
-                    <label className="mont-font fw-600 font-xsss">Referrer Amount</label>
+                    <label className="mont-font fw-600 font-xsss">Referrer Amount (Exisiting User Incentive)</label>
                     <input
                       type="text"
                       className="form-control"
@@ -155,7 +158,7 @@ function EditFee({ title }) {
                     )}
                   </div>
                 </div>
-                <div className="col-lg-6 col-md-12 mb-3">
+                <div className="col-lg-12 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">Benefits</label>
                     {/* <input

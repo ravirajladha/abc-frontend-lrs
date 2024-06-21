@@ -76,15 +76,18 @@ function Show() {
                     </span>
                   </div>
                   <div className="d-flex align-items-center justify-content-center flex-wrap w-100">
-                    <span className="badge badge-pill badge-danger px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3">
-                      Description: {testData?.description}
-                    </span>
-                  </div>
-                  <div className="d-flex align-items-center justify-content-center flex-wrap w-100">
-                    <p className="badge badge-pill badge-danger px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3">
-                      Instruction: {testData?.instruction}
-                    </p>
-                  </div>
+      <span className="badge badge-pill badge-danger px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3 text-wrap">
+        Description: {testData?.description}
+      </span>
+    </div>
+    <div className="d-flex align-items-center justify-content-center flex-wrap w-100">
+     
+
+      <p
+                className="badge badge-pill badge-danger px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3 text-wrap"
+                dangerouslySetInnerHTML={{ __html: testData.instruction }}
+              ></p>
+    </div>
                 </div>
               </div>
             </div>

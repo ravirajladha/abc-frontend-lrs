@@ -62,9 +62,9 @@ function Show(props) {
                         <th className="border-0" scope="col">
                           Name
                         </th>
-                        <th className="border-0" scope="col">
-                          Class
-                        </th>
+                        {/* <th className="border-0" scope="col">
+                          Subject
+                        </th> */}
                         <th className="border-0" scope="col">
                           Status
                         </th>
@@ -88,7 +88,7 @@ function Show(props) {
                             <td>
                               <strong>{application?.student_name}</strong>
                             </td>
-                            <td>{application?.class_name}</td>
+                            {/* <td>{application?.class_name}</td> */}
                             <td>
                               {application?.is_pass ? (
                                 <span className="badge badge-success">

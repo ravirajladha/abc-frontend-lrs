@@ -16,7 +16,7 @@ function Jobs() {
   console.log(studentData);
   const studentId = studentData.student_auth_id;
   const schoolId = studentData.school_id;
-  const classId = studentData.class_id;
+  // const classId = studentData.class_id;
   const navigate = useNavigate();
 
   const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -85,8 +85,8 @@ function Jobs() {
     setLoading1(true);
     const data = {
       studentId, // Assuming this is available from context or state
-      schoolId,
-      classId, // Assuming this is available from context or state
+      // schoolId,
+      // classId, 
       jobId,
       testId,
     };
@@ -100,6 +100,7 @@ function Jobs() {
       } else {
         response = await submitJobApplication(data);
       }
+
       console.log(response, 'response');
       console.log(response.status, 'response status');
       if (response.status === 200) {
@@ -137,17 +138,14 @@ function Jobs() {
           jobs.map((job, index) => (
             <div className="col-xl-4 col-lg-6 col-md-6" key={index}>
               <div className="card mb-4 d-block w-100 shadow-xss rounded-lg p-xxl-5 p-4 border-0 text-center">
-                <a
-                  href="#"
-                  className="btn-round-xxxl rounded-lg bg-lightblue ml-auto mr-auto"
-                >
+              <figure className="avatar position-relative w-110 z-index-1 w100 z-index-1 mr-auto ml-auto">
                   <img
                     src={baseUrl + job.image}
                     alt="image"
-                    className="p-1"
+                  className="p-3 bg-greylight rounded-lg w-100"
                     style={{ maxWidth: '100%', height: 'auto' }}
                   />
-                </a>
+                </figure>
 
                 <h4 className="fw-700 font-xs my-3">{job.title}</h4>
                 <span className="font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 alert-success d-inline-block text-dark mb-1 mr-1">
@@ -196,67 +194,7 @@ function Jobs() {
         handleStartTestFromModal={handleStartTestFromModal}
       />
 
-        {/* <div
-          className={`modal ${showModal ? 'show' : ''}`}
-          onClick={handleCloseModal}
-        >
-          <div
-            className="modal-content-lg"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="modal-header">
-              <h3 className="modal-title">Job Instructions </h3>{' '}
-              <span className="modal-title text-sm mt-0 ml-4">
-                (Read Carefully before starting the test)
-              </span>
-              <button
-                type="button"
-                className="close"
-                onClick={handleCloseModal}
-              >
-                <span>&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              {currentJob?.instruction && (
-                <>
-                  <h5>Job Instructions</h5>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: currentJob.instruction,
-                    }}
-                    style={{ listStyleType: 'disc', paddingLeft: '20px' }}
-                  />
-                </>
-              )}
-
-              {currentJob?.test_instruction && (
-                <>
-                  <h5>Test Instructions</h5>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: currentJob.test_instruction,
-                    }}
-                    style={{ listStyleType: 'disc', paddingLeft: '20px' }}
-                  />
-                </>
-              )}
-            </div>
-
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn text-white bg-success"
-                onClick={() =>
-                  handleStartTestFromModal(currentJob.id, currentJob.test_id)
-                }
-              >
-                {currentJob.test_id ? 'Start Test' : 'Apply for Job'}
-            
-              </button>
-            </div>
-          </div>
-        </div> */}
+       
       </div>
     </div>
   );
