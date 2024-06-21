@@ -90,16 +90,16 @@ const PaymentModal = ({
     >
       <Modal.Header>
         {/* <Modal.Title>Complete Your Payment</Modal.Title> */}
-        <h4 className="font-xs fw-700 pt-2">Complete Your Payment</h4>
+        <h4 className="font-xs fw-700 pt-2 text-primary">Complete Your Payment</h4>
         <LogoutButton className="ml-auto" />
       </Modal.Header>
       <Modal.Body>
         {feesData ? (
           <>
-            <p className="font-xsss fw-500">
+            {/* <p className="font-xsss fw-500">
               <i className="feather-info"> </i>
               Please complete the payment to continue using the application.
-            </p>
+            </p> */}
 
             <div className="mb-1">
               <h4 className="font-xss fw-500 pt-2 text-black">Benefits:</h4>
@@ -147,22 +147,30 @@ const PaymentModal = ({
                 </span>
               )}
             </Form.Group>
+            <div className="d-flex align-items-center">
+  <h4 className="font-xss fw-500 pt-2 text-black mb-0 w-50">
+    <s className="text-muted me-2">Rs. {feesData.slash_amount}</s>
+    {' '} Rs. 
+    {feesData.amount}
+  </h4>
+  <div className="w-50 d-flex justify-content-end">
+    <button
+      onClick={handlePayment}
+      disabled={loading}
+      className="btn bg-success text-white ms-3"
+      style={{ whiteSpace: 'nowrap' }}
+    >
+      <i className="feather-check-square font-xsss me-2"></i>
+      {loading ? (
+        'Processing...'
+      ) : (
+        <u>PAY NOW</u>
+      )}
+    </button>
+  </div>
+</div>
 
-            <button
-              onClick={handlePayment}
-              disabled={loading}
-              className="w-100 btn bg-success text-white"
-            >
-              <i className="feather-check-square font-xsss"> </i>
-              {loading ? (
-                'Processing...'
-              ) : (
-                <>
-                  <s className="text-muted">{feesData.slash_amount}</s>{' '}
-                  {feesData.amount} <u>PAY NOW</u>
-                </>
-              )}
-            </button>
+
           </>
         ) : (
           <p>Loading fee details...</p>

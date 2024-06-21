@@ -33,9 +33,10 @@ function TermTestQuestionBank({ title, isAdmin }) {
     fetchClassDropdownData();
   }, [fetchClassDropdownData]);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setSelectedClass(value);
-  };
+  // const handleClassChange = ({ target: { value } }) => {
+  //   setSelectedClass(value);
+  
+  // };
 
   const handleShowModal = (question) => {
     setSelectedQuestion(question);
@@ -95,7 +96,7 @@ function TermTestQuestionBank({ title, isAdmin }) {
             text: 'New Question',
           },
         ]}
-        backLink={isAdmin ? '/admin/jobs/tests' : '/recruiter/tests'}
+        backLink={isAdmin ? '/admin/jobs/tests' : '/recruiter/jobs/tests'}
       />
       {loading ? (
         <div className="text-center mt-5 col-12">
@@ -108,7 +109,7 @@ function TermTestQuestionBank({ title, isAdmin }) {
               <div className="card-body d-flex align-items-center justify-content-between pt-4 px-4 pb-0">
                 <h4 className="font-xss text-grey-800 mt-3 fw-700">{title}</h4>
                 <div className="d-flex g-4">
-                  <ContentSelectFilter
+                  {/* <ContentSelectFilter
                     options={classes}
                     name="selectedClass"
                     label="name"
@@ -116,7 +117,8 @@ function TermTestQuestionBank({ title, isAdmin }) {
                     onChange={handleClassChange}
                     defaultText="All Subjects"
                     className="float-right filter mr-2"
-                  />
+                  /> */}
+                  
                 </div>
               </div>
               <div className="card-body p-4">

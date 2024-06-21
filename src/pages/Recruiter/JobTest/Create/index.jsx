@@ -165,7 +165,7 @@ function Create({ title ,isAdmin}) {
       if (isAdmin) {
         navigate('/admin/jobs/tests');
       } else {
-        navigate('/recruiter/tests');
+        navigate('/recruiter/jobs/tests');
       }
       setFormData({
         selectedClass: '',

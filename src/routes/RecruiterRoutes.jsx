@@ -38,18 +38,22 @@ const RecruiterRoutes = [
   // { path: 'subjects/:classId/results/:studentId/assessment-result', element: <RecruiterAssessmentResult title="Assessment Result" /> },
   
   //Term Tests
-  { path: 'tests', element: <JobTest title="All Job Tests" /> },
+  { path: 'jobs/tests', element: <JobTest title="All Job Tests"  isAdmin={false}
+    isRecruiter={true}/> },
   {
-    path: 'tests/create',
-    element: <JobTestCreate title="Create New Job Tests" />,
+    path: 'jobs/tests/create',
+    element: <JobTestCreate title="Create New Job Tests" isAdmin={false}
+    isRecruiter={true} />,
   },
   {
-    path: 'tests/:testId/edit',
-    element: <JobTestEdit title="Edit Job Tests" />,
+    path: 'jobs/tests/:testId/edit',
+    element: <JobTestEdit title="Edit Job Tests" isAdmin={false}
+    isRecruiter={true} />,
   },
   {
-    path: 'tests/:testId',
-    element: <JobTestShow title="Show Job Test Details" />,
+    path: 'jobs/tests/:testId',
+    element: <JobTestShow title="Show Job Test Details" isAdmin={false}
+    isRecruiter={true} />,
   },
   // {
   //   path: 'tests/:testId/results',
@@ -58,20 +62,24 @@ const RecruiterRoutes = [
 
   //Term Test Question
   {
-    path: 'tests/question-bank',
-    element: <JobTestQuestionBank title="Job Test Questions" />,
+    path: 'jobs/tests/question-bank',
+    element: <JobTestQuestionBank title="Job Test Questions"  isAdmin={false}
+    isRecruiter={true} />,
   },
   {
-    path: 'tests/question-bank/create',
-    element: <JobTestQuestionCreate title="Create Job Test Question" />,
+    path: 'jobs/tests/question-bank/create',
+    element: <JobTestQuestionCreate title="Create Job Test Question"  isAdmin={false}
+    isRecruiter={true} />,
   },
   {
-    path: 'tests/question-bank/:questionId/edit',
-    element: <JobTestQuestionEdit title="Edit Job Test Question" />,
+    path: 'jobs/tests/question-bank/:questionId/edit',
+    element: <JobTestQuestionEdit title="Edit Job Test Question" isAdmin={false}
+    isRecruiter={true}  />,
   },
   {
-    path: 'tests/question-bank/:questionId',
-    element: <JobTestQuestionShow title="Show Job Test Question" />,
+    path: 'jobs/tests/question-bank/:questionId',
+    element: <JobTestQuestionShow title="Show Job Test Question" isAdmin={false}
+    isRecruiter={true} />,
   },
   { path: 'jobs', element: <Job title="Jobs List" isAdmin={false} isRecruiter={true}/> },
   {

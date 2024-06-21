@@ -205,7 +205,7 @@ console.log( typeof(data.class_id), "data clas_id");
       if (isAdmin) {
         navigate('/admin/jobs/tests');
       } else {
-        navigate('/recruiter/tests');
+        navigate('/recruiter/jobs/tests');
       }
       setFormData({
         selectedClass: '',

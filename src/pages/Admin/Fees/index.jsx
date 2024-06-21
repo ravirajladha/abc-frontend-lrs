@@ -75,16 +75,22 @@ const Index = ({ title }) => {
                       <p>{feesData.referrer_amount}</p>
                     </div>
                   </div>
-                  <div className="col-lg-6 col-md-12 mb-3">
+                  <div className="col-lg-12 col-md-12 mb-3">
                     <div className="form-group">
                       <label className="mont-font fw-600 font-xsss">Benefits</label>
-                      <p>{feesData.benefits}</p>
+                      <p
+                className="font-xsss fw-500"
+                dangerouslySetInnerHTML={{ __html: feesData.benefits }}
+              ></p>
                     </div>
                   </div>
                   <div className="col-lg-12 mb-3">
                     <div className="form-group">
                       <label className="mont-font fw-600 font-xsss">Description</label>
-                      <p>{feesData.description}</p>
+                      <p
+                className="font-xsss fw-500"
+                dangerouslySetInnerHTML={{ __html: feesData.description }}
+              ></p>
                     </div>
                   </div>
                 </div>
