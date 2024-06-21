@@ -175,3 +175,7 @@ export { default as EditZoomCall } from './ZoomCall/Edit';
 export { default as DinacharyaLogsTable } from './DinacharyaLogs/Components/StudentTable';
 // export { default as StudentCard } from './Students/Components/StudentCard';
 export { default as DinacharyaModal } from './DinacharyaLogs/Components/CustomModal';
+
+
+export { default as ForumQuestions } from './Forum';
+export { default as ForumQuestionAnswers } from './Forum/show';

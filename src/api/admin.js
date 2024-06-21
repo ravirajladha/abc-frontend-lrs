@@ -1365,3 +1365,17 @@ export const sendDinacharyaMessages = async () => {
   const response = await apiService.fetchData(`/admin/send-dinacharya-messages`);
   return response.data;
 };
+
+export const fetchForumQuestions = async () => {
+  const response = await apiService.fetchData(`/admin/forums/questions`);
+  return response.data;
+};
+export const fetchForumQuestionDetails = async (forumId) => {
+  const response = await apiService.fetchData(`/admin/forums/questions/${forumId}/answers`);
+  return response.data;
+};
+
+export const fetchTransactions = async (forumId) => {
+  const response = await apiService.fetchData(`/admin/transactions`);
+  return response.data;
+};

@@ -19,7 +19,7 @@ import StudentRoutes from '@/routes/StudentRoutes';
 import ParentRoutes from '@/routes/ParentRoutes';
 import RecruiterRoutes from '@/routes/RecruiterRoutes';
 
-import { NotFound ,StudentTermTest,StudentJobTest} from '@/pages';
+import { NotFound, StudentTermTest, StudentJobTest } from '@/pages';
 import {
   SchoolApplicationPrint,
   SchoolOldApplicationPrint,
@@ -111,15 +111,27 @@ function Index() {
             )}
             {/* Teacher Routes */}
             {authenticatedUserType === USER_TYPES.TEACHER && (
-              <Route path="/teacher" element={<TeacherLayout />}>
-                {TeacherRoutes.map((route, index) => (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={route.element}
-                  />
-                ))}
-              </Route>
+              <>
+                <Route path="/teacher" element={<TeacherLayout />}>
+                  {TeacherRoutes.map((route, index) => (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      element={route.element}
+                    />
+                  ))}
+                </Route>
+                <Route
+                  path="ebooks/:ebookId/preview/:moduleId?/:sectionId?"
+                  element={
+                    <EbookShow
+                      title="Show eBook"
+                      isAdmin={false}
+                      isMobile={false}
+                    />
+                  }
+                />
+              </>
             )}
             {/* Student Routes */}
             {authenticatedUserType === USER_TYPES.STUDENT && (
@@ -145,7 +157,7 @@ function Index() {
                 ))}
               </Route>
             )}
-         
+
             {/* Recruiter Routes */}
             {authenticatedUserType === USER_TYPES.RECRUITER && (
               <Route path="/recruiter" element={<RecruiterLayout />}>
@@ -188,7 +200,7 @@ function Index() {
                 />
               }
             />
-             <Route
+            <Route
               path="project-reports/:projectReportId/preview"
               element={
                 <ProjectReportShow
@@ -209,16 +221,12 @@ function Index() {
               }
             />
             <Route
-              path="student/courses/term-test/:token/:testId"  
-              element={
-                <StudentTermTest />
-              }
+              path="student/courses/term-test/:token/:testId"
+              element={<StudentTermTest />}
             />
             <Route
-              path="student/jobs/job-test/:token/:jobId"  
-              element={
-                <StudentJobTest />
-              }
+              path="student/jobs/job-test/:token/:jobId"
+              element={<StudentJobTest />}
             />
           </>
         )}

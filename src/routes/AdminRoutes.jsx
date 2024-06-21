@@ -138,6 +138,8 @@ import {
   Students,
   StudentsShow,
   DinacharyaLogs,
+  ForumQuestions,
+  ForumQuestionAnswers,
 } from '@/pages/Admin';
 import {
   JobTest,
@@ -805,6 +807,15 @@ const AdminRoutes = [
         title="Student Profile Students"
       />
     ),
+  },
+
+  {
+    path: 'forums',
+    element: <ForumQuestions title="Forum Questions" />,
+  },
+  {
+    path: 'forums/:forumId/answers',
+    element: <ForumQuestionAnswers title="Forum Answers" />,
   },
 ];
 
