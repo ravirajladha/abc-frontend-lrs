@@ -102,7 +102,7 @@ function Create() {
       <ContentHeader title="Create" subtitle="Teacher" />
 
       <ContentCardWrapper>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             <div className="col-lg-6 mb-3">
               <div className="form-group">

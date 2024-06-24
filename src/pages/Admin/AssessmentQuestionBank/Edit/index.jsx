@@ -165,7 +165,7 @@ function Edit({ title }) {
             <ContentLoader />
           </div>
         ) : (
-          <form className="contact_form" onSubmit={handleSubmit}>
+          <form className="contact_form" onSubmit={handleSubmit} autoComplete="off">
             <div className="row">
               <div className="col-lg-6 mb-2">
                 <div className="form-group">

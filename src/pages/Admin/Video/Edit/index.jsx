@@ -315,6 +315,7 @@ function EditContentForm() {
           id="createForm"
           onSubmit={handleSubmit}
           className={isSubmitting ? 'blurred-form' : ''}
+          autoComplete="off"
         >
           {!isLoading ? (
             <div className="row">

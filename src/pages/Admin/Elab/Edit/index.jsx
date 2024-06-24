@@ -242,7 +242,7 @@ function Edit({ title }) {
                 <ContentLoader />
               </div>
             ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             {/* Select Class */}
             <div className="col-6">

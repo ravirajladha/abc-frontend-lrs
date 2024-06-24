@@ -226,6 +226,7 @@ function CreateContentForm() {
           id="createForm"
           onSubmit={handleSubmit}
           className={isSubmitting ? 'blurred-form' : ''}
+          autoComplete="off"
         >
           <div className="row">
             <div className="col-lg-6 mb-2">

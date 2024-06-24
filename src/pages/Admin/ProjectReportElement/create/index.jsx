@@ -102,7 +102,7 @@ function Create() {
           ]}
         />
         <ContentFormWrapper formTitle="New Elements">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} autoComplete="off">
             <div className="row">
               <div className="col-lg-4 mb-2">
                 <div className="form-group">

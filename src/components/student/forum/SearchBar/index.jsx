@@ -35,7 +35,7 @@ function SearchBar() {
 
   return (
     <div className="card border-0 bg-white shadow-xs p-0 mb-4 rounded-lg">
-      <form onSubmit={handleSearchSubmit}>
+      <form onSubmit={handleSearchSubmit} autoComplete="off">
         <div className="row mx-1">
           <div className="col-lg-10">
             <div className="form-group icon-input mb-0 search-box">
@@ -50,6 +50,7 @@ function SearchBar() {
                 value={searchQuery}
                 onChange={handleSearchInput}
                 ref={searchInputRef}
+                autoComplete="searchQuery"
               />
             </div>
           </div>

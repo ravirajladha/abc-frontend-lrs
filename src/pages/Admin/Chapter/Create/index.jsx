@@ -78,7 +78,7 @@ function Create({ title }) {
     <div className="px-2">
       <ContentHeader title={title} />
       <ContentCardWrapper>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           {chapters.map((chapter, index) => (
             <div
               className="row align-items-center justify-content-center"

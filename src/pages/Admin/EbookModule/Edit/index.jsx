@@ -60,7 +60,7 @@ function Edit() {
     <>
       <ContentHeader title="Edit Module" />
       <ContentFormWrapper formTitle="Edit EBook Module">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
             <div className="row" >
               <div className="col-lg-6 mb-2">
                 <label className="mont-font fw-600 font-xsss">

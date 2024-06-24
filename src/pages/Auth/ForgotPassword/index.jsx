@@ -129,7 +129,7 @@ function ForgotPassword() {
                   Reset Password
                 </h2>
                 {step === 1 && (
-                  <form onSubmit={handleVerifyEmail}>
+                  <form onSubmit={handleVerifyEmail} autoComplete="off">
                     <div className="form-group icon-input mb-3">
                       <i className="font-sm ti-email text-grey-500 pr-0"></i>
                       <input
@@ -178,7 +178,7 @@ function ForgotPassword() {
                 )}
 
                 {step === 2 && (
-                  <form onSubmit={handleVerifyOtp}>
+                  <form onSubmit={handleVerifyOtp} autoComplete="off">
                     <h4 className='font-xsss text-grey-500'><i className='feather-check-square text-success rounded-lg p-1'></i> {verifySuccessMessage}</h4>
                     <div className="form-group icon-input mb-3">
                       <i className="font-sm ti-mobile text-grey-500 pr-0"></i>
@@ -222,7 +222,7 @@ function ForgotPassword() {
                 )}
 
                 {step === 3 && (
-                  <form onSubmit={handleResetPassword}>
+                  <form onSubmit={handleResetPassword} autoComplete="off">
                     <div className="form-group icon-input mb-3">
                       <i className="font-sm ti-lock text-grey-500 pr-0"></i>
                       <input

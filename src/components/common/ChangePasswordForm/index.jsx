@@ -21,7 +21,7 @@ function ChangePasswordForm({
             </h2>
           </div>
           <div className="card-body p-lg-5 p-4 w-100 border-0 ">
-            <form action="#" onSubmit={onUpdateClick}>
+            <form action="#" onSubmit={onUpdateClick} autoComplete="off">
               <div className="row">
                 <div className="col-lg-6 mb-3">
                   <div className="form-group">
@@ -30,6 +30,7 @@ function ChangePasswordForm({
                       type="text"
                       className="form-control"
                       defaultValue={userData['name']}
+                    
                       disabled
                     />
                   </div>
@@ -56,6 +57,7 @@ function ChangePasswordForm({
                       className="form-control"
                       value={formData.password}
                       onChange={onInputChange}
+                      autoComplete="password"
                       placeholder="Enter new password"
                     />
                     {validationErrors.password && (
@@ -79,6 +81,7 @@ function ChangePasswordForm({
                       }`}
                       value={formData.confirmPassword}
                       onChange={onInputChange}
+                      autoComplete="confirm-password"
                       placeholder="Confirm new password"
                     />
                     {!passwordMatch && (

@@ -167,7 +167,7 @@ function Edit() {
       <div>
         <ContentHeader title="Edit Elements" />
         <ContentFormWrapper formTitle="Edit Elements">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} autoComplete="off">
             <div className="row">
               <div className="col-lg-4 mb-2">
                 <div className="form-group">

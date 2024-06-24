@@ -89,7 +89,7 @@ function Create() {
         <ContentLoader />
       ) : (
       <ContentFormWrapper formTitle="Edit Zoom call">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             <div className="col-lg-6 col-md-12 mb-3">
               <div className="form-group">

@@ -93,7 +93,7 @@ function Create() {
     <div>
       <ContentHeader title="Create Mini Project Task" />
       <ContentFormWrapper formTitle="New Mini Project">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             <div className="col-lg-6 mb-2">
               <div className="form-group">

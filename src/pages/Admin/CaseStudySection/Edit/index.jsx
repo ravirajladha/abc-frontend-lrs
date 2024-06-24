@@ -60,7 +60,7 @@ function Edit() {
     <>
       <ContentHeader title="Edit Section" />
       <ContentFormWrapper formTitle="Edit Case Study Report Section">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
             <div className="row" >
               <div className="col-lg-6 mb-2">
                 <label className="mont-font fw-600 font-xsss">

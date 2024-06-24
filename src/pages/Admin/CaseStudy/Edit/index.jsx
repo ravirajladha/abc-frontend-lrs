@@ -154,7 +154,7 @@ function Edit() {
         <ContentLoader />
       ) : (
         <ContentFormWrapper formTitle="Update Case Study">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} autoComplete="off">
             <div className="row">
               <div className="col-lg-6 mb-2">
                 <div className="form-group">

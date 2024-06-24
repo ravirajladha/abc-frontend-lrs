@@ -237,6 +237,7 @@ function Create(props) {
           id="editForm"
           onSubmit={handleSubmit}
           className={isSubmitting ? 'blurred-form' : ''}
+          autoComplete="off"
         >
           {!isLoading ? (
             <div className="row">

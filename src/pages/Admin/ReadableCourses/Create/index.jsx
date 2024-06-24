@@ -149,7 +149,7 @@ function Create() {
     <div>
       <ContentHeader title="Create Readable Courses" />
       <ContentFormWrapper formTitle="New Readable Courses">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             <div className="col-lg-6 mb-2">
               <div className="form-group">

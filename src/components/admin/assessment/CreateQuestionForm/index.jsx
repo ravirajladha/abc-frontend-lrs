@@ -12,7 +12,7 @@ function CreateQuestionForm({
   handleAction,
 }) {
   return (
-    <form onSubmit={handleAction}>
+    <form onSubmit={handleAction}  autoComplete="off">
       <div className="row">
         <div className="col-lg-6 mb-2">
           <div className="form-group">

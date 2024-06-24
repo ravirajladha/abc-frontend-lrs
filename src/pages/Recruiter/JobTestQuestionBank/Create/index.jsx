@@ -118,7 +118,7 @@ function Create({ title,isAdmin }) {
     <div>
       <ContentHeader title={title} />
       <ContentFormWrapper formTitle="Job Test Question">
-        <form className="contact_form" onSubmit={handleSubmit}>
+        <form className="contact_form" onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             <div className="col-lg-12 mb-2">
               <div className="form-group">

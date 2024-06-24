@@ -125,7 +125,7 @@ function Create() {
     <div>
       <ContentHeader title="Create Internship" />
       <ContentFormWrapper formTitle="New Internship">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             <div className="col-lg-6 mb-2">
               <div className="form-group">

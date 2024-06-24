@@ -74,7 +74,7 @@ function CreateQuote({ title }) {
       <div className="row">
         <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
           <div className="card-body p-lg-5 p-4 w-100 border-0 mb-0">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
               <div className="row">
                 <div className="col-lg-12 mb-3">
                   <div className="form-group">
@@ -115,7 +115,7 @@ function CreateQuote({ title }) {
         </div>
         <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
           <div className="card-body p-lg-5 p-4 w-100 border-0 mb-0">
-            <form onSubmit={handleCsvUpload}>
+            <form onSubmit={handleCsvUpload} >
               <div className="row">
                 <div className="col-lg-12 mb-3">
                   <div className="form-group">

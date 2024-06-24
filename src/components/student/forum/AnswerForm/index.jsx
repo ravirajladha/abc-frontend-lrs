@@ -16,7 +16,7 @@ function AnswerForm({
             </h4>
           </div>
           <div className="card-body p-lg-5 p-4 w-100 border-0 ">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
               <div className="row">
                 <div className="col-lg-12">
                   <textarea
@@ -26,6 +26,7 @@ function AnswerForm({
                     style={{ resize: 'none' }}
                     value={answer}
                     onChange={handleInputChange}
+                    autoComplete="answer"
                   ></textarea>
                   {validationErrors.answer && (
                     <span className="text-danger">

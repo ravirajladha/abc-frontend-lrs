@@ -64,7 +64,7 @@ function Create() {
     <>
     <ContentHeader title="Add Sections" />
     <ContentFormWrapper formTitle="EBook Section">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete="off">
         {sectionTitles.map((title, index) => (
           <div className="row" key={index}>
             <div className="col-lg-6 mb-2">

@@ -181,7 +181,7 @@ function QnaTab({
               <>
                 <form
                   className="chat-form position-absolute bottom-0 w-100 left-0 bg-white z-index-1 p-3 shadow-xs theme-dark-bg  d-flex align-items-center"
-                  onSubmit={handleSubmit}
+                  onSubmit={handleSubmit} autoComplete="off"
                 >
                   <div className="form-group">
                     <input

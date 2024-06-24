@@ -132,7 +132,7 @@ function Qna() {
       <div className="row">
         {/* Left Chat List */}
         <div className="col-lg-6 col-xl-4 col-md-6 chat-left scroll-bar border-right-light pl-4 pr-4">
-          <form action="#" className="mt-0 pl-3 pt-3">
+          <form action="#" className="mt-0 pl-3 pt-3" autoComplete="off">
             <div className="search-form">
               <i className="ti-search font-xs"></i>
               <input
@@ -189,7 +189,7 @@ function Qna() {
               className="chat-bottom dark-bg p-3 shadow-none"
               style={{ width: '98%' }}
             >
-              <form className="chat-form" onSubmit={handleSubmit}>
+              <form className="chat-form" onSubmit={handleSubmit} autoComplete="off">
                 <div className="form-group">
                   <input
                     type="text"

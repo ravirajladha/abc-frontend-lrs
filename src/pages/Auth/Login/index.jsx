@@ -99,7 +99,7 @@ function Login() {
                   Login into <br />
                   your account
                 </h2>
-                <form onSubmit={handleLogin}>
+                <form onSubmit={handleLogin}  autoComplete="off">
                   <div className="form-group icon-input mb-3">
                     <i className="font-sm ti-email text-grey-500 pr-0"></i>
                     <input
@@ -107,7 +107,9 @@ function Login() {
                       className="style2-input pl-5 form-control text-grey-900 font-xssss fw-600"
                       placeholder="Email Address"
                       value={email}
+                      label={12131}
                       onChange={(e) => setEmail(e.target.value)}
+                     autoComplete="new-email"
                     />
                   </div>
                   <div className="form-group icon-input mb-1">
@@ -117,6 +119,7 @@ function Login() {
                       placeholder="Password"
                       name="password"
                       value={password}
+                   autoComplete="new-password"
                       onChange={(e) => setPassword(e.target.value)}
                     />
                     <i className="font-sm ti-lock text-grey-500 pr-0"></i>

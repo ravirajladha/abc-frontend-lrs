@@ -14,7 +14,7 @@ function EditAssessmentForm({
   handleAction,
 }) {
   return (
-    <form onSubmit={handleAction}>
+    <form onSubmit={handleAction } autoComplete="off">
       {loading ? (
         <ContentLoader />
       ) : (

@@ -67,7 +67,7 @@ function Create() {
     <>
       <ContentHeader title="Add Modules" />
       <ContentFormWrapper formTitle="EBook Modules">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           {moduleTitles.map((title, index) => (
             <div className="row" key={index}>
               <div className="col-lg-6 mb-2">

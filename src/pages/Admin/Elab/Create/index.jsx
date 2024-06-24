@@ -157,7 +157,7 @@ function Create({ title }) {
     <div>
       <ContentHeader title={title} />
       <ContentFormWrapper formTitle="New eLab">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             {/* Select Subject */}
             <div className="col-6">

@@ -241,6 +241,7 @@ console.log( typeof(data.class_id), "data clas_id");
               name="contact_form"
               action="#"
               onSubmit={nextForm}
+              autoComplete="off"
             >
               <div className="row">
                 <div className="col-lg-6">

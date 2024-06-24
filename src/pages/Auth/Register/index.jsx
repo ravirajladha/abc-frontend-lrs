@@ -126,7 +126,7 @@ function Index() {
                   Create <br />
                   your account
                 </h2>
-                <form onSubmit={handleRegister}>
+                <form onSubmit={handleRegister} autoComplete="off">
                   <div className="form-group icon-input mb-3">
                     <i className="font-sm ti-user text-grey-500 pr-0"></i>
                     <input
