@@ -25,3 +25,4 @@ export { default as StudentSettings } from './Settings';
 export { default as StudentReadableCourses } from './ReadableCourses';
 
 export { default as StudentZoomCall } from './ZoomCall';
+export { default as PaymentStudent } from './PaymentStudent';

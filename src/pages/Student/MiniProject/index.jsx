@@ -36,9 +36,12 @@ function MiniProject({ title }) {
         setTodoTasks(allTasks.filter((task) => !task.status));
         setInProgressTasks(allTasks.filter((task) => task.status === 1));
         setCompletedTasks(allTasks.filter((task) => task.status === 2));
-        setLoading(false);
+   
       } catch (error) {
         console.error('Error fetching mini project data:', error);
+        toast.error('Error fetching mini project data.');
+    
+      }finally{
         setLoading(false);
       }
     };
@@ -250,34 +253,33 @@ function MiniProject({ title }) {
             </div>
           </div>
         </div>
-      )}
+ )}
 
-      {!studentStatus && (
-        <button
-          onClick={() => handleGenerateCertificate(miniProjectId, studentId)}
-          className="mt-1 btn bg-success float-right text-center text-white font-xsss fw-600 p-3 w175 mt-5 rounded-lg d-inline-block border-0"
-        >
-          Click To Complete
-        </button>
-      )}
+ {!loading && !studentStatus && (
+   <button
+     onClick={() => handleGenerateCertificate(miniProjectId, studentId)}
+     className="mt-1 btn bg-success float-right text-center text-white font-xsss fw-600 p-3 w175 mt-5 rounded-lg d-inline-block border-0"
+   >
+     Click To Complete
+   </button>
+ )}
 
-      {studentStatus && (
-        <div className="text-center mt-5">
-          <h3 className="bg-success text-white">Mini Project Completed</h3>
-        </div>
-      )}
+ {!loading && studentStatus && (
+   <div className="text-center mt-5">
+     <h3 className="bg-success text-white">Mini Project Completed</h3>
+   </div>
+ )}
 
-      {todoTasks.length === 0 &&
-        inProgressTasks.length === 0 &&
-        completedTasks.length === 0 && (
-          <div className="text-center mt-5">
-            <h3>No tasks found in this Mini Project</h3>
-          </div>
-        )}
-
-      {/* old start */}
-    </>
-  );
+ {!loading &&
+   todoTasks.length === 0 &&
+   inProgressTasks.length === 0 &&
+   completedTasks.length === 0 && (
+     <div className="text-center mt-5">
+       <h3>No tasks found in this Mini Project</h3>
+     </div>
+   )}
+</>
+);
 }
 
 MiniProject.propTypes = {

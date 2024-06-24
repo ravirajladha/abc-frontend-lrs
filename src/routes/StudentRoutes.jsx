@@ -17,6 +17,7 @@ import {
   StudentTermTestDetails,
   InternshipParticipate,
   StudentZoomCall,
+  PaymentStudent,
   
 // Home
 } from '@/pages';
@@ -69,6 +70,7 @@ const StudentRoutes = [
   { path: 'readable-courses', element: <StudentReadableCourses title="Readable Courses"/> },
 
   { path: 'zoom-call', element: <StudentZoomCall title="Zoom Call"/> },
+  { path: 'payment', element: <PaymentStudent title="Payment"/> },
 ];
 
 export default StudentRoutes;

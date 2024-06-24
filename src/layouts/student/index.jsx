@@ -24,21 +24,23 @@ function StudentLayout() {
     setIsNavOpen(!isNavOpen);
   };
 
-  useEffect(() => {
-    const isPaidStatus = localStorage.getItem('is_paid') === 'true' || studentData.is_paid;
-    setIsPaid(isPaidStatus);
-    setShowModal(!isPaidStatus);
-  }, [studentData.is_paid]);
+  // useEffect(() => {
+  //   const isPaidStatus = localStorage.getItem('is_paid') === 'true' || studentData.is_paid;
+  //   setIsPaid(isPaidStatus);
+  //   setShowModal(!isPaidStatus);
+  // }, [studentData.is_paid]);
 
-  const handlePaymentComplete = () => {
-    setIsPaid(true);
-    setShowModal(false);
-    localStorage.setItem('is_paid', 'true'); // Ensure this is updated in local storage
-  };
+  // const handlePaymentComplete = () => {
+  //   setIsPaid(true);
+  //   setShowModal(false);
+  //   localStorage.setItem('is_paid', 'true'); // Ensure this is updated in local storage
+  // };
   return (
     <Fragment>
-    <PaymentModal showModal={showModal} handleCloseModal={() => {}} handlePaymentComplete={handlePaymentComplete} />
-      <div className="main-wrapper" style={{ opacity: showModal ? 0.5 : 1 }}>
+    {/* <PaymentModal showModal={showModal} handleCloseModal={() => {}} handlePaymentComplete={handlePaymentComplete} />
+      <div className="main-wrapper" style={{ opacity: showModal ? 0.5 : 1 }}> */}
+    {/* <PaymentModal showModal={showModal} handleCloseModal={() => {}} handlePaymentComplete={handlePaymentComplete} /> */}
+      <div className="main-wrapper" >
         <NavHeader isOpen={isNavOpen} toggleNav={toggleNav} />
         <ToastContainer position="top-center" autoClose={3000} closeOnClick />
         <div className="main-content" id="mainContent">

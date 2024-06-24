@@ -53,6 +53,17 @@ const verifyEmailAndSendOtp = async (userData) => {
     throw error;
   }
 }
+
+const verifyPhoneAndSendOtp = async (userData) => {
+  try {
+    const response = await axiosInstance.post('verify-phone-and-send-otp', userData);
+    return response;
+  } catch (error) {
+    console.error('Error during verify:', error);
+    throw error;
+  }
+}
+
 const verifyOtp = async (userData) => {
   try {
     const response = await axiosInstance.post('verify-otp', userData);
@@ -100,6 +111,7 @@ const authService = {
   login,
   logout,
   verifyEmailAndSendOtp,
+  verifyPhoneAndSendOtp,
   verifyOtp,
   resetPassword,
   updatePaymentStatus,

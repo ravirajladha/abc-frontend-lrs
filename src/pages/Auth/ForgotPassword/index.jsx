@@ -13,7 +13,7 @@ function ForgotPassword() {
   const dispatch = useDispatch();
 
   const [validationErrors, setValidationErrors] = useState({});
-  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -23,19 +23,19 @@ function ForgotPassword() {
 
   const navigate = useNavigate();
 
-  const handleVerifyEmail = async (e) => {
+  const handleVerifyPhone = async (e) => {
     e.preventDefault();
 
-    if (!email || loading) {
-      toast.warning('Please enter a valid email.');
+    if (!phone || loading) {
+      toast.warning('Please enter a valid phone number.');
       return;
     }
 
     try {
       setLoading(true);
-      const response = await authService.verifyEmailAndSendOtp({ email });
+      const response = await authService.verifyPhoneAndSendOtp({ phone });
       console.log(response);
-      toast.success('Email verified');
+      toast.success('Mobile number verified');
       setVerifySuccessMessage(response.data.message);
       setValidationErrors({});
       setStep(2); // Move to OTP step
@@ -59,7 +59,7 @@ function ForgotPassword() {
 
     try {
       setLoading(true);
-      const response = await authService.verifyOtp({ email, otp });
+      const response = await authService.verifyOtp({ phone, otp });
       console.log(response);
       toast.success(response.data.message || 'OTP verified.');
       setValidationErrors({});
@@ -84,7 +84,7 @@ function ForgotPassword() {
 
     try {
       setLoading(true);
-      const response = await authService.resetPassword({ email,
+      const response = await authService.resetPassword({ phone,
         password,
         password_confirmation: confirmPassword, });
       console.log(response);
@@ -129,20 +129,26 @@ function ForgotPassword() {
                   Reset Password
                 </h2>
                 {step === 1 && (
-                  <form onSubmit={handleVerifyEmail} autoComplete="off">
+                  <form onSubmit={handleVerifyPhone} autoComplete="off">
                     <div className="form-group icon-input mb-3">
                       <i className="font-sm ti-email text-grey-500 pr-0"></i>
                       <input
-                        type="email"
+                        type="text"
                         className="style2-input pl-5 form-control text-grey-900 font-xssss fw-600"
-                        placeholder="Email Address"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Mobile Number"
+                        value={phone}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (/^\d{0,10}$/.test(value)) {
+                            setPhone(value);
+                          }
+                        }}
+                        maxLength={10}
                         disabled={step !== 1}
                       />
-                      {validationErrors.email && (
+                      {validationErrors.phone && (
                         <span className="text-danger">
-                          {validationErrors.email}
+                          {validationErrors.phone}
                         </span>
                       )}
                     </div>
@@ -164,7 +170,7 @@ function ForgotPassword() {
                               className="mr-2"
                             />
                           ) : (
-                            'Verify Email'
+                            'Verify Mobile Number'
                           )}
                         </button>
                         <h6 className="text-primary font-xssss fw-500 mt-0 mb-0 lh-32">

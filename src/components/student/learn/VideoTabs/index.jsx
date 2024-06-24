@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect, Suspense, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { Tabs, Tab } from 'react-bootstrap';
 import {
   LearnTab,
@@ -10,6 +11,10 @@ import {
 
 import PropTypes from 'prop-types';
 import { useOutletContext } from 'react-router';
+import {
+  getUserDataFromLocalStorage,
+  getStudentDataFromLocalStorage,
+} from '@/utils/services';
 
 const VideoTabs = ({
   isLoading,
@@ -26,6 +31,24 @@ const VideoTabs = ({
   const [activeTab, setActiveTab] = useState('learn');
   const isTabActive = (tabKey) => {
     return activeTab === tabKey;
+  };
+  const userData = JSON.parse(getUserDataFromLocalStorage());
+  const studentDataLocal = JSON.parse(getStudentDataFromLocalStorage());
+  const [showModal, setShowModal] = useState(false);
+  const [isPaid, setIsPaid] = useState(false);
+console.log("payment details", studentDataLocal.is_paid);
+console.log("payment", isPaid);
+  useEffect(() => {
+    const isPaidStatus =
+      localStorage.getItem('is_paid') === 'true' || studentDataLocal.is_paid;
+    setIsPaid(isPaidStatus);
+    setShowModal(!isPaidStatus);
+  }, [studentDataLocal.is_paid]);
+
+  const handlePaymentComplete = () => {
+    setIsPaid(true);
+    setShowModal(false);
+    localStorage.setItem('is_paid', 'true'); // Ensure this is updated in local storage
   };
   return (
     <>
@@ -94,6 +117,18 @@ const VideoTabs = ({
         ></i>{' '}
         Live Doubt Clearing
       </h5>
+      {!isPaid && (
+  <Link to="/student/payment">
+    <h5 className="font-xs mb-2 text-center rounded-lg bg-white py-3 text-dark fw-400 border border-size-md">
+      <i
+        className="feather-play text-grey-500 mr-2"
+        style={{ marginTop: '2px' }}
+      ></i>{' '}
+      Payment
+    </h5>
+  </Link>
+)}
+
     </>
   );
 };
