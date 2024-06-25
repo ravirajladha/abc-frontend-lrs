@@ -84,8 +84,11 @@ function Learn() {
         video.querySelector('i').classList.add('feather-pause-circle');
         const defaultSources = [
           {
-            src: baseUrl + 'uploads/' + videoFile,
-            type: 'video/mp4',
+            // src: baseUrl + 'uploads/' + videoFile,
+            // type: 'video/mp4',
+
+            src: baseUrl + 'api/video/playlist/' + videoFile,
+            type: 'application/x-mpegURL',
           },
         ];
         setVideoOptions((prevOptions) => ({
@@ -137,8 +140,11 @@ function Learn() {
 
         const defaultSources = [
           {
-            src: baseUrl + 'uploads/' + data.contents.video.url,
-            type: 'video/mp4',
+            // src: baseUrl + 'uploads/' + data.contents.video.url,
+            // type: 'video/mp4',
+
+            src: baseUrl + 'api/video/playlist/' + data.contents.video.url,
+            type: 'application/x-mpegURL',
           },
         ];
 
@@ -174,8 +180,11 @@ function Learn() {
       ...prevOptions,
       sources: [
         {
-          src: baseUrl + 'uploads/' + activeVideo.url,
-          type: 'video/mp4',
+          // src: baseUrl + 'uploads/' + activeVideo.url,
+          // type: 'video/mp4',
+
+          src: baseUrl + 'api/video/playlist/' + activeVideo.url,
+          type: 'application/x-mpegURL',
         },
       ],
     }));
