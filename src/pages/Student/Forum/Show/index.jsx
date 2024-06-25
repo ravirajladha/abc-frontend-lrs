@@ -174,7 +174,7 @@ function Show() {
                     className="col-xl-12 col-lg-12 col-sm-12"
                     key={answer.id}
                   >
-                    <div className="card w-100 p-3 text-left border-0 shadow-sm rounded-lg ">
+                    <div className="card w-100 p-3 text-left border-0 shadow-sm rounded-lg mb-1">
                       <div className="card-header bg-transparent border-0 d-flex justify-content-between">
                         <div className="w-50">
                           <img
@@ -202,7 +202,7 @@ function Show() {
                                 : 'text-success'
                             }`}
                             onClick={() => handleVote(index, answer.id, 1)}
-                            // disabled={answer.vote_type == 1}
+                            disabled={answer.student_id == studentId}
                           >
                             <i className="feather-thumbs-up font-xs"></i>
                           </button>
@@ -216,7 +216,7 @@ function Show() {
                                 : 'text-danger'
                             }`}
                             onClick={() => handleVote(index, answer.id, -1)}
-                            // disabled={answer.vote_type == -1}
+                            disabled={answer.student_id == studentId}
                           >
                             <i className="feather-thumbs-down font-xs"></i>
                           </button>

@@ -29,7 +29,7 @@
 // export default ADMIN_ROUTES;
 const ADMIN_ROUTES = [
   { path: '/admin/dashboard', title: 'Home', icon: 'feather-home' },
-  { path: '/admin/subjects', title: 'Subjects', icon: 'feather-book-open' },
+  { path: '/admin/subjects', title: 'Courses', icon: 'feather-book-open' },
 
   { path: '/admin/public-students', title: 'Students', icon: 'feather-user' },
   { path: '/admin/fees', title: 'Fees', icon: 'feather-dollar-sign' },

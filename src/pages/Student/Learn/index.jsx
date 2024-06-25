@@ -13,6 +13,7 @@ import {
 } from '@/components/student/learn';
 
 import { fetchContents, fetchExternalStudentContents } from '@/api/student';
+import { getUserDataFromLocalStorage } from '@/utils/services';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -20,6 +21,7 @@ function Learn() {
   const studentData = useOutletContext();
   const studentId = studentData.student_auth_id;
   const classId = studentData.class_id;
+  const userData = JSON.parse(getUserDataFromLocalStorage());
 
   const { subjectId } = useParams();
 
@@ -204,6 +206,7 @@ function Learn() {
             onPlayerChange={handlePlayerChange}
             onQualityChange={handleQualityChange}
             studentId={studentId}
+            studentPhone={userData.phone_number}
             videoId={activeVideo.id}
             lastTimestamp={activeVideo.watch_time}
           />

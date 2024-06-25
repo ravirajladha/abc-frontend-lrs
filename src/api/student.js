@@ -270,7 +270,7 @@ export const completeMiniProject = async (data) => {
 
 export const fetchAllCourses = async () => {
   const response = await apiService.fetchData(
-    `student/courses-all`
+    `student/my-courses`
   );
   return response.data;
 };

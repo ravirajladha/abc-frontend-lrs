@@ -13,6 +13,7 @@ const VideoPlayer = ({
   options,
   onReady,
   studentId,
+  studentPhone,
   videoId,
   lastTimestamp,
   onPlayerChange,
@@ -137,7 +138,7 @@ const VideoPlayer = ({
     <>
       <div data-vjs-player>
         <div ref={playerElementRef}></div>
-        <i className="watermark">{'student ' + studentId}</i>
+        <i className="watermark">{studentPhone}</i>
         <img
           className="watermark_image"
           src={Logo}
