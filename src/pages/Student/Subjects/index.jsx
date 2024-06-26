@@ -171,7 +171,7 @@ function Subjects() {
                                       scope="row"
                                       className="border-success border-size-md"
                                     >
-                                      {`Term ${termIndex}`}
+                                      {`Term `}
                                     </th>
                                     <td className="border-size-md border-primary ml-2">
                                       Score:{' '}
@@ -211,10 +211,10 @@ function Subjects() {
                               {loading1
                                 ? 'Loading...'
                                 : subject.latest_term === 1
-                                ? 'Term Test 1'
+                                ? 'Test'
                                 : subject.latest_term === 2
-                                ? 'Term Test 2'
-                                : 'Term Test 3'}
+                                ? 'Test'
+                                : 'Test '}
                             </button>
 
                           )}

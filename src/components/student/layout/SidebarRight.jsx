@@ -26,7 +26,7 @@ function SidebarRight({ studentData }) {
         <div className="middle-sidebar-right-content">
           <Profile studentData={studentData} />
           <Forum />
-          <Subjects subjects={studentData.subjects} />
+          {/* <Subjects subjects={studentData.subjects} /> */}
         </div>
       </div>
       <button

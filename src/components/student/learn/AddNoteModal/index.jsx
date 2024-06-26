@@ -12,7 +12,7 @@ const AddNoteModal = ({
   handleSaveNote,
 }) => {
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeLabel="Close" closeVariant="white" closeButton={true}>
         <Modal.Title className="mt-1">Add Note</Modal.Title>
       </Modal.Header>

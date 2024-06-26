@@ -100,7 +100,7 @@ console.log("payment", isPaid);
               eventKey="info"
               title={
                 <span>
-                  <i className="feather-info"></i>
+                  <i className="feather-info"></i>{' '}Info
                 </span>
               }
               className="list-inline-item"

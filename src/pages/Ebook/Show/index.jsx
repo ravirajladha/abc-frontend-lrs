@@ -273,7 +273,7 @@ function Show({ title, isAdmin, isMobile }) {
                     userSelect: 'none',
                   }}
                 >
-                  &nbsp;ABC&nbsp;
+                  &nbsp;ATOMS&nbsp;
                 </h1>
               </div>
 {/* atoms header */}

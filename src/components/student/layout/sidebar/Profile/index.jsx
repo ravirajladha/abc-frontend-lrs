@@ -26,7 +26,7 @@ function Profile({ studentData }) {
           {studentData['student_name']}
         </h2>
 
-        <ul className="list-inline border-0 mt-4">
+        {/* <ul className="list-inline border-0 mt-4">
           <li className="list-inline-item text-center mr-4">
             <h4 className="fw-700 font-md">
               {studentData['class_name']}
@@ -44,7 +44,7 @@ function Profile({ studentData }) {
               </span>
             </h4>
           </li>
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

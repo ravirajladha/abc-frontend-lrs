@@ -18,7 +18,7 @@ function AppHeader({ toggleNav }) {
         <h1
           style={{ letterSpacing: '2px', fontSize: '25px', fontWeight: '700' , userSelect: 'none' }}
         >
-          &nbsp;ABC&nbsp;
+          &nbsp;ATOMS&nbsp;
         </h1>
       </div>
 {/* atoms header */}

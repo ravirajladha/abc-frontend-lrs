@@ -156,6 +156,7 @@ function Create(props) {
       clearForm();
       clearSelectedImage();
       setIsSubmitting(false);
+      
       if (props.isRecruiter) {
       navigate(`/recruiter/jobs`);
       }else{
@@ -194,9 +195,10 @@ function Create(props) {
     });
   };
   const jobTestsWithNoOption = [{ title: "No Test", id: 'null' }, ...jobTests];
+  const backLink = props.isRecruiter ? '/recruiter/jobs' : '/admin/jobs';
   return (
     <>
-      <ContentHeader title="Create Job" backLink="/admin/jobs" />
+      <ContentHeader title="Create Job" backLink={backLink} />
       <ContentFormWrapper formTitle={`Create Job Post`}>
         <form
           id="createForm"
