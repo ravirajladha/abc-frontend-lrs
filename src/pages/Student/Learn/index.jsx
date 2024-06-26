@@ -13,6 +13,7 @@ import {
 } from '@/components/student/learn';
 
 import { fetchContents, fetchExternalStudentContents } from '@/api/student';
+import { getUserDataFromLocalStorage } from '@/utils/services';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -20,6 +21,7 @@ function Learn() {
   const studentData = useOutletContext();
   const studentId = studentData.student_auth_id;
   const classId = studentData.class_id;
+  const userData = JSON.parse(getUserDataFromLocalStorage());
 
   const { subjectId } = useParams();
 
@@ -84,8 +86,11 @@ function Learn() {
         video.querySelector('i').classList.add('feather-pause-circle');
         const defaultSources = [
           {
-            src: baseUrl + 'uploads/' + videoFile,
-            type: 'video/mp4',
+            // src: baseUrl + 'uploads/' + videoFile,
+            // type: 'video/mp4',
+
+            src: baseUrl + 'api/video/playlist/' + videoFile,
+            type: 'application/x-mpegURL',
           },
         ];
         setVideoOptions((prevOptions) => ({
@@ -137,8 +142,11 @@ function Learn() {
 
         const defaultSources = [
           {
-            src: baseUrl + 'uploads/' + data.contents.video.url,
-            type: 'video/mp4',
+            // src: baseUrl + 'uploads/' + data.contents.video.url,
+            // type: 'video/mp4',
+
+            src: baseUrl + 'api/video/playlist/' + data.contents.video.url,
+            type: 'application/x-mpegURL',
           },
         ];
 
@@ -174,8 +182,11 @@ function Learn() {
       ...prevOptions,
       sources: [
         {
-          src: baseUrl + 'uploads/' + activeVideo.url,
-          type: 'video/mp4',
+          // src: baseUrl + 'uploads/' + activeVideo.url,
+          // type: 'video/mp4',
+
+          src: baseUrl + 'api/video/playlist/' + activeVideo.url,
+          type: 'application/x-mpegURL',
         },
       ],
     }));
@@ -195,6 +206,7 @@ function Learn() {
             onPlayerChange={handlePlayerChange}
             onQualityChange={handleQualityChange}
             studentId={studentId}
+            studentPhone={userData.phone_number}
             videoId={activeVideo.id}
             lastTimestamp={activeVideo.watch_time}
           />

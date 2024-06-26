@@ -93,7 +93,7 @@ function Subjects() {
 
   return (
     <div>
-      <ContentHeader title="All" subtitle="Subjects" />
+      <ContentHeader title="All" subtitle="Courses" />
       <div className="row">
         {loading ? (
           <div className="text-center mt-5 col-12">
@@ -113,13 +113,7 @@ function Subjects() {
             >
               <div className="card py-4 px-0 w-100 h-100 shadow-xss rounded-lg border-0 text-center d-flex justify-content-center align-items-center">
                 <div className="wrapper d-flex flex-row w-100">
-                  <div
-                    className={
-                      subject.results || subject.latest_test_id
-                        ? 'col-lg-5'
-                        : 'col-lg-12'
-                    }
-                  >
+                  <div className="col-lg-12">
                     <div>
                       <Link
                         to={''}
@@ -134,154 +128,106 @@ function Subjects() {
                       <h4 className="fw-700 font-xs mt-3 lh-32 text-capitalize">
                         {subject.name}
                       </h4>
-                      {subject?.subject_type && subject.subject_type == 3 && (
-                        <h4 className="fw-500 font-xss">
-                          {subject.super_subject_name}
-                        </h4>
-                      )}
                     </div>
-                    <div>
+                    <div className="d-flex justify-content-center">
                       <Link
                         to={subject.id + '/learn'}
-                        className="px-2 py-1 mt-2 d-inline-block text-white fw-700 lh-32 rounded-lg w100 text-center font-xsssss ls-3 bg-success"
+                        className="px-2 py-1 mt-2 mx-1 d-inline-block text-white fw-700 lh-32 rounded-lg w100 text-center font-xsssss ls-3 bg-success"
                       >
                         LEARN
                       </Link>
+                      {subject.results && (
+                        <Link
+                          to={subject.id + '/results'}
+                          className={`px-2 py-1 mt-2 mx-1 d-inline-block text-white fw-700 lh-32 rounded-lg w100 text-center font-xsssss ls-3 bg-current`}
+                        >
+                          RESULTS
+                        </Link>
+                      )}
+                      {subject.latest_test_id && (
+                        <button
+                          onClick={() => handleOpenModal(subject)}
+                          disabled={loading1}
+                          className={`px-2 py-1 mt-2 mx-1 d-inline-block text-white text-uppercase fw-700 lh-32 rounded-lg w100 text-center font-xsssss ls-3 ${
+                            subject.latest_test_id
+                              ? 'bg-current text-white'
+                              : 'd-none'
+                          }`}
+                          style={{
+                            pointerEvents: subject.latest_test_id
+                              ? 'auto'
+                              : 'none',
+                            cursor: subject.latest_test_id
+                              ? 'pointer'
+                              : 'not-allowed',
+                          }}
+                        >
+                          {loading1
+                            ? 'Loading...'
+                            : subject.latest_term === 1
+                            ? 'Term Test 1'
+                            : subject.latest_term === 2
+                            ? 'Term Test 2'
+                            : 'Term Test 3'}
+                        </button>
+                      )}
                     </div>
                   </div>
 
-                  {/* Display results for the subject */}
-                  {(subject.results || subject.latest_test_id) && (
-                    <div className="col-lg-7 pl-0 pr-4">
-                      <div className="row ">
-                        <div className="col-12 table-responsive ">
-                          <table className="table table-bordered mb-4">
-                            <tbody>
-                              {[1, 2, 3].map((termIndex) => {
-                                const term_result = subject?.results?.find(
-                                  (result) => result.term_type === termIndex
-                                );
-
-                                return (
-                                  <tr
-                                    key={termIndex}
-                                    className="font-xssss fw-700 text-uppercase rounded-lg text-dark"
-                                  >
-                                    <th
-                                      scope="row"
-                                      className="border-success border-size-md"
-                                    >
-                                      {`Term `}
-                                    </th>
-                                    <td className="border-size-md border-primary ml-2">
-                                      Score:{' '}
-                                      {term_result ? term_result.score : 'N/A'}
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
-                        </div>
-                        <div className="col-12 d-flex ">
-                          {subject.latest_test_id && (
-                            <button
-                              // onClick={() =>
-                              //   handleStartTest(
-                              //     subject.id,
-                              //     subject.latest_test_id
-                              //   )
-                              // }
-                              onClick={() => handleOpenModal(subject)}
-                              disabled={loading1}
-                              className={`px-3 py-1 d-inline-block text-uppercase fw-700 lh-30 rounded-lg text-center font-xsssss ls-3 mr-2 ${
-                                subject.latest_test_id
-                                  ? 'bg-current text-white'
-                                  : 'd-none'
-                              }`}
-                              style={{
-                                pointerEvents: subject.latest_test_id
-                                  ? 'auto'
-                                  : 'none',
-                                cursor: subject.latest_test_id
-                                  ? 'pointer'
-                                  : 'not-allowed',
-                              }}
-                            >
-                              {loading1
-                                ? 'Loading...'
-                                : subject.latest_term === 1
-                                ? 'Test'
-                                : subject.latest_term === 2
-                                ? 'Test'
-                                : 'Test '}
-                            </button>
-
-                          )}
-                          {subject.results && (
-                            <Link
-                              to={subject.id + '/results'}
-                              className={`px-4 py-1 d-inline-block text-uppercase fw-700 lh-30 rounded-lg text-center font-xsssss ls-3  bg-current text-white${
-                                subject.results ? '' : 'd-none '
-                              }`}
-                            >
-                              Results
-                            </Link>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
               {showModal && (
-              <div
-                className={`modal modal-test-instructions  ${showModal ? 'show' : ''}`}
-                onClick={handleCloseModal}
-              >
                 <div
-                  className="modal-content-lg bg-white"
-                  onClick={(e) => e.stopPropagation()}
+                  className={`modal modal-test-instructions  ${
+                    showModal ? 'show' : ''
+                  }`}
+                  onClick={handleCloseModal}
                 >
-                  <div className="modal-header modal-test-instructions-header">
-                    <h3 className="modal-title modal-test-instructions-title ">Test Instructions </h3>{' '}
-                    <span className="modal-title  modal-test-instructions-title text-sm mt-0 ml-4">
-                      (Read Carefully before starting the test)
-                    </span>
-                    <button
-                      type="button"
-                      className="close modal-test-instructions-close"
-                      onClick={handleCloseModal}
-                    >
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div className="modal-body modal-test-instructions-body">
-                    {/* <div dangerouslySetInnerHTML={{ __html: currentSubject?.testDescription }} /> */}
+                  <div
+                    className="modal-content-lg bg-white"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="modal-header modal-test-instructions-header">
+                      <h3 className="modal-title modal-test-instructions-title ">
+                        Test Instructions{' '}
+                      </h3>{' '}
+                      <span className="modal-title  modal-test-instructions-title text-sm mt-0 ml-4">
+                        (Read Carefully before starting the test)
+                      </span>
+                      <button
+                        type="button"
+                        className="close modal-test-instructions-close"
+                        onClick={handleCloseModal}
+                      >
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body modal-test-instructions-body">
+                      {/* <div dangerouslySetInnerHTML={{ __html: currentSubject?.testDescription }} /> */}
 
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: currentSubject?.testDescription,
-                      }}
-                      style={{ listStyleType: 'disc', paddingLeft: '20px' }}
-                    />
-                  </div>
-                  <div className="modal-footer modal-test-instructions-footer">
-                    <button
-                      type="button"
-                      className="btn text-white bg-success"
-                      onClick={() =>
-                        handleStartTestFromModal(
-                          currentSubject.id,
-                          currentSubject.latest_test_id
-                        )
-                      }
-                    >
-                      Start Test
-                    </button>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: currentSubject?.testDescription,
+                        }}
+                        style={{ listStyleType: 'disc', paddingLeft: '20px' }}
+                      />
+                    </div>
+                    <div className="modal-footer modal-test-instructions-footer">
+                      <button
+                        type="button"
+                        className="btn text-white bg-success"
+                        onClick={() =>
+                          handleStartTestFromModal(
+                            currentSubject.id,
+                            currentSubject.latest_test_id
+                          )
+                        }
+                      >
+                        Start Test
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
               )}
             </div>
           ))

@@ -35,7 +35,7 @@ function CoursesCard() {
   return (
     <div className="card w-100 p-1 border-0 mt-4 rounded-lg bg-white shadow-xs overflow-hidden">
       <div className="card-body">
-        <h4 className="font-xss text-grey-800 mt-1 lh-22 fw-700">Courses</h4>
+        <h4 className="font-xss text-grey-800 mt-1 lh-22 fw-700">My Courses</h4>
         <div className="row">
           {loading ? (
             <div className="text-center col-12">
