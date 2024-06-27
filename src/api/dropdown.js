@@ -21,6 +21,16 @@ export const fetchSubjects = (classId) => {
       throw error;
     });
 };
+export const fetchSubjectsForTest = (classId) => {
+  return apiService
+    .fetchData(`/minimal/tests/classes/${classId}/subjects`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
 export const fetchAssessments = (subjectId) => {
   return apiService

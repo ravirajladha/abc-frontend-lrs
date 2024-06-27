@@ -1,4 +1,5 @@
 export { default as SelectInput } from './SelectInput';
+export { default as DisabledSelectInput } from './DisabledSelectInput';
 export { default as SelectMultipleInput } from './SelectMultipleInput';
 export { default as FileInput } from './FileInput';
 export { default as SaveButton } from './SaveButton';

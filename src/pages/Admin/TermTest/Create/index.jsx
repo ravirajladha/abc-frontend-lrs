@@ -13,14 +13,14 @@ import {
 } from '@/components/common';
 import { SelectQuestion } from '@/components/admin/term-test';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchClasses, fetchSubjectsForTest } from '@/api/dropdown';
 
 import {
   createTermTest,
   fetchTermTestQuestionsByIds,
   checkTermTestAvailability,
 } from '@/api/admin';
-import { SelectInput } from '@/components/common/form';
+import { SelectInput,DisabledSelectInput } from '@/components/common/form';
 import { TextEditor } from '@/components/common';
 
 function Create({ title }) {
@@ -34,7 +34,7 @@ function Create({ title }) {
     selectedSubject: '',
     numberOfQuestions: '',
     testTitle: '',
-    testTerm: '',
+    // testTerm: '',
     startTime: '',
     endTime: '',
     duration: '',
@@ -48,7 +48,7 @@ function Create({ title }) {
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [existingTerms, setExistingTerms] = useState([]);
+  // const [existingTerms, setExistingTerms] = useState([]);
 
   const fetchClassDropdownData = useCallback(() => {
     fetchClasses()
@@ -64,15 +64,15 @@ function Create({ title }) {
     fetchClassDropdownData();
   }, [fetchClassDropdownData]);
 
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
-      .then((data) => {
-        setSubjects(data.subjects);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
+  // const fetchSubjectsDropdownData = useCallback((classId) => {
+  //   fetchSubjects(classId)
+  //     .then((data) => {
+  //       setSubjects(data.subjects);
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.message);
+  //     });
+  // }, []);
 
   const handleClassChange = ({ target: { value } }) => {
     setErrorMessage('');
@@ -85,7 +85,7 @@ function Create({ title }) {
       selectedSubject: '',
       numberOfQuestions: '',
       testTitle: '',
-      testTerm: '',
+      // testTerm: '',
       startTime: '',
       endTime: '',
       duration: '',
@@ -95,15 +95,25 @@ function Create({ title }) {
     fetchSubjectsDropdownData(value);
   };
 
+  const fetchSubjectsDropdownData = useCallback((classId) => {
+    fetchSubjectsForTest(classId)
+      .then((data) => {
+        console.log(data, "subject data");
+        setSubjects(data.subjects);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+  
   const handleSubjectChange = (event) => {
-    setErrorMessage('');
+    const selectedSubject = event.target.value;
     setFormData((prevData) => ({ ...prevData, selectedSubject }));
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
       selectedSubject: '',
     }));
-
-    const selectedSubject = event.target.value;
+  
     fetchTermTestQuestionsByIds(selectedSubject)
       .then((data) => {
         setFormData((prevData) => ({
@@ -119,17 +129,6 @@ function Create({ title }) {
       .catch((error) => {
         toast.error(error.message);
       });
-
-    checkTermTestAvailability(selectedSubject)
-      .then((data) => {
-        console.warn(data.terms);
-        setExistingTerms(data.terms);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-
-    setFormData((prevData) => ({ ...prevData, selectedSubject }));
   };
 
   const handleInputChange = ({ target: { name, value } }) => {
@@ -141,15 +140,14 @@ function Create({ title }) {
     setFormData((prevData) => ({ ...prevData, instruction: html }));
   };
 
-  const handleTermChange = (event) => {
-    setValidationErrors((prevErrors) => ({
-      ...prevErrors,
-      testTerm: '',
-    }));
-
-    const testTerm = event.target.value;
-    setFormData((prevData) => ({ ...prevData, testTerm }));
-  };
+  // const handleTermChange = (event) => {
+  //   setValidationErrors((prevErrors) => ({
+  //     ...prevErrors,
+  //     testTerm: '',
+  //   }));
+  //   const testTerm = event.target.value;
+  //   setFormData((prevData) => ({ ...prevData, testTerm }));
+  // };
 
   const nextForm = async (event) => {
     event.preventDefault();
@@ -177,7 +175,7 @@ function Create({ title }) {
         selectedSubject: '',
         numberOfQuestions: '',
         testTitle: '',
-        testTerm: '',
+        // testTerm: '',
         startTime: '',
         endTime: '',
         duration: '',
@@ -238,7 +236,7 @@ function Create({ title }) {
                     <label className="mont-font fw-600 font-xsss">
                       Select Course *
                     </label>
-                    <SelectInput
+                    {/* <SelectInput
                       className="form-control"
                       options={subjects}
                       name="selectedSubject"
@@ -247,7 +245,19 @@ function Create({ title }) {
                       onChange={handleSubjectChange}
                       placeholder="Select Course"
                       required
-                    />
+                    /> */}
+                    {/* fetchSubjectsForTest */}
+                    <DisabledSelectInput
+  className="form-control"
+  options={subjects}
+  name="selectedSubject"
+  label="name"
+  value={formData.selectedSubject || ''}
+  onChange={handleSubjectChange}
+  placeholder="Select Course"
+  required
+  valueKey="id"
+/>
                     {validationErrors.selectedSubject && (
                       <span className="text-danger font-xsss mt-2">
                       Course empty or not found.
@@ -270,7 +280,7 @@ function Create({ title }) {
                     />
                   </div>
                 </div>
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                   <div className="form-group mb30">
                     <label className="form-label mont-font fw-600 font-xsss">
                       Test Term *
@@ -300,7 +310,7 @@ function Create({ title }) {
                       </span>
                     )}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="col-md-4">
                   <div className="form-group mb30">

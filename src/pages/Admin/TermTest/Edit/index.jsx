@@ -14,14 +14,14 @@ import {
 } from '@/components/common';
 import { SelectQuestion } from '@/components/admin/term-test';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchClasses, fetchSubjectsForTest } from '@/api/dropdown';
 
 import {
   updateTermTest,
   fetchTermTestQuestionsByIds,
   fetchTestDetails,
 } from '@/api/admin';
-import { SelectInput } from '@/components/common/form';
+import { SelectInput, DisabledSelectInput } from '@/components/common/form';
 
 function Edit({ title }) {
   const navigate = useNavigate();
@@ -36,12 +36,13 @@ function Edit({ title }) {
     selectedSubject: '',
     numberOfQuestions: '',
     testTitle: '',
-    testTerm: '',
+    // testTerm: '',
     startTime: '',
     endTime: '',
     duration: '',
     description: '',
     instruction: '',
+    status: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,7 +66,7 @@ function Edit({ title }) {
   }, [fetchClassDropdownData]);
 
   const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+    fetchSubjectsForTest(classId)
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -122,16 +123,26 @@ function Edit({ title }) {
   const handleInstructionChange = (html) => {
     setFormData((prevData) => ({ ...prevData, instruction: html }));
   };
+  // const handleStatusChange = (event) => {
+  //   const status = event.target.value;
+  //   setFormData((prevData) => ({ ...prevData, status }));
+  // };
 
-  const handleTermChange = (event) => {
-    setValidationErrors((prevErrors) => ({
-      ...prevErrors,
-      testTerm: '',
+  const handleStatusChange = (selectedOption) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      status: selectedOption.target.value,
     }));
-
-    const testTerm = event.target.value;
-    setFormData((prevData) => ({ ...prevData, testTerm }));
   };
+  // const handleTermChange = (event) => {
+  //   setValidationErrors((prevErrors) => ({
+  //     ...prevErrors,
+  //     testTerm: '',
+  //   }));
+
+  //   const testTerm = event.target.value;
+  //   setFormData((prevData) => ({ ...prevData, testTerm }));
+  // };
 
   const nextForm = async (event) => {
     event.preventDefault();
@@ -143,7 +154,7 @@ function Edit({ title }) {
     try {
       const response = await fetchTestDetails(testId);
       const data = response.term_test;
-      console.log("data", data)
+      console.log('data', data);
       if (data) {
         fetchSubjectsDropdownData(data.class_id);
         fetchQuestionsCount(data.subject_id);
@@ -154,10 +165,11 @@ function Edit({ title }) {
           selectedSubject: data.subject_id,
           selectedQuestions: data.question_ids,
           testTitle: data.title,
-          testTerm: data.term_type,
+          // testTerm: data.term_type,
           duration: data.time_limit,
           description: data.description,
           instruction: data.instruction,
+          status: data.status,
         });
       }
       setLoading(false);
@@ -166,7 +178,7 @@ function Edit({ title }) {
       setLoading(false);
     }
   }, [testId, fetchSubjectsDropdownData]);
-console.log("formData", formData.instruction )
+  console.log('formData', formData.instruction);
   useEffect(() => {
     fetchTermTestDetails();
   }, [fetchTermTestDetails]);
@@ -189,12 +201,13 @@ console.log("formData", formData.instruction )
         selectedSubject: '',
         numberOfQuestions: '',
         testTitle: '',
-        testTerm: '',
+        // testTerm: '',
         startTime: '',
         endTime: '',
         duration: '',
         description: '',
         instruction: '',
+        status: '',
       });
     } catch (error) {
       if (error.validationErrors) {
@@ -239,7 +252,7 @@ console.log("formData", formData.instruction )
                     />
                     {validationErrors.selectedClass && (
                       <span className="text-danger font-xsss mt-2">
-                     Subject empty or not found.
+                        Subject empty or not found.
                       </span>
                     )}
                   </div>
@@ -250,7 +263,7 @@ console.log("formData", formData.instruction )
                     <label className="mont-font fw-600 font-xsss">
                       Select Course
                     </label>
-                    <SelectInput
+                    {/* <SelectInput
                       className="form-control"
                       options={subjects}
                       name="selectedSubject"
@@ -259,10 +272,22 @@ console.log("formData", formData.instruction )
                       onChange={handleSubjectChange}
                       placeholder="Select Course"
                       required
+                    /> */}
+                    <DisabledSelectInput
+                      className="form-control"
+                      options={subjects}
+                      name="selectedSubject"
+                      label="name"
+                      value={formData.selectedSubject || ''}
+                      onChange={handleSubjectChange}
+                      placeholder="Select Course"
+                      required
+                      valueKey="id"
                     />
+
                     {validationErrors.selectedSubject && (
                       <span className="text-danger font-xsss mt-2">
-                         Course empty or not found.
+                        Course empty or not found.
                       </span>
                     )}
                   </div>
@@ -282,7 +307,7 @@ console.log("formData", formData.instruction )
                     />
                   </div>
                 </div>
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                   <div className="form-group mb30">
                     <label className="form-label mont-font fw-600 font-xsss">
                       Test Term
@@ -304,7 +329,7 @@ console.log("formData", formData.instruction )
                       </span>
                     )}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="col-md-4">
                   <div className="form-group mb30">
@@ -392,7 +417,23 @@ console.log("formData", formData.instruction )
                     />
                   </div>
                 </div>
-                
+                <div className="col-md-4">
+                  <div className="form-group mb30">
+                    <label className="form-label mont-font fw-600 font-xsss">
+                      Status{!formData.status}
+                    </label>
+                    <select
+                      className="form-control"
+                      name="status"
+                      value={formData.status}
+                      onChange={handleStatusChange}
+                      required
+                    >
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
+                  </div>
+                </div>
                 <div className="col-lg-12 mb-0 mt-2 pl-0">
                   <div className=" d-flex align-items-center justify-content-center">
                     <button
