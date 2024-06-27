@@ -166,18 +166,19 @@ function Jobs() {
 
                 <div className="clearfix"></div>
                 <div className="col-lg-12">
-                  <Link
-                    to="#"
-                    onClick={() => {
-                      if (!job?.applied) {
-                        handleOpenModal(job);
-                      }
-                    }}
-                    className="btn btn-outline-warning btn-icon btn-sm mr-2"
-                  >
-                    {job?.applied ? 'Applied' : 'Apply'}
-                  </Link>
-                </div>
+  <Link
+    to="#"
+    onClick={() => {
+      if (!job?.applied) {
+        handleOpenModal(job);
+      }
+    }}
+    className="btn btn-outline-warning btn-icon btn-sm mr-2"
+  >
+    {job?.applied ? job?.participated_test_id ? `Applied (Score: ${job.percentage}%)` : 'Applied' : 'Apply'}
+  </Link>
+</div>
+
               </div>
             </div>
           ))

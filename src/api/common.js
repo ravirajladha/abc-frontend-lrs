@@ -86,4 +86,17 @@ export const fetchActiveElabs = async () => {
   // console.log(response.data.elabs);
   return response.data.elabs;
 };
+export const getJobTestResultOfStudent = async (applicationId) => {
+console.log("appId: " + applicationId);
+  const response = await apiService.fetchData(`/admin/jobs/get-job-test-results?applicationId=${applicationId}`);
+  console.log(response.data);
+  return response.data;
+};
+
+// export const fetchStudentResultsBySubject = async (studentId, subjectId) => {
+//   const response = await apiService.fetchData(
+//     `/student/get-subject-results?studentId=${studentId}&subjectId=${subjectId}`
+//   );
+//   return response.data;
+// };
 

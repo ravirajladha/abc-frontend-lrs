@@ -22,6 +22,8 @@ import {
   JobEdit,
   JobShow,
   JobCreate,
+  JobResult,
+
 } from '@/pages/Admin';
 const RecruiterRoutes = [
   // Add Recruiter routes here
@@ -93,6 +95,16 @@ const RecruiterRoutes = [
   {
     path: 'jobs/:jobId/applications',
     element: <JobShow title="Show Job Applications" isAdmin={false} isRecruiter={true}/>,
+  },
+  {
+    path: 'jobs/:jobId/applications/:applicationsId/result',
+    element: (
+      <JobResult
+        title="Show Job Student Result"
+        isAdmin={true}
+        isRecruiter={false}
+      />
+    ),
   },
 ];
 

@@ -892,12 +892,12 @@ export const fetchJobList = async () => {
   return response.data;
 };
 
-
-
-export const fetchJobApplicationsList = async (jobId) => {
-  const response = await apiService.fetchData(`/admin/jobs/${jobId}/applications`);
+export const fetchJobApplicationsList = async (jobId, filters) => {
+  console.log("filters", filters);
+  const response = await apiService.fetchData(`/admin/jobs/${jobId}/applications`, filters);
   return response.data;
 };
+
 
 export const fetchJobDetails = async (jobId) => {
   const response = await apiService.fetchData(`/admin/jobs/${jobId}`);

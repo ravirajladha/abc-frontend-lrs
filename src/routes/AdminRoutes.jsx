@@ -111,6 +111,7 @@ import {
   JobEdit,
   JobShow,
   JobCreate,
+  JobResult,
   Recruiter,
   // AssignRecruiter,
   CreateRecruiter,
@@ -719,6 +720,16 @@ const AdminRoutes = [
     element: (
       <JobShow
         title="Show Job Applications"
+        isAdmin={true}
+        isRecruiter={false}
+      />
+    ),
+  },
+  {
+    path: 'jobs/:jobId/applications/:applicationsId/result',
+    element: (
+      <JobResult
+        title="Show Job Student Result"
         isAdmin={true}
         isRecruiter={false}
       />

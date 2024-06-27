@@ -150,6 +150,7 @@ export { default as Job } from './Job';
 export { default as JobShow } from './Job/Show';
 export { default as JobCreate } from './Job/Create';
 export { default as JobEdit } from './Job/Edit';
+export { default as JobResult } from './Job/Result';
 
 export { default as Fees } from './Fees';
 // export { default as FeesCreate } from './Fees/Edit';

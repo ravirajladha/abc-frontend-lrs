@@ -14,10 +14,8 @@ import ContentSelectFilter from '@/components/common/ContentSelectFilter';
 
 function Tests({ title }) {
   const [termTests, setTermTests] = useState([]);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [selectedClass, setSelectedClass] = useState([]);

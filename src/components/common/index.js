@@ -33,4 +33,5 @@ export { default as TextEditor } from '@/components/common/TextEditor';
 export { default as Accordion } from '@/components/common/Accordion';
 export { default as AccordionItem } from '@/components/common/AccordionItem';
 export { default as Pagination } from '@/components/common/Pagination';
+export { default as CertificateViewer } from '@/components/common/CertificateViewer';
 // export { default as Tooltip } from '@/components/common/Tooltip';

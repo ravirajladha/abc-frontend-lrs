@@ -39,7 +39,7 @@ function InternshipParticipate({ title }) {
         setTodoTasks(allTasks.filter((task) => !task.status));
         setInProgressTasks(allTasks.filter((task) => task.status === 1));
         setCompletedTasks(allTasks.filter((task) => task.status === 2));
-console.log("todotasks",todoTasks);
+        console.log("todotasks",todoTasks);
         if (response.certificateGenerated) {
           setCertificate(response.certificateGenerated.certificate);
         }
@@ -263,14 +263,17 @@ console.log("todotasks",todoTasks);
             )}
 
             {certificateGenerated && (
-              <a
-                href={baseUrl + certificate}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-1 btn bg-success float-right text-center text-white font-xsss fw-600 p-3 w175 rounded-lg d-inline-block border-0"
-              >
-                View Certificate
-              </a>
+              // <a
+              //   href={baseUrl + certificate}
+              //   target="_blank"
+              //   rel="noopener noreferrer"
+              //   className="mt-1 btn bg-success float-right text-center text-white font-xsss fw-600 p-3 w175 rounded-lg d-inline-block border-0"
+              // >
+              //   View Certificate
+              // </a>
+              <Link to={`/student/certificate/${certificate}`}>
+        <button className="mt-1 btn bg-success float-right text-center text-white font-xsss fw-600 p-3 w175 rounded-lg d-inline-block border-0">View Certificate</button>
+      </Link>
             )}
           </div>
         )}

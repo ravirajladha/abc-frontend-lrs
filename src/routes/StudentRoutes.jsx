@@ -1,3 +1,4 @@
+// import { CertificateViewer } from '@/components/common';
 import {
   StudentReadableCourses,
   StudentAssessmentTest,
@@ -18,7 +19,7 @@ import {
   InternshipParticipate,
   StudentZoomCall,
   PaymentStudent,
-  
+  CertificateViewer,
 // Home
 } from '@/pages';
 import Editor1 from '@/pages/e_lab/components/Editor1';
@@ -71,6 +72,7 @@ const StudentRoutes = [
 
   { path: 'zoom-call', element: <StudentZoomCall title="Zoom Call"/> },
   { path: 'payment', element: <PaymentStudent title="Payment"/> },
+  { path: 'certificate/uploads/pass/:imageUrl?', element: <CertificateViewer title="Certificate"/> },
 ];
 
 export default StudentRoutes;

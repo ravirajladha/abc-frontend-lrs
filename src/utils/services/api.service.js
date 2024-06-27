@@ -1,8 +1,8 @@
 import axios from './axios.service';
 
 const apiService = {
-  async fetchData(endpoint) {
-    return this.makeRequest(axios.get(endpoint));
+  async fetchData(endpoint, params = {}) {
+    return this.makeRequest(axios.get(endpoint, { params }));
   },
 
   async postData(endpoint, data, headers = {}) {

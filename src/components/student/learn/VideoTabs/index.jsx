@@ -36,8 +36,8 @@ const VideoTabs = ({
   const studentDataLocal = JSON.parse(getStudentDataFromLocalStorage());
   const [showModal, setShowModal] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
-console.log("payment details", studentDataLocal.is_paid);
-console.log("payment", isPaid);
+  // console.log("payment details", studentDataLocal.is_paid);
+  // console.log("payment", isPaid);
   useEffect(() => {
     const isPaidStatus =
       localStorage.getItem('is_paid') === 'true' || studentDataLocal.is_paid;
@@ -100,7 +100,7 @@ console.log("payment", isPaid);
               eventKey="info"
               title={
                 <span>
-                  <i className="feather-info"></i>{' '}Info
+                  <i className="feather-info"></i> Info
                 </span>
               }
               className="list-inline-item"
@@ -117,17 +117,26 @@ console.log("payment", isPaid);
         ></i>{' '}
         Live Doubt Clearing
       </h5>
-      {!isPaid && (
-  <Link to="/student/payment">
-    <h5 className="font-xs mb-2 text-center rounded-lg bg-white py-3 text-dark fw-400 border border-size-md">
-      <i
-        className="feather-play text-grey-500 mr-2"
-        style={{ marginTop: '2px' }}
-      ></i>{' '}
-      Payment
-    </h5>
-  </Link>
-)}
+    
+
+<div>
+      {!isPaid ? (
+        <Link to="/student/payment">
+                  <button className="w-100 font-xs mb-2 text-center rounded-lg bg-success py-3 text-dark fw-400 border border-size-md">
+
+            <i className="feather-check"></i> Payment
+          </button>
+        </Link>
+      ) : (
+     
+        <button className="w-100 font-xs mb-2 text-center rounded-lg bg-primary py-3 text-dark fw-400 border border-size-md">
+
+            <i className="feather-check"></i> Payment Suuccessfull
+          </button>
+       
+      )}
+    </div>
+
 
     </>
   );
