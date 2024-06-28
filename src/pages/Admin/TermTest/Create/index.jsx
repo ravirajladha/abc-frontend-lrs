@@ -140,15 +140,6 @@ function Create({ title }) {
     setFormData((prevData) => ({ ...prevData, instruction: html }));
   };
 
-  // const handleTermChange = (event) => {
-  //   setValidationErrors((prevErrors) => ({
-  //     ...prevErrors,
-  //     testTerm: '',
-  //   }));
-  //   const testTerm = event.target.value;
-  //   setFormData((prevData) => ({ ...prevData, testTerm }));
-  // };
-
   const nextForm = async (event) => {
     event.preventDefault();
     const isVerified = formData.selectedClass && formData.selectedSubject;
@@ -168,6 +159,7 @@ function Create({ title }) {
       console.log('Data to be submitted:', updatedFormData);
   
       const response = await createTermTest(updatedFormData);
+
       if (response.status) {
         toast.success('Term test created successfully!');
         navigate('/admin/tests');
