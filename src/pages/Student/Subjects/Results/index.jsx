@@ -13,20 +13,29 @@ import { getStudentDataFromLocalStorage } from '@/utils/services';
 
 import ResponseItemCard from '@/components/common/results/ResponseItemCard';
 
-function Results() {
+function Results({ isAdmin, isStudent }) {
+  console.log(isAdmin,"isamdin")
   const navigate = useNavigate();
-  const { subjectId } = useParams();
+  // const { subjectId } = useParams();
 
+  // const studentData = JSON.parse(getStudentDataFromLocalStorage());
+  const {  subjectId, studentId: paramStudentId } = useParams();
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
+  const localStudentId = isAdmin? paramStudentId : studentData.student_id;
+  
+  const studentId = isAdmin ? paramStudentId : localStudentId;
+  // const studentId = 2;
+  // const subjectId = 1;
 
-  const studentId = studentData.student_id;
+  console.log(subjectId,paramStudentId, "subject and student id")
+  // const studentId = studentData.student_id;
 
   const [resultData, setResultData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const getClassDetails = useCallback(async () => {
     try {
-      const res = await fetchStudentResultsBySubject(studentId, subjectId);
+      const res = await fetchStudentResultsBySubject(2, subjectId);
       setResultData(res.term_test_results);
       setLoading(false);
     } catch (error) {
@@ -39,11 +48,11 @@ function Results() {
     getClassDetails();
   }, [getClassDetails]);
 
-  const [selectedTermType, setSelectedTermType] = useState(1);
+  // const [selectedTermType, setSelectedTermType] = useState(1);
 
-  const filteredResults = resultData?.filter(
-    (result) => result.term_type === selectedTermType
-  );
+  // const filteredResults = resultData?.filter(
+  //   (result) => result.term_type === selectedTermType
+  // );
 
   return (
     <div>
@@ -54,7 +63,7 @@ function Results() {
         <ContentCardWrapper>
           <div className="row">
             <div className="float-left font-xssss fw-700 text-grey-500 text-uppercase ls-3 mt-2 pt-1"></div>
-            <select
+            {/* <select
               className="searchCat float-right sort"
               value={selectedTermType}
               onChange={(e) => setSelectedTermType(parseInt(e.target.value))}
@@ -62,11 +71,11 @@ function Results() {
               <option value={1}>Term 1</option>
               <option value={2}>Term 2</option>
               <option value={3}>Term 3</option>
-            </select>
+            </select> */}
           </div>
-          {filteredResults &&
-            (filteredResults.length > 0 ? (
-              filteredResults.map((result) => (
+          {resultData &&
+            (resultData.length > 0 ? (
+              resultData.map((result) => (
                 <div className="row w-100" key={result.result_id}>
                   <div className="col-12 my-2 text-center">
                     <h3 className="fw-600 font-xl d-block lh-4 mb-2">

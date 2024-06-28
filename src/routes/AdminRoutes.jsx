@@ -142,6 +142,14 @@ import {
   ForumQuestions,
   ForumQuestionAnswers,
 } from '@/pages/Admin';
+import{
+
+
+StudentSubjectResults,
+
+// Home
+} from '@/pages';
+
 import {
   JobTest,
   JobTestCreate,
@@ -339,7 +347,7 @@ const AdminRoutes = [
     path: 'tests/:testId/results',
     element: <TermTestResult title="Show Term Test Results" />,
   },
-
+  { path: 'tests/:testId/results/:subjectId/:studentId', element: <StudentSubjectResults isAdmin={true} isStudent={false}/>  },
   //Term Test Question
   {
     path: 'tests/question-bank',

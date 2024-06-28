@@ -28,7 +28,7 @@ const StudentRoutes = [
   { path: 'dashboard', element: <StudentDashboard /> },
 
   { path: 'courses', element: <StudentSubjects /> },
-  { path: 'courses/:subjectId/results', element: <StudentSubjectResults /> },
+  { path: 'courses/:subjectId/results', element: <StudentSubjectResults isAdmin={false} isStudent={true}/> },
 
   { path: 'courses/:subjectId/learn', element: <StudentLearn /> },
   {

@@ -79,7 +79,7 @@ function Login() {
           <div
             className="col-xl-5 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"
             style={{
-              backgroundImage: `url(/assets/images/classroom1.jpg)`,
+              backgroundImage: `url(/assets/images/welcome.png)`,
               backgroundColor: '#f2f2f2',
               transition: '0.5s ease-in-out',
             }}
