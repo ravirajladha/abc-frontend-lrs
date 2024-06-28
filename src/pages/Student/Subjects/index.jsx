@@ -136,7 +136,7 @@ function Subjects() {
                       >
                         LEARN
                       </Link>
-                      {subject.results && (
+                      {subject.results && subject.results.length > 0 &&(
                         <Link
                           to={subject.id + '/results'}
                           className={`px-2 py-1 mt-2 mx-1 d-inline-block text-white fw-700 lh-32 rounded-lg w100 text-center font-xsssss ls-3 bg-current`}
