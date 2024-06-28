@@ -11,6 +11,7 @@ import { fetchClasses, fetchSubjects } from '@/api/dropdown';
 
 import { TERM_TYPES } from '@/utils/constants';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
+import StatusBadge from '@/components/common/StatusBadge';
 
 function Tests({ title }) {
   const [termTests, setTermTests] = useState([]);
@@ -164,6 +165,9 @@ function Tests({ title }) {
                         <th className="border-0" scope="col">
                           Course
                         </th>
+                        <th className="border-0" scope="col">
+                        Status
+                        </th>
                         <th
                           scope="col"
                           className="text-right border-0 pl-1"
@@ -188,6 +192,7 @@ function Tests({ title }) {
                             <td>{test.title}</td>
                             <td>{test.class}</td>
                             <td>{test.subject}</td>
+                            <td><StatusBadge status={test.status} /></td>
                             <td className="text-right pl-1">
                               <Link
                                 to={`/admin/tests/${test.id}/results`}

@@ -333,7 +333,9 @@ export const fetchTermTestQuestionsByClassIds = async (classIds) => {
 
 
 export const createTermTest = (data) => {
-  return apiService.postData(`admin/term-tests/store`, data);
+return apiService.postData(`admin/term-tests/store`, data);
+  console.log("respinse print from route", response);
+  // return response.data;
 };
 
 export const deleteTermTest = (testId) => {

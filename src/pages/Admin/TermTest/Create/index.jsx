@@ -20,7 +20,7 @@ import {
   fetchTermTestQuestionsByIds,
   checkTermTestAvailability,
 } from '@/api/admin';
-import { SelectInput,DisabledSelectInput } from '@/components/common/form';
+import { SelectInput, DisabledSelectInput } from '@/components/common/form';
 import { TextEditor } from '@/components/common';
 
 function Create({ title }) {
@@ -98,14 +98,14 @@ function Create({ title }) {
   const fetchSubjectsDropdownData = useCallback((classId) => {
     fetchSubjectsForTest(classId)
       .then((data) => {
-        console.log(data, "subject data");
+        console.log(data, 'subject data');
         setSubjects(data.subjects);
       })
       .catch((error) => {
         toast.error(error.message);
       });
   }, []);
-  
+
   const handleSubjectChange = (event) => {
     const selectedSubject = event.target.value;
     setFormData((prevData) => ({ ...prevData, selectedSubject }));
@@ -113,7 +113,7 @@ function Create({ title }) {
       ...prevErrors,
       selectedSubject: '',
     }));
-  
+
     fetchTermTestQuestionsByIds(selectedSubject)
       .then((data) => {
         setFormData((prevData) => ({
@@ -140,15 +140,6 @@ function Create({ title }) {
     setFormData((prevData) => ({ ...prevData, instruction: html }));
   };
 
-  // const handleTermChange = (event) => {
-  //   setValidationErrors((prevErrors) => ({
-  //     ...prevErrors,
-  //     testTerm: '',
-  //   }));
-  //   const testTerm = event.target.value;
-  //   setFormData((prevData) => ({ ...prevData, testTerm }));
-  // };
-
   const nextForm = async (event) => {
     event.preventDefault();
     const isVerified = formData.selectedClass && formData.selectedSubject;
@@ -158,39 +149,45 @@ function Create({ title }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
+  
     try {
       const updatedFormData = {
         ...formData,
         selectedQuestions: selectedQuestions,
         totalMarks: selectedQuestions.length,
       };
-      console.log('data to be sumitted', updatedFormData);
-      await createTermTest(updatedFormData);
+      console.log('Data to be submitted:', updatedFormData);
+  
+      const response = await createTermTest(updatedFormData);
 
-      toast.success('Term test created successfully!');
-      navigate('/admin/tests');
-      setFormData({
-        selectedClass: '',
-        selectedSubject: '',
-        numberOfQuestions: '',
-        testTitle: '',
-        // testTerm: '',
-        startTime: '',
-        endTime: '',
-        duration: '',
-        description: '',
-        instruction: '',
-      });
+      if (response.status) {
+        toast.success('Term test created successfully!');
+        navigate('/admin/tests');
+        setFormData({
+          selectedClass: '',
+          selectedSubject: '',
+          numberOfQuestions: '',
+          testTitle: '',
+          startTime: '',
+          endTime: '',
+          duration: '',
+          description: '',
+          instruction: '',
+        });
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
       }
-      toast.error(error.message);
+      const errorMessage = error.message || 'Test already available for this test';
+      toast.error(errorMessage);
       console.error('Error creating term test:', error);
     }
     setIsSubmitting(false);
   };
+  
   return (
     <>
       {!isFormVerified ? (
@@ -248,19 +245,19 @@ function Create({ title }) {
                     /> */}
                     {/* fetchSubjectsForTest */}
                     <DisabledSelectInput
-  className="form-control"
-  options={subjects}
-  name="selectedSubject"
-  label="name"
-  value={formData.selectedSubject || ''}
-  onChange={handleSubjectChange}
-  placeholder="Select Course"
-  required
-  valueKey="id"
-/>
+                      className="form-control"
+                      options={subjects}
+                      name="selectedSubject"
+                      label="name"
+                      value={formData.selectedSubject || ''}
+                      onChange={handleSubjectChange}
+                      placeholder="Select Course"
+                      required
+                      valueKey="id"
+                    />
                     {validationErrors.selectedSubject && (
                       <span className="text-danger font-xsss mt-2">
-                      Course empty or not found.
+                        Course empty or not found.
                       </span>
                     )}
                   </div>
@@ -332,8 +329,6 @@ function Create({ title }) {
                     )}
                   </div>
                 </div>
-
-               
 
                 <div className="col-md-4">
                   <div className="form-group mb30">

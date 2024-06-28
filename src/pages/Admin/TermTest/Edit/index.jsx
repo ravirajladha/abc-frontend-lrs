@@ -193,7 +193,8 @@ function Edit({ title }) {
         selectedQuestions: selectedQuestions,
         totalMarks: selectedQuestions.length,
       };
-      await updateTermTest(testId, updatedFormData);
+      const response =  await updateTermTest(testId, updatedFormData);
+      if (response.status) {
       toast.success('Term test edited successfully!');
       navigate('/admin/tests');
       setFormData({
@@ -209,11 +210,15 @@ function Edit({ title }) {
         instruction: '',
         status: '',
       });
+    }else{
+      toast.error(response.message);
+    }
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
       }
-      toast.error(error.message);
+      const errorMessage = error.message || 'Test already available for this test';
+      toast.error(errorMessage);
       console.error('Error creating term test:', error);
     }
     setIsSubmitting(false);
