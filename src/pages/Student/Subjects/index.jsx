@@ -136,7 +136,7 @@ function Subjects() {
                       >
                         LEARN
                       </Link>
-                      {subject.results && (
+                      {subject.results && subject.results.length > 0 &&(
                         <Link
                           to={subject.id + '/results'}
                           className={`px-2 py-1 mt-2 mx-1 d-inline-block text-white fw-700 lh-32 rounded-lg w100 text-center font-xsssss ls-3 bg-current`}
@@ -144,7 +144,7 @@ function Subjects() {
                           RESULTS
                         </Link>
                       )}
-                      {subject.latest_test_id && (
+                      {subject.chapter_completed && subject.latest_test_id && (
                         <button
                           onClick={() => handleOpenModal(subject)}
                           disabled={loading1}
@@ -164,11 +164,7 @@ function Subjects() {
                         >
                           {loading1
                             ? 'Loading...'
-                            : subject.latest_term === 1
-                            ? 'Term Test 1'
-                            : subject.latest_term === 2
-                            ? 'Term Test 2'
-                            : 'Term Test 3'}
+                            : 'Take Test'}
                         </button>
                       )}
                     </div>
