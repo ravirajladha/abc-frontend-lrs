@@ -18,7 +18,7 @@ function VideoAnalyticsCard({ stats }) {
                   ]}
                   colorsData={['#25d366', '#dc3545']}
                 />
-                <h4 className="font-xss text-grey-800 mt-1 lh-22 fw-600">
+                <h4 className="font-xss text-grey-800 mt-1 lh-22 fw-600  ml-7">
                   {item.subject_name}
                 </h4>
               </div>

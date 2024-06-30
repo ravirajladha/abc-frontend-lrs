@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import DefaultProfileImage from '@/assets/images/default/student.png';
@@ -7,12 +7,34 @@ import { formatNumber } from '@/utils/helpers';
 import { ContentLoader } from '@/components/common';
 
 function ReportCard({ studentData, reportData, loading }) {
+  console.log(reportData, 'student data inside report card');
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const termTotals = [0, 0, 0];
 
   const d = new Date();
   let year = d.getFullYear();
+
+  // const fetchCourseWiseCard = useCallback(async () => {
+  //   console.log('Fetching wallet student details', studentData);
+  //   const studentAuthId = studentData.student_id;
+  //   try {
+  //     const data = await fetchCourseWiseScore(studentAuthId);
+  //     if (data) {
+  //       console.log('wallet details', data);
+  //       setWalletData(data.wallet_details);
+  //       setWalletLogs(data.wallet_logs);
+  //       setLoading(false);
+  //     }
+  //   } catch (error) {
+  //     console.error('Failed to fetch wallet details:', error);
+  //     setError(true);
+  //     toast.error('Failed to load wallet details: ' + error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, [studentData]);
+
   return (
     <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
       <div className="card-body p-4 w-100 bg-current border-0 d-flex rounded-lg justify-content-between">
@@ -34,7 +56,7 @@ function ReportCard({ studentData, reportData, loading }) {
           {studentData && (
             <div className="card-body p-lg-5 p-4 w-100 border-0">
               <div className="row">
-                <div className="col-lg-5">
+                <div className="col-lg-12">
                   <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     <div className="card mb-4 d-block w-100 shadow-xss rounded-lg p-4 border-0 text-center">
                       <a
@@ -87,7 +109,7 @@ function ReportCard({ studentData, reportData, loading }) {
                   </div>
                   <div className="clearfix"></div>
 
-                  <div className="card border-0 shadow-none mb-4">
+                  {/* <div className="card border-0 shadow-none mb-4">
                     <div className="card-bod6 d-block text-left 2 fw-600-0">
                       <div className="item w-100 h50 bg-gold-gradiant rounded-xxl overflow-hidden text-left shadow-md pl-3 pt-3 align-items-end d-flex">
                         <h4 className="text-white font-sm fw-700 mont-font mb-3 ">
@@ -98,7 +120,7 @@ function ReportCard({ studentData, reportData, loading }) {
                         </h4>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* <div className="card border-0 mb-4 shadow-none">
                     <div className="card-body d-block text-left p-0">
@@ -117,78 +139,46 @@ function ReportCard({ studentData, reportData, loading }) {
                     to="#"
                     className="rounded-xxl border-dashed my-2 p-3 w-100 fw-600 fw-700 text-center font-xssss mont-font text-uppercase ls-3 text-grey-900 d-block user-select-none text-dark"
                   >
-                    TERM WISE SCORE
+                    COURSE WISE SCORE
                   </p>
 
                   <div className="row mb-3">
-                    <div className="col-lg-4 col-md-4">
-                      <div className="card shadow-xss border-0 p-3 rounded-lg d-flex justify-content-center align-items-center gap-2 h-100">
-                        <span className="btn-round-xxxl mb-2 alert-success">
-                          Term 1
-                        </span>
-                        <span className="font-xsss fw-bold">
-                          Score:{' '}
-                          {reportData?.total_marks &&
-                          reportData?.total_marks['first_term']
-                            ? formatNumber(
-                                reportData?.total_marks['first_term']
-                              ) +
-                              '/' +
-                              formatNumber(
-                                reportData?.base_total_marks[
-                                  'first_term_total_marks'
-                                ]
-                              )
-                            : 'N/A'}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-4 col-md-4">
-                      <div className="card shadow-xss border-0 p-3 rounded-lg d-flex justify-content-center align-items-center gap-2 h-100">
-                        <span className="btn-round-xxxl mb-2 alert-success">
-                          Term 2
-                        </span>
-                        <span className="font-xsss fw-bold d-block">
-                          Score:{' '}
-                          {reportData?.total_marks &&
-                          reportData?.total_marks['second_term']
-                            ? formatNumber(
-                                reportData?.total_marks['second_term']
-                              ) +
-                              '/' +
-                              formatNumber(
-                                reportData?.base_total_marks[
-                                  'second_term_total_marks'
-                                ]
-                              )
-                            : 'N/A'}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-4 col-md-4">
-                      <div className="card shadow-xss border-0 p-4 rounded-lg d-flex justify-content-center align-items-center gap-2 h-100">
-                        <span className="btn-round-xxxl mb-2 alert-success">
-                          Term 3
-                        </span>
-                        <span className="font-xsss fw-bold">
-                          Score:{' '}
-                          {reportData?.total_marks &&
-                          reportData?.total_marks['third_term']
-                            ? formatNumber(
-                                reportData?.total_marks['third_term']
-                              ) +
-                              '/' +
-                              formatNumber(
-                                reportData?.base_total_marks[
-                                  'third_term_total_marks'
-                                ]
-                              )
-                            : 'N/A'}
-                        </span>
-                      </div>
-                    </div>
+                    {reportData?.subject_results &&
+                      Object.keys(reportData.subject_results).map(
+                        (className, index) => (
+                          <div key={index} className="col-12 mb-4">
+                            <h3 className="text-dark font-xxl fw-700 mont-font mb-3">
+                              {className}
+                            </h3>
+                            <div className="row">
+                              {Object.keys(
+                                reportData.subject_results[className]
+                              ).map((subject, subIndex) => (
+                                <div
+                                  className="col-lg-4 col-md-4"
+                                  key={subIndex}
+                                >
+                                  <div className="card shadow-xss border-0 p-3 rounded-lg d-flex justify-content-center align-items-center gap-2 h-200 mt-4">
+                                    <span className="mb-2 alert-success">
+                                      {subject}
+                                    </span>
+                                    <span className="font-xsss fw-bold">
+                                      Score:{' '}
+                                      {reportData.subject_results[className][
+                                        subject
+                                      ] !== undefined
+                                        ? reportData.subject_results[className][
+                                            subject
+                                          ]
+                                        : 'N/A'}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )
+                      )}
                   </div>
                   <div className="row">
                     <div className="col-12">
@@ -211,7 +201,7 @@ function ReportCard({ studentData, reportData, loading }) {
                   </div>
                 </div>
 
-                <div className="col-lg-7">
+                {/* <div className="col-lg-7">
                   <div className="rounded-xxl bg-greylight h-100 p-3">
                     <table className="table rounded-10 table-admin mb-0">
                       <thead className="bg-greylight ovh">
@@ -284,49 +274,62 @@ function ReportCard({ studentData, reportData, loading }) {
                       <div className="row"></div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="row mt-2">
-                <div className="col-lg-12">
-                  <div className="rounded-xxl bg-greylight h-100 p-3">
-                    <table className="table rounded-10 table-admin mb-0">
-                      <thead className="bg-greylight ovh">
-                        <tr>
-                          <th className="border-0" scope="col">
-                            Course
-                          </th>
-                          <th className="border-0 text-center" scope="col">
-                            Average Score
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {reportData &&
-                        reportData.assessment_results &&
-                        reportData.assessment_results.length > 0 ? (
-                          reportData.assessment_results.map((result, index) => (
-                            <tr key={index}>
-                              <th className="">{result.subject_name}</th>
-                              <th className="text-center">
-                                {formatNumber(result.avg_score)}
-                              </th>{' '}
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td className="text-center" colSpan="2">
-                              No assessment results available
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                    <div className="col-lg-12 mt-5">
-                      <div className="row"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+  <div className="col-lg-12">
+    <div className="rounded-xxl bg-greylight h-100 p-3">
+      <table className="table rounded-10 table-admin mb-0">
+        <thead className="bg-greylight ovh">
+          <tr>
+            <th colSpan={2} className="border-0 text-center" scope="col">Assessment Score</th>
+            {/* <th className="border-0 text-center" scope="col">Average Score</th> */}
+          </tr>
+          <tr>
+            <th className="border-0" scope="col">Course</th>
+            <th className="border-0 text-center" scope="col">Average Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {reportData && reportData.assessment_results ? (
+            Object.keys(reportData.assessment_results).map((className, index) => {
+              const subjects = reportData.assessment_results[className];
+              return (
+                <React.Fragment key={index}>
+                  <tr>
+                    <th colSpan="2" className="text-left font-weight-bold">{className} {"Subject"}</th>
+                  </tr>
+                  {Object.keys(subjects).map((subjectName, subIndex) => {
+                    const score = subjects[subjectName];
+                    return (
+                      <tr key={subIndex}>
+                        <td className="">{subjectName}</td>
+                        <td className="text-center">
+                          {score !== null && score !== undefined ? formatNumber(score) : 'N/A'}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </React.Fragment>
+              );
+            })
+          ) : (
+            <tr>
+              <td className="text-center" colSpan="2">
+                No assessment results available
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      <div className="col-lg-12 mt-5">
+        <div className="row"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
             </div>
           )}
         </>

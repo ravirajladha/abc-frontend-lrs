@@ -28,6 +28,7 @@ function Dashboard() {
       .then((data) => {
         if (data) {
           setDashboard(data.dashboard);
+          console.log('Dashboard', data.dashboard);
         }
         setLoading(false);
       })
@@ -63,10 +64,10 @@ function Dashboard() {
             avg_assessment_score={dashboard.avg_assessment_score}
             first_term_results={dashboard.first_term_results}
             first_term_total_marks={dashboard.first_term_total_marks}
-            second_term_results={dashboard.second_term_results}
-            second_term_total_marks={dashboard.second_term_total_marks}
-            third_term_results={dashboard.third_term_results}
-            third_term_total_marks={dashboard.third_term_total_marks}
+            // second_term_results={dashboard.second_term_results}
+            // second_term_total_marks={dashboard.second_term_total_marks}
+            // third_term_results={dashboard.third_term_results}
+            // third_term_total_marks={dashboard.third_term_total_marks}
           />
           <VideoAnalyticsCard stats={dashboard.video_stats} />
           <CoursesCard/>

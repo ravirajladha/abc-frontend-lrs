@@ -81,6 +81,7 @@ function Profile({ isAdmin, isStudent }) {
     try {
       const data = await fetchReportCard(studentId, classId, sectionId);
       if (data) {
+        console.log("report card restult", data.report_card);
         setReportCard(data.report_card);
         setLoading(false);
       }

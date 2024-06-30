@@ -27,7 +27,7 @@ function Results({ isAdmin, isStudent }) {
   // const studentId = 2;
   // const subjectId = 1;
 
-  console.log(subjectId,paramStudentId, "subject and student id")
+  console.log(subjectId,studentId, "subject and student id")
   // const studentId = studentData.student_id;
 
   const [resultData, setResultData] = useState([]);
@@ -35,7 +35,8 @@ function Results({ isAdmin, isStudent }) {
 
   const getClassDetails = useCallback(async () => {
     try {
-      const res = await fetchStudentResultsBySubject(2, subjectId);
+      const res = await fetchStudentResultsBySubject(studentId, subjectId);
+      console.log("result inside result page",res.term_test_results)
       setResultData(res.term_test_results);
       setLoading(false);
     } catch (error) {
@@ -100,7 +101,7 @@ function Results({ isAdmin, isStudent }) {
             ) : (
               <div className="text-center mt-5 col-12">
                 <div className="alert" role="alert">
-                   There are no results available at the moment for Term Test {selectedTermType}.
+                   There are no results available at the moment..
                 </div>
               </div>
             ))}

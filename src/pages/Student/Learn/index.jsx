@@ -113,6 +113,7 @@ function Learn() {
       }
     });
   };
+  // console.log("video file: " + videoFile);
 
   const fetchSubjectContents = useCallback(async () => {
     try {

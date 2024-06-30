@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import {
+  CoursesCard,
 
+} from '@/components/student/dashboard';
 function SubjectCard({ subjects }) {
   const baseUrl = import.meta.env.VITE_BASE_URL;
   return (
@@ -10,36 +13,7 @@ function SubjectCard({ subjects }) {
           My Courses
         </h4>
       </div>
-      {subjects && subjects.length > 0 ? (
-        <div className="card-body p-lg-5 p-4 w-100 border-0 mb-0">
-          <div className="row">
-            {subjects?.map((subject) => (
-              <Link
-                to={'/student/courses/' + subject.id + '/learn'}
-                key={subject.id}
-                className="col-3 border-0"
-              >
-                <div className="card p-2 w-100 h-100 rounded-lg border-0 text-center d-flex justify-content-center align-items-center">
-                  <div className="btn-round-xxxl rounded-lg bg-lightblue ml-auto mr-auto img-fluid h100 w100">
-                    <img
-                      src={baseUrl + subject.image}
-                      alt="icon"
-                      className="p-1 p-1 w-100 h100 w100 object-fit-cover font-xsssss "
-                    />
-                  </div>
-                  <h4 className="fw-700 font-xs mt-3 lh-32 text-capitalize">
-                    {subject.name}
-                  </h4>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-       ) : (
-        <div className="text-center p-4">
-          <h4 className="fw-700 font-xs">No courses available</h4>
-        </div>
-      )}
+      <CoursesCard/>
     </div>
   );
 }

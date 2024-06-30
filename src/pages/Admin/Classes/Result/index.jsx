@@ -85,13 +85,13 @@ function Result() {
 
   return (
     <div>
-      <ContentHeader title="Class Results" />
+      <ContentHeader title="Subject Results" />
       <ContentCardWrapper>
         <div className="row justify-content-between mb-4">
           <div className="float-left font-xssss fw-700 text-grey-500 text-uppercase ls-3 mt-2 pt-1">
-            Term {selectedTerm} Results
+           Class Results
           </div>
-          <select
+          {/* <select
             className="searchCat float-right sort"
             value={selectedTerm}
             onChange={handleChangeTerm}
@@ -102,7 +102,7 @@ function Result() {
             <option value={1}>Term 1</option>
             <option value={2}>Term 2</option>
             <option value={3}>Term 3</option>
-          </select>
+          </select> */}
         </div>
         {loading ? (
           <div className="text-center mt-5 col-12">
@@ -126,6 +126,10 @@ function Result() {
                 {results.map((result, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
+                    {/* <td>  <Link
+                  to={`${result.student_id}/show-profile`}
+                  className="btn btn-outline-warning btn-icon btn-sm"
+                >{result.student_name}</Link></td> */}
                     <td>{result.student_name}</td>
                     <td>{result.rank}</td>
                     <td>{formatNumber(result.total_score)}</td>

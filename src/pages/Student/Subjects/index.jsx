@@ -70,7 +70,7 @@ function Subjects() {
 
     try {
       const response = await startTest(data);
-      console.log(response, ':rrespsonse');
+      console.log(response, ':respsonse');
       if (response.status === 200) {
         setLoading1(false);
         navigate(`term-test/${response.token}/${latestTestId}`); // Adjusted to use response.testSessionId directly

@@ -810,6 +810,17 @@ const AdminRoutes = [
   },
 
   {
+    path: 'tests/:testId/results/:studentId/show-profile',
+    element: (
+      <StudentProfile
+        title="Student Profile Students"
+        isAdmin="true"
+        isStudent="false"
+      />
+    ),
+  },
+
+  {
     path: 'public-students/:studentId/show-profile',
     element: (
       <StudentProfile

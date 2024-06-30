@@ -50,13 +50,13 @@ function QuickAnalyticsCard({
         <div className="row my-4">
           <div className="col-4">
             <h2 className="text-grey-900 fw-600 font-xs mt-4 mb-2 pb-1 ls-3 lh-1">
-              {first_term_results ? first_term_results + '/' + first_term_total_marks : '0'}
+              {first_term_results ? first_term_results + '/' + first_term_total_marks+'.00' : '0'}
             </h2>
             <h4 className="fw-700 text-grey-500 font-xssss ls-3 text-uppercase mb-0 mt-0">
-              Term 1 Score
+              TOTAL SUBJECT TEST SCORE
             </h4>
           </div>
-          <div className="col-4">
+          {/* <div className="col-4">
             <h2 className="text-grey-900 fw-600 font-xs mt-4 mb-2 pb-1 ls-3 lh-1">
               {second_term_results
                 ? second_term_results + '/' + second_term_total_marks
@@ -75,7 +75,7 @@ function QuickAnalyticsCard({
             <h4 className="fw-700 text-grey-500 font-xssss ls-3 text-uppercase mb-0 mt-0">
               Term 3 Score
             </h4>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
