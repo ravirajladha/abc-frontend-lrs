@@ -23,7 +23,7 @@ function StudentReportCard({ studentData, reportData }) {
     <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
       <div className="card-body p-4 w-100 bg-current border-0 d-flex rounded-lg justify-content-between">
         <h4 className="font-xs text-white fw-600 ml-4 mb-0 mt-2">
-          REPORT CARD
+          PERFORMANCE
         </h4>
         <div className="">
           {/* <button className="btn btn-light text-white d-inline-block rounded-xl bg-current font-xssss uppercase fw-700 ls-lg border-2 mr-2">

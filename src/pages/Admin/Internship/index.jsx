@@ -37,7 +37,7 @@ function Internship({ title }) {
       setInternshipsData((prevParticipants) =>
         prevParticipants.filter((participant) => participant.id !== id)
       );
-      toast.success("Internship Deleted Successfully");
+      toast.success('Internship Deleted Successfully');
     } catch (error) {
       console.error('Error fetching participants:', error);
     }
@@ -79,7 +79,7 @@ function Internship({ title }) {
                             Name
                           </th>
                           <th className="border-0" scope="col">
-                Subject
+                            Subject
                           </th>
                           {/* <th className="border-0" scope="col">
                             Subject
@@ -130,7 +130,8 @@ function Internship({ title }) {
                                 to={`/admin/internship/${item.id}/participants`}
                                 className="btn btn-outline-warning btn-icon btn-sm mr-2"
                               >
-                               <i className="feather-eye"></i> View ({item.participant_count})
+                                <i className="feather-eye"></i> View (
+                                {item.participant_count})
                               </Link>
                             </td>
                             <td>

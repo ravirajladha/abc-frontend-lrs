@@ -3,15 +3,24 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getInternships } from '@/api/admin';
+import { getInternships } from '@/api/student';
+import { getStudentDataFromLocalStorage } from '@/utils/services';
+
 function Internship({ title }) {
   const [internships, setInternshipsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
+  const studentData = JSON.parse(getStudentDataFromLocalStorage());
+  console.log("student data from the local storage", studentData);
+  const studentId = studentData.student_auth_id;
+  console.log("student id", studentId);
+
+
   const fetchData = async () => {
     try {
-      const response = await getInternships();
+      const response = await getInternships(studentId);
+      console.log("response", response.internships);
       setInternshipsData(response.internships);
     } catch (error) {
       toast.error(error.message);
@@ -74,7 +83,9 @@ function Internship({ title }) {
                           //   handleParticipateClick(internship.project_image)
                           // }
                         >
-                          Participate
+                          {internship.status==="completed" ? 'Finished' : 'Participate'}
+                          {/* Participate */}
+                          {/* {internship.status} */}
                         </button>
                         </Link>
                         {/* <button

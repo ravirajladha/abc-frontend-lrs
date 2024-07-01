@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useOutletContext, useParams } from 'react-router-dom';
+import { formatDateTime } from '@/utils/helpers';
+
 import {
   startInternship,
   generateCertificateForInternship,
@@ -38,8 +40,9 @@ function InternshipParticipate({ title }) {
         const allTasks = response.internshipTasks;
         setTodoTasks(allTasks.filter((task) => !task.status));
         setInProgressTasks(allTasks.filter((task) => task.status === 1));
+
         setCompletedTasks(allTasks.filter((task) => task.status === 2));
-        console.log("todotasks",todoTasks);
+        console.log('todotasks', todoTasks);
         if (response.certificateGenerated) {
           setCertificate(response.certificateGenerated.certificate);
         }
@@ -225,17 +228,28 @@ function InternshipParticipate({ title }) {
                           </h4>
                         </div>
                         {completedTasks.map((task, index) => (
-                          <div
-                            className="card-body p-3 bg-lightgreen m-3 rounded-lg"
-                            key={index}
-                          >
-                            <h4 className="font-xsss fw-700 text-grey-900 mb-2 mt-1 d-block">
-                              {task.internship_task_name}
-                            </h4>
-                            <p className="font-xssss lh-24 fw-500 text-grey-500 mt-3 d-block mb-3">
-                              {task.description}
-                            </p>
-                          </div>
+                      <div
+                      className="card-body p-3 bg-lightgreen m-3 rounded-lg"
+                      key={index}
+                    >
+                      <h4 className="font-xsss fw-700 text-grey-900 mb-2 mt-1 d-block">
+                        {task.a}
+                      </h4>
+                      <p className="font-xssss lh-24 fw-500 text-grey-500 mt-3 d-block mb-3">
+                        {task.description}
+                      </p>
+                      <p className="font-xxsss lh-24 fw-500 text-grey-400 mt-1 d-block mb-1">
+                        {formatDateTime(task.code_submitted_at)}
+                      </p>
+                    
+                      <Link
+                        to={`/student/elab/check-code/1/1/${task.elab_id}/${task.elab_submission_id}`}
+                        className="btn btn-outline-warning btn-icon btn-sm mr-2"
+                      >
+                        <i className="feather-eye"></i> View Code
+                      </Link>
+                    </div>
+                    
                         ))}
                       </div>
                     </div>
@@ -272,18 +286,26 @@ function InternshipParticipate({ title }) {
               //   View Certificate
               // </a>
               <Link to={`/student/certificate/${certificate}`}>
-        <button className="mt-1 btn bg-success float-right text-center text-white font-xsss fw-600 p-3 w175 rounded-lg d-inline-block border-0">View Certificate</button>
-      </Link>
+                <button className="mt-1 btn bg-success float-right text-center text-white font-xsss fw-600 p-3 w175 rounded-lg d-inline-block border-0">
+                  View Certificate
+                </button>
+              </Link>
             )}
           </div>
         )}
-      {todoTasks.length === 0 &&
+      {/* {todoTasks.length === 0 &&
         inProgressTasks.length === 0 &&
         completedTasks.length === 0 && (
           <div className="text-center mt-5">
             <h3>No tasks found in this internship</h3>
           </div>
-        )}
+        )} */}
+
+{!loading && todoTasks.length === 0 && inProgressTasks.length === 0 && completedTasks.length === 0 && (
+        <div className="text-center mt-5">
+          <h3>No tasks found in this internship</h3>
+        </div>
+      )}
     </>
   );
 }
