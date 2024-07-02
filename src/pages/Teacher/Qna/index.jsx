@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ContentHeader } from '@/components/common';
+import { ContentHeader, ContentLoader } from '@/components/common';
 import { ChatInterface, ChatUserList } from '@/components/teacher/qna';
 import { fetchStudents, fetchQnA, storeQnA } from '@/api/teacher';
 import { getUserDataFromLocalStorage } from '@/utils/services';
@@ -8,6 +8,7 @@ import { Spinner } from 'react-bootstrap';
 function Qna() {
   const userData = JSON.parse(getUserDataFromLocalStorage());
   const [loading, setLoading] = useState(true);
+  const [userListLoading, setUserListLoading] = useState(true);
   const [teacherId, setTeacherId] = useState(null);
   const [students, setStudents] = useState([]);
   const [studentId, setStudentId] = useState(null);
@@ -31,6 +32,8 @@ function Qna() {
       setFilteredStudents(response.students);
     } catch (error) {
       console.error('Error fetching students:', error.message);
+    } finally {
+      setUserListLoading(false);
     }
   }, []);
 
@@ -152,7 +155,9 @@ function Qna() {
 
           <div className="section full mt-2 mb-2 pl-3">
             <ul className="list-group list-group-flush">
-              {filteredStudents && filteredStudents.length > 0 ? (
+              {userListLoading ? (
+                <ContentLoader/>
+              ) : filteredStudents && filteredStudents.length > 0 ? (
                 filteredStudents.map((user, index) => (
                   <ChatUserList
                     key={index}
@@ -195,7 +200,11 @@ function Qna() {
               className="chat-bottom dark-bg p-3 shadow-none"
               style={{ width: '98%' }}
             >
-              <form className="chat-form" onSubmit={handleSubmit} autoComplete="off">
+              <form
+                className="chat-form"
+                onSubmit={handleSubmit}
+                autoComplete="off"
+              >
                 <div className="form-group">
                   <input
                     type="text"
@@ -209,21 +218,21 @@ function Qna() {
                   />
                 </div>
                 <button
-                    type="submit"
-                    className={`bg-current ${isSubmitting ? 'disabled' : ''}`}
-                  >
-                    {isSubmitting ? (
-                      <Spinner
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                        className="mr-2"
-                      />
-                    ) : (
-                      <i className="ti-arrow-right text-white"></i>
-                    )}
-                  </button>
+                  type="submit"
+                  className={`bg-current ${isSubmitting ? 'disabled' : ''}`}
+                >
+                  {isSubmitting ? (
+                    <Spinner
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                      className="mr-2"
+                    />
+                  ) : (
+                    <i className="ti-arrow-right text-white"></i>
+                  )}
+                </button>
               </form>
             </div>
           )}

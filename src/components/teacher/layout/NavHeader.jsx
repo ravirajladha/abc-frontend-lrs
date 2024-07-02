@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -6,9 +6,12 @@ import LogoutButton from '@/components/common/LogoutButton';
 import { TEACHER_ROUTES } from '@/utils/constants';
 
 import Logo from '@/assets/images/logo-transparent.png';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { fetchUnrepliedQnACount } from '@/api/teacher';
 
 function NavHeader({ isOpen, toggleNav }) {
   const [isFull, setIsFull] = useState(false);
+  const [qnaCount, setQnaCount] = useState(0);
 
   const toggleNavWidth = () => {
     mainContent.classList.toggle('menu-active');
@@ -16,6 +19,18 @@ function NavHeader({ isOpen, toggleNav }) {
   };
 
   const toggleNavClass = `${isFull ? 'menu-active' : ''}`;
+
+  const getUnrepliedQnACount = useCallback(async () => {
+    try {
+      const response = await fetchUnrepliedQnACount();
+      setQnaCount(response.qnaCount);
+    } catch (error) {
+      console.error('Error fetching qna Count:', error.message);
+    }
+  }, []);
+  useEffect(() => {
+    getUnrepliedQnACount();
+  }, [getUnrepliedQnACount]);
   return (
     <nav
       className={`navigation scroll-bar  ${toggleNavClass} ${
@@ -42,14 +57,43 @@ function NavHeader({ isOpen, toggleNav }) {
             <li className="logo d-none d-xl-block d-lg-block"></li>
             {TEACHER_ROUTES.map((route, index) => (
               <li key={index}>
-                <NavLink
-                  to={route.path}
-                  className="nav-content-bttn open-font"
-                  data-tab="chats"
-                >
-                  <i className={`${route.icon} mr-3`}></i>
-                  <span>{route.title}</span>
-                </NavLink>
+                {route.title && isFull ? (
+                  <OverlayTrigger
+                    delay={{ hide: 300, show: 250 }}
+                    overlay={(props) => (
+                      <Tooltip {...props}>{route.title}</Tooltip>
+                    )}
+                    placement="right"
+                  >
+                    <NavLink
+                      to={route.path}
+                      className="nav-content-bttn open-font"
+                      data-tab="chats"
+                    >
+                      <i className={`${route.icon} mr-3`}></i>
+                      <span>{route.title}</span>
+                      {route.path === '/teacher/qna' ? (
+                      <span className="position-absolute top-0 right-0 badge bg-white text-dark rounded-pill p-1 font-xssss" style={{lineHeight:'15px'}}>
+                        {qnaCount ? qnaCount : 0}
+                      </span>
+                    ) : null}
+                    </NavLink>
+                  </OverlayTrigger>
+                ) : (
+                  <NavLink
+                    to={route.path}
+                    className="nav-content-bttn open-font"
+                    data-tab="chats"
+                  >
+                    <i className={`${route.icon} mr-3`}></i>
+                    <span>{route.title}</span>
+                    {route.path === '/teacher/qna' ? (
+                      <span className="badge bg-white text-dark rounded-pill px-2" style={{lineHeight:'20px'}}>
+                        {qnaCount ? qnaCount : 0}
+                      </span>
+                    ) : null}
+                  </NavLink>
+                )}
               </li>
             ))}
           </ul>

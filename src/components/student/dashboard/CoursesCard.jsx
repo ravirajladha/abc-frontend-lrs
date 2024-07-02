@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { fetchAllCourses } from '@/api/student';
+import { fetchMyCourses } from '@/api/student';
 import { ContentItemCard, ContentLoader } from '@/components/common';
 import { Link } from 'react-router-dom';
 
@@ -13,8 +13,7 @@ function CoursesCard() {
 
   const fetchSubjectsCallback = useCallback(async () => {
     try {
-      const data = await fetchAllCourses();
-      console.table(data.subjects);
+      const data = await fetchMyCourses();
       setSubjectsData(data.subjects);
     } catch (error) {
       setError(error);

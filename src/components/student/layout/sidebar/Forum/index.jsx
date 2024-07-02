@@ -1,35 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getStudentDataFromLocalStorage } from '@/utils/services';
-
-import { fetchForum } from '@/api/student';
 import { formatDate, formatSentence } from '@/utils/helpers';
 import { ContentLoader } from '@/components/common';
 
-function Forum() {
-  const studentData = JSON.parse(getStudentDataFromLocalStorage());
-
-  const studentId = studentData.student_id;
-
-  const [forumData, setForumData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const fetchData = useCallback(async () => {
-    try {
-      const response = await fetchForum(studentId);
-      setForumData(response.forum);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  }, [studentId]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+function Forum({forumData, forumloading}) {
 
   return (
     <div className="card theme-light-bg overflow-hidden rounded-xxl border-0 mb-3">
@@ -40,7 +15,7 @@ function Forum() {
         </Link>
       </div>
       <div className="row pl-4 pr-2 pt-0 pb-3 border-0 w-100 d-block">
-        {loading ? (
+        {forumloading ? (
           <span>
             <ContentLoader />
           </span>
@@ -53,9 +28,9 @@ function Forum() {
                   className="col-12 mb-4 d-block"
                   key={index}
                 >
-                  <span className="bg-current btn-round-xs rounded-lg font-xssss text-white fw-600">
+                  {/* <span className="bg-current btn-round-xs rounded-lg font-xssss text-white fw-600">
                     {item.answers_count}
-                  </span>
+                  </span> */}
                   <span className="font-xssss fw-500 text-grey-500 ml-2">
                     {formatSentence(item.question, 8)}
                   </span>

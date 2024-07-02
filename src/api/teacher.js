@@ -59,3 +59,10 @@ export const fetchTeacherSubjects = async (classId) => {
   );
   return response.data;
 };
+
+export const fetchUnrepliedQnACount = async (teacherId, studentId) => {
+  const response = await apiService.fetchData(
+    `teacher/qna/get-unreplied-count`
+  );
+  return response.data;
+};

@@ -6,6 +6,7 @@ import LogoutButton from '@/components/common/LogoutButton';
 import { RECRUITER_ROUTES } from '@/utils/constants';
 
 import Logo from '@/assets/images/logo-transparent.png';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 function NavHeader({ isOpen, toggleNav }) {
   const [isFull, setIsFull] = useState(false);
@@ -42,14 +43,33 @@ function NavHeader({ isOpen, toggleNav }) {
             <li className="logo d-none d-xl-block d-lg-block"></li>
             {RECRUITER_ROUTES.map((route, index) => (
               <li key={index}>
-                <NavLink
-                  to={route.path}
-                  className="nav-content-bttn open-font"
-                  data-tab="chats"
-                >
-                  <i className={`${route.icon} mr-3`}></i>
-                  <span>{route.title}</span>
-                </NavLink>
+                {route.title && isFull ? (
+                  <OverlayTrigger
+                    delay={{ hide: 300, show: 250 }}
+                    overlay={(props) => (
+                      <Tooltip {...props}>{route.title}</Tooltip>
+                    )}
+                    placement="right"
+                  >
+                    <NavLink
+                      to={route.path}
+                      className="nav-content-bttn open-font"
+                      data-tab="chats"
+                    >
+                      <i className={`${route.icon} mr-3`}></i>
+                      <span>{route.title}</span>
+                    </NavLink>
+                  </OverlayTrigger>
+                ) : (
+                  <NavLink
+                    to={route.path}
+                    className="nav-content-bttn open-font"
+                    data-tab="chats"
+                  >
+                    <i className={`${route.icon} mr-3`}></i>
+                    <span>{route.title}</span>
+                  </NavLink>
+                )}
               </li>
             ))}
           </ul>

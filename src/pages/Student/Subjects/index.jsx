@@ -128,6 +128,9 @@ function Subjects() {
                       <h4 className="fw-700 font-xs mt-3 lh-32 text-capitalize">
                         {subject.name}
                       </h4>
+                      {subject?.class_name && (
+                        <h4 className="fw-500 font-xss">{subject.class_name}</h4>
+                      )}
                     </div>
                     <div className="d-flex justify-content-center">
                       <Link
