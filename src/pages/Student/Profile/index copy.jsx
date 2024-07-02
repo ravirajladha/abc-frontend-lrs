@@ -55,7 +55,7 @@ console.log("student data: " + studentData.student_id)
           defaultActiveKey="report"
           className="mb-3 nav nav-tabs profile xs-p-3 d-flex align-items-center justify-content-between product-info-tab border-bottom-0 bg-white shadow-xss rounded-lg"
         >
-          <Tab eventKey="report" title="REPORT CARD">
+          <Tab eventKey="report" title="PERFORMANCE">
             <ReportCard studentData={studentData} reportData={reportCard} loading={loading} />
           </Tab>
           <Tab eventKey="about" title="ABOUT">

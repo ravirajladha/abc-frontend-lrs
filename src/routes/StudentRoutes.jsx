@@ -22,6 +22,9 @@ import {
   CertificateViewer,
 // Home
 } from '@/pages';
+import {
+  InternshipParticipants,
+} from '@/pages/Admin';
 import Editor1 from '@/pages/e_lab/components/Editor1';
 
 const StudentRoutes = [
@@ -51,7 +54,10 @@ const StudentRoutes = [
   { path: 'internship', element: <StudentInternship /> },
 
   { path: 'internship/participate/:internshipId', element: <InternshipParticipate  title="My Internship Tasks"/> },
-
+  {
+    path: 'internship/participate/:internshipId/participants',
+    element: <InternshipParticipants title="Show Internship Participant" />,
+  },
 
   // { path: 'courses/:subjectId/elab/:eLabId', element: <StudentElab /> },
   // { path: 'courses/:subjectId/ebook', element: <StudentElab /> },

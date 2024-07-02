@@ -251,6 +251,16 @@ export const getParentDetails = async (studentId) => {
   return response.data;
 }
 
+export const getInternships = async (studentId) => {
+  const response = await apiService.fetchData(`/student/internships?studentId=${studentId}`);
+  // console.log(response);
+  return response.data;
+};
+
+
+
+
+
 export const startInternship = async (data) => {
   const response = await apiService.postData(`/admin/internship-task-processes/start-internship`, data);
   return response.data;

@@ -5,6 +5,7 @@ import { useOutletContext, useParams } from 'react-router-dom';
 import { startMiniProject, completeMiniProject } from '@/api/student';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { formatDateTime } from '@/utils/helpers';
 
 import { getMiniProjectTasks } from '@/api/admin';
 import {
@@ -25,6 +26,7 @@ function MiniProject({ title }) {
   const navigate = useNavigate();
   const { subjectId, miniProjectId } = useParams();
 
+  
   useEffect(() => {
     const fetchMiniProjectData = async () => {
       try {
@@ -33,6 +35,7 @@ function MiniProject({ title }) {
         setStudentStatus(response.hasStartedMiniProject);
         setMiniProjectData(response.miniProject);
         const allTasks = response.miniProjectTasks;
+        console.log(allTasks, 'all tasks');
         setTodoTasks(allTasks.filter((task) => !task.status));
         setInProgressTasks(allTasks.filter((task) => task.status === 1));
         setCompletedTasks(allTasks.filter((task) => task.status === 2));
@@ -232,6 +235,12 @@ function MiniProject({ title }) {
                             </span> */}
                           </h4>
                         </div>
+                        {/* <Link
+                                      to={`/admin/elab/check-code/1/1/${task.elab_id}/${task.elab_submission_id}`}
+                                      className="btn btn-outline-warning btn-icon btn-sm mr-2"
+                                    >
+                                    </Link> */}
+                          
                         {completedTasks.map((task, index) => (
                           <div
                             className="card-body p-3 bg-lightgreen m-3 rounded-lg"
@@ -243,6 +252,16 @@ function MiniProject({ title }) {
                             <p className="font-xssss lh-24 fw-500 text-grey-500 mt-3 d-block mb-3">
                               {task.description}
                             </p>
+                            <p className="font-xxsss lh-24 fw-500 text-grey-400 mt-1 d-block mb-1">
+                        {formatDateTime(task.code_submitted_at)}
+                      </p>
+                    
+                      <Link
+                        to={`/student/elab/check-code/1/1/${task.elab_id}/${task.elab_submission_id}`}
+                        className="btn btn-outline-warning btn-icon btn-sm mr-2"
+                      >
+                        <i className="feather-eye"></i> View Code
+                      </Link>
                           </div>
                         ))}
                       </div>
