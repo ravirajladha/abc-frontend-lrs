@@ -1036,9 +1036,9 @@ export const updateElabStatus = async (id, status) => {
   return response;
 };
 
-export const fetchElabs = () => {
+export const fetchElabs = (page = 1) => {
   return apiService
-    .fetchData('/admin/elabs')
+    .fetchData(`/admin/elabs?page=${page}`)
     .then((response) => {
       return response.data;
     })
@@ -1368,8 +1368,8 @@ export const sendDinacharyaMessages = async () => {
   return response.data;
 };
 
-export const fetchForumQuestions = async () => {
-  const response = await apiService.fetchData(`/admin/forums/questions`);
+export const fetchForumQuestions = async (page = 1) => {
+  const response = await apiService.fetchData(`/admin/forums/questions?page=${page}`);
   return response.data;
 };
 export const fetchForumQuestionDetails = async (forumId) => {
@@ -1377,7 +1377,7 @@ export const fetchForumQuestionDetails = async (forumId) => {
   return response.data;
 };
 
-export const fetchTransactions = async (forumId) => {
-  const response = await apiService.fetchData(`/admin/transactions`);
+export const fetchTransactions = async (page = 1) => {
+  const response = await apiService.fetchData(`/admin/transactions?page=${page}`);
   return response.data;
 };

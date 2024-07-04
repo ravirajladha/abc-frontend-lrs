@@ -6,16 +6,23 @@ import { ADMIN_ROUTES } from '@/utils/constants';
 import LogoutButton from '@/components/common/LogoutButton';
 
 import Logo from '@/assets/images/logo-transparent.png';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { AiFillAccountBook } from 'react-icons/ai';
 
 function NavHeader({ isOpen, toggleNav }) {
   const [isFull, setIsFull] = useState(false);
+  const [openGroups, setOpenGroups] = useState({});
 
   const toggleNavWidth = () => {
     mainContent.classList.toggle('menu-active');
     setIsFull(!isFull);
   };
-
+  const toggleGroup = (group) => {
+    setOpenGroups((prevState) => ({
+      ...prevState,
+      [group]: !prevState[group],
+    }));
+  };
   const toggleNavClass = `${isFull ? 'menu-active' : ''}`;
   return (
     <nav
@@ -41,7 +48,7 @@ function NavHeader({ isOpen, toggleNav }) {
           </div>
           <ul className="mb-3">
             <li className="logo d-none d-xl-block d-lg-block"></li>
-            {ADMIN_ROUTES.map((route, index) => (
+            {/* {ADMIN_ROUTES.map((route, index) => (
               <li key={index}>
                 {route.title && isFull ? (
                   <OverlayTrigger
@@ -71,6 +78,68 @@ function NavHeader({ isOpen, toggleNav }) {
                   </NavLink>
                 )}
               </li>
+            ))} */}
+            {Object.keys(ADMIN_ROUTES).map((group, index) => (
+              <div className={`mx-3`} key={index}>
+                <div
+                  onClick={() => toggleGroup(group)}
+                  className={`py-3 px-2 d-flex justify-content-between open-font font-xss fw-600 shadow-sm border-bottom rounded ${
+                    openGroups[group] ? 'border-warning' : ''
+                  }`}
+                >
+                  <div className="d-flex">
+                    {React.createElement(ADMIN_ROUTES[group].icon, {
+                      className: 'mr-3 font-md',
+                    })}
+                    <span
+                      className="ml-3"
+                      style={{ display: isFull ? 'none' : 'inline' }}
+                    >
+                      {ADMIN_ROUTES[group].title}
+                    </span>
+                  </div>
+                  <i
+                    className={`feather-chevron-${
+                      openGroups[group] ? 'up' : 'down'
+                    } float-right`}
+                  ></i>
+                </div>
+                {openGroups[group] && (
+                  <ul className="">
+                    {ADMIN_ROUTES[group].routes.map((route, routeIndex) => (
+                      <li key={routeIndex} className="mx-0">
+                        {route.title && isFull ? (
+                          <OverlayTrigger
+                            delay={{ hide: 300, show: 250 }}
+                            overlay={(props) => (
+                              <Tooltip {...props}>{route.title}</Tooltip>
+                            )}
+                            placement="right"
+                          >
+                            <NavLink
+                              to={route.path}
+                              className="nav-content-bttn open-font"
+                              data-tab="chats"
+                            >
+                              <i className={`${route.icon} mr-3`}></i>
+                              <span>{route.title}</span>
+                            </NavLink>
+                          </OverlayTrigger>
+                        ) : (
+                          <NavLink
+                            to={route.path}
+                            className="nav-content-bttn open-font"
+                            data-tab="chats"
+                          >
+                            <i className={`${route.icon} mr-3`}></i>
+                            <span>{route.title}</span>
+                          </NavLink>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             ))}
           </ul>
           <div className="nav-caption fw-600 font-xssss text-grey-500">

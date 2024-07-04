@@ -5,6 +5,7 @@ import {
   ContentLoader,
   UcFirst,
   Toggle,
+  Pagination,
 } from '@/components/common';
 import { Link } from 'react-router-dom';
 import { fetchElabs} from '@/api/admin';
@@ -14,13 +15,20 @@ function Elabs({ title }) {
   const [elabs, setElabs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
   useEffect(() => {
-    fetchElabs()
+    fetchElabs(currentPage)
       .then((response) => {
         console.log('Full response:', response);
         if (response && response.elabs) {
           console.log('res', response.elabs);
-          setElabs(response.elabs);
+          setElabs(response.elabs.data);
+          setTotalPages(response.elabs.last_page);
         } else {
           // Handle the case where the response is not in the expected shape
           setError(new Error('Invalid response structure'));
@@ -31,7 +39,7 @@ function Elabs({ title }) {
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [currentPage]);
 
   // const handleToggle = async (elabId, isActive) => {
   //   try {
@@ -193,6 +201,11 @@ function Elabs({ title }) {
                 </div>
               </div>
             </div>
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
           </div>
         ) : (
           <div className="text-center mt-5 col-12">

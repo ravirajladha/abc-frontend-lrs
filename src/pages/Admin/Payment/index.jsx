@@ -4,6 +4,7 @@ import {
   ContentFallback,
   ContentHeader,
   ContentLoader,
+  Pagination,
 } from '@/components/common';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
@@ -14,30 +15,31 @@ function Payment({ title }) {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   const fetchData = async () => {
     try {
-      const response = await fetchTransactions();
-      setTransactions(response.transactions);
+      const response = await fetchTransactions(currentPage);
+      setTransactions(response.transactions.data);
+      setTotalPages(response.transactions.last_page);
     } catch (error) {
       toast.error(error.message);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage]);
+  
   return (
     <>
-      <ContentHeader
-        title="Payments"
-        // buttons={[
-        //   {
-        //     link: `create`,
-        //     text: 'New Payment',
-        //   },
-        // ]}
-      />
+      <ContentHeader title="Payments" />
       {loading ? (
         <ContentLoader />
       ) : (
@@ -50,9 +52,6 @@ function Payment({ title }) {
                   <h4 className="font-xss text-grey-800 mt-3 fw-700">
                     {title}
                   </h4>
-                  <select className="form-select ml-auto float-right border-0 font-xssss fw-600 text-grey-700 bg-transparent">
-                    <option>Sort by latest</option>
-                  </select>
                 </div>
                 <div className="card-body p-4">
                   <div className="table-responsive">
@@ -103,7 +102,7 @@ function Payment({ title }) {
                             </td>
                             <td>{item.transaction_id}</td>
                             <td>{item.amount}</td>
-                            <td className='text-success'>{item.status}</td>
+                            <td className="text-success">{item.status}</td>
                             <td>{item.ip_address}</td>
                             <td>{formatDateTime(item.created_at)}</td>
                           </tr>
@@ -113,6 +112,11 @@ function Payment({ title }) {
                   </div>
                 </div>
               </div>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
         ) : (

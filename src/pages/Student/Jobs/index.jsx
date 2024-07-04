@@ -54,19 +54,19 @@ function Jobs() {
     getJobsList();
   }, [getJobsList]);
 
-  const handleSubmit = async (e, jobId) => {
-    e.preventDefault();
-    try {
-      const submissionData = new FormData();
-      submissionData.append('job_id', jobId);
-      submissionData.append('student_id', studentId);
-      const response = await submitJobApplication(submissionData);
-      toast.success(response.message);
-      getJobsList();
-    } catch (error) {
-      toast.error('Error applying the job. Please try again.');
-    }
-  };
+  // const handleSubmit = async (e, jobId) => {
+  //   e.preventDefault();
+  //   try {
+  //     const submissionData = new FormData();
+  //     submissionData.append('job_id', jobId);
+  //     submissionData.append('student_id', studentId);
+  //     const response = await submitJobApplication(submissionData);
+  //     toast.success(response.message);
+  //     getJobsList();
+  //   } catch (error) {
+  //     toast.error('Error applying the job. Please try again.');
+  //   }
+  // };
 
   const handleShowModal = (job) => {
     setSelectedJob(job);

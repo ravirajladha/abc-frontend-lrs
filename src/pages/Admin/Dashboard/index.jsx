@@ -44,7 +44,7 @@ function Dashboard() {
               >
                 Welcome
               </span>
-              Hi, Admin
+              Admin
               <span
                 className="font-xsss fw-600 text-grey-700 d-block mt-2"
                 style={{ fontSize: '20px' }}
@@ -101,7 +101,7 @@ function Dashboard() {
             itemIcon="check-square"
             itemValue={dashboard?.tests}
             itemLink="/admin/tests"
-            itemName="Term Tests"
+            itemName="Tests"
           />
           <Card
             itemIcon="code"

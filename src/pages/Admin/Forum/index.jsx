@@ -4,6 +4,7 @@ import {
   ContentFallback,
   ContentHeader,
   ContentLoader,
+  Pagination,
 } from '@/components/common';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -15,10 +16,17 @@ function Index({ title }) {
   const [forumsData, setForumsData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
   const fetchData = async () => {
     try {
-      const response = await fetchForumQuestions();
-      setForumsData(response.forumQuestions);
+      const response = await fetchForumQuestions(currentPage);
+      setForumsData(response.forumQuestions.data);
+      setTotalPages(response.forumQuestions.last_page);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -27,7 +35,7 @@ function Index({ title }) {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -97,6 +105,11 @@ function Index({ title }) {
                   </div>
                 </div>
               </div>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
         ) : (
