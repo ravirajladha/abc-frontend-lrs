@@ -36,3 +36,6 @@ export { default as Pagination } from '@/components/common/Pagination';
 export { default as CertificateViewer } from '@/components/common/CertificateViewer';
 export { default as StatusBadge } from '@/components/common/StatusBadge';
 // export { default as Tooltip } from '@/components/common/Tooltip';
+
+export { default as Notification } from '@/components/common/Notification';
+export { default as HeaderSearchBar } from '@/components/common/HeaderSearchBar';

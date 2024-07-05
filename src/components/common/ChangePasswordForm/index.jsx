@@ -48,6 +48,19 @@ function ChangePasswordForm({
                 </div>
                 <div className="col-lg-6 mb-3">
                   <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">Phone Number</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      defaultValue={userData['phone_number']}
+                      disabled
+                    />
+                  </div>
+                </div>
+                </div>
+              <div className="row">
+                <div className="col-lg-6 mb-3">
+                  <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
                       Password *
                     </label>

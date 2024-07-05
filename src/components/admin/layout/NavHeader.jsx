@@ -48,62 +48,45 @@ function NavHeader({ isOpen, toggleNav }) {
           </div>
           <ul className="mb-3">
             <li className="logo d-none d-xl-block d-lg-block"></li>
-            {/* {ADMIN_ROUTES.map((route, index) => (
-              <li key={index}>
-                {route.title && isFull ? (
-                  <OverlayTrigger
-                    delay={{ hide: 300, show: 250 }}
-                    overlay={(props) => (
-                      <Tooltip {...props}>{route.title}</Tooltip>
-                    )}
-                    placement="right"
-                  >
-                    <NavLink
-                      to={route.path}
-                      className="nav-content-bttn open-font"
-                      data-tab="chats"
-                    >
-                      <i className={`${route.icon} mr-3`}></i>
-                      <span>{route.title}</span>
-                    </NavLink>
-                  </OverlayTrigger>
-                ) : (
-                  <NavLink
-                    to={route.path}
-                    className="nav-content-bttn open-font"
-                    data-tab="chats"
-                  >
-                    <i className={`${route.icon} mr-3`}></i>
-                    <span>{route.title}</span>
-                  </NavLink>
-                )}
-              </li>
-            ))} */}
             {Object.keys(ADMIN_ROUTES).map((group, index) => (
               <div className={`mx-3`} key={index}>
-                <div
-                  onClick={() => toggleGroup(group)}
-                  className={`py-3 px-2 d-flex justify-content-between open-font font-xss fw-600 shadow-sm border-bottom rounded ${
-                    openGroups[group] ? 'border-warning' : ''
-                  }`}
+                <OverlayTrigger
+                  delay={{ hide: 300, show: 250 }}
+                  overlay={(props) =>
+                    isFull ? (
+                      <Tooltip {...props}>{ADMIN_ROUTES[group]?.title}</Tooltip>
+                    ) : (
+                      <span />
+                    )
+                  }
+                  placement="right"
                 >
-                  <div className="d-flex">
-                    {React.createElement(ADMIN_ROUTES[group].icon, {
-                      className: 'mr-3 font-md',
-                    })}
-                    <span
-                      className="ml-3"
-                      style={{ display: isFull ? 'none' : 'inline' }}
-                    >
-                      {ADMIN_ROUTES[group].title}
-                    </span>
+                  <div
+                    onClick={() => toggleGroup(group)}
+                    className={`py-3 px-2 d-flex justify-content-between open-font font-xss fw-600 shadow-sm border-bottom text-linkedin rounded ${
+                      openGroups[group] ? 'border-warning' : ''
+                    }`}
+                    // style={{ color:"#000851"}}
+                  >
+                    <div className="d-flex">
+                      {React.createElement(ADMIN_ROUTES[group].icon, {
+                        className: 'mr-3 font-md',
+                      })}
+                      <span
+                        className="ml-3"
+                        style={{ display: isFull ? 'none' : 'inline' }}
+                      >
+                        {ADMIN_ROUTES[group].title}
+                      </span>
+                    </div>
+                    <i
+                      className={`feather-chevron-${
+                        openGroups[group] ? 'up' : 'down'
+                      } float-right`}
+                    ></i>
                   </div>
-                  <i
-                    className={`feather-chevron-${
-                      openGroups[group] ? 'up' : 'down'
-                    } float-right`}
-                  ></i>
-                </div>
+                </OverlayTrigger>
+
                 {openGroups[group] && (
                   <ul className="">
                     {ADMIN_ROUTES[group].routes.map((route, routeIndex) => (
@@ -142,39 +125,33 @@ function NavHeader({ isOpen, toggleNav }) {
               </div>
             ))}
           </ul>
-          <div className="nav-caption fw-600 font-xssss text-grey-500">
-            <span></span> Account
-          </div>
-          <ul className="mb-3">
-            <li className="logo d-none d-xl-block d-lg-block"></li>
-            <li>
-              <Link
-                to="/admin/settings"
-                className="nav-content-bttn open-font h-auto pt-2 pb-2"
-              >
-                <i className="font-sm feather-settings mr-3 text-dark"></i>
-                <span>Settings</span>
-              </Link>
-            </li>
-            <li>
-              <LogoutButton />
-            </li>
-          </ul>
           <div className="nav-caption fw-600 font-xssss text-grey-500"></div>
           <ul>
             <li className="logo d-none d-xl-block d-lg-block"></li>
             <li>
-              <Link
-                to="#"
-                onClick={toggleNavWidth}
-                className="nav-content-bttn open-font h-auto pt-2 pb-2"
+              <OverlayTrigger
+                delay={{ hide: 450, show: 300 }}
+                overlay={(props) =>
+                  isFull ? (
+                    <Tooltip {...props}>Expand the sidebar</Tooltip>
+                  ) : (
+                    <span />
+                  )
+                }
+                placement="right"
               >
-                <i
-                  className={`font-sm ${
-                    isFull ? 'feather-chevron-right' : 'feather-chevron-left'
-                  }  mr-3 text-dark`}
-                ></i>
-              </Link>
+                <Link
+                  to="#"
+                  onClick={toggleNavWidth}
+                  className="nav-content-bttn open-font h-auto pt-2 pb-2"
+                >
+                  <i
+                    className={`font-sm ${
+                      isFull ? 'feather-chevron-right' : 'feather-chevron-left'
+                    }  mr-3 text-dark`}
+                  ></i>
+                </Link>
+              </OverlayTrigger>
             </li>
           </ul>
         </div>

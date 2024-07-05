@@ -16,7 +16,7 @@ function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -77,29 +77,43 @@ function Login() {
         <ToastContainer autoClose={3000} closeOnClick />
         <div className="row justify-content-center align-items-center">
           <div
-            className="col-xl-5 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"
+            className="col-xl-6 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"
             style={{
-              backgroundImage: `url(/assets/images/welcome.png)`,
+              backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)),url(/assets/images/welcome.jpg)`,
               backgroundColor: '#f2f2f2',
               transition: '0.5s ease-in-out',
+              position: 'relative',
             }}
-          ></div>
+          >
+            <img
+              src={Logo}
+              alt="logo"
+              style={{
+                width: 150,
+                position: 'absolute',
+                top: '10%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                padding: '10px',
+                borderRadius: '5px',
+              }}
+            />
+          </div>
 
-          <div className="col-xl-7 vh-100 align-items-center d-flex rounded-lg overflow-hidden">
+          <div className="col-xl-6 vh-100 align-items-center d-flex rounded-lg overflow-hidden">
             <div className="card shadow-none border-0 ml-auto mr-auto login-card">
               <div className="card-body rounded-0 text-left">
-                <img
+                {/* <img
                   src={Logo}
                   alt="logo"
                   className="inline-center flex center my-3"
                   width={100}
-                />
+                /> */}
                 <br />
                 <h2 className="fw-700 display1-size display2-md-size mb-3">
-                  Login into <br />
-                  your account
+                  Login
                 </h2>
-                <form onSubmit={handleLogin}  autoComplete="off">
+                <form onSubmit={handleLogin} autoComplete="off">
                   <div className="form-group icon-input mb-3">
                     <i className="font-sm ti-email text-grey-500 pr-0"></i>
                     <input
@@ -109,7 +123,7 @@ function Login() {
                       value={email}
                       label={12131}
                       onChange={(e) => setEmail(e.target.value)}
-                     autoComplete="new-email"
+                      autoComplete="new-email"
                     />
                   </div>
                   <div className="form-group icon-input mb-1">
@@ -119,7 +133,7 @@ function Login() {
                       placeholder="Password"
                       name="password"
                       value={password}
-                   autoComplete="new-password"
+                      autoComplete="new-password"
                       onChange={(e) => setPassword(e.target.value)}
                     />
                     <i className="font-sm ti-lock text-grey-500 pr-0"></i>

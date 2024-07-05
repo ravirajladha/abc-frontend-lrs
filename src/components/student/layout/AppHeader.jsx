@@ -5,37 +5,71 @@ import PropTypes from 'prop-types';
 import DarkButton from '@/components/common/DarkButton';
 import DefaultProfileImage from '@/assets/images/default/student.png';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
+import { HeaderSearchBar, Notification } from '@/components/common';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import LogOutButton from '@/components/common/LogoutButton';
 
 function AppHeader({ toggleNav }) {
   const baseUrl = import.meta.env.VITE_BASE_URL;
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
 
   return (
-    <div className="middle-sidebar-header bg-white">
+    <div className="middle-sidebar-header"  style={{ background: "linear-gradient(90deg, #1CB5E0 0%, #000851 100%)"}}>
       <button onClick={toggleNav} className="header-menu"></button>
       <div className=" d-inline-block float-left mb-0 text-grey-900">
         <h1
-          style={{ letterSpacing: '2px', fontSize: '25px', fontWeight: '700', userSelect: 'none' }}
+          style={{
+            letterSpacing: '2px',
+            fontSize: '25px',
+            fontWeight: '700',
+            userSelect: 'none',
+          }}
         >
           &nbsp;ATOMS&nbsp;
         </h1>
       </div>
-{/* atoms header */}
-
+      <HeaderSearchBar />
+      {/* atoms header */}
       <ul className="d-flex ml-auto right-menu-icon">
         <DarkButton />
+        <Notification />
         <li>
-          <Link to="profile">
-            <img
-              src={
-                studentData['profile_image']
-                  ? baseUrl + studentData['profile_image']
-                  : DefaultProfileImage
-              }
-              alt="user"
-              className="w40 mt--1 rounded-circle bg-white"
-            />
-          </Link>
+          <OverlayTrigger
+            placement="bottom"
+            overlay={<Tooltip>Settings</Tooltip>}
+          >
+            <Link to="/student/settings">
+              <i className="feather-settings font-xl text-current"></i>
+            </Link>
+          </OverlayTrigger>
+        </li>
+        <li>
+          <OverlayTrigger
+            placement="bottom"
+            overlay={<Tooltip>Profile</Tooltip>}
+          >
+            <Link to="profile">
+              <img
+                src={
+                  studentData['profile_image']
+                    ? baseUrl + studentData['profile_image']
+                    : DefaultProfileImage
+                }
+                alt="user"
+                className="w40 mt--1 rounded-circle bg-white"
+              />
+            </Link>
+          </OverlayTrigger>
+        </li>
+        <li>
+          <OverlayTrigger
+            placement="bottom"
+            overlay={<Tooltip>Logout</Tooltip>}
+          >
+            <span>
+              <LogOutButton />
+            </span>
+          </OverlayTrigger>
         </li>
         <li>
           <span className="menu-search-icon"></span>

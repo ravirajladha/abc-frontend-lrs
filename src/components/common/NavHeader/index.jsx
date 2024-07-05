@@ -57,53 +57,36 @@ function NavHeader({ isOpen, toggleNav }) {
             <li className="logo d-none d-xl-block d-lg-block"></li>
             {/* two conditions while showing route */}
             {STUDENT_ROUTES.map((route, index) => (
-  <li key={index}>
-    {route.title && isFull ? (
-      <OverlayTrigger
-        delay={{ hide: 300, show: 250 }}
-        overlay={(props) => <Tooltip {...props}>{route.title}</Tooltip>}
-        placement="right"
-      >
-        <NavLink
-          to={route.path}
-          className="nav-content-bttn open-font"
-          data-tab="chats"
-        >
-          <i className={`${route.icon} mr-3`}></i>
-          <span>{route.title}</span>
-        </NavLink>
-      </OverlayTrigger>
-    ) : (
-      <NavLink
-        to={route.path}
-        className="nav-content-bttn open-font"
-        data-tab="chats"
-      >
-        <i className={`${route.icon} mr-3`}></i>
-        <span>{route.title}</span>
-      </NavLink>
-    )}
-  </li>
-))}
-
-          </ul>
-          <div className="nav-caption fw-600 font-xssss text-grey-500">
-            <span></span> Account
-          </div>
-          <ul className="mb-3">
-            <li className="logo d-none d-xl-block d-lg-block"></li>
-            <li>
-              <Link
-                to="/student/settings"
-                className="nav-content-bttn open-font h-auto pt-2 pb-2"
-              >
-                <i className="font-sm feather-settings mr-3 text-dark"></i>
-                <span>Settings</span>
-              </Link>
-            </li>
-            <li>
-              <LogoutButton />
-            </li>
+              <li key={index}>
+                {route.title && isFull ? (
+                  <OverlayTrigger
+                    delay={{ hide: 300, show: 250 }}
+                    overlay={(props) => (
+                      <Tooltip {...props}>{route.title}</Tooltip>
+                    )}
+                    placement="right"
+                  >
+                    <NavLink
+                      to={route.path}
+                      className="nav-content-bttn open-font"
+                      data-tab="chats"
+                    >
+                      <i className={`${route.icon} mr-3`}></i>
+                      <span>{route.title}</span>
+                    </NavLink>
+                  </OverlayTrigger>
+                ) : (
+                  <NavLink
+                    to={route.path}
+                    className="nav-content-bttn open-font"
+                    data-tab="chats"
+                  >
+                    <i className={`${route.icon} mr-3`}></i>
+                    <span>{route.title}</span>
+                  </NavLink>
+                )}
+              </li>
+            ))}
           </ul>
           <div className="nav-caption fw-600 font-xssss text-grey-500"></div>
           <ul>
@@ -111,9 +94,13 @@ function NavHeader({ isOpen, toggleNav }) {
             <li>
               <OverlayTrigger
                 delay={{ hide: 450, show: 300 }}
-                overlay={(props) => (
-                  <Tooltip {...props}>Expand the sidebar</Tooltip>
-                )}
+                overlay={(props) =>
+                  isFull ? (
+                    <Tooltip {...props}>Expand the sidebar</Tooltip>
+                  ) : (
+                    <span />
+                  )
+                }
                 placement="right"
               >
                 <Link

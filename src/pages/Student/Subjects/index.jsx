@@ -104,11 +104,7 @@ function Subjects() {
         ) : subjects && subjects.length > 0 ? (
           subjects?.map((subject, index) => (
             <div
-              className={`${
-                subject.results || subject.latest_test_id
-                  ? 'col-xl-4'
-                  : 'col-xl-3'
-              } col-lg-6 mb-4`}
+              className={`col-lg-3`}
               key={index}
             >
               <div className="card py-4 px-0 w-100 h-100 shadow-xss rounded-lg border-0 text-center d-flex justify-content-center align-items-center">

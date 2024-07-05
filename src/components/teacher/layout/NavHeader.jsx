@@ -97,39 +97,33 @@ function NavHeader({ isOpen, toggleNav }) {
               </li>
             ))}
           </ul>
-          <div className="nav-caption fw-600 font-xssss text-grey-500">
-            <span></span> Account
-          </div>
-          <ul className="mb-3">
-            <li className="logo d-none d-xl-block d-lg-block"></li>
-            <li>
-              <Link
-                to="/teacher/settings"
-                className="nav-content-bttn open-font h-auto pt-2 pb-2"
-              >
-                <i className="font-sm feather-settings mr-3 text-dark"></i>
-                <span>Settings</span>
-              </Link>
-            </li>
-            <li>
-              <LogoutButton />
-            </li>
-          </ul>
           <div className="nav-caption fw-600 font-xssss text-grey-500"></div>
           <ul>
             <li className="logo d-none d-xl-block d-lg-block"></li>
             <li>
-              <Link
-                to="#"
-                onClick={toggleNavWidth}
-                className="nav-content-bttn open-font h-auto pt-2 pb-2"
+            <OverlayTrigger
+                delay={{ hide: 450, show: 300 }}
+                overlay={(props) =>
+                  isFull ? (
+                    <Tooltip {...props}>Expand the sidebar</Tooltip>
+                  ) : (
+                    <span />
+                  )
+                }
+                placement="right"
               >
-                <i
-                  className={`font-sm ${
-                    isFull ? 'feather-chevron-right' : 'feather-chevron-left'
-                  }  mr-3 text-dark`}
-                ></i>
-              </Link>
+                <Link
+                  to="#"
+                  onClick={toggleNavWidth}
+                  className="nav-content-bttn open-font h-auto pt-2 pb-2"
+                >
+                  <i
+                    className={`font-sm ${
+                      isFull ? 'feather-chevron-right' : 'feather-chevron-left'
+                    }  mr-3 text-dark`}
+                  ></i>
+                </Link>
+              </OverlayTrigger>
             </li>
           </ul>
         </div>

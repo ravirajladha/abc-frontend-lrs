@@ -1,4 +1,5 @@
 import React from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 function DarkButton() {
   let clickedClass = 'clicked';
@@ -33,14 +34,16 @@ function DarkButton() {
   };
   return (
     <li className={'nav-item dropdown '}>
-      <span
-        className={`navi-link  cursor-pointer ${
-          theme === 'dark' ? clickedClass : ''
-        }`}
-        onClick={(e) => switchTheme(e)}
-      >
-        <i className={`feather-moon`}></i>
-      </span>
+      <OverlayTrigger placement="bottom" overlay={<Tooltip>Dark Mode</Tooltip>}>
+        <span
+          className={`navi-link  cursor-pointer ${
+            theme === 'dark' ? clickedClass : ''
+          }`}
+          onClick={(e) => switchTheme(e)}
+        >
+          <i className={`feather-moon`}></i>
+        </span>
+      </OverlayTrigger>
     </li>
   );
 }

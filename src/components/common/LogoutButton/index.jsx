@@ -35,10 +35,9 @@ function LogOutButton() {
   return (
     <a
       onClick={handleLogout}
-      className="cursor-pointer nav-content-bttn open-font h-auto pt-2 pb-2"
+      className=""
     >
-      <i className="font-sm feather-log-out mr-3 text-dark"></i>
-      <span>Logout</span>
+      <i className="feather-log-out font-xl text-current"></i>
     </a>
   );
 }

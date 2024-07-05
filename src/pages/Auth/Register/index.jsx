@@ -103,24 +103,39 @@ function Index() {
       <div className="main-wrap card overflow-hidden vh-100">
         <ToastContainer autoClose={3000} closeOnClick />
         <div className="row">
-          <div
-            className="col-xl-5 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"
+        <div
+            className="col-xl-6 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"
             style={{
-              backgroundImage: `url(/assets/images/classroom1_compressed.jpg)`,
+              backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)),url(/assets/images/welcome.jpg)`,
               backgroundColor: '#f2f2f2',
               transition: '0.5s ease-in-out',
+              position: 'relative',
             }}
-          ></div>
+          >
+            <img
+              src={Logo}
+              alt="logo"
+              style={{
+                width: 150,
+                position: 'absolute',
+                top: '10%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                padding: '10px',
+                borderRadius: '5px',
+              }}
+            />
+          </div>
 
-          <div className="col-xl-7 vh-100 align-items-center d-flex bg-white rounded-lg overflow-hidden">
+          <div className="col-xl-6 vh-100 align-items-center d-flex bg-white rounded-lg overflow-hidden">
             <div className="card shadow-none border-0 ml-auto mr-auto login-card">
               <div className="card-body rounded-0 text-left">
-                <img
+                {/* <img
                   src={Logo}
                   alt="logo"
                   className="inline-center flex center my-3"
                   width={100}
-                />
+                /> */}
                 <br />
                 <h2 className="fw-700 display1-size display2-md-size mb-4">
                   Create <br />
