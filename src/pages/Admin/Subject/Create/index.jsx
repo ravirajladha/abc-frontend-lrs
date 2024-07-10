@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { Spinner } from 'react-bootstrap';
 
 import { createSubject, fetchSuperSubjects } from '@/api/admin';
-import { ContentHeader } from '@/components/common';
+import { ContentHeader, TextEditor } from '@/components/common';
 import SUBJECT_TYPES from '@/utils/constants/subjectType.constants';
 
 function Create({ title }) {
@@ -20,6 +20,8 @@ function Create({ title }) {
     subject_image_name: '',
     subject_type: '',
     super_subject: null,
+    benefits: '',
+    description: ''
   });
   const [validationErrors, setValidationErrors] = useState({});
   const [loading, setLoading] = useState(false); // Loader state
@@ -43,10 +45,15 @@ function Create({ title }) {
       });
     }
   };
-
+  const handleTextEditorChange = (field, content) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: content,
+    }));
+  };
   const handleSubjectTypeChange = (event) => {
     const subjectType = event.target.value;
-    setFormData((prevData) => ({ ...prevData, subject_type:subjectType }));
+    setFormData((prevData) => ({ ...prevData, subject_type: subjectType }));
     if (subjectType === '3') {
       setShowSuperSubject(true);
     } else {
@@ -62,6 +69,9 @@ function Create({ title }) {
     submissionData.append('class_id', classId);
     submissionData.append('subject_type', 1);
     submissionData.append('super_subject_id', null);
+    submissionData.append('benefits', formData.benefits);
+    submissionData.append('description', formData.description);
+
 
     try {
       const response = await createSubject(submissionData);
@@ -75,10 +85,9 @@ function Create({ title }) {
         setValidationErrors(error.validationErrors);
       }
       toast.error(error.message);
-    }finally{
-      setLoading(false); 
+    } finally {
+      setLoading(false);
     }
-
   };
   const fetchData = async () => {
     try {
@@ -107,7 +116,7 @@ function Create({ title }) {
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                    Course Name
+                      Course Name
                     </label>
                     <input
                       type="text"
@@ -119,7 +128,7 @@ function Create({ title }) {
                     />
                     {validationErrors.subject_name && (
                       <span className="text-danger">
-                          Course empty or not found
+                        Course empty or not found
                       </span>
                     )}
                   </div>
@@ -127,7 +136,7 @@ function Create({ title }) {
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font form-label fw-600 font-xsss">
-                    Course Image
+                      Course Image
                     </label>
                     <input
                       type="text"
@@ -155,64 +164,36 @@ function Create({ title }) {
                     )}
                   </div>
                 </div>
-                {/* <div className="col-lg-6 col-md-12 mb-3">
+                <div className="col-lg-12 col-md-12 mb-3">
                   <div className="form-group">
-                    <label className="form-label mont-font fw-600 font-xsss">
-                    Course Type
-                    </label>
-                    <select
-                      className="form-control"
-                      placeholder="Enter Subject Type"
-                      name="subject_type"
-                      onChange={handleSubjectTypeChange}
-                      required
-                    >
-                      <option value=""  readOnly>
-                        Select Course Type
-                      </option>
-                      {SUBJECT_TYPES.map((type) => (
-                        <option value={type.id} key={type.id}>
-                          {type.name}
-                        </option>
-                      ))}
-                    </select>
-                    {validationErrors.subject_type && (
-                      <span className="text-danger font-xsss mt-2">
-                        {validationErrors.subject_type}
+                    <label className="mont-font fw-600 font-xsss">Benefits</label>
+                       <TextEditor
+                      initialValue={formData.benefits || 'default value'}
+                      onContentChange={(html) => handleTextEditorChange('benefits', html)}
+                    />
+
+                    {validationErrors.benefits && (
+                      <span className="text-danger">
+                        {validationErrors.benefits}
                       </span>
                     )}
                   </div>
                 </div>
-                {showSuperSubject && (
-                  <div className="col-lg-6 col-md-12 mb-3">
-                    <div className="form-group">
-                      <label className="form-label mont-font fw-600 font-xsss">
-                        Select Super Subject
-                      </label>
-                      <select
-                        className="form-control"
-                        placeholder="Enter Super Type"
-                        name="super_subject"
-                        onChange={handleFormChange}
-                        required
-                      >
-                        <option value="" readOnly>
-                          Select Super Subject
-                        </option>
-                        {superSubjects.map((superSubject) => (
-                          <option key={superSubject.id} value={superSubject.id}>
-                            {superSubject.name}
-                          </option>
-                        ))}
-                      </select>
-                      {validationErrors.super_subject && (
-                        <span className="text-danger font-xsss mt-2">
-                          {validationErrors.super_subject}
-                        </span>
-                      )}
-                    </div>
+                <div className="col-lg-12 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">Description</label>
+                       <TextEditor
+                      initialValue={formData.description || 'default value'}
+                      onContentChange={(html) => handleTextEditorChange('description', html)}
+                    />
+
+                    {validationErrors.description && (
+                      <span className="text-danger">
+                        {validationErrors.description}
+                      </span>
+                    )}
                   </div>
-                )} */}
+                </div>
               </div>
               <div className="col-lg-12 mb-0 mt-2 pl-0">
                 <button
@@ -220,32 +201,22 @@ function Create({ title }) {
                   className="bg-current border-0 text-center float-right text-white font-xsss fw-600 p-3 w150 rounded-lg d-inline-block"
                   disabled={loading}
                 >
-
-{/* {loading ? (
-                    <i className="fa fa-spinner fa-spin mr-2"></i>
-                  ) : (
-                    <i className="feather-save mr-2"></i>
-                  )}
-                  {loading ? 'Saving...' : 'Save'} */}
-
                   {loading ? (
-                  <>
-                    {' '}
-                    <Spinner
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                      className="mr-2"
-                    />
-                  </>
-                ) : (
-                  <>
-                    <i className="feather-save mr-2"></i> Save
-                  </>
-                )}
-
-                  {/* <i className="feather-save mr-2"></i> Save */}
+                    <>
+                      {' '}
+                      <Spinner
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        className="mr-2"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <i className="feather-save mr-2"></i> Save
+                    </>
+                  )}
                 </button>
               </div>
             </form>

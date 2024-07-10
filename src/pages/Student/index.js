@@ -4,6 +4,7 @@ export { default as StudentProfile } from './Profile';
 export { default as StudentLearn } from './Learn';
 export { default as StudentSubjects } from './Subjects';
 export { default as StudentSubjectResults } from './Subjects/Results';
+export { default as StudentCoursePreview } from './Subjects/CoursePreview';
 
 export { default as StudentTermTest } from './TermTest';
 export { default as EndTestModal } from './TermTest/EndTestModal';

@@ -284,3 +284,8 @@ export const fetchMyCourses = async () => {
   );
   return response.data;
 };
+
+export const fetchCoursePreviewData = async (subjectId) => {
+  const response = await apiService.fetchData(`/student/course-preview/${subjectId}`);
+  return response.data;
+};

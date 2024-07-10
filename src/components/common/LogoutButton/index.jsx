@@ -37,7 +37,7 @@ function LogOutButton() {
       onClick={handleLogout}
       className=""
     >
-      <i className="feather-log-out font-xl text-current"></i>
+      <i className="feather-log-out font-xl text-white"></i>
     </a>
   );
 }

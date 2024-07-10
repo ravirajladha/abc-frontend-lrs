@@ -130,7 +130,7 @@ function Subjects() {
                     </div>
                     <div className="d-flex justify-content-center">
                       <Link
-                        to={subject.id + '/learn'}
+                        to={subject.id + '/course-preview'}
                         className="px-2 py-1 mt-2 mx-1 d-inline-block text-white fw-700 lh-32 rounded-lg w100 text-center font-xsssss ls-3 bg-success"
                       >
                         LEARN
