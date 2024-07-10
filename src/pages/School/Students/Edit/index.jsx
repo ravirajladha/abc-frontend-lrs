@@ -38,14 +38,15 @@ function Edit() {
     pincode: '',
     description: '',
     dob:'',
-    profile_image:''
-
+    profile_image:'',
+    status: '',
   });
 
   const fetchTeacherData = useCallback(async () => {
     try {
       const response = await fetchStudent(studentId);
       const data = response.student;
+      // console.log("student data", data);
       if (data) {
         const updatedForm = {
           name: data.name || '',
@@ -60,6 +61,8 @@ function Edit() {
           pincode: data.pincode || '',
           address: data.address || '',
           profile_image: data.profile_image || '',
+          status: data.student_status !== undefined ? String(data.student_status) : '', // Ensure
+          
         };
         setForm(updatedForm);
         setLoading(false);
@@ -75,46 +78,7 @@ function Edit() {
     fetchTeacherData();
   }, [fetchTeacherData]);
 
-  // const fetchClassDropdownData = useCallback(() => {
-  //   fetchClasses()
-  //     .then((data) => {
-  //       setClasses(data);
-  //     })
-  //     .catch((error) => {
-  //       toast.error(error.message);
-  //     });
-  //   fetchSectionsDropdownData();
-  // }, []);
 
-  // const fetchSectionsDropdownData = useCallback(() => {
-  //   fetchSections()
-  //     .then((data) => {
-  //       setSections(data);
-  //     })
-  //     .catch((error) => {
-  //       toast.error(error.message);
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   fetchClassDropdownData();
-  // }, [fetchClassDropdownData]);
-
-  // const handleClassChange = ({ target: { value } }) => {
-  //   setValidationErrors(({ class_id: _, ...prevErrors }) => prevErrors);
-  //   setForm((prevForm) => ({
-  //     ...prevForm,
-  //     class_id: value,
-  //   }));
-  // };
-
-  // const handleSectionChange = ({ target: { value } }) => {
-  //   setValidationErrors(({ section_id: _, ...prevErrors }) => prevErrors);
-  //   setForm((prevForm) => ({
-  //     ...prevForm,
-  //     section_id: value,
-  //   }));
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,6 +99,7 @@ function Edit() {
       submissionData.append('dob', form.dob || '');
       submissionData.append('pincode', form.pincode || '');
       submissionData.append('address', form.address || '');
+      submissionData.append('status', form.status );
 
       const response = await editStudent(studentId, submissionData);
       toast.success('Student added successfully', response);
@@ -183,7 +148,14 @@ function Edit() {
       }));
     }
   };
-
+  //student status dropdown function
+  const handleDropdownChange = (event) => {
+    const { name, value } = event.target;
+    setForm((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
   return (
     <div className="px-2">
       <ContentHeader title="Edit" subtitle="Student" />
@@ -431,7 +403,22 @@ function Edit() {
                   </div>
                 </div>
           </div>
-
+          <div className="col-lg-12 mb-2">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">
+                 Status 
+                  </label>
+                  <select
+                    className="form-control"
+                    name="status"
+                    value={form.status}
+                    onChange={handleDropdownChange}
+                  >
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                  </select>
+                </div>
+              </div>
           <div className="row"></div>
           <div className="col-lg-12 mb-0 mt-2 pl-0">
             <button
