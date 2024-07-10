@@ -32,6 +32,7 @@ const StudentTable = ({ students, loading, toggleModal }) => (
                     <th className="border-0">Name</th>
                     <th className="border-0">Email</th>
                     <th className="border-0">Subscription</th>
+                    <th className="border-0">Status</th>
                     <th className="border-0">Number</th>
                     {/* <th className="border-0">Class</th> */}
                     {/* <th className="border-0">Section</th> */}
@@ -45,6 +46,7 @@ const StudentTable = ({ students, loading, toggleModal }) => (
                       <td>{student.name}</td>
                       <td>{student.email}</td>
                       <td>  <Badge isPaid={student.is_paid} /></td>
+                      <td>  <Badge isPaid={student.status} /></td>
               
                       <td>{student.phone_number}</td>
                       {/* <td>{student?.class_name}</td> */}

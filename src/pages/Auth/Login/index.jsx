@@ -57,7 +57,22 @@ function Login() {
         toast.error('Invalid credentials');
       }
     } catch (err) {
-      toast.error('Login failed. Please try again.');
+      if (err.response && err.response.data) {
+        // Display the error message from the backend
+        const { message, errors } = err.response.data;
+        if (message) {
+          toast.error(message);
+        }
+        if (errors) {
+          Object.values(errors).forEach((errorArray) => {
+            errorArray.forEach((errorMessage) => {
+              toast.error(errorMessage);
+            });
+          });
+        }
+      } else {
+        toast.error('Login failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
