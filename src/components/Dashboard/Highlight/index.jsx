@@ -37,7 +37,7 @@ console.log("userData: " + userData.name);
             >
               Welcome,
             </span>
-            Hi,{' '}
+            {' '}
             {USER_TYPES.STUDENT == userData?.type
               ? `${studentData['student_name']}`
               : `${userData['name']}`}

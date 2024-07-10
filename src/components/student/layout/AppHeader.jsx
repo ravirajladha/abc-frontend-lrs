@@ -11,7 +11,8 @@ function AppHeader({ toggleNav }) {
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
 
   return (
-    <div className="middle-sidebar-header bg-white">
+    <div className="middle-sidebar-header bg-white"  >
+  {/* <div className="middle-sidebar-header bg-white" style={{ borderBottom: '2px solid #0f36c0' }}>  */}
       <button onClick={toggleNav} className="header-menu"></button>
       <div className=" d-inline-block float-left mb-0 text-grey-900">
         <h1
