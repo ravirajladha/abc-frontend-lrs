@@ -5,7 +5,7 @@ import { getStudentDataFromLocalStorage } from '@/utils/services';
 import LogoutButton from '@/components/common/LogoutButton';
 import { toast } from 'react-toastify';
 import { fetchFeeDetails, validateReferralCode } from '@/api/admin';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const PaymentModal = ({
   showModal,
   handleCloseModal,
@@ -21,20 +21,18 @@ const PaymentModal = ({
   const [validationErrors, setValidationErrors] = useState({});
   const [isPaymentDone, setIsPaymentDone] = useState(false);
   const navigate = useNavigate();
- 
+  const { subjectId } = useParams();
 
   const studentDataLocal = JSON.parse(getStudentDataFromLocalStorage());
   // const [showModal, setShowModal] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
-console.log("payment details", studentDataLocal.is_paid);
-console.log("payment", isPaid);
+  console.log('payment details', studentDataLocal.is_paid);
+  console.log('payment', isPaid);
   useEffect(() => {
     const isPaidStatus =
       localStorage.getItem('is_paid') === 'true' || studentData.is_paid;
     setIsPaid(isPaidStatus);
- 
   }, [studentData.is_paid]);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,6 +78,7 @@ console.log("payment", isPaid);
         referral_code: referralCode, // Only include if valid
         referral_amount: feesData.referral_amount,
         referrer_amount: feesData.referrer_amount,
+        course_id: subjectId,
       });
       setLoading(false);
 
@@ -110,83 +109,93 @@ console.log("payment", isPaid);
     <>
       {feesData ? (
         <>
-          {/* <p className="font-xsss fw-500">
-              <i className="feather-info"> </i>
-              Please complete the payment to continue using the application.
-            </p> */}
-
-          <div className="mb-1">
-            <h4 className="font-xss fw-500 pt-2 text-black">Benefits:</h4>
-            <p
-              className="font-xsss fw-500"
-              dangerouslySetInnerHTML={{ __html: feesData.benefits }}
-            ></p>
-          </div>
-          <div className="mb-1">
-            <h4 className="font-xss fw-500 pt-0 text-black">Description:</h4>
-            <p
-              className="font-xsss fw-500"
-              dangerouslySetInnerHTML={{ __html: feesData.description }}
-            ></p>
-          </div>
-          {!isPaid && (
-          <Form.Group controlId="formReferralCode" className="mb-3">
-            <h4 className="font-xss fw-500 pt-2 text-black">Referral Code:</h4>
-            <div className="d-flex">
-              <Form.Control
-                type="text"
-                placeholder="Enter referral code"
-                value={referralCode}
-                onChange={(e) => {
-                  setReferralCode(e.target.value);
-                  setIsReferralValid(false); // Reset validation if the code changes
-                }}
-                disabled={isReferralValid} // Disable input if validated
-              />
-              {!isReferralValid && (
-                <Button
-                  onClick={handleValidateReferral}
-                  className="w-100 btn bg-primary text-white"
-                >
-                  Validate
-                </Button>
-              )}
+          {!isPaid ? (
+            <div className="middle-wrap">
+              <div className="card w-100 border-0 bg-white shadow-md p-0 mb-4">
+                <div className="card-body p-4 w-100 border-0 rounded-lg">
+                  <h4 className="font-xss fw-700 pt-2 text-black mb-0 w-50">
+                    Complete Payment
+                  </h4>
+                  <div className="card border-0 shadow-none mb-4 mt-3">
+                    <div className="card-body d-block text-left p-0">
+                      <div className="item w-100 bg-white rounded-xxl overflow-hidden text-left shadow-md pl-3 pt-2 align-items-end flex-column d-flex">
+                        <div className="card border-0 shadow-none p-0 bg-transparent-card text-left w-100">
+                          <Form.Group
+                            controlId="formReferralCode"
+                            className="mb-3"
+                          >
+                            <h4 className="font-xss fw-500 pt-2 text-black">
+                              Referral Code:
+                            </h4>
+                            <div className="row">
+                              <div className="col-8">
+                                <Form.Control
+                                  type="text"
+                                  placeholder="Enter referral code"
+                                  value={referralCode}
+                                  onChange={(e) => {
+                                    setReferralCode(e.target.value);
+                                    setIsReferralValid(false); // Reset validation if the code changes
+                                  }}
+                                  disabled={isReferralValid} // Disable input if validated
+                                />
+                                {validationErrors.referral_code && (
+                                  <span className="text-danger">
+                                    {validationErrors.referral_code}
+                                  </span>
+                                )}
+                                {referralName && (
+                                  <span
+                                    className={`text-${
+                                      isReferralValid ? 'success' : 'danger'
+                                    }`}
+                                  >
+                                    {referralName}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="col-4 text-right pr-4">
+                                {!isReferralValid && (
+                                  <Button
+                                    onClick={handleValidateReferral}
+                                    className="w-100 btn bg-primary text-white p-3 border-0 font-xssss fw-600"
+                                  >
+                                    Validate
+                                  </Button>
+                                )}
+                              </div>
+                            </div>
+                          </Form.Group>
+                        </div>
+                        <div className="card border-0 shadow-none p-0 bg-transparent-card text-center w-100 mt-4">
+                          <h4 className="text-grey-900 font-sm fw-700 mont-font mb-3 text-dark-color">
+                            <s className="text-muted me-2">
+                              Rs. {feesData.slash_amount}
+                            </s>{' '}
+                            Rs.
+                            {feesData.amount}
+                          </h4>
+                            <button
+                              onClick={handlePayment}
+                              disabled={loading}
+                              className="btn w150 bg-success text-white p-3 font-xssss fw-600 mx-auto mb-4"
+                              style={{ whiteSpace: 'nowrap' }}
+                            >
+                              {loading ? 'Processing...' : 'PAY NOW'}
+                              <i className="feather-check-square font-xsss pl-2"></i>
+                            </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            {validationErrors.referral_code && (
-              <span className="text-danger">
-                {validationErrors.referral_code}
-              </span>
-            )}
-            {referralName && (
-              <span
-                className={`text-${isReferralValid ? 'success' : 'danger'}`}
-              >
-                {referralName}
-              </span>
-            )}
-          </Form.Group>
+          ) : (
+            <h5 className="font-xs mb-2 text-center rounded-lg w-50 bg-success py-3 text-dark fw-400 border border-size-md bg-success">
+              Payment Successful
+            </h5>
           )}
-          <div className="d-flex align-items-center">
-            <h4 className="font-xss fw-500 pt-2 text-black mb-0 w-50">
-              <s className="text-muted me-2">Rs. {feesData.slash_amount}</s> Rs.
-              {feesData.amount}
-            </h4>
-            {!isPaid ? (
-                <button
-                  onClick={handlePayment}
-                  disabled={loading}
-                  className="btn bg-success text-white ms-3"
-                  style={{ whiteSpace: 'nowrap' }}
-                >
-                  <i className="feather-check-square font-xsss me-2"></i>
-                  {loading ? 'Processing...' : <u>PAY NOW</u>}
-                </button>
-              ) : (
-                <h5 className="font-xs mb-2 text-center rounded-lg w-50 bg-success py-3 text-dark fw-400 border border-size-md bg-success">
-                  Payment Successful
-                </h5>
-              )}
-          </div>
         </>
       ) : (
         <p>Loading fee details...</p>

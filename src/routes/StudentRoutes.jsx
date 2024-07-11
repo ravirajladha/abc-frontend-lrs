@@ -20,6 +20,7 @@ import {
   StudentZoomCall,
   PaymentStudent,
   CertificateViewer,
+  StudentCoursePreview,
 // Home
 } from '@/pages';
 import {
@@ -34,6 +35,7 @@ const StudentRoutes = [
   { path: 'courses/:subjectId/results', element: <StudentSubjectResults isAdmin={false} isStudent={true}/> },
 
   { path: 'courses/:subjectId/learn', element: <StudentLearn /> },
+  { path: 'courses/:subjectId/course-preview', element: <StudentCoursePreview /> },
   {
     path: 'courses/:subjectId/learn/:videoId/assessment/:assessmentId',
     element: <StudentAssessmentTest />,
@@ -77,7 +79,7 @@ const StudentRoutes = [
   { path: 'readable-courses', element: <StudentReadableCourses title="Readable Courses"/> },
 
   { path: 'zoom-call', element: <StudentZoomCall title="Zoom Call"/> },
-  { path: 'payment', element: <PaymentStudent title="Payment"/> },
+  { path: 'payment/:subjectId', element: <PaymentStudent title="Payment"/> },
   { path: 'certificate/uploads/pass/:imageUrl?', element: <CertificateViewer title="Certificate"/> },
 ];
 

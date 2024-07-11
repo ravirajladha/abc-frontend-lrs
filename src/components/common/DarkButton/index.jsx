@@ -33,15 +33,15 @@ function DarkButton() {
     }
   };
   return (
-    <li className={'nav-item dropdown '}>
+    <li className={''}>
       <OverlayTrigger placement="bottom" overlay={<Tooltip>Dark Mode</Tooltip>}>
         <span
-          className={`navi-link  cursor-pointer ${
+          className={`cursor-pointer ${
             theme === 'dark' ? clickedClass : ''
           }`}
           onClick={(e) => switchTheme(e)}
         >
-          <i className={`feather-moon`}></i>
+          <i className={`feather-moon font-xl  text-white`}></i>
         </span>
       </OverlayTrigger>
     </li>

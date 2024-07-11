@@ -7,7 +7,7 @@ const index = () => {
     <li>
       <Link to="#">
         <span className="dot-count bg-warning"></span>
-        <i className="feather-bell font-xl text-current"></i>
+        <i className="feather-bell font-xl text-white"></i>
         <div className="menu-dropdown">
           <h4 className="fw-700 font-xs mb-4">Notifications</h4>
           <div className="card bg-transparent-card w-100 border-0 mb-3">
