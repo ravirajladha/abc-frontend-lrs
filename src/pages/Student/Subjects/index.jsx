@@ -8,8 +8,8 @@ import { fetchSubjectsWithResults, startTest } from '@/api/student';
 import { ContentFallback, ContentError } from '@/components/common';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 import { toast } from 'react-toastify';
-
 import { Modal } from 'react-bootstrap';
+
 function Subjects() {
   const baseUrl = import.meta.env.VITE_BASE_URL;
   // const studentData = useOutletContext();
@@ -107,7 +107,7 @@ function Subjects() {
               className={`col-lg-3`}
               key={index}
             >
-              <div className="card py-4 px-0 w-100 h-100 shadow-xss rounded-lg border-0 text-center d-flex justify-content-center align-items-center">
+              <div className="card py-4 px-0 pt-4 mt-4 w-100 h-100 shadow-xss rounded-lg border-0 text-center d-flex justify-content-center align-items-center">
                 <div className="wrapper d-flex flex-row w-100">
                   <div className="col-lg-12">
                     <div>
