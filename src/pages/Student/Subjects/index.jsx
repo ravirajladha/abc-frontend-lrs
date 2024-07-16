@@ -103,10 +103,7 @@ function Subjects() {
           <ContentError message={error.message} />
         ) : subjects && subjects.length > 0 ? (
           subjects?.map((subject, index) => (
-            <div
-              className={`col-lg-3`}
-              key={index}
-            >
+            <div className={`col-lg-3`} key={index}>
               <div className="card py-4 px-0 pt-4 mt-4 w-100 h-100 shadow-xss rounded-lg border-0 text-center d-flex justify-content-center align-items-center">
                 <div className="wrapper d-flex flex-row w-100">
                   <div className="col-lg-12">
@@ -125,7 +122,9 @@ function Subjects() {
                         {subject.name}
                       </h4>
                       {subject?.class_name && (
-                        <h4 className="fw-500 font-xss">{subject.class_name}</h4>
+                        <h4 className="fw-500 font-xss">
+                          {subject.class_name}
+                        </h4>
                       )}
                     </div>
                     <div className="d-flex justify-content-center">
@@ -135,7 +134,7 @@ function Subjects() {
                       >
                         LEARN
                       </Link>
-                      {subject.results && subject.results.length > 0 &&(
+                      {subject.results && subject.results.length > 0 && (
                         <Link
                           to={subject.id + '/results'}
                           className={`px-2 py-1 mt-2 mx-1 d-inline-block text-white fw-700 lh-32 rounded-lg w100 text-center font-xsssss ls-3 bg-current`}
@@ -161,14 +160,11 @@ function Subjects() {
                               : 'not-allowed',
                           }}
                         >
-                          {loading1
-                            ? 'Loading...'
-                            : 'Take Test'}
+                          {loading1 ? 'Loading...' : 'Take Test'}
                         </button>
                       )}
                     </div>
                   </div>
-
                 </div>
               </div>
               {showModal && (

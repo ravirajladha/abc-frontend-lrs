@@ -11,9 +11,11 @@ import {
   ContentTitle,
   MiniProjects,
 } from '@/components/student/learn';
+import { ReviewCard, TrainerCard } from '@/components/student/previewCourse';
 
 import { fetchContents, fetchExternalStudentContents } from '@/api/student';
 import { getUserDataFromLocalStorage } from '@/utils/services';
+import { Tab, Tabs } from 'react-bootstrap';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -211,6 +213,11 @@ function Learn() {
             videoId={activeVideo.id}
             lastTimestamp={activeVideo.watch_time}
           />
+          <ContentTitle
+            title={activeVideo?.title}
+            chapter={activeVideo?.chapter}
+            teacher={teacher?.name}
+          />
         </div>
         <div className="col-xl-4 col-xxl-3">
           <VideoTabs
@@ -227,17 +234,18 @@ function Learn() {
         </div>
       </div>
       <div className="row">
-        <div className="col-xl-8 col-xxl-9 px-3">
-          <ContentTitle
-            title={activeVideo?.title}
-            chapter={activeVideo?.chapter}
-            teacher={teacher?.name}
-          />
-        </div>
-      </div>
-      <div className="row">
         <div className="col-xl-8 col-xxl-9">
-          <ContentDescription description={activeVideo.description} />
+          <Tabs className="font-xss fw-600 d-flex justify-content-around">
+            <Tab title="Overview" eventKey="overview">
+              <ContentDescription description={activeVideo.description} />
+            </Tab>
+            <Tab title="Trainer Details" eventKey="trainer">
+              <TrainerCard teacher={teacher} />
+            </Tab>
+            <Tab title="Reviews" eventKey="review">
+              <ReviewCard />
+            </Tab>
+          </Tabs>
           <h2 className="fw-700 font-sm mb-3 mt-3 pl-1 mb-3">Mini Projects</h2>
           <div className="row mt-2">
             {miniProjects.map((project) => (

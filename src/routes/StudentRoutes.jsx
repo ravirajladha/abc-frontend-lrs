@@ -21,6 +21,7 @@ import {
   PaymentStudent,
   CertificateViewer,
   StudentCoursePreview,
+  StudentProfileEdit,
 // Home
 } from '@/pages';
 import {
@@ -73,7 +74,7 @@ const StudentRoutes = [
   { path: 'jobs', element: <StudentJobs /> },
 
   { path: 'profile', element: <StudentProfile  isAdmin="false" isStudent="true"/> },
-  { path: 'settings', element: <StudentSettings title="Settings"/> },
+  { path: 'profile/:studentId/edit', element: <StudentProfileEdit /> },
   { path: 'settings', element: <StudentSettings title="Settings"/> },
 
   { path: 'readable-courses', element: <StudentReadableCourses title="Readable Courses"/> },

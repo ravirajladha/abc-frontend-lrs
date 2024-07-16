@@ -1,5 +1,6 @@
 export { default as StudentDashboard } from './Dashboard';
 export { default as StudentProfile } from './Profile';
+export { default as StudentProfileEdit } from './Profile/Edit';
 
 export { default as StudentLearn } from './Learn';
 export { default as StudentSubjects } from './Subjects';

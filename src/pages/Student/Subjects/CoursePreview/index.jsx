@@ -16,8 +16,13 @@ import { Accordion, Modal } from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import { formatDate } from '@/utils/helpers';
 import { fetchCoursePreviewData } from '@/api/student';
-import { ChapterAccordion } from '@/components/student/previewCourse';
+import {
+  ChapterAccordion,
+  ReviewCard,
+  TrainerCard,
+} from '@/components/student/previewCourse';
 import { fetchFeeDetails } from '@/api/admin';
+
 function Subjects() {
   const baseUrl = import.meta.env.VITE_BASE_URL;
   const { subjectId } = useParams();
@@ -31,6 +36,7 @@ function Subjects() {
   const [subjects, setSubjects] = useState([]);
   const [chapters, setChapters] = useState([]);
   const [feesData, setFeesData] = useState(null);
+  const [teacher, setTeacher] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -42,6 +48,7 @@ function Subjects() {
       console.log('Fetching', data);
       setSubjects(data.subject);
       setChapters(data.chapters);
+      setTeacher(data.teacher);
       setLoading(false);
     } catch (error) {
       setError(error);
@@ -106,13 +113,16 @@ function Subjects() {
                     </a>
                   </div>
                 </div>
-
-                {/* <span className="font-xssss fw-700 text-grey-900 d-inline-block ml-0 text-dark">
-                  Cassica Vanni
-                </span> */}
+                <span className="font-xssss fw-600 text-grey-500 d-inline-block ml-1">
+                  {subjects?.class_name}
+                </span>
                 <span className="dot ml-2 mr-2 d-inline-block btn-round-xss bg-grey"></span>
                 <span className="font-xssss fw-700 text-grey-900 d-inline-block ml-0 text-dark">
-                  Created on {formatDate(subjects.created_at)}
+                  Created by: {teacher?.name}
+                </span>
+                <span className="dot ml-2 mr-2 d-inline-block btn-round-xss bg-grey"></span>
+                <span className="font-xssss fw-700 text-grey-900 d-inline-block ml-0 text-dark">
+                  Created on: {formatDate(subjects.created_at)}
                 </span>
               </div>
               <div className="card d-block border-0 rounded-lg overflow-hidden p-4 shadow-xss mt-4 alert-success">
@@ -137,6 +147,8 @@ function Subjects() {
                   dangerouslySetInnerHTML={{ __html: subjects.description }}
                 ></p>
               </div>
+
+              <TrainerCard teacher={teacher} />
             </div>
             <div className="col-xl-4 col-xxl-3">
               <div className="card p-4 mb-4 bg-primary border-0 shadow-xss rounded-lg">
@@ -173,13 +185,13 @@ function Subjects() {
                   </div>
                 )}
               </div>
-
               <div className="card d-block border-0 rounded-lg overflow-hidden mt-3">
                 <h2 className="fw-700 font-sm mb-3 mt-1 pl-1 mb-3">
                   Curriculum
                 </h2>
                 <ChapterAccordion isLoading={loading} chapterData={chapters} />
               </div>
+              <ReviewCard />
             </div>
           </>
         ) : (
