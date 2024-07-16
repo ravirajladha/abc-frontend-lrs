@@ -29,7 +29,7 @@ function School({ title, subtitle }) {
       <div className="row mb-4">
         <div className="col-lg-12 d-flex align-items-center justify-content-between">
           <h2 className="text-grey-900 font-md mb-0">
-            <span className="fw-600">All Schools</span>
+            <span className="fw-600">All Internship Admins</span>
           </h2>
           <div className="d-flex align-items-center">
             <Link
@@ -40,7 +40,7 @@ function School({ title, subtitle }) {
                 className="feather-plus font-xsss mr-1 fw-bolder"
                 style={{ marginTop: '2.5px' }}
               ></span>
-              Add School
+              Add Internship Admin
             </Link>
           </div>
         </div>
@@ -58,7 +58,7 @@ function School({ title, subtitle }) {
             <div className="card border-0 mt-0 rounded-lg shadow-xs">
               <div className="card-body d-flex px-4 pt-4 pb-0">
                 <h4 className="font-xss text-grey-700">
-                  All <strong className="fw-700"> Schools List</strong>{' '}
+                  All <strong className="fw-700"> Internship Admins List</strong>{' '}
                 </h4>
               </div>
               <div className="card-body p-4">

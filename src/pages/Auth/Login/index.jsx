@@ -47,8 +47,15 @@ function Login() {
 
         setTimeout(() => {
           if (USERS[user.type] && USERS[user.type].value === user.type) {
-            const dashboardPath = USERS[user.type].path || '/';
-            navigate(dashboardPath);
+            // console.log('USERS', USERS[user.type].value);
+            // return (USERS[user.type].value)
+            if(USERS[user.type].value===1){
+              navigate('/academic-admin/dashboard');
+            }else{
+              const dashboardPath = USERS[user.type].path || '/';
+              navigate(dashboardPath);
+            }
+        
           } else {
             toast.error('Invalid user type or no matching user found.');
           }

@@ -36,12 +36,12 @@ function Student() {
         title="Students"
         buttons={[
           {
-            link: `/admin/schools/${schoolId}/edit`,
-            text: 'Edit School Details',
+            link: `/admin/academic-admin/${schoolId}/edit`,
+            text: 'Edit Academic Admin Details',
             iconClassName: 'feather-edit mr-2',
           },
         ]}
-        backLink={'/admin/schools'}
+        backLink={'/admin/academic-admin'}
       />
       <NavTab schoolId={schoolId} />
       {loading ? (

@@ -17,10 +17,16 @@ import {
   SubjectEdit,
   SubjectCreate,
   School,
-  // ShowSchool,
   ShowSchoolDetail,
   EditSchool,
   CreateSchool,
+  // AcademicAdmin,
+  // // ShowAcademicAdminDetail,
+  // EditAcademicAdmin,
+  // CreateAcademicAdmin,
+  // AcademicAdminShowApplication,
+  // AcademicAdminShowTeacher,
+  // AcademicAdminShowStudent,
   Quote,
   CreateQuote,
   EditQuote,
@@ -112,6 +118,11 @@ import {
   JobShow,
   JobCreate,
   JobResult,
+  Company,
+  CompanyEdit,
+  CompanyShow,
+  CompanyCreate,
+  CompanyResult,
   Recruiter,
   // AssignRecruiter,
   CreateRecruiter,
@@ -155,7 +166,6 @@ import {
   JobTestCreate,
   JobTestShow,
   JobTestEdit,
-
   // JobTestResult,
   JobTestQuestionBank,
   JobTestQuestionCreate,
@@ -243,24 +253,24 @@ const AdminRoutes = [
     element: <EditQuote title="Edit" subtitle="Quotes" />,
   },
   {
-    path: 'schools',
-    element: <School title="All" subtitle="Schools" />,
+    path: 'academic-admin',
+    element: <School title="All" subtitle="Academic Admins" />,
   },
-  { path: 'schools/create', element: <CreateSchool title="Add New School" /> },
+  { path: 'academic-admin/create', element: <CreateSchool title="Add  Corporate/Academic Admin" /> },
   {
-    path: 'schools/:schoolId/applications',
-    element: <SchoolShowApplication title="School Applications" />,
-  },
-  {
-    path: 'schools/:schoolId/trainers',
-    element: <SchoolShowTeacher title="School Teachers" />,
+    path: 'academic-admin/:schoolId/applications',
+    element: <SchoolShowApplication title="Academic Admin Applications" />,
   },
   {
-    path: 'schools/:schoolId/students',
-    element: <SchoolShowStudent title="School Students" />,
+    path: 'academic-admin/:schoolId/trainers',
+    element: <SchoolShowTeacher title="Academic Admin Teachers" />,
   },
   {
-    path: 'schools/:schoolId/students/:studentId',
+    path: 'academic-admin/:schoolId/students',
+    element: <SchoolShowStudent title="Academic Admin Students" />,
+  },
+  {
+    path: 'academic-admin/:schoolId/students/:studentId',
     element: (
       <StudentProfile
         title="Student Profile Students"
@@ -270,17 +280,31 @@ const AdminRoutes = [
     ),
   },
   {
-    path: 'schools/:schoolId',
-    element: <ShowSchoolDetail title="School Details" />,
+    path: 'academic-admin/:schoolId',
+    element: <ShowSchoolDetail title="Internship Admin  Details" />,
   },
   {
-    path: 'schools/:schoolId/school',
-    element: <ShowSchoolDetail title="School Details" />,
+    path: 'academic-admin/:schoolId/school',
+    element: <ShowSchoolDetail title="Internship Admin  Details" />,
   },
   {
-    path: 'schools/:schoolId/edit',
-    element: <EditSchool title="Edit School" />,
+    path: 'academic-admin/:schoolId/edit',
+    element: <EditSchool title="Edit Academic Admin" />,
   },
+
+
+
+  // // {
+  // //   path: 'academic-admin/:schoolId/students/:studentId',
+  // //   element: (
+  // //     <StudentProfile
+  // //       title="Student Profile Students"
+  // //       isAdmin="true"
+  // //       isStudent="false"
+  // //     />
+  // //   ),
+  // // },
+
 
   //trainers
 
@@ -738,6 +762,50 @@ const AdminRoutes = [
     element: (
       <JobResult
         title="Show Job Student Result"
+        isAdmin={true}
+        isRecruiter={false}
+      />
+    ),
+  },
+  {
+    path: 'companies',
+    element: <Company title="Companies List" isAdmin={true} isRecruiter={false} />,
+  },
+  {
+    path: 'companies/create',
+    element: (
+      <CompanyCreate
+        title="Add New Company Description"
+        isAdmin={true}
+        isRecruiter={false}
+      />
+    ),
+  },
+  {
+    path: 'companies/:companyId/edit',
+    element: (
+      <CompanyEdit
+        title="Edit Company Description"
+        isAdmin={true}
+        isRecruiter={false}
+      />
+    ),
+  },
+  {
+    path: 'companies/:companyId/applications',
+    element: (
+      <CompanyShow
+        title="Show Company Applications"
+        isAdmin={true}
+        isRecruiter={false}
+      />
+    ),
+  },
+  {
+    path: 'companies/:companyId/applications/:applicationsId/result',
+    element: (
+      <CompanyResult
+        title="Show Company Student Result"
         isAdmin={true}
         isRecruiter={false}
       />

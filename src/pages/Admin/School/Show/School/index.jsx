@@ -28,7 +28,7 @@ function Show({ title }) {
         setSchoolData(data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching school data:', error);
+        console.error('Error fetching academic admin data:', error);
         setLoading(false);
       }
     };
@@ -43,11 +43,11 @@ function Show({ title }) {
         buttons={[
           {
             link: 'edit',
-            text: 'Edit School Details',
+            text: 'Edit Academic Admin Details',
             iconClassName: 'feather-edit mr-2',
           },
         ]}
-        backLink={'/admin/schools'}
+        backLink={'/admin/academic-admin'}
       />
       <NavTab schoolId={schoolId} />
       {loading && (
@@ -67,7 +67,7 @@ function Show({ title }) {
                     className="shadow-lg w-100 p-1"
                   />
                 </figure>
-                <h4 className="fw-700 font-xs my-3">School Image</h4>
+                <h4 className="fw-700 font-xs my-3"> Image</h4>
                 <figure className="avatar ml-auto mr-auto mb-0 w150 overflow-hidden">
                   <img
                     src={schoolData?.logo ? baseUrl + schoolData?.logo : No_image}
@@ -75,8 +75,8 @@ function Show({ title }) {
                     className="shadow-lg w-100 p-1"
                   />
                 </figure>
-                <h4 className="fw-700 font-xs my-3">School Logo</h4>
-                <h6 className="fw-700 font-xs my-3">School Name: <u>{schoolData?.name}</u></h6>
+                <h4 className="fw-700 font-xs my-3">Logo</h4>
+                <h6 className="fw-700 font-xs my-3">Name: <u>{schoolData?.name}</u></h6>
               </div>
             </div>
             <div className="col-lg-9">
@@ -139,14 +139,6 @@ function Show({ title }) {
                       {schoolData?.pincode || 'N/A'}
                     </label>
                   </div>
-                  {/* <div className="form-group">
-                    <label className="mont-font fw-500 font-xsss">
-                      <span className="fw-600 ">Office Address: </span>{' '}
-                      {schoolData?.office_address}
-                    </label>
-                  </div> */}
-                     {/* <div className="col-lg-3"></div> */}
-        
 
                 </div>
                 <div className="col-lg-12">

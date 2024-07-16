@@ -73,8 +73,8 @@ function Edit({ title }) {
       }
       const response = await editSchool(schoolId, submissionData);
 
-      toast.success('School updated successfully', response);
-      navigate('/admin/schools');
+      toast.success('Academic Admin updated successfully', response);
+      navigate('/admin/academic-admin');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
@@ -454,7 +454,7 @@ function Edit({ title }) {
                   <div className="col-lg-6 col-md-12 mb-3">
                     <div className="form-group">
                     <label className="mont-font form-label fw-600 font-xsss">
-                        School Image
+                         Image
                         {form.image ? (
                           <a
                             href={baseUrl + form.image} // URL of the uploaded image
@@ -503,7 +503,7 @@ function Edit({ title }) {
                   <div className="col-lg-6 col-md-12 mb-3">
                     <div className="form-group">
                       <label className="mont-font form-label fw-600 font-xsss">
-                        School Logo
+                         Logo
                         {form.logo ? (
                           <a
                             href={baseUrl + form.logo} // URL of the uploaded image
