@@ -152,6 +152,12 @@ export { default as JobCreate } from './Job/Create';
 export { default as JobEdit } from './Job/Edit';
 export { default as JobResult } from './Job/Result';
 
+export { default as Company } from './Company';
+export { default as CompanyShow } from './Company/Show';
+export { default as CompanyCreate } from './Company/Create';
+export { default as CompanyEdit } from './Company/Edit';
+export { default as CompanyResult } from './Company/Result';
+
 export { default as Fees } from './Fees';
 // export { default as FeesCreate } from './Fees/Edit';
 export { default as FeesEdit } from './Fees/Edit';
@@ -176,7 +182,6 @@ export { default as EditZoomCall } from './ZoomCall/Edit';
 export { default as DinacharyaLogsTable } from './DinacharyaLogs/Components/StudentTable';
 // export { default as StudentCard } from './Students/Components/StudentCard';
 export { default as DinacharyaModal } from './DinacharyaLogs/Components/CustomModal';
-
 
 export { default as ForumQuestions } from './Forum';
 export { default as ForumQuestionAnswers } from './Forum/show';

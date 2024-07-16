@@ -11,7 +11,6 @@ export { default as SchoolOldApplicationUpload } from './OldApplication/Upload';
 
 export { default as SchoolBlackListedApplication } from './BlackListedApplication';
 
-
 export { default as SchoolResults } from './Results';
 export { default as SchoolTermResults } from './Results/TermTest';
 export { default as SchoolSubjectAssessmentResults } from './Results/Subject/Assessment';
@@ -31,3 +30,9 @@ export { default as ShowTeacher } from './Teachers/Show';
 export { default as AssignTeacher } from './Teachers/Assign';
 
 export { default as SchoolSettings } from './Settings';
+
+export { default as AcademicInternship } from './Internship';
+// export { default as AcademicInternshipTask } from './Internship/Task';
+export { default as AcademicInternshipParticipants } from './Internship/Participant';
+export { default as AcademicInternshipParticipantProgress } from './Internship/ParticipantProgress';
+export { default as AcademicInternshipTask } from './Internship/Task';

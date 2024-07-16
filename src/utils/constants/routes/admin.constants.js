@@ -48,6 +48,7 @@ const ADMIN_ROUTES = {
     icon: FaHandshakeSimple,
     routes: [
       { path: '/admin/recruiters', title: 'Recruiters', icon: 'feather-user-plus' },
+      { path: '/admin/companies', title: 'Companies', icon: 'feather-user-plus' },
       { path: '/admin/jobs', title: 'Jobs', icon: 'feather-briefcase' },
     ],
   },
@@ -57,6 +58,7 @@ const ADMIN_ROUTES = {
     routes: [
       { path: '/admin/fees', title: 'Fees', icon: 'feather-dollar-sign' },
     { path: '/admin/payments', title: 'Payments', icon: 'feather-credit-card' },
+    { path: '/admin/academic-admin', title: 'Internship Admin', icon: 'feather-credit-card' },
     ],
   },
 };

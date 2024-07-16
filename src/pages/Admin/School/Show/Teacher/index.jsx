@@ -22,7 +22,7 @@ function Teacher() {
         setTeachers(data.teachers);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching school teachers:', error);
+        console.error('Error fetching academic admin teachers:', error);
         setLoading(false);
       }
     };

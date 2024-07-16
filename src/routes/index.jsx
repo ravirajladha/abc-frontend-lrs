@@ -99,7 +99,7 @@ function Index() {
             )}
             {/* School Routes */}
             {authenticatedUserType === USER_TYPES.SCHOOL && (
-              <Route path="/school" element={<SchoolLayout />}>
+              <Route path="/academic-admin" element={<SchoolLayout />}>
                 {SchoolRoutes.map((route, index) => (
                   <Route
                     key={index}

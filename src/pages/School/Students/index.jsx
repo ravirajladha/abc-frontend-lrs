@@ -53,6 +53,7 @@ function Students() {
       try {
         // Fetch all students initially without filtering by class
         const data = await fetchStudentsByClassAndSection(null, null);
+        // console.log("student data: " + data.students)
         setStudents(data.students);
         console.log(data.students);
         setLoading(false);
@@ -125,8 +126,8 @@ function Students() {
         <div className="col-lg-12">
           <div className="card border-0 mt-0 rounded-lg shadow-xs">
             <div className="card-body d-flex px-4 pt-4 pb-0 justify-content-between">
-              <h4 className="font-xssss text-grey-700">Click on the student name to view assessment result*</h4>
-              <div className="d-flex">
+              {/* <h4 className="font-xssss text-grey-700">Click on the student name to view assessment result*</h4> */}
+              {/* <div className="d-flex">
                 <ContentSelectFilter
                   options={classes}
                   name="selectedClass"
@@ -145,7 +146,7 @@ function Students() {
                   defaultText="All Sections"
                   className="float-right filter mr-2"
                 />
-              </div>
+              </div> */}
             </div>
             {loading ? (
               <div className="text-center col-12">
@@ -197,9 +198,13 @@ function Students() {
                           <td>{student.section_name}</td>
                           <td>
                             <Link
-                              to={`${student.auth_id}/show`}
+                              to={`public-students/${student.student_id}/show-profile`}
                               className="btn btn-outline-success btn-icon btn-sm mr-2"
                             >
+                            {/* <Link
+                              to={`${student.auth_id}/show`}
+                              className="btn btn-outline-success btn-icon btn-sm mr-2"
+                            > */}
                               <i className="feather-eye"></i>
                             </Link>
                             <Link

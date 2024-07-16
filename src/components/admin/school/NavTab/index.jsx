@@ -11,37 +11,37 @@ function NavTab({ schoolId }) {
         <li className="nav-item">
           <NavLink
         
-            to={`/admin/schools/${schoolId}/school`}
+            to={`/admin/academic-admin/${schoolId}/school`}
             aria-selected="true"
             className="nav-link"
           >
-            School
+            Profile
           </NavLink>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <NavLink
-            to={`/admin/schools/${schoolId}/trainers`}
+            to={`/admin/academic-admin/${schoolId}/trainers`}
             className="nav-link"
           >
             Teachers
           </NavLink>
-        </li>
+        </li> */}
         <li className="nav-item">
           <NavLink
-            to={`/admin/schools/${schoolId}/students`}
+            to={`/admin/academic-admin/${schoolId}/students`}
             className="nav-link "
           >
             Students
           </NavLink>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <NavLink
-            to={`/admin/schools/${schoolId}/applications`}
+            to={`/admin/academic-admin/${schoolId}/applications`}
             className="nav-link"
           >
             Applications
           </NavLink>
-        </li>
+        </li> */}
       </ul>
     </>
   );
