@@ -3,7 +3,7 @@ import { ContentHeader, ContentLoader } from '@/components/common';
 import { ChatInterface, ChatUserList } from '@/components/teacher/qna';
 import { fetchStudents, fetchQnA, storeQnA } from '@/api/teacher';
 import { getUserDataFromLocalStorage } from '@/utils/services';
-import { Spinner } from 'react-bootstrap';
+import { Modal, Spinner } from 'react-bootstrap';
 
 function Qna() {
   const userData = JSON.parse(getUserDataFromLocalStorage());
@@ -24,6 +24,7 @@ function Qna() {
   const [filteredStudents, setFilteredStudents] = useState([]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const getStudents = useCallback(async () => {
     try {
@@ -156,7 +157,7 @@ function Qna() {
           <div className="section full mt-2 mb-2 pl-3">
             <ul className="list-group list-group-flush">
               {userListLoading ? (
-                <ContentLoader/>
+                <ContentLoader />
               ) : filteredStudents && filteredStudents.length > 0 ? (
                 filteredStudents.map((user, index) => (
                   <ChatUserList
@@ -214,18 +215,20 @@ function Qna() {
                     onChange={(e) =>
                       setFormData({ ...formData, answer: e.target.value })
                     }
-                    style={{width:'90%'}}
+                    style={{ width: '90%' }}
                     required
+                    className="pl-4"
                   />
-                  <button
-                type="button"
-                className="attach-icon"
-                // onClick={handleShowModal}
-              >
-                {/* <FaPaperclip /> */}
-                <i className='feather-clipboard'></i>
-              </button>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowModal(true);
+                    console.log('ggg');
+                  }}
+                >
+                  <i className="feather-clipboard text-dark"></i>
+                </button>
                 <button
                   type="submit"
                   className={`bg-current ${isSubmitting ? 'disabled' : ''}`}
@@ -250,6 +253,40 @@ function Qna() {
                 You are all caught up, There are no questions to answer!
               </span>
             </div> */}
+          <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+            <Modal.Header
+              closeLabel="Close"
+              closeVariant="white"
+              closeButton={true}
+            >
+              <Modal.Title className="mt-1 font-xss fw-700">
+                Attach video
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="form-group icon-input mb-3 mt-3">
+                <i className="font-sm ti-file text-grey-500 pr-0"></i>
+                <input
+                  type="text"
+                  name="video_timestamp "
+                  className="style2-input pl-5 form-control text-grey-900 font-xsss fw-600"
+                  placeholder="Give video time stamp in seconds"
+                  required
+                />
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <div className="form-group mb-1">
+                <button
+                  type="submit"
+                  className="btn text-white bg-current px-3"
+                  onClick={() => setShowModal(false)}
+                >
+                  <i className="feather feather-save font-xsss"></i> Save
+                </button>
+              </div>
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
     </div>

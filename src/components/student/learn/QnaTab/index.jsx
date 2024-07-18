@@ -10,6 +10,7 @@ import DefaultTeacherImage from '@/assets/images/default/teacher.png';
 import { formatTimestamp } from '@/utils/helpers';
 import { fetchQnA, storeQnA, searchQuestion } from '@/api/student';
 import { Spinner } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function QnaTab({
   subjectId,
@@ -170,6 +171,17 @@ function QnaTab({
               >
                 {message.response}
               </div>
+              {message.sender_id !== studentId ? (
+                <Link
+                  target="_blank"
+                  to={`/student/courses/1/learn`}
+                  className="text-primary font-xssss fw-700"
+                >
+                  Video url
+                </Link>
+              ) : (
+                ''
+              )}
             </div>
           ))
         ) : (
@@ -181,7 +193,8 @@ function QnaTab({
               <>
                 <form
                   className="chat-form position-absolute bottom-0 w-100 left-0 bg-white z-index-1 p-3 shadow-xs theme-dark-bg  d-flex align-items-center"
-                  onSubmit={handleSubmit} autoComplete="off"
+                  onSubmit={handleSubmit}
+                  autoComplete="off"
                 >
                   <div className="form-group">
                     <input

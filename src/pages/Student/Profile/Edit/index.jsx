@@ -12,6 +12,7 @@ import { getStudentDataFromLocalStorage } from '@/utils/services';
 import {
   EditAboutSection,
   EditEducationSection,
+  EditFamilySection,
   EditPersonalDetailSection,
 } from '@/components/student/profile';
 
@@ -29,7 +30,7 @@ function Index() {
   });
 
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 3;
+  const totalSteps = 4;
 
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
@@ -106,7 +107,8 @@ function Index() {
                   />
                 )}
                 {currentStep == 2 && <EditEducationSection />}
-                {currentStep == 3 && <EditAboutSection />}
+                {currentStep == 3 && <EditFamilySection />}
+                {currentStep == 4 && <EditAboutSection />}
                 {currentStep > 1 && (
                   <button
                     type="button"

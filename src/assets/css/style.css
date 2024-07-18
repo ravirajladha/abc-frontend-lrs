@@ -160,7 +160,7 @@ button.btn.btn-secondary {
 }
 
 .chat-form .form-group {
-  width: calc(100% - 50px) !important;
+  width: calc(100% - 90px) !important;
 }
 
 .settings-active {

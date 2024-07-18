@@ -7,6 +7,7 @@ import DefaultTeacherImage from '@/assets/images/default/user.png';
 import { formatTimestamp } from '@/utils/helpers';
 
 import { ContentLoader } from '@/components/common';
+import { Link } from 'react-router-dom';
 
 function ChatInterface({
   users,
@@ -19,7 +20,10 @@ function ChatInterface({
 }) {
   return (
     <>
-      <div className="chat-wrapper pt-0 w-100 position-relative scroll-bar bg-white theme-dark-bg teacher-chat" style={{marginBottom: "90px", height: "calc(100vh - 240px)"}}>
+      <div
+        className="chat-wrapper pt-0 w-100 position-relative scroll-bar bg-white theme-dark-bg teacher-chat"
+        style={{ marginBottom: '90px', height: 'calc(100vh - 240px)' }}
+      >
         <div className="chat-body p-3">
           <div className="messages-content pb-5" style={{ height: 660 }}>
             {selectedStudent?.id ? (
@@ -65,7 +69,19 @@ function ChatInterface({
                             </div>
                             <div className="message-wrap">
                               {message.response}
+                              <br />
                             </div>
+                            {isOutgoing ? (
+                              <Link
+                                target="_blank"
+                                to={``}
+                                className="text-primary font-xssss fw-700"
+                              >
+                                Video url
+                              </Link>
+                            ) : (
+                              ''
+                            )}
                           </div>
                         );
                       })

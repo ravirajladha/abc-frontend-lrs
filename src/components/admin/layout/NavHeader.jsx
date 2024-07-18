@@ -63,7 +63,7 @@ function NavHeader({ isOpen, toggleNav }) {
                 >
                   <div
                     onClick={() => toggleGroup(group)}
-                    className={`py-3 px-2 d-flex justify-content-between open-font font-xss fw-600 shadow-sm border-bottom text-linkedin rounded ${
+                    className={`py-3 px-2 d-flex justify-content-between open-font font-xss fw-600 shadow-sm border-bottom text-current rounded ${
                       openGroups[group] ? 'border-warning' : ''
                     }`}
                     // style={{ color:"#000851"}}

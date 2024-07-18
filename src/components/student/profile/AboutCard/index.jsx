@@ -113,6 +113,61 @@ function AboutCard({ studentData, isProfileEditable }) {
             </div>
           </div>
           <div className="card w-100 border-top-current bg-lightgreen p-2 mb-2">
+            <h4 className="font-xss fw-700 my-2">Family Details</h4>
+            <div className="card-body m-4 mb-0 bg-lightblue p-4 rounded-lg">
+              <div className="row">
+                <div className="col-lg-4">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">Father Name: </span>Asish Sharma
+                    </label>
+                  </div>
+                </div>
+                <div className="col-lg-4">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">Father Email: </span>
+                      father@gmail.com
+                    </label>
+                  </div>
+                </div>
+                <div className="col-lg-4">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">Father Phone: </span>
+                      9314585552
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-4">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">Mother Name: </span>Asish Sharma
+                    </label>
+                  </div>
+                </div>
+                <div className="col-lg-4">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">Mother Email: </span>
+                      mother@gmail.com
+                    </label>
+                  </div>
+                </div>
+                <div className="col-lg-4">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">Mother Phone: </span>
+                      9314585552
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="card w-100 border-top-current bg-lightgreen p-2 mb-2">
             <h4 className="font-xss fw-700 my-2">About Myself</h4>
             <div className="card-body m-4 mb-0 bg-lightblue p-4 rounded-lg">
               <div className="row">

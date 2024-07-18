@@ -14,7 +14,7 @@ function AppHeader({ toggleNav }) {
     setIsDropdownOpen(!isDropdownOpen);
   };
   return (
-    <div className="middle-sidebar-header" style={{ background: "linear-gradient(90deg, #1CB5E0 0%, #000851 100%)"}}>
+    <div className="middle-sidebar-header" style={{ background: "linear-gradient(90deg, #ffa629 0%, #ff9500 100%)"}}>
       <button onClick={toggleNav} className="header-menu"></button>
       {/* <div className=" d-inline-block float-left mb-0 text-grey-900"> */}
       <div className=" d-inline-block float-left mb-0 text-grey-900">

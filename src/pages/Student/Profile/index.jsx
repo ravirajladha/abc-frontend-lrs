@@ -11,6 +11,7 @@ import {
   SubjectCard,
   AboutCard,
   Wallet,
+  Alumni,
 } from '@/components/student/profile';
 
 import { fetchReportCard, fetchWalletDetails } from '@/api/student';
@@ -50,7 +51,6 @@ function Profile({ isAdmin, isStudent }) {
     }
   });
 
-
   // Fetches student basic data for admin
   const fetchStudentData = useCallback(async () => {
     if (!studentIdFromParams) {
@@ -82,7 +82,7 @@ function Profile({ isAdmin, isStudent }) {
     try {
       const data = await fetchReportCard(studentId, classId, sectionId);
       if (data) {
-        console.log("report card restult", data.report_card);
+        console.log('report card restult', data.report_card);
         setReportCard(data.report_card);
         setLoading(false);
       }
@@ -170,7 +170,10 @@ function Profile({ isAdmin, isStudent }) {
             />
           </Tab>
           <Tab eventKey="about" title="ABOUT">
-            <AboutCard studentData={studentData} isProfileEditable={isProfileEditable}/>
+            <AboutCard
+              studentData={studentData}
+              isProfileEditable={isProfileEditable}
+            />
           </Tab>
           <Tab eventKey="subject" title="Courses">
             <SubjectCard subjects={studentData?.subjects} />
@@ -185,6 +188,9 @@ function Profile({ isAdmin, isStudent }) {
               walletData={walletData}
               loading={loading}
             />
+          </Tab>
+          <Tab eventKey="alumni" title="Alumni">
+            <Alumni />
           </Tab>
         </Tabs>
       </div>
