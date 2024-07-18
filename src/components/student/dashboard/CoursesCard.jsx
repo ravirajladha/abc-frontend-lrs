@@ -54,6 +54,11 @@ function CoursesCard() {
                         action: () => `/student/courses/${subject.id}/learn`,
                         style: 'bg-primary-gradiant',
                       },
+                      {
+                        label: 'Finish the course to download',
+                        action: () => ``,
+                        style: 'bg-primary-gradiant ml-2',
+                      },
                     ]}
                   />
                 ))} 

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import DarkButton from '@/components/common/DarkButton';
 import DefaultProfileImage from '@/assets/images/default/student.png';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
-import { HeaderSearchBar, Notification } from '@/components/common';
+import { HeaderSearchBar, NotificationStudent } from '@/components/common';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import LogOutButton from '@/components/common/LogoutButton';
 
@@ -32,7 +32,7 @@ function AppHeader({ toggleNav }) {
       {/* atoms header */}
       <ul className="d-flex ml-auto right-menu-icon">
         <DarkButton />
-        <Notification />
+        <NotificationStudent />
         <li>
           <OverlayTrigger
             placement="bottom"
