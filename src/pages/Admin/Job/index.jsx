@@ -143,9 +143,13 @@ function Job(props) {
             link: 'create',
             text: 'New Job Post',
           },
+          {
+            link: 'tests',
+            text: ' Job Test',
+          },
         ]}
       />
-
+{/* jobs/tests/create */}
       {loading ? (
         <div className="text-center mt-5 col-12">
           <ContentLoader />

@@ -66,6 +66,32 @@ function Subjects() {
     }
   };
 
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(`${baseUrl}api/download-certificate`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'resources.zip'; // The name of the file to be downloaded
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } else {
+        console.error('Failed to download file');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   useEffect(() => {
     fetchSubjectsCallback();
     fetchData();
@@ -105,14 +131,14 @@ function Subjects() {
                       {subjects.name}
                     </h2>
                   </div>
-                  <div className="col-2">
+                  {/* <div className="col-2">
                     <a
                       href="/default-course-one"
                       className="btn-round-md ml-3 d-inline-block float-right rounded-lg bg-danger"
                     >
                       <i className="feather-bookmark font-sm text-white"></i>
                     </a>
-                  </div>
+                  </div> */}
                 </div>
                 <span className="font-xssss fw-600 text-grey-500 d-inline-block ml-1">
                   {subjects?.class_name}
@@ -150,7 +176,7 @@ function Subjects() {
               </div>
 
               <TrainerCard teacher={teacher} />
-              <FAQs/>
+              <FAQs />
             </div>
             <div className="col-xl-4 col-xxl-3">
               <div className="card p-4 mb-4 bg-primary border-0 shadow-xss rounded-lg">
@@ -175,12 +201,12 @@ function Subjects() {
                   </div>
                 ) : (
                   <div className="card-body">
-                    <h2 className="text-white font-xsssss fw-700 text-uppercase ls-3 ">
+                    <h2 className="text-white font-xsssss fw-700 text-uppercase ls-3 pb-4 ">
                       Subscribed
                     </h2>
                     <Link
                       to={`/student/courses/${subjectId}/learn`}
-                      className="btn btn-block border-0 w-100 bg-white p-3 text-primary fw-600 rounded-lg d-inline-block font-xssss btn-light"
+                      className="btn btn-sm btn-block border-0 w-100 bg-white p-1 text-primary fw-600 rounded-lg d-inline-block font-xssss btn-light"
                     >
                       Continue
                     </Link>
@@ -194,6 +220,22 @@ function Subjects() {
                 <ChapterAccordion isLoading={loading} chapterData={chapters} />
               </div>
               <ReviewCard />
+
+            <div className="border-0 rounded-sm mx-1 lh-24 px-2 bg-current">
+  {isPaid ? (
+    <Link
+      className="font-xsssss fw-600 text-uppercase text-white"
+      onClick={handleDownload}
+    >
+      <i className="feather-file"></i> Download Certificate
+    </Link>
+  ) : (
+    <span className="font-xsssss fw-600 text-uppercase text-white">
+      Finish the course to download
+    </span>
+  )}
+</div>
+
             </div>
           </>
         ) : (
