@@ -151,6 +151,8 @@ export { default as JobShow } from './Job/Show';
 export { default as JobCreate } from './Job/Create';
 export { default as JobEdit } from './Job/Edit';
 export { default as JobResult } from './Job/Result';
+export { default as JobDetail } from './Job/JobDetail';
+export { default as JobBulletin } from './Job/Bulletin';
 
 export { default as Company } from './Company';
 export { default as CompanyShow } from './Company/Show';

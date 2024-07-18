@@ -177,6 +177,13 @@ function Jobs() {
   >
     {job?.applied ? job?.participated_test_id ? `Applied (Score: ${job.percentage}%)` : 'Applied' : 'Apply'}
   </Link>
+  <Link
+    to="jobDetail"
+    
+    className="btn btn-outline-warning btn-icon btn-sm mr-2"
+  >
+  View Detail
+  </Link>
 </div>
 
               </div>

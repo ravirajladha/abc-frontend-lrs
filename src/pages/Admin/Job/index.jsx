@@ -251,13 +251,20 @@ function Job(props) {
                                 <strong>{job.recruiter_name}</strong>
                               </td>
                               <td className="text-right">
-                                <Link
+                              <Link
+                                  to="jobDetail"
+                                  // onClick={() => handleShowModal(job)}
+                                  className="btn btn-outline-warning btn-icon btn-sm mr-2"
+                                >
+                                  <i className="feather-eye"></i>
+                                </Link>
+                                {/* <Link
                                   to="#"
                                   onClick={() => handleShowModal(job)}
                                   className="btn btn-outline-warning btn-icon btn-sm mr-2"
                                 >
                                   <i className="feather-eye"></i>
-                                </Link>
+                                </Link> */}
 
                                 <Link
                                   to={`${job.id}/edit`}
@@ -279,6 +286,14 @@ function Job(props) {
                                   onClick={() => handleDelete(job.id)}
                                 >
                                   <i className="feather-trash"></i>
+                                </Link>
+
+                                <Link
+                                  to="bulletin"
+                                  className="btn btn-outline-danger btn-icon btn-sm"
+                                 
+                                >
+                                  <i className="feather-briefcase"></i>
                                 </Link>
                               </td>
                             </tr>
