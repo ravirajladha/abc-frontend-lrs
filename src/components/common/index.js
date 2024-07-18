@@ -39,3 +39,4 @@ export { default as StatusBadge } from '@/components/common/StatusBadge';
 
 export { default as Notification } from '@/components/common/Notification';
 export { default as HeaderSearchBar } from '@/components/common/HeaderSearchBar';
+export { default as EllipsisMenu } from '@/components/common/EllipsisMenu';

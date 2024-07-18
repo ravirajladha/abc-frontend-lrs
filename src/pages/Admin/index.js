@@ -169,6 +169,7 @@ export { default as EditQuote } from './Quote/Edit';
 
 export { default as Students } from './Students';
 export { default as StudentsShow } from './Students/Show';
+export { default as StudentsCreate } from './Students/Create';
 // export { default as BulkImageUploadModal } from './Students/BulkImageUploadModal';
 export { default as StudentTable } from './Students/Components/StudentTable';
 export { default as StudentCard } from './Students/Components/StudentCard';

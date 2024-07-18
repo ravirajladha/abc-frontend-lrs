@@ -27,6 +27,7 @@ function CreateContentForm() {
   const [ebookModules, setEbookModules] = useState([]);
   const [ebookSections, setEbookSections] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedResource, setSelectedResource] = useState(null);
   const [formData, setFormData] = useState({
     class_id: classId || '',
     subject_id: subjectId || '',
@@ -39,10 +40,12 @@ function CreateContentForm() {
     ebook_id: '',
     ebook_module_id: '',
     ebook_section_id: '',
+    resource:'',
   });
   const [showAssessmentDropdown, setShowAssessmentDropdown] = useState(false);
   const [showEbookDropdown, setShowEbookDropdown] = useState(false);
   const [showElabDropdown, setShowElabDropdown] = useState(false);
+  const [showResourceInput, setShowResourceInput] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const navigate = useNavigate();
@@ -82,12 +85,25 @@ function CreateContentForm() {
     setShowAssessmentDropdown((prev) => !prev);
   }, []);
 
+  const handleResourceCheckbox = () => {
+    setShowResourceInput(!showResourceInput);
+  };
+
   const handleFileChange = useCallback((file) => {
     setFormData((prevData) => ({
       ...prevData,
       url: file || '',
     }));
     setSelectedVideo(file);
+  }, []);
+
+  const handleResourceChange = useCallback((event) => {
+    const file = event.target.files[0];
+    setFormData((prevData) => ({
+      ...prevData,
+      resource: file || '',
+    }));
+    setSelectedResource(file);
   }, []);
 
   const handleAssessmentChange = useCallback(({ target: { value } }) => {
@@ -288,7 +304,7 @@ function CreateContentForm() {
               </div>
             </div>
 
-            <div className="col-lg-6 mb-2">
+            <div className="col-lg-4 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">Assessment</label>
                 <div className="form-check">
@@ -319,7 +335,7 @@ function CreateContentForm() {
               </div>
             </div>
 
-            <div className="col-lg-6 mb-2">
+            <div className="col-lg-4 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">eLab</label>
                 <div className="form-check">
@@ -343,6 +359,48 @@ function CreateContentForm() {
                     onChange={handleElabChange}
                     placeholder="Select Elab"
                   />
+                )}
+              </div>
+            </div>
+            <div className="col-lg-4 mb-2">
+              <div className="form-group">
+                <label className="mont-font fw-600 font-xsss">Resource</label>
+                <div className="form-check">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="eLabCheckbox"
+                    onChange={handleResourceCheckbox}
+                  />
+                  <label className="form-check-label" htmlFor="eLabCheckbox">
+                    Has Resource?
+                  </label>
+                </div>
+                {showResourceInput && (
+                  <>
+                   <input
+                     type="file"
+                     name="image"
+                     id="file"
+                     className="input-file"
+                     onChange={handleResourceChange}
+                     accept=".zip"
+                   />
+                   <label
+                     htmlFor="file"
+                     className="rounded-lg text-center bg-white btn-tertiary js-labelFile w-100 border-dashed"
+                   >
+                     <i className="ti-cloud-down small-icon mr-3"></i>
+                     <span className="js-fileName">
+                       {formData.resource ? (
+                         <>{formData.resource.name} </>
+                       ) : (
+                         'Click to Upload an zip file'
+                       )}
+                     </span>
+                   </label>
+                  </>
+                   
                 )}
               </div>
             </div>

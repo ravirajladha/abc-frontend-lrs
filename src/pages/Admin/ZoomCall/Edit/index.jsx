@@ -67,7 +67,7 @@ function Create() {
       setTimeout(() => {
         setIsSubmitting(false);
       }, 1500);
-      navigate('/admin/zoom-call');
+      navigate('/admin/live-sessions');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
@@ -84,11 +84,11 @@ function Create() {
 
   return (
     <div>
-      <ContentHeader title="Update Zoom call" />
+      <ContentHeader title="Update Live Sessions" />
       {loading ? (
         <ContentLoader />
       ) : (
-      <ContentFormWrapper formTitle="Edit Zoom call">
+      <ContentFormWrapper formTitle="Edit Live Sessions">
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             <div className="col-lg-6 col-md-12 mb-3">

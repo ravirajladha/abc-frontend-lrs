@@ -5,7 +5,11 @@ import {
   TeacherClassResults,
   TeacherClasses,
   TeacherDashboard,
+  TeacherFAQs,
+  TeacherFAQsCreate,
+  TeacherLiveQnaSessions,
   TeacherQna,
+  TeacherReviews,
   TeacherSettings,
   TeacherShowChapter,
   TeacherSubjectResults,
@@ -23,6 +27,18 @@ const TeacherRoutes = [
   {
     path: 'subjects/:classId/courses/:subjectId/results',
     element: <TeacherSubjectResults />,
+  },
+  {
+    path: 'subjects/:classId/courses/:subjectId/reviews',
+    element: <TeacherReviews />,
+  },
+  {
+    path: 'subjects/:classId/courses/:subjectId/faqs',
+    element: <TeacherFAQs />,
+  },
+  {
+    path: 'subjects/:classId/courses/:subjectId/faqs/create',
+    element: <TeacherFAQsCreate />,
   },
   { path: 'settings', element: <TeacherSettings title="Settings" /> },
   { path: 'subjects/:classId/results/:studentId/assessment-result', element: <TeacherAssessmentResult title="Assessment Result" /> },
@@ -42,6 +58,10 @@ const TeacherRoutes = [
   {
     path: 'assessments/:assessmentId',
     element: <AssessmentsShow title="Show Content" />,
+  },
+  {
+    path: 'live-sessions',
+    element: <TeacherLiveQnaSessions title="Live QnA Session" />,
   },
 ];
 

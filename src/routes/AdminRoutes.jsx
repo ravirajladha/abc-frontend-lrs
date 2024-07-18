@@ -152,6 +152,7 @@ import {
   DinacharyaLogs,
   ForumQuestions,
   ForumQuestionAnswers,
+  StudentsCreate,
 } from '@/pages/Admin';
 import{
 
@@ -844,6 +845,8 @@ const AdminRoutes = [
       <StudentsShow title="All Images" isPrivate={false} isPublic={true} />
     ),
   },
+  { path: 'public-students/create', element: <StudentsCreate /> },
+  
   {
     path: 'private-students',
     element: (
@@ -861,15 +864,16 @@ const AdminRoutes = [
     ),
   },
 
-  // zoom call
-  { path: 'zoom-call', element: <ZoomCall title="Zoom call" /> },
+  // Live Qns session
+
+  { path: 'live-sessions', element: <ZoomCall title="Live QnA Session" /> },
   {
-    path: 'zoom-call/create',
-    element: <CreateZoomCall title="Create Zoom call" />,
+    path: 'live-sessions/create',
+    element: <CreateZoomCall title="Create QnA Session" />,
   },
   {
-    path: 'zoom-call/:zoomCallId/edit',
-    element: <EditZoomCall title="Create Zoom call" />,
+    path: 'live-sessions/:zoomCallId/edit',
+    element: <EditZoomCall title="Create QnA Session" />,
   },
 
   {

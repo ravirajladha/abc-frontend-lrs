@@ -4,7 +4,7 @@ import { Accordion } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 
 import { ContentLoader } from '@/components/common';
-import { getElabSubmissionByStudent } from '@/api/student';
+import { getElabSubmissionByStudent, getResource } from '@/api/student';
 import { getUserDataFromLocalStorage } from '@/utils/services';
 
 const LearnTab = ({
@@ -18,6 +18,31 @@ const LearnTab = ({
   const userDetail = JSON.parse(getUserDataFromLocalStorage());
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
+    const handleDownload = async () => {
+      try {
+        const response = await fetch(`${baseUrl}api/download-zip`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'resources.zip'; // The name of the file to be downloaded
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        } else {
+          console.error('Failed to download file');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
   useEffect(() => {
     const fetchElabSubmissions = async () => {
       if (userDetail && userDetail.id) {
@@ -230,7 +255,8 @@ const LearnTab = ({
                                   <div className="border-0 rounded-sm mx-1 lh-24  px-2 bg-current">
                                     <Link
                                       className="font-xsssss fw-600 text-uppercase text-white"
-                                      to={`${baseUrl}uploads/zip/resources.zip`}
+                                      // to={`${baseUrl}uploads/zip/resources.zip`}
+                                      onClick={handleDownload}
                                     >
                                       <i className='feather-file'></i>
                                     </Link>

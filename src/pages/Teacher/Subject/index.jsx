@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { fetchTeacherSubjects } from '@/api/teacher';
@@ -9,10 +9,12 @@ import {
   ContentHeader,
   ContentItemCard,
   ContentLoader,
+  EllipsisMenu,
 } from '@/components/common';
 
 function Subject() {
   let { classId } = useParams();
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const [className, setClassName] = useState(null);
   const [subjectsData, setSubjectsData] = useState(null);
@@ -46,24 +48,50 @@ function Subject() {
           <ContentLoader />
         ) : subjectsData.length > 0 ? (
           subjectsData.map((item, index) => (
-            <ContentItemCard
-              key={index}
-              data={item}
-              buttons={[
-                {
-                  label: 'Chapters',
-                  action: () =>
-                    `/teacher/subjects/${classId}/courses/${item.id}/chapters`,
-                  style: ' bg-primary-gradiant',
-                },
-                {
-                  label: 'Results',
-                  action: (item) =>
-                    `/teacher/subjects/${classId}/courses/${item.id}/results`,
-                  style: ' bg-success ml-2',
-                },
-              ]}
-            />
+            <div className="col-xl-3 col-lg-4 col-md-6 mt-2" key={index}>
+              <div className="card mb-4 d-block w-100 h-100 shadow-md rounded-lg px-2 pt-5 border-0 text-center">
+                <EllipsisMenu
+                  items={[
+                    {
+                      label: 'Reviews',
+                      href: `${item.id}/reviews`,
+                    },
+                    {
+                      label: 'FAQs',
+                      href: `${item.id}/faqs`,
+                    },
+                  ]}
+                />
+                <Link
+                  to=""
+                  className="btn-round-xxxl rounded-lg bg-lightblue ml-auto mr-auto overflow-hidden"
+                >
+                  {item.image && (
+                    <img
+                      src={baseUrl + item.image}
+                      alt="icon"
+                      className="p-1 w-100 object-fit-cover fixed-avatar"
+                    />
+                  )}
+                </Link>
+                <h4 className="fw-700 font-xs my-2">{item.name}</h4>
+                <div className="clearfix"></div>
+                <div className="mb-2">
+                  <Link
+                    to={`/teacher/subjects/${classId}/courses/${item.id}/chapters`}
+                    className={`mt-3 d-inline-block fw-700 text-white rounded-lg text-center font-xsssss shadow-xs py-2 px-3 text-uppercase ls-3 lh-4 bg-primary-gradiant`}
+                  >
+                    Chapters
+                  </Link>
+                  <Link
+                    to={`/teacher/subjects/${classId}/courses/${item.id}/results`}
+                    className={`mt-3 d-inline-block fw-700 text-white rounded-lg text-center font-xsssss shadow-xs py-2 px-3 text-uppercase ls-3 lh-4 bg-success ml-2`}
+                  >
+                    Results
+                  </Link>
+                </div>
+              </div>
+            </div>
           ))
         ) : (
           <ContentFallback />

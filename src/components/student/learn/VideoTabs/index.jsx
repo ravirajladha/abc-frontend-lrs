@@ -111,11 +111,13 @@ const VideoTabs = ({
         </Tabs>
       </div>
       <h5 className="font-xs mb-2 text-center rounded-lg bg-white py-3 text-dark fw-400 border  border-size-md">
+        <Link target='_blank' to={`https://zoom.us/join`}>
         <i
           className="feather-play text-grey-500 mr-2"
           style={{ marginTop: '2px' }}
         ></i>{' '}
         Live Doubt Clearing
+        </Link>
       </h5>
     
 

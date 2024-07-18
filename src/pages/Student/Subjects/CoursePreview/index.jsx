@@ -18,6 +18,7 @@ import { formatDate } from '@/utils/helpers';
 import { fetchCoursePreviewData } from '@/api/student';
 import {
   ChapterAccordion,
+  FAQs,
   ReviewCard,
   TrainerCard,
 } from '@/components/student/previewCourse';
@@ -149,6 +150,7 @@ function Subjects() {
               </div>
 
               <TrainerCard teacher={teacher} />
+              <FAQs/>
             </div>
             <div className="col-xl-4 col-xxl-3">
               <div className="card p-4 mb-4 bg-primary border-0 shadow-xss rounded-lg">

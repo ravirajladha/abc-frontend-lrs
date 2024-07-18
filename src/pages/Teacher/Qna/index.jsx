@@ -214,8 +214,17 @@ function Qna() {
                     onChange={(e) =>
                       setFormData({ ...formData, answer: e.target.value })
                     }
+                    style={{width:'90%'}}
                     required
                   />
+                  <button
+                type="button"
+                className="attach-icon"
+                // onClick={handleShowModal}
+              >
+                {/* <FaPaperclip /> */}
+                <i className='feather-clipboard'></i>
+              </button>
                 </div>
                 <button
                   type="submit"

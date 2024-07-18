@@ -1,5 +1,5 @@
 import React from 'react';
-import DefaultProfileImage from '@/assets/images/default/student.png';
+import DefaultTeacherImage from '@/assets/images/default/teacher.png';
 
 const index = ({teacher}) => {
   return (
@@ -9,7 +9,7 @@ const index = ({teacher}) => {
       </h2>
       <div className="row">
         <div className="col-lg-3 text-center">
-          <img src={DefaultProfileImage} alt="" />
+          <img src={DefaultTeacherImage} alt="" />
           <h4 className="font-xss fw-600 mt-2 mb-3 pl-2 position-relative lh-24">
             {teacher?.name}
           </h4>

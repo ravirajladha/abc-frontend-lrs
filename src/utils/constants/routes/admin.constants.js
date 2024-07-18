@@ -21,6 +21,7 @@ const ADMIN_ROUTES = {
       { path: '/admin/tests', title: 'Tests', icon: 'feather-target' },
       { path: '/admin/assessments', title: 'Assessments', icon: 'feather-activity' },
       { path: '/admin/trainers', title: 'Trainers', icon: 'feather-user-check' },
+      { path: '/admin/live-sessions', title: 'Live QnA Sessions', icon: 'feather-airplay' },
     ],
   },
   resources: {

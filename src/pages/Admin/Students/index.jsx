@@ -13,7 +13,7 @@ import { StudentTable } from '@/pages/Admin';
 import { StudentCard } from '@/pages/Admin';
 import PropTypes from 'prop-types';
 
-import { Accordion, Pagination } from '@/components/common';
+import { Accordion, ContentHeader, Pagination } from '@/components/common';
 import { getUserDataFromLocalStorage } from '@/utils/services';
 import { fetchClasses, fetchSections, fetchPrivateSchools } from '@/api/common';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
@@ -108,7 +108,7 @@ function PublicStudent({ title, isPrivate, isPublic }) {
     };
 
     fetchData();
-  }, [isPrivate, currentPage,selectedSchool, selectedClass, selectedSection]);
+  }, [isPrivate, currentPage, selectedSchool, selectedClass, selectedSection]);
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -224,75 +224,43 @@ function PublicStudent({ title, isPrivate, isPublic }) {
   ];
 
   return (
-    <div className="px-2">
-      <div className="row mb-4">
-        <div className="col-lg-12 d-flex align-items-center justify-content-between">
-          <h2 className="text-grey-900 font-md mb-0">
-            <span className="fw-600">{title}</span>
-          </h2>
-          <div className="card-body d-flex px-4 pt-4 pb-0 justify-content-between">
-            <h4 className="font-xssss text-grey-700">
-               {''}
-            </h4>
-            {/* <div className="d-flex">
-              {isPrivate &&( 
-              <ContentSelectFilter
-                options={schools}
-                name="selectedSchool"
-                label="name"
-                value={selectedSchool}
-                onChange={handleSchoolChange}
-                defaultText="All Schools"
-                className="float-right filter mr-2"
-              />)}
-              <ContentSelectFilter
-                options={classes}
-                name="selectedClass"
-                label="name"
-                value={selectedClass}
-                onChange={handleClassChange}
-                defaultText="All Subjects"
-                className="float-right filter mr-2"
-              />
-              <ContentSelectFilter
-                options={sections}
-                name="selectedSection"
-                label="name"
-                value={selectedSection}
-                onChange={handleSectionChange}
-                defaultText="All Sections"
-                className="float-right filter mr-2"
-              />
-            </div> */}
-          </div>
-        </div>
-      </div>
-
-      <Accordion items={accordionItems} />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
+    <>
+      <ContentHeader
+        title={title}
+        buttons={[
+          {
+            link: `create`,
+            text: 'New student',
+          },
+        ]}
       />
-      {modalOpen && (
-        <CustomModal
-          isOpen={showModal}
-          onClose={handleCloseModal}
-          handleSubmit={(e, images) =>
-            handleSubmit(
-              e,
-              images,
-              selectedStudent.student_id,
-              selectedStudent.auth_id,
-              createdBy
-            )
-          }
-          handleFileChange={handleFileChange}
-          studentId={selectedStudent.student_id}
-          createdBy={createdBy}
+      <div className="px-2">
+        <Accordion items={accordionItems} />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
         />
-      )}
-    </div>
+        {modalOpen && (
+          <CustomModal
+            isOpen={showModal}
+            onClose={handleCloseModal}
+            handleSubmit={(e, images) =>
+              handleSubmit(
+                e,
+                images,
+                selectedStudent.student_id,
+                selectedStudent.auth_id,
+                createdBy
+              )
+            }
+            handleFileChange={handleFileChange}
+            studentId={selectedStudent.student_id}
+            createdBy={createdBy}
+          />
+        )}
+      </div>
+    </>
   );
 }
 

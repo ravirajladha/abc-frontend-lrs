@@ -14,6 +14,7 @@ function Create() {
   const [formData, setFormData] = useState({
     url: '',
     date: '',
+    time: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
@@ -48,7 +49,7 @@ function Create() {
       setTimeout(() => {
         setIsSubmitting(false);
       }, 1500);
-      navigate('/admin/zoom-call');
+      navigate('/admin/live-sessions');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
@@ -61,8 +62,8 @@ function Create() {
 
   return (
     <div>
-      <ContentHeader title="Create Zoom call" />
-      <ContentFormWrapper formTitle="New Zoom call">
+      <ContentHeader title="Create Live Sessions" />
+      <ContentFormWrapper formTitle="New Live Sessions">
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             <div className="col-lg-6 col-md-12 mb-3">
@@ -94,6 +95,22 @@ function Create() {
                 />
                 {validationErrors.date && (
                   <span className="text-danger">{validationErrors.date}</span>
+                )}
+              </div>
+            </div>
+            <div className="col-lg-6 col-md-12 mb-3">
+              <div className="form-group">
+                <label className="mont-font fw-600 font-xsss">Time</label>
+                <input
+                  type="time"
+                  className="form-control dummy"
+                  name="time"
+                  value={formData.time}
+                  onChange={handleFormChange}
+                  placeholder="Enter Time"
+                />
+                {validationErrors.time && (
+                  <span className="text-danger">{validationErrors.time}</span>
                 )}
               </div>
             </div>

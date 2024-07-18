@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import Star from '/assets/images/star.png';
 import StarDisabled from '/assets/images/star-disable.png';
 import DefaultProfileImage from '@/assets/images/default/student.png';
+import DefaultTeacherImage from '@/assets/images/default/teacher.png';
 import { Modal } from 'react-bootstrap';
-import { Rating } from 'react-simple-star-rating';
 import StarRatings from 'react-star-ratings';
 
 const index = () => {
@@ -131,34 +131,64 @@ const index = () => {
         </div>
       </div>
 
-      <div className="row border-bottom mb-2">
-        <div className="col-2 text-left">
-          <figure className="avatar float-left mb-0">
-            <img
-              src={DefaultProfileImage}
-              alt="banner"
-              className="float-right shadow-none w40 mr-2"
-            />
-          </figure>
-        </div>
-        <div className="col-10 pl-4">
-          <div className="content">
-            <h6 className="author-name font-xssss fw-600 mb-0 text-grey-800">
-              Sidharth
-            </h6>
-            <h6 className="d-block font-xsssss fw-500 text-grey-500 mt-2 mb-0">
-              July 26 at 8:20 PM
-            </h6>
-            <div className="star d-flex w-100 text-left">
-              <img src={Star} alt="star" className="w10" />
-              <img src={Star} alt="star" className="w10" />
-              <img src={Star} alt="star" className="w10" />
-              <img src={Star} alt="star" className="w10" />
-              <img src={StarDisabled} alt="star" className="w10" />
+      <div className="border-bottom mb-2">
+        <div className="row  mb-2">
+          <div className="col-2 text-left">
+            <figure className="avatar float-left mb-0">
+              <img
+                src={DefaultProfileImage}
+                alt="banner"
+                className="float-right shadow-none w40 mr-2"
+              />
+            </figure>
+          </div>
+          <div className="col-10 pl-0">
+            <div className="content">
+              <h6 className="author-name font-xssss fw-600 mb-0 text-grey-800">
+                Sidharth
+              </h6>
+              <h6 className="d-block font-xsssss fw-500 text-grey-500 mt-2 mb-0">
+                July 26 at 8:20 PM
+              </h6>
+              <div className="star d-flex w-100 text-left">
+                <img src={Star} alt="star" className="w10" />
+                <img src={Star} alt="star" className="w10" />
+                <img src={Star} alt="star" className="w10" />
+                <img src={Star} alt="star" className="w10" />
+                <img src={StarDisabled} alt="star" className="w10" />
+              </div>
+              <p className="comment-text lh-24 fw-500 font-xssss text-grey-500 mt-2">
+                Enjoyed this a lot and well done. Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Sit exercitationem veniam
+                voluptatem eius provident neque adipisci fugit reiciendis
+                distinctio ut.{' '}
+              </p>
             </div>
-            <p className="comment-text lh-24 fw-500 font-xssss text-grey-500 mt-2">
-              Enjoyed this a lot and well done. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit exercitationem veniam voluptatem eius provident neque adipisci fugit reiciendis distinctio ut.{' '}
-            </p>
+          </div>
+        </div>
+        <div className="row mb-2">
+          <div className="col-1"></div>
+          <div className="col-2 text-left">
+            <figure className="avatar float-left mb-0">
+              <img
+                src={DefaultTeacherImage}
+                alt="banner"
+                className="float-right shadow-none w40 mr-2"
+              />
+            </figure>
+          </div>
+          <div className="col-9 pl-0">
+            <div className="content">
+              <h6 className="author-name font-xssss fw-600 mb-0 text-grey-800">
+                Teacher
+              </h6>
+              <h6 className="d-block font-xsssss fw-500 text-grey-500 mt-2 mb-0">
+                July 26 at 8:20 PM
+              </h6>
+              <p className="comment-text lh-24 fw-500 font-xssss text-grey-500 mt-2">
+                Thank you for your valuable feedback.{' '}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -173,7 +203,7 @@ const index = () => {
             />
           </figure>
         </div>
-        <div className="col-10 pl-4">
+        <div className="col-10 pl-0">
           <div className="content">
             <h6 className="author-name font-xssss fw-600 mb-0 text-grey-800">
               Rishi
@@ -189,7 +219,8 @@ const index = () => {
               <img src={StarDisabled} alt="star" className="w10" />
             </div>
             <p className="comment-text lh-24 fw-500 font-xssss text-grey-500 mt-2">
-              Enjoyed this a lot and well done. Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, officiis.{' '}
+              Enjoyed this a lot and well done. Lorem ipsum dolor sit amet
+              consectetur adipisicing elit. Placeat, officiis.{' '}
             </p>
           </div>
         </div>
@@ -209,7 +240,9 @@ const index = () => {
             closeVariant="white"
             closeButton={true}
           >
-            <Modal.Title className="mt-1 font-xss fw-700">Add Review</Modal.Title>
+            <Modal.Title className="mt-1 font-xss fw-700">
+              Add Review
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <StarRatings
