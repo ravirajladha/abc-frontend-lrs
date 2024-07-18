@@ -1,14 +1,11 @@
+import { USER_TYPES } from '@/utils/constants';
+import { getUserDataFromLocalStorage } from '@/utils/services';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function ContentItemCard({
-  data,
-  buttons,
-  handleDelete,
-  handleEdit,
-}) {
+function ContentItemCard({ data, buttons, handleDelete, handleEdit }) {
   const baseUrl = import.meta.env.VITE_BASE_URL;
-
+  const user = JSON.parse(getUserDataFromLocalStorage());
   return (
     <div className="col-xl-3 col-lg-4 col-md-6 mt-2">
       <div className="card mb-4 d-block w-100 h-100 shadow-md rounded-lg px-2 pt-5 border-0 text-center">
@@ -31,7 +28,7 @@ function ContentItemCard({
 
         {data?.image && (
           <Link
-            to="/"
+            to=""
             className="btn-round-xxxl rounded-lg bg-lightblue ml-auto mr-auto overflow-hidden"
           >
             {data.image && (
@@ -51,6 +48,23 @@ function ContentItemCard({
           <h4 className="fw-500 font-xss">{data.class_name}</h4>
         )}
         <div className="clearfix"></div>
+        {user && user.type === USER_TYPES.STUDENT && (
+          //only for student- for now its dummy
+          <>
+            <div className="progress mt-3 h10">
+              <div
+                className="progress-bar progress-bar-striped progress-bar-animated"
+                role="progressbar"
+                aria-valuemin="0"
+                style={{ width: `70%` }}
+              ></div>
+            </div>
+            <div className="d-flex justify-content-between">
+            <h4 className="fw-500 font-xssss mt-2">Start date: 16-07-2024</h4>
+            <h4 className="fw-500 font-xssss mt-2">Validity: 45 days</h4>
+            </div>
+          </>
+        )}
 
         {buttons && buttons.length > 0 && (
           <div className="mb-2">

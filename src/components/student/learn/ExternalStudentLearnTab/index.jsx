@@ -16,6 +16,7 @@ const LearnTab = ({
   console.log('subjectdata', subjectData);
   const [elabSubmissionIds, setElabSubmissionIds] = useState({});
   const userDetail = JSON.parse(getUserDataFromLocalStorage());
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     const fetchElabSubmissions = async () => {
@@ -123,7 +124,7 @@ const LearnTab = ({
                             video.assessment_results.some(
                               (result) => result.is_passed === 1
                             );
-                          
+
                           return (
                             <div
                               className={`card-body d-flex p-1 video ${
@@ -155,10 +156,9 @@ const LearnTab = ({
                                   </span>
                                   {video.video_complete_status == 1 ? (
                                     <i className="feather-check-circle text-success font-xssss float-right"></i>
-                                  ):(
-                                    ""
+                                  ) : (
+                                    ''
                                   )}
-                                  
                                 </div>
 
                                 <div className="d-flex">
@@ -227,6 +227,14 @@ const LearnTab = ({
                                       </Link>
                                     </div>
                                   ) : null}
+                                  <div className="border-0 rounded-sm mx-1 lh-24  px-2 bg-current">
+                                    <Link
+                                      className="font-xsssss fw-600 text-uppercase text-white"
+                                      to={`${baseUrl}uploads/zip/resources.zip`}
+                                    >
+                                      <i className='feather-file'></i>
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
                             </div>

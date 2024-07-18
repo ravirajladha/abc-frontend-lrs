@@ -11,7 +11,7 @@ import LogOutButton from '@/components/common/LogoutButton';
 function AppHeader({ toggleNav }) {
 
   return (
-    <div className="middle-sidebar-header bg-white">
+    <div className="middle-sidebar-header bg-white"  style={{ background: "linear-gradient(90deg, #ffa629 0%, #ff9500 100%)"}}>
       <button onClick={toggleNav} className="header-menu"></button>
       <div className=" d-inline-block float-left mb-0 text-grey-900">
         <h1
@@ -35,7 +35,7 @@ function AppHeader({ toggleNav }) {
             overlay={<Tooltip>Settings</Tooltip>}
           >
             <Link to="/teacher/settings">
-              <i className="feather-settings font-xl text-current"></i>
+              <i className="feather-settings font-xl text-white"></i>
             </Link>
           </OverlayTrigger>
         </li>

@@ -8253,6 +8253,10 @@ button.bg-dark:focus {
   border-top: 1px solid #e1e1f0 !important;
 }
 
+.border-top-current {
+  border-top: 1px solid var(--theme-color) !important;
+}
+
 .border-right {
   border-right: 1px solid #e1e1f0 !important;
 }

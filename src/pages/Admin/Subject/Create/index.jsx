@@ -21,7 +21,9 @@ function Create({ title }) {
     subject_type: '',
     super_subject: null,
     benefits: '',
-    description: ''
+    description: '',
+    subject_video: '',
+    subject_video_name: '',
   });
   const [validationErrors, setValidationErrors] = useState({});
   const [loading, setLoading] = useState(false); // Loader state
@@ -42,6 +44,17 @@ function Create({ title }) {
         ...formData,
         subject_image: file,
         subject_image_name: file.name,
+      });
+    }
+  };
+  const handleVideoChange = (event) => {
+    // Method to handle file changes
+    const file = event.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        subject_video: file,
+        subject_video_name: file.name,
       });
     }
   };
@@ -71,7 +84,6 @@ function Create({ title }) {
     submissionData.append('super_subject_id', null);
     submissionData.append('benefits', formData.benefits);
     submissionData.append('description', formData.description);
-
 
     try {
       const response = await createSubject(submissionData);
@@ -164,12 +176,54 @@ function Create({ title }) {
                     )}
                   </div>
                 </div>
+                <div className="col-lg-6 col-md-12 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">
+                      Course Validity
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control dummy"
+                      name="course_validity"
+                      placeholder="Enter Course Validity in days"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-12 mb-3">
+                  <div className="form-group">
+                    <label className="mont-font form-label fw-600 font-xsss">
+                      Course Video
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control dummy"
+                      placeholder="Select Course Image"
+                      value={formData.subject_video_name}
+                      onClick={() =>
+                        document.getElementById('subjectVideoInput').click()
+                      }
+                      readOnly
+                    />
+                    <input
+                      type="file"
+                      className="custom-file-input"
+                      name="subject_image"
+                      onChange={handleVideoChange}
+                      style={{ display: 'none' }}
+                      id="subjectVideoInput"
+                    />
+                  </div>
+                </div>
                 <div className="col-lg-12 col-md-12 mb-3">
                   <div className="form-group">
-                    <label className="mont-font fw-600 font-xsss">Benefits</label>
-                       <TextEditor
+                    <label className="mont-font fw-600 font-xsss">
+                      Benefits
+                    </label>
+                    <TextEditor
                       initialValue={formData.benefits || 'default value'}
-                      onContentChange={(html) => handleTextEditorChange('benefits', html)}
+                      onContentChange={(html) =>
+                        handleTextEditorChange('benefits', html)
+                      }
                     />
 
                     {validationErrors.benefits && (
@@ -181,10 +235,14 @@ function Create({ title }) {
                 </div>
                 <div className="col-lg-12 mb-3">
                   <div className="form-group">
-                    <label className="mont-font fw-600 font-xsss">Description</label>
-                       <TextEditor
+                    <label className="mont-font fw-600 font-xsss">
+                      Description
+                    </label>
+                    <TextEditor
                       initialValue={formData.description || 'default value'}
-                      onContentChange={(html) => handleTextEditorChange('description', html)}
+                      onContentChange={(html) =>
+                        handleTextEditorChange('description', html)
+                      }
                     />
 
                     {validationErrors.description && (

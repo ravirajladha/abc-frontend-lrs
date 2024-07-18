@@ -7,3 +7,4 @@ export { default as AddFieldButton } from './AddFieldButton';
 export { default as DeleteFieldButton } from './DeleteFieldButton';
 export { default as FrontArrow } from './FrontArrow';
 export { default as BackArrow } from './BackArrow';
+export { default as MultiSelectDropdown } from './MultiSelectDropdown';

@@ -24,6 +24,7 @@ function Profile({ isAdmin, isStudent }) {
   const [walletLogs, setWalletLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [isProfileEditable, setIsProfileEditable] = useState(true);
   const [studentData, setStudentData] = useState(() => {
     // If isAdmin is true, then we should always be using the studentId from the URL parameters
     // otherwise, we try to get the student data from local storage.
@@ -116,6 +117,7 @@ function Profile({ isAdmin, isStudent }) {
   // Effect to fetch student data if admin
   useEffect(() => {
     if (isAdmin === 'true' && studentIdFromParams) {
+      setIsProfileEditable(false);
       fetchStudentData();
     }
   }, [isAdmin, studentIdFromParams, fetchStudentData]);
@@ -158,7 +160,7 @@ function Profile({ isAdmin, isStudent }) {
       <div>
         <Tabs
           defaultActiveKey="report"
-          className="mb-3 nav nav-tabs profile xs-p-3 d-flex align-items-center justify-content-between product-info-tab border-bottom-0 bg-white shadow-xss rounded-lg"
+          className="mb-3 nav nav-tabs profile d-flex align-items-center justify-content-between product-info-tab border-bottom-0 bg-white shadow-xss rounded-lg"
         >
           <Tab eventKey="report" title="PERFORMANCE">
             <ReportCard
@@ -168,7 +170,7 @@ function Profile({ isAdmin, isStudent }) {
             />
           </Tab>
           <Tab eventKey="about" title="ABOUT">
-            <AboutCard studentData={studentData} />
+            <AboutCard studentData={studentData} isProfileEditable={isProfileEditable}/>
           </Tab>
           <Tab eventKey="subject" title="Courses">
             <SubjectCard subjects={studentData?.subjects} />

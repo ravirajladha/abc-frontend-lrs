@@ -24,6 +24,7 @@ import {
   Company,
   JobDetail,
 
+  StudentProfileEdit,
 // Home
 } from '@/pages';
 import {
@@ -89,7 +90,7 @@ const StudentRoutes = [
     element: <Company title="Companies List" isAdmin={false} isRecruiter={false} isStudent={true}/>,
   },
   { path: 'profile', element: <StudentProfile  isAdmin="false" isStudent="true"/> },
-  { path: 'settings', element: <StudentSettings title="Settings"/> },
+  { path: 'profile/:studentId/edit', element: <StudentProfileEdit /> },
   { path: 'settings', element: <StudentSettings title="Settings"/> },
 
   { path: 'readable-courses', element: <StudentReadableCourses title="Readable Courses"/> },
