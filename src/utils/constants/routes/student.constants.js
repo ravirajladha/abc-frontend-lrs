@@ -8,7 +8,8 @@ const STUDENT_ROUTES = [
     title: 'Internship',
     icon: 'feather-file',
   },
-  { path: '/student/jobs', title: 'Jobs', icon: 'feather-briefcase' },
+  // { path: '/student/jobs', title: 'Jobs', icon: 'feather-briefcase' },
+  { path: '/student/companies', title: 'Companies', icon: 'feather-briefcase' },
   {
     path: '/student/readable-courses',
     title: 'Readable Courses',

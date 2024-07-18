@@ -15,6 +15,7 @@ import {
   JobTestQuestionCreate,
   JobTestQuestionEdit,
   JobTestQuestionShow,
+  // JobDetail,
 
 } from '@/pages/Recruiter';
 import {
@@ -23,6 +24,9 @@ import {
   JobShow,
   JobCreate,
   JobResult,
+  Company,
+  JobDetail,
+  JobBulletin,
 
 } from '@/pages/Admin';
 const RecruiterRoutes = [
@@ -38,14 +42,37 @@ const RecruiterRoutes = [
   // },
   { path: 'settings', element: <RecruiterSettings title="Settings" /> },
   // { path: 'subjects/:classId/results/:studentId/assessment-result', element: <RecruiterAssessmentResult title="Assessment Result" /> },
-  
+  {
+    path: 'jobs/bulletin',
+    element: (
+      <JobBulletin
+        title="Show Job Student Result"
+        isAdmin={true}
+        isRecruiter={false}
+      />
+    ),
+  },
   //Term Tests
   { path: 'jobs/tests', element: <JobTest title="All Job Tests"  isAdmin={false}
     isRecruiter={true}/> },
+    {
+      path: 'jobs/jobDetail',
+      element: (
+        <JobDetail
+          title="Show Job Detail"
+          isAdmin={true}
+          isRecruiter={false}
+        />
+      ),
+    },
   {
     path: 'jobs/tests/create',
     element: <JobTestCreate title="Create New Job Tests" isAdmin={false}
     isRecruiter={true} />,
+  },
+  {
+    path: 'companies',
+    element: <Company title="Companies List" isAdmin={false} isRecruiter={true}  isStudent={false}/>,
   },
   {
     path: 'jobs/tests/:testId/edit',

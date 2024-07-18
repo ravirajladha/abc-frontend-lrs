@@ -21,6 +21,9 @@ import {
   PaymentStudent,
   CertificateViewer,
   StudentCoursePreview,
+  Company,
+  JobDetail,
+
 // Home
 } from '@/pages';
 import {
@@ -71,7 +74,20 @@ const StudentRoutes = [
   { path: 'forum/:forumId', element: <StudentForumShow /> },
   // { path: 'elab/show', element: <Home /> },
   { path: 'jobs', element: <StudentJobs /> },
-
+  {
+    path: 'jobs/jobDetail',
+    element: (
+      <JobDetail
+        title="Show Job Detail"
+        isAdmin={true}
+        isRecruiter={false}
+      />
+    ),
+  },
+  {
+    path: 'companies',
+    element: <Company title="Companies List" isAdmin={false} isRecruiter={false} isStudent={true}/>,
+  },
   { path: 'profile', element: <StudentProfile  isAdmin="false" isStudent="true"/> },
   { path: 'settings', element: <StudentSettings title="Settings"/> },
   { path: 'settings', element: <StudentSettings title="Settings"/> },

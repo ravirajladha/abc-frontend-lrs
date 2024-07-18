@@ -68,6 +68,7 @@ const companies = [
 ];
 
 const Companies = (props) => {
+  console.log(props.isRecruiter, "props detail");
   const [activePopup, setActivePopup] = useState(null);
 
   const handleOutsideClick = (event) => {
@@ -100,19 +101,33 @@ const Companies = (props) => {
     }
   };
 
+  const { isAdmin, isRecruiter, isStudent } = props;
+
+  const getLink = () => {
+    if (isAdmin) {
+      return "/admin/jobs";
+    } else if (isRecruiter) {
+      return "/recruiter/jobs";
+    } else if (isStudent) {
+      return "/student/jobs";
+    } else {
+      return null;
+    }
+  };
+
+
+  
   return (
     <>
-   <ContentHeader
+    
+    <ContentHeader
         title="Jobs"
-        backLink={props.isAdmin ? '/admin/companies' : '/recruiter/companies'}
-
-        buttons={[
+        backLink={isAdmin ? '/admin/companies' : isRecruiter ? '/recruiter/companies' : null}
+        buttons={!isStudent && [
           {
             link: 'create',
             text: 'Company',
           },
-          
-          
         ]}
       />
       <div className="row">
@@ -198,11 +213,11 @@ const Companies = (props) => {
               </ul>
 
               <Link 
-                to="/admin/jobs"
-                className="p-2 mt-4 d-inline-block text-white fw-700 lh-30 rounded-lg w200 text-center font-xsssss ls-3 bg-current"
-              >
-               VIEW JOBS
-              </Link>
+        to={getLink()}
+        className="p-2 mt-4 d-inline-block text-white fw-700 lh-30 rounded-lg w200 text-center font-xsssss ls-3 bg-current"
+      >
+        VIEW JOBS
+      </Link>
             </div>
           </div>
         ))}

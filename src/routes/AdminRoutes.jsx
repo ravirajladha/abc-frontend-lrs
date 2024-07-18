@@ -118,6 +118,8 @@ import {
   JobShow,
   JobCreate,
   JobResult,
+  JobDetail,
+  JobBulletin,
   Company,
   CompanyEdit,
   CompanyShow,
@@ -768,8 +770,28 @@ const AdminRoutes = [
     ),
   },
   {
+    path: 'jobs/jobDetail',
+    element: (
+      <JobDetail
+        title="Show Job Detail"
+        isAdmin={true}
+        isRecruiter={false}
+      />
+    ),
+  },
+  {
+    path: 'jobs/bulletin',
+    element: (
+      <JobBulletin
+        title="Show Job Student Result"
+        isAdmin={true}
+        isRecruiter={false}
+      />
+    ),
+  },
+  {
     path: 'companies',
-    element: <Company title="Companies List" isAdmin={true} isRecruiter={false} />,
+    element: <Company title="Companies List" isAdmin={true} isRecruiter={false}  isStudent={false}/>,
   },
   {
     path: 'companies/create',
