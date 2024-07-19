@@ -161,7 +161,7 @@ function Create({ title }) {
       const response = await createTermTest(updatedFormData);
 
       if (response.status) {
-        toast.success('Term test created successfully!');
+        toast.success('Test created successfully!');
         navigate('/admin/tests');
         setFormData({
           selectedClass: '',
@@ -193,7 +193,7 @@ function Create({ title }) {
       {!isFormVerified ? (
         <div>
           <ContentHeader title={title} />
-          <ContentFormWrapper formTitle="Create New Term Test">
+          <ContentFormWrapper formTitle="Create New Test">
             {errorMessage && (
               <ContentFallback alertDanger message={errorMessage} />
             )}

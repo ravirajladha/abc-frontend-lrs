@@ -53,7 +53,7 @@ function TermTestQuestionBank({ title, isAdmin }) {
       setQuestions(data.term_test_questions);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching term test questions:', error);
+      console.error('Error fetching test questions:', error);
       setLoading(false);
     }
   }, [setQuestions, setLoading, selectedClass]);
@@ -80,7 +80,7 @@ function TermTestQuestionBank({ title, isAdmin }) {
           }
           fetchQuestions();
         } catch (error) {
-          console.error('Error deleting term test question:', error);
+          console.error('Error deleting test question:', error);
         }
       }
     });
@@ -190,7 +190,7 @@ function TermTestQuestionBank({ title, isAdmin }) {
                       ) : (
                         <tr>
                           <td colSpan="4" className="text-center">
-                            There are no term test questions available at the
+                            There are no test questions available at the
                             moment.
                           </td>
                         </tr>

@@ -1,5 +1,7 @@
 import {
   AssessmentsShow,
+  CreateZoomCall,
+  EditZoomCall,
   TeacherAssessmentResult,
   TeacherChapters,
   TeacherClassResults,
@@ -62,6 +64,14 @@ const TeacherRoutes = [
   {
     path: 'live-sessions',
     element: <TeacherLiveQnaSessions title="Live QnA Session" />,
+  },
+  {
+    path: 'live-sessions/create',
+    element: <CreateZoomCall title="Create QnA Session" />,
+  },
+  {
+    path: 'live-sessions/:zoomCallId/edit',
+    element: <EditZoomCall title="Create QnA Session" />,
   },
 ];
 

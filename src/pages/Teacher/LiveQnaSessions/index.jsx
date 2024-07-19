@@ -34,7 +34,7 @@ function Index({ title }) {
   return (
     <>
       <ContentHeader
-        title="Live QnA"
+        title="Live Q&A"
         subtitle="Sessions"
         buttons={[
           {

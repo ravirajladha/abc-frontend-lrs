@@ -62,7 +62,7 @@ function Tests({ title}) {
       setTermTests(data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching term tests:', error);
+      console.error('Error fetching tests:', error);
       setLoading(false);
     }
   }, [setTermTests, setLoading, selectedClass]);
@@ -77,7 +77,7 @@ function Tests({ title}) {
       title: 'Confirm!',
       showDenyButton: true,
       confirmButtonText: 'Yes',
-      text: 'Do you want to delete this term test?',
+      text: 'Do you want to delete this test?',
       icon: 'warning',
     }).then(async (result) => {
       if (result.isConfirmed) {

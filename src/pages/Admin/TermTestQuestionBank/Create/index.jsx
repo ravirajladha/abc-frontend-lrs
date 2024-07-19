@@ -123,7 +123,7 @@ function Create({ title }) {
   return (
     <div>
       <ContentHeader title={title} />
-      <ContentFormWrapper formTitle="Term Test Question">
+      <ContentFormWrapper formTitle="Test Question">
         <form className="contact_form" onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             <div className="col-lg-6 mb-2">

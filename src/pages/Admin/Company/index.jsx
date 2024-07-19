@@ -163,7 +163,7 @@ const Companies = (props) => {
                 )}
               </div>
               <a
-                href="/default-channel"
+                href=""
                 className="btn-round-xxxl rounded-lg bg-lightblue ml-auto mr-auto"
               >
                 <img
@@ -196,7 +196,7 @@ const Companies = (props) => {
               <ul className="memberlist mt-4 mb-2">
                 <li className="last-member">
                   <a
-                    href="/default-channel"
+                    href=""
                     className="bg-greylight fw-600 text-grey-500 font-xssss ls-3"
                   >
                     +2

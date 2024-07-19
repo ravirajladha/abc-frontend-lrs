@@ -356,41 +356,41 @@ const AdminRoutes = [
     element: <AssessmentQuestionShow title="Show Assessment Question" />,
   },
 
-  //Term Tests
-  { path: 'tests', element: <TermTest title="All Term Tests" /> },
+  //Tests
+  { path: 'tests', element: <TermTest title="All Tests" /> },
   {
     path: 'tests/create',
-    element: <TermTestCreate title="Create New Term Tests" />,
+    element: <TermTestCreate title="Create New Tests" />,
   },
   {
     path: 'tests/:testId/edit',
-    element: <TermTestEdit title="Edit Term Tests" />,
+    element: <TermTestEdit title="Edit Tests" />,
   },
   {
     path: 'tests/:testId',
-    element: <TermTestShow title="Show Term Test Details" />,
+    element: <TermTestShow title="Show Tests Details" />,
   },
   {
     path: 'tests/:testId/results',
-    element: <TermTestResult title="Show Term Test Results" />,
+    element: <TermTestResult title="Show Tests Results" />,
   },
   { path: 'tests/:testId/results/:subjectId/:studentId', element: <StudentSubjectResults isAdmin={true} isStudent={false}/>  },
-  //Term Test Question
+  //Tests Question
   {
     path: 'tests/question-bank',
-    element: <TermTestQuestionBank title="Term Test Questions" />,
+    element: <TermTestQuestionBank title="Tests Questions" />,
   },
   {
     path: 'tests/question-bank/create',
-    element: <TermTestQuestionCreate title="Create Term Test Question" />,
+    element: <TermTestQuestionCreate title="Create Tests Question" />,
   },
   {
     path: 'tests/question-bank/:questionId/edit',
-    element: <TermTestQuestionEdit title="Edit Term Test Question" />,
+    element: <TermTestQuestionEdit title="Edit Tests Question" />,
   },
   {
     path: 'tests/question-bank/:questionId',
-    element: <TermTestQuestionShow title="Show Term Test Question" />,
+    element: <TermTestQuestionShow title="Show Tests Question" />,
   },
 
   //Mini Projects
@@ -886,16 +886,16 @@ const AdminRoutes = [
     ),
   },
 
-  // Live Qns session
+  // Live Qna session
 
-  { path: 'live-sessions', element: <ZoomCall title="Live QnA Session" /> },
+  { path: 'live-sessions', element: <ZoomCall title="Live Q&A Session" /> },
   {
     path: 'live-sessions/create',
-    element: <CreateZoomCall title="Create QnA Session" />,
+    element: <CreateZoomCall title="Create Q&A Session" />,
   },
   {
     path: 'live-sessions/:zoomCallId/edit',
-    element: <EditZoomCall title="Create QnA Session" />,
+    element: <EditZoomCall title="Create Q&A Session" />,
   },
 
   {

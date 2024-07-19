@@ -461,7 +461,7 @@ function JobDetail({}) {
               <div className="card-body mb-lg-3 pb-0">
                 <h2 className="fw-400 font-lg d-block">
                   <b>Bulletin</b>
-                  {/* <a href="/default-user-profile" className="float-right">
+                  {/* <a href="" className="float-right">
                     <i className="feather-edit text-grey-500 font-xs"></i>
                   </a> */}
                 </h2>
@@ -540,14 +540,11 @@ function JobDetail({}) {
               </div>
             </div>
           </Tab>
-          <Tab eventKey="group" title="GROUP">
+          <Tab eventKey="status" title="Status">
             <div className="card d-block w-100 border-0 shadow-xss rounded-lg overflow-hidden p-lg-4 p-2">
               <div className="card-body mb-lg-3 pb-0">
                 <h2 className="fw-400 font-lg d-block">
-                  <b>Group</b>
-                  <a href="/default-user-profile" className="float-right">
-                    <i className="feather-edit text-grey-500 font-xs"></i>
-                  </a>
+                  <b>Status</b>
                 </h2>
               </div>
               <div className="card-body pb-0">
@@ -593,7 +590,7 @@ function JobDetail({}) {
               <div className="card-body mb-lg-3 pb-0">
                 <h2 className="fw-400 font-lg d-block">
                   My <b>Friend</b>
-                  <a href="/default-user-profile" className="float-right">
+                  <a href="" className="float-right">
                     <i className="feather-edit text-grey-500 font-xs"></i>
                   </a>
                 </h2>
@@ -630,7 +627,7 @@ function JobDetail({}) {
                           <ul className="text-center d-block mt-3 list-inline ml-2 mr-2 mb-3">
                             <li className="mr-1 list-inline-item">
                               <a
-                                href="/default-user-profile"
+                                href=""
                                 className="btn-round-md bg-facebook"
                               >
                                 <i className="font-xs ti-facebook text-white"></i>
@@ -638,7 +635,7 @@ function JobDetail({}) {
                             </li>
                             <li className="mr-1 list-inline-item">
                               <a
-                                href="/default-user-profile"
+                                href=""
                                 className="btn-round-md bg-twiiter"
                               >
                                 <i className="font-xs ti-twitter-alt text-white"></i>
@@ -646,7 +643,7 @@ function JobDetail({}) {
                             </li>
                             <li className="mr-1 list-inline-item">
                               <a
-                                href="/default-user-profile"
+                                href=""
                                 className="btn-round-md bg-linkedin"
                               >
                                 <i className="font-xs ti-linkedin text-white"></i>
@@ -654,7 +651,7 @@ function JobDetail({}) {
                             </li>
                             <li className="mr-0 list-inline-item">
                               <a
-                                href="/default-user-profile"
+                                href=""
                                 className="btn-round-md bg-instagram"
                               >
                                 <i className="font-xs ti-instagram text-white"></i>

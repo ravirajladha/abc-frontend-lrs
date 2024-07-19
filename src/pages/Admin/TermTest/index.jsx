@@ -66,7 +66,7 @@ function Tests({ title }) {
       setTermTests(data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching term tests:', error);
+      console.error('Error fetching tests:', error);
       setLoading(false);
     }
   }, [setTermTests, setLoading, selectedClass, selectedSubject]);
@@ -80,7 +80,7 @@ function Tests({ title }) {
       title: 'Confirm!',
       showDenyButton: true,
       confirmButtonText: 'Yes',
-      text: 'Do you want to delete this term test?',
+      text: 'Do you want to delete this test?',
       icon: 'warning',
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -100,7 +100,7 @@ function Tests({ title }) {
   return (
     <div>
       <ContentHeader
-        title="Term Tests"
+        title="Tests"
         buttons={[
           {
             link: 'create',
@@ -154,9 +154,6 @@ function Tests({ title }) {
                           #
                         </th>
                         <th className="border-0" scope="col">
-                          Term
-                        </th>
-                        <th className="border-0" scope="col">
                           Name
                         </th>
                         <th className="border-0" scope="col">
@@ -182,13 +179,6 @@ function Tests({ title }) {
                         termTests.map((test, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>
-                              {
-                                TERM_TYPES.find(
-                                  (item) => item.id === test.term_type
-                                )?.name
-                              }
-                            </td>
                             <td>{test.title}</td>
                             <td>{test.class}</td>
                             <td>{test.subject}</td>

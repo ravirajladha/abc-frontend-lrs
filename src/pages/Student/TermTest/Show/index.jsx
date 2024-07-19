@@ -4,7 +4,7 @@ import React from 'react';
 function Show() {
   return (
     <div>
-      <ContentHeader title="Term Test" subtitle="Details" />
+      <ContentHeader title="Test" subtitle="Details" />
     </div>
   );
 }

@@ -21,7 +21,7 @@ const ADMIN_ROUTES = {
       { path: '/admin/tests', title: 'Tests', icon: 'feather-target' },
       { path: '/admin/assessments', title: 'Assessments', icon: 'feather-activity' },
       { path: '/admin/trainers', title: 'Trainers', icon: 'feather-user-check' },
-      { path: '/admin/live-sessions', title: 'Live QnA Sessions', icon: 'feather-airplay' },
+      { path: '/admin/live-sessions', title: 'Live Q&A Sessions', icon: 'feather-airplay' },
     ],
   },
   resources: {
@@ -40,8 +40,10 @@ const ADMIN_ROUTES = {
     icon: FaLaptopCode,
     routes: [
       { path: '/admin/elabs', title: 'eLab', icon: 'feather-code' },
-      { path: '/admin/internships', title: 'Internship', icon: 'feather-file-plus' },
       { path: '/admin/mini-projects', title: 'Mini Projects', icon: 'feather-shopping-bag' },
+      { path: '/admin/internships', title: 'Internship', icon: 'feather-file-plus' },
+    { path: '/admin/academic-admin', title: 'Internship Admin', icon: 'feather-credit-card' },
+
     ],
   },
   recruitments: {
@@ -59,7 +61,6 @@ const ADMIN_ROUTES = {
     routes: [
       { path: '/admin/fees', title: 'Fees', icon: 'feather-dollar-sign' },
     { path: '/admin/payments', title: 'Payments', icon: 'feather-credit-card' },
-    { path: '/admin/academic-admin', title: 'Internship Admin', icon: 'feather-credit-card' },
     ],
   },
 };

@@ -133,7 +133,7 @@ function Subjects() {
                   </div>
                   {/* <div className="col-2">
                     <a
-                      href="/default-course-one"
+                      href=""
                       className="btn-round-md ml-3 d-inline-block float-right rounded-lg bg-danger"
                     >
                       <i className="feather-bookmark font-sm text-white"></i>

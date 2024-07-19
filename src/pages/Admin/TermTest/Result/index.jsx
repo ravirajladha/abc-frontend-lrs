@@ -79,7 +79,7 @@ function Result() {
 
   return (
     <div>
-      <ContentHeader title="Term Test Results" />
+      <ContentHeader title="Test Results" />
       {loading ? (
         <div className="text-center mt-5 col-12">
           <ContentLoader />

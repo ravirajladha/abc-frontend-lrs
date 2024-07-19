@@ -258,7 +258,7 @@ function TermTest() {
   return (
     <>
       {/* <ContentHeader
-        title="Term Test"
+        title="Test"
         hasBackButton={false}
         className="mt-4"
         style={{ margin: '10px' }}
@@ -272,7 +272,7 @@ function TermTest() {
                   <div className="row" style={{ margin: '20px' }}>
                     <div className="col-6">
                       <h6 className="font-lg text-grey-800 fw-700 lh-32 mt-3 ">
-                        Term Test
+                        Test
                       </h6>
                       <h3 className="font-lg text-grey-800 fw-700 lh-32 mt-3 ">
                         {testDetails?.title}

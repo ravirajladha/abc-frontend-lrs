@@ -60,7 +60,7 @@ function ReportCard({ studentData, reportData, loading }) {
                   <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     <div className="card mb-4 d-block w-100 shadow-xss rounded-lg p-4 border-0 text-center">
                       <a
-                        href="/default-follower"
+                        href=""
                         className="ml-auto mr-auto rounded-lg overflow-hidden d-inline-block"
                       >
                         <img

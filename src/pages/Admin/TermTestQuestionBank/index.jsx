@@ -222,7 +222,7 @@ function TermTestQuestionBank({ title }) {
                       ) : (
                         <tr>
                           <td colSpan="4" className="text-center">
-                            There are no term test questions available at the
+                            There are no test questions available at the
                             moment.
                           </td>
                         </tr>

@@ -195,7 +195,7 @@ function Edit({ title }) {
       };
       const response =  await updateTermTest(testId, updatedFormData);
       if (response.status) {
-      toast.success('Term test edited successfully!');
+      toast.success('Test edited successfully!');
       navigate('/admin/tests');
       setFormData({
         selectedClass: '',
@@ -228,7 +228,7 @@ function Edit({ title }) {
       {!isFormVerified ? (
         <div>
           <ContentHeader title={title} />
-          <ContentFormWrapper formTitle="Edit New Term Test">
+          <ContentFormWrapper formTitle="Edit New Test">
             {errorMessage && (
               <ContentFallback alertDanger message={errorMessage} />
             )}

@@ -40,7 +40,7 @@ function AppHeader({ toggleNav }) {
             overlay={<Tooltip>Settings</Tooltip>}
           >
             <Link to="/admin/settings">
-              <i className="feather-settings font-xl text-current"></i>
+              <i className="feather-settings font-xl text-white"></i>
             </Link>
           </OverlayTrigger>
         </li>

@@ -76,7 +76,7 @@ const VideoTabs = ({
               />
             )}
           </Tab>
-          <Tab eventKey="chat" title="QNA" className="list-inline-item">
+          <Tab eventKey="chat" title="Q&A" className="list-inline-item">
             <QnaTab
               studentId={studentId}
               subjectId={subjectId}
@@ -120,25 +120,6 @@ const VideoTabs = ({
         </Link>
       </h5>
     
-
-<div>
-      {!isPaid ? (
-        <Link to="/student/payment">
-                  <button className="w-100 font-xs mb-2 text-center rounded-lg bg-success py-3 text-dark fw-400 border border-size-md">
-
-            <i className="feather-check"></i> Payment
-          </button>
-        </Link>
-      ) : (
-     
-        <button className="w-100 font-xs mb-2 text-center rounded-lg bg-primary py-3 text-dark fw-400 border border-size-md">
-
-            <i className="feather-check"></i> Payment Suuccessfull
-          </button>
-       
-      )}
-    </div>
-
 
     </>
   );

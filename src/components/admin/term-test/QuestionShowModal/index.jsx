@@ -14,7 +14,7 @@ const TestQuestionShowModal = ({
         <ContentDisplayModal
           show={showModal}
           handleClose={handleCloseModal}
-          title="Term Test Question Details"
+          title="Test Question Details"
           content={
             <div className="row">
               <div className="col-12">

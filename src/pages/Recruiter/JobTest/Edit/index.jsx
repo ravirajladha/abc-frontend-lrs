@@ -222,7 +222,7 @@ console.log( typeof(data.class_id), "data clas_id");
         setValidationErrors(error.validationErrors);
       }
       toast.error(error.message);
-      console.error('Error creating term test:', error);
+      console.error('Error creating test:', error);
     }
     setIsSubmitting(false);
   };

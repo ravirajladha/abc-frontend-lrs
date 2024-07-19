@@ -148,7 +148,7 @@ function Edit({ title ,isAdmin}) {
   return (
     <div>
       <ContentHeader title={title} />
-      <ContentFormWrapper formTitle="Term Test Question">
+      <ContentFormWrapper formTitle="Test Question">
         {loading ? (
           <div className="py-5">
             <ContentLoader />

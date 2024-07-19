@@ -54,7 +54,7 @@ function InternshipParticipate({ title }) {
     };
 
     fetchMiniProjectData();
-  }, [internshipId, certificateGenerated]);
+  }, [internshipId]);
 
   console.log('inProgressTasks', inProgressTasks);
   const handleStartButtonClick = async (taskId, elabId) => {

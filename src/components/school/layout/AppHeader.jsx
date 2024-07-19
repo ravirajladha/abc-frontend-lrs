@@ -11,7 +11,7 @@ import LogoutButton from '@/components/common/LogoutButton';
 function AppHeader({ toggleNav }) {
 
   return (
-    <div className="middle-sidebar-header" style={{ background: "linear-gradient(90deg, #1CB5E0 0%, #000851 100%)"}}>
+    <div className="middle-sidebar-header" style={{ background: "linear-gradient(90deg, #ffa629 0%, #ff9500 100%)"}}>
 
       <button onClick={toggleNav} className="header-menu"></button>
       <ul className="d-flex ml-auto right-menu-icon">
@@ -23,7 +23,7 @@ function AppHeader({ toggleNav }) {
             overlay={<Tooltip>Settings</Tooltip>}
           >
             <Link to="/academic-admin/settings">
-              <i className="feather-settings font-xl text-current"></i>
+              <i className="feather-settings font-xl text-white"></i>
             </Link>
           </OverlayTrigger>
         </li>

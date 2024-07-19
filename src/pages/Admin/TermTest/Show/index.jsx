@@ -19,7 +19,7 @@ function Show() {
 
   return (
     <>
-      <ContentHeader title={`Term Test Details`} />
+      <ContentHeader title={`Test Details`} />
       {loading && <ContentLoader />}
       {testData && (
         <>

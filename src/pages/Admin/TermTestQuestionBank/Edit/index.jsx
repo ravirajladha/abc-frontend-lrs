@@ -153,7 +153,7 @@ function Edit({ title }) {
   return (
     <div>
       <ContentHeader title={title} />
-      <ContentFormWrapper formTitle="Term Test Question">
+      <ContentFormWrapper formTitle="Test Question">
         {loading ? (
           <div className="py-5">
             <ContentLoader />
