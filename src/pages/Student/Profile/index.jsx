@@ -160,7 +160,7 @@ function Profile({ isAdmin, isStudent }) {
       <div>
         <Tabs
           defaultActiveKey="report"
-          className="mb-3 nav nav-tabs profile d-flex align-items-center justify-content-between product-info-tab border-bottom-0 bg-white shadow-xss rounded-lg"
+          className="mb-1 nav nav-tabs profile d-flex align-items-center justify-content-between product-info-tab border-bottom-0 bg-white shadow-sm rounded-lg"
         >
           <Tab eventKey="report" title="PERFORMANCE">
             <ReportCard

@@ -37,14 +37,6 @@ function ReportCard({ studentData, reportData, loading }) {
 
   return (
     <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
-      <div className="card-body p-4 w-100 bg-current border-0 d-flex rounded-lg justify-content-between">
-        <h4 className="font-xs text-white fw-600 ml-4 mb-0 mt-2">
-          PERFORMANCE
-        </h4>
-        {/* <button className="btn btn-light text-white d-inline-block rounded-xl bg-current font-xssss uppercase fw-700 ls-lg border-2">
-          Download
-        </button> */}
-      </div>
       {loading ? (
         <div className="card-body p-lg-5 p-4 w-100 border-0">
           <div className="row">
@@ -277,59 +269,80 @@ function ReportCard({ studentData, reportData, loading }) {
                 </div> */}
               </div>
               <div className="row mt-2">
-  <div className="col-lg-12">
-    <div className="rounded-xxl bg-greylight h-100 p-3">
-      <table className="table rounded-10 table-admin mb-0">
-        <thead className="bg-greylight ovh">
-          <tr>
-            <th colSpan={2} className="border-0 text-center" scope="col">Assessment Score</th>
-            {/* <th className="border-0 text-center" scope="col">Average Score</th> */}
-          </tr>
-          <tr>
-            <th className="border-0" scope="col">Course</th>
-            <th className="border-0 text-center" scope="col">Average Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {reportData && reportData.assessment_results ? (
-            Object.keys(reportData.assessment_results).map((className, index) => {
-              const subjects = reportData.assessment_results[className];
-              return (
-                <React.Fragment key={index}>
-                  <tr>
-                    <th colSpan="2" className="text-left font-weight-bold">{className} {"Subject"}</th>
-                  </tr>
-                  {Object.keys(subjects).map((subjectName, subIndex) => {
-                    const score = subjects[subjectName];
-                    return (
-                      <tr key={subIndex}>
-                        <td className="">{subjectName}</td>
-                        <td className="text-center">
-                          {score !== null && score !== undefined ? formatNumber(score) : 'N/A'}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </React.Fragment>
-              );
-            })
-          ) : (
-            <tr>
-              <td className="text-center" colSpan="2">
-                No assessment results available
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      <div className="col-lg-12 mt-5">
-        <div className="row"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+                <div className="col-lg-12">
+                  <div className="rounded-xxl bg-greylight h-100 p-3">
+                    <table className="table rounded-10 table-admin mb-0">
+                      <thead className="bg-greylight ovh">
+                        <tr>
+                          <th
+                            colSpan={2}
+                            className="border-0 text-center"
+                            scope="col"
+                          >
+                            Assessment Score
+                          </th>
+                          {/* <th className="border-0 text-center" scope="col">Average Score</th> */}
+                        </tr>
+                        <tr>
+                          <th className="border-0" scope="col">
+                            Course
+                          </th>
+                          <th className="border-0 text-center" scope="col">
+                            Average Score
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {reportData && reportData.assessment_results ? (
+                          Object.keys(reportData.assessment_results).map(
+                            (className, index) => {
+                              const subjects =
+                                reportData.assessment_results[className];
+                              return (
+                                <React.Fragment key={index}>
+                                  <tr>
+                                    <th
+                                      colSpan="2"
+                                      className="text-left font-weight-bold"
+                                    >
+                                      {className} {'Subject'}
+                                    </th>
+                                  </tr>
+                                  {Object.keys(subjects).map(
+                                    (subjectName, subIndex) => {
+                                      const score = subjects[subjectName];
+                                      return (
+                                        <tr key={subIndex}>
+                                          <td className="">{subjectName}</td>
+                                          <td className="text-center">
+                                            {score !== null &&
+                                            score !== undefined
+                                              ? formatNumber(score)
+                                              : 'N/A'}
+                                          </td>
+                                        </tr>
+                                      );
+                                    }
+                                  )}
+                                </React.Fragment>
+                              );
+                            }
+                          )
+                        ) : (
+                          <tr>
+                            <td className="text-center" colSpan="2">
+                              No assessment results available
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                    <div className="col-lg-12 mt-5">
+                      <div className="row"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </>

@@ -4,9 +4,6 @@ function RankCard({ reportData }) {
   const ranks = null;
   return (
     <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
-      <div className="card-header p-4 w-100 border-0 d-flex rounded-lg  bg-current">
-        <h4 className="font-xs text-white fw-600 ml-4 mb-0 mt-2">My Ranks</h4>
-      </div>
       {reportData && (
   <div className="card-body p-lg-5 p-4 w-100 border-0 mb-0">
     <div className="row">

@@ -13,9 +13,7 @@ console.log("studentData from wallet: " + studentData.student_unique_code)
 
   return (
     <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
-      <div className="card-body p-4 w-100 bg-current border-0 d-flex rounded-lg justify-content-between">
-        <h4 className="font-xs text-white fw-600 ml-4 mb-0 mt-2">WALLET</h4>
-      </div>
+      
       {loading ? (
         <div className="card-body p-lg-5 p-4 w-100 border-0">
           <div className="row">

@@ -18400,10 +18400,11 @@ body.theme-dark .h6 {
 .nav-tabs.profile li button {
   border: 0 !important;
   color: #adb5bd !important;
-  padding: 3rem 0 !important;
+  padding: 1rem 0 !important;
   border-radius: 0 !important;
   text-transform: uppercase !important;
   background: transparent !important;
+  font-weight: 600;
 }
 .nav-link.text-white {
   color: #fff !important;

@@ -41,7 +41,7 @@ function NavHeader({ isOpen, toggleNav }) {
         <div className="nav-content">
           <div className="nav-top">
             <Link to="/" className="justify-content-center pl-0">
-              <img src={Logo} alt="Logo" className="" width={65} />
+              <img src={Logo} alt="Logo" className="" width={90} />
             </Link>
             <span
               onClick={toggleNav}

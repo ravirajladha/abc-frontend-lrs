@@ -221,21 +221,20 @@ function Subjects() {
               </div>
               <ReviewCard />
 
-            <div className="border-0 rounded-sm mx-1 lh-24 px-2 bg-current">
-  {isPaid ? (
-    <Link
-      className="font-xsssss fw-600 text-uppercase text-white"
-      onClick={handleDownload}
-    >
-      <i className="feather-file"></i> Download Certificate
-    </Link>
-  ) : (
-    <span className="font-xsssss fw-600 text-uppercase text-white">
-      Finish the course to download
-    </span>
-  )}
-</div>
-
+              <div className="border-0 rounded-sm mx-1 lh-24 px-2 bg-current">
+                {isPaid ? (
+                  <Link
+                    className="font-xsssss fw-600 text-uppercase text-white"
+                    onClick={handleDownload}
+                  >
+                    <i className="feather-file"></i> Download Certificate
+                  </Link>
+                ) : (
+                  <span className="font-xsssss fw-600 text-uppercase text-white">
+                    Finish the course to download
+                  </span>
+                )}
+              </div>
             </div>
           </>
         ) : (

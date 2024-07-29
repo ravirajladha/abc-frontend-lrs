@@ -43,7 +43,7 @@ function StudentLayout() {
       <div className="main-wrapper" >
         <NavHeader isOpen={isNavOpen} toggleNav={toggleNav} />
         <ToastContainer position="top-center" autoClose={3000} closeOnClick />
-        <div className="main-content" id="mainContent">
+        <div className="main-content bg-lightgreen" id="mainContent">
           <AppHeader toggleNav={toggleNav} />
           <div className="middle-sidebar-bottom">
             <div className="middle-sidebar-left">

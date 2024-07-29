@@ -14,7 +14,9 @@ function AppHeader({ toggleNav }) {
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
 
   return (
-    <div className="middle-sidebar-header"  style={{ background: "linear-gradient(90deg, #ffa629 0%, #ff9500 100%)"}}>
+    <div className="middle-sidebar-header"  
+    style={{ background: "linear-gradient(90deg, #ffa629 0%, #ff9500 100%)"}}
+    >
       <button onClick={toggleNav} className="header-menu"></button>
       <div className=" d-inline-block float-left mb-0 text-grey-900">
         <h1

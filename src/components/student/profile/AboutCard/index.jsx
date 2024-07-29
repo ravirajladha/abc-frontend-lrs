@@ -9,19 +9,17 @@ function AboutCard({ studentData, isProfileEditable }) {
   const student = studentData;
   return (
     <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
-      <div className="card-header p-4 w-100 border-0 d-flex justify-content-between rounded-lg  bg-current">
-        <h4 className="font-xs text-white fw-600 ml-4 mb-0 mt-2">About Me</h4>
-        {isProfileEditable && (
-          <Link
-            to={`${student?.student_auth_id}/edit`}
-            className="font-xs text-white"
-          >
-            <i className="feather-edit" />{' '}
-          </Link>
-        )}
-      </div>
       {student && (
         <div className="card-body p-lg-5 p-4 w-100 border-0 mb-0">
+            {isProfileEditable && (
+              <Link
+                to={`${student?.student_auth_id}/edit`}
+                className="font-xs text-black float-right"
+              >
+                <i className="feather-edit" />{' '}
+              </Link>
+            )}
+
           <div className="row">
             <div className="col-lg-4">
               <div className="mb-4 d-block w-100 rounded-lg border-0 text-center ">
