@@ -49,7 +49,7 @@ function Participants({ title }) {
     <>
       <ContentHeader
         title="All"
-        subtitle="Elab Participants1"
+        subtitle="Elab Participants"
         buttons={[
           {
             link: 'create',
@@ -83,7 +83,7 @@ function Participants({ title }) {
                           student
                         </th>
                         <th className="border-0" scope="col">
-                          summary
+                          Memory (in kb)
                         </th>
                         <th className="border-0" scope="col">
                           time taken
@@ -116,10 +116,11 @@ function Participants({ title }) {
                           <td>{elab.time_taken}</td>
                           <td>{elab.start_timestamp}</td>
                           <td>
-                            {elab.code_language === 0 && 'Java'}
+                            {/* {elab.code_language === 0 && 'Java'}
                             {elab.code_language === 1 && 'Python'}
                             {elab.code_language === 2 && 'C'}
-                            {elab.code_language === 3 && 'SQL'}
+                            {elab.code_language === 3 && 'SQL'} */}
+                            Java
                           </td>
                           <td className="text-right">
                             {/* <Link

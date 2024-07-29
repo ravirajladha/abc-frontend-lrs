@@ -7,7 +7,7 @@ const Accordion = ({ labs }) => {
 
   const accordionContent = {
     "Description": <p className="text-black">{labs.description}</p>,
-    "I/O Format": <p className="text-black">{labs.constraints}</p>,
+    "I/O Format": <p className="text-black">{labs.io_format}</p>,
     "Constraints": <p className="text-black">{labs.constraints}</p>,
     "Sample I/O": <p className="text-black">{labs.io_sample}</p>, // Assuming labs.sample_io exists
     "Pseudo Code": (
