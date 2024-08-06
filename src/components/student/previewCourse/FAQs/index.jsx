@@ -2,25 +2,26 @@ import React from 'react';
 import { Accordion } from 'react-bootstrap';
 const index = () => {
   const faqs = [
+   
     {
-      title: 'title 1',
+      title: 'How can I unlock the locks present in the videos section?',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo amet aspernatur, aperiam quibusdam voluptatem vel incidunt, voluptatibus ipsum nobis vero pariatur at? Magnam ipsam enim earum',
+        "To unlock the videos in the next chapter, you must first complete watching all the videos in the current chapter. Each chapter's content is designed to be sequential, ensuring that you grasp all the necessary concepts before moving on. Once you have watched all the videos in a particular chapter, the system will automatically unlock the subsequent chapter, allowing you to continue your learning journey. This structured approach ensures that you build a strong foundation before advancing to more complex topics.",
     },
     {
-      title: 'title 2',
+      title: 'How can we ask the next question in the Q&A tab?',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo amet aspernatur, aperiam quibusdam voluptatem vel incidunt, voluptatibus ipsum nobis vero pariatur at? Magnam ipsam enim earum',
+        'Students can ask a single question in the provided tab at any given time. After submitting their question, they need to wait for a response from the teacher before they can ask another question. This system ensures that each query is addressed individually, allowing for a more organized and effective learning experience.',
     },
     {
-      title: 'title 3',
+      title: 'How can I see the test button or pursue the test in any course?',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo amet aspernatur, aperiam quibusdam voluptatem vel incidunt, voluptatibus ipsum nobis vero pariatur at? Magnam ipsam enim earum',
+        'To access the test button and take the test for any course, you must first complete all the course content. Once you have finished all the chapters within a course, the test button will appear on the main page where all the courses are listed. This ensures that you have thoroughly understood the course material before attempting the test, enhancing your chances of success.',
     },
     {
-      title: 'title 4',
+      title: 'How do I get the certificate for each course?',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo amet aspernatur, aperiam quibusdam voluptatem vel incidunt, voluptatibus ipsum nobis vero pariatur at? Magnam ipsam enim earum',
+        'To receive a certificate for a course, you must complete all the chapters and their respective content within the course. After you have successfully finished all the chapters and any associated tests, the system will generate your certificate. This certificate will be available for download or viewing, signifying your successful completion and mastery of the course material.',
     },
   ];
   return (

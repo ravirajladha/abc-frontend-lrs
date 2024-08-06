@@ -154,7 +154,7 @@ function Subjects() {
               </div>
               <div className="card d-block border-0 rounded-lg overflow-hidden p-4 shadow-xss mt-4 alert-success">
                 <h2 className="fw-700 font-sm mb-3 mt-1 pl-1 text-success mb-4">
-                  Course Benifits
+                  Course Benefits
                 </h2>
                 {/* <h4 className="font-xssss fw-600 text-grey-600 mb-3 pl-30 position-relative lh-24">
                   <i className="ti-check font-xssss btn-round-xs bg-success text-white position-absolute left-0 top-5"></i>
@@ -163,6 +163,10 @@ function Subjects() {
                   className="font-xssss fw-600 text-grey-600 mb-3 pl-2 position-relative lh-24"
                   dangerouslySetInnerHTML={{ __html: subjects.benefits }}
                 ></h4>
+                  <h4
+                  className="font-xssss fw-600 text-grey-600 mb-3 pl-2 position-relative lh-24"
+              
+                >This course is meticulously designed to cover all fundamental OOP concepts with detailed explanations and practical examples. By the end of the course, learners will have a solid grasp of Java's OOP principles, demonstrated through real-world coding exercises and projects. This ensures that students are not only proficient in theory but also capable of applying their knowledge in practical scenarios, making them well-prepared for industry challenges.</h4>
               </div>
 
               <div className="card d-block border-0 rounded-lg overflow-hidden p-4 shadow-xss mt-4">

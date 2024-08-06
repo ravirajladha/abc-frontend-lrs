@@ -77,6 +77,12 @@ function Payment({ title }) {
                             Amount
                           </th>
                           <th className="border-0" scope="col">
+                           Referral  Amount
+                          </th>
+                          <th className="border-0" scope="col">
+                           Referee  Amount
+                          </th>
+                          <th className="border-0" scope="col">
                             Status
                           </th>
                           <th className="border-0" scope="col">
@@ -102,6 +108,8 @@ function Payment({ title }) {
                             </td>
                             <td>{item.transaction_id}</td>
                             <td>{item.amount}</td>
+                            <td>--</td>
+                            <td>--</td>
                             <td className="text-success">{item.status}</td>
                             <td>{item.ip_address}</td>
                             <td>{formatDateTime(item.created_at)}</td>

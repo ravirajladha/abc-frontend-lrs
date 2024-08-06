@@ -294,14 +294,7 @@ function Editor1({ title, studentView, isTestCode, isShowCodebase }) {
     setCode(newCode);
   };
 
-  const processCompilation = async (encodedCode, inputVariables, testId) => {
-    console.log(
-      'language.id',
-      encodedCode,
-      inputVariables,
-      testId,
-      language.id
-    );
+  const processCompilation = async (encodedCode, inputVariables, testId, customStatus) => {
     const formData = {
       language_id: language.id,
       source_code: encodedCode,
@@ -323,8 +316,17 @@ function Editor1({ title, studentView, isTestCode, isShowCodebase }) {
     try {
       const response = await axios.request(options);
       const token = response.data.token;
+     
+
+    
       const result = await checkStatus(token, testId); // Modify checkStatus if needed to handle custom input
+      // if(!customStatus){
       return { testId, ...result };
+      // }else{
+      // return { 1, ...result };
+
+      // }
+ 
     } catch (err) {
       console.error(
         'Error during compile request for test case:',
@@ -369,33 +371,6 @@ ${harnessCode}
 ${userFunction}
 ${harnessCode}
     `.trim();
-
-      // finalCode = `def intToRoman(num):
-      // val = [
-      //     1000, 900, 500, 400,
-      //     100, 90, 50, 40,
-      //     10, 9, 5, 4,
-      //     1
-      //     ]
-      // syb = [
-      //     "M", "CM", "D", "CD",
-      //     "C", "XC", "L", "XL",
-      //     "X", "IX", "V", "IV",
-      //     "I"
-      //     ]
-      // roman_num = ''
-      // i = 0
-      // while num > 0:
-      //     for _ in range(num // val[i]):
-      //         roman_num += syb[i]
-      //         num -= val[i]
-      //     i += 1
-      // return roman_num
-
-      // if __name__ == "__main__":
-      // number = int(input())
-      // roman = intToRoman(number)
-      // print(roman)`
     } else if (language.id == 82) {
       // Prepare sql code for compilation
       const userFunction = code.trim();
@@ -408,18 +383,17 @@ ${harnessCode}
       return; // Exit the function if language is not recognized
     }
     const encodedFinalCode = btoa(finalCode);
-    console.log("finalc code", finalCode);
+   
     // Process test cases
     if (labs && Array.isArray(labs.testcase)) {
       for (const test of labs.testcase) {
         const inputVariables = test.variables.map((v) => v.value).join('\n');
-        console.log('encodedfinalcode', encodedFinalCode);
-        console.log('inputVariables', inputVariables);
-        console.log('test', test);
+        console.log('input vailr', inputVariables);
         const testCaseResult = await processCompilation(
           encodedFinalCode,
           inputVariables,
-          test
+          test,
+          false
         );
         // testCaseResult.passed = testCaseResult.output.trim() === test.expected_output.trim();
         testResults.push(testCaseResult);
@@ -432,9 +406,12 @@ ${harnessCode}
     if (customInputValue.trim() !== '') {
       const customResult = await processCompilation(
         encodedFinalCode,
-        15,
-        'custom'
+        customInputValue,
+        'custom',
+        true
       );
+      console.log('custom input', customResult);
+
       testResults.push(customResult);
     }
 
@@ -534,24 +511,30 @@ ${harnessCode}
       }
       // Once you have the output:
       const passed = output.trim() === test.expected_output.trim();
-      //   setTestResults((prevResults) => ({
-      //     ...prevResults,
-      //     [test.id]: passed, // Store boolean result by test id
-      //   }));
+
       console.log(passed);
-      console.log('before passed');
-      if (passed) {
-        console.log('after passed');
-        showSuccessToast(`Test case ${test.id} passed!`);
-      } else {
-        showErrorToast(
-          `Test case ${test.id} failed! Expected ${test.expected_output}, got ${output}`
-        );
+      console.log(`before passed ${test.id}`);
+      if (expectedOutput != undefined) {
+        if (passed) {
+          console.log('after passed');
+          const testCaseNumber = test.id.match(/\d+/)[0]; // Extract the number from test.id
+          showSuccessToast(`Test case ${testCaseNumber} passed!`);
+        } else {
+          const testCaseNumber = test.id.match(/\d+/)[0]; // Extract the number from test.id
+          showErrorToast(
+            `Test case ${testCaseNumber} failed! Expected ${test.expected_output}, got ${output}`
+          );
+        }
       }
+
       return { output, passed };
     } catch (err) {
       // Handle errors from the GET request
-      showErrorToast(`"Error during status check:", err`);
+     if(test != 'custom')
+{
+
+  showErrorToast(`"Error during status check:", err`);
+}
       // console.error("Error during status check:", err);
       setProcessing(false);
     }
