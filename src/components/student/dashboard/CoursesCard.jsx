@@ -158,7 +158,7 @@ function CoursesCard() {
                         </Link>
                       </h4>
                       <span className="font-xssss fw-500 text-grey-900 d-inline-block ml-0 text-dark">
-                        Teacher
+                      {subject.teacher_name}
                       </span>
                       <hr />
                       <div className="progress mt-3 h10">
@@ -166,7 +166,7 @@ function CoursesCard() {
                           className="progress-bar progress-bar-striped progress-bar-animated"
                           role="progressbar"
                           aria-valuemin="0"
-                          style={{ width: `70%` }}
+                          style={{ width: `${subject.completePercentage}%` }}
                         ></div>
                       </div>
                       <div className="d-flex justify-content-between">

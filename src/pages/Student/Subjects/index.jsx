@@ -106,7 +106,7 @@ function Subjects() {
                     </Link>
                   </h4>
                   <span className="font-xssss fw-500 text-grey-900 d-inline-block ml-0 text-dark">
-                    Teacher
+                    {subject.teacher_name}
                   </span>
                 </div>
               </div>
