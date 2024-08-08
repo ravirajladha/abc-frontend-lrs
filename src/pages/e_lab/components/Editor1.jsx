@@ -41,6 +41,25 @@ import SubmitButtonWithModal from './SubmitButtonWithModal';
 //submit code hook
 // import useSubmitCode from './hooks/useSubmitCode';
 function Editor1({ title, studentView, isTestCode, isShowCodebase }) {
+
+  // disable copy, right click
+  useEffect(() => {
+    const handleCopy = (e) => {
+      e.preventDefault();
+      alert('Copying, cutting, and pasting are disabled.');
+    };
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+    };
+
+    document.addEventListener('copy', handleCopy);
+    document.addEventListener('contextmenu', handleContextMenu);
+
+    return () => {
+      document.removeEventListener('copy', handleCopy);
+      document.removeEventListener('contextmenu', handleContextMenu);
+    };
+  }, []);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);

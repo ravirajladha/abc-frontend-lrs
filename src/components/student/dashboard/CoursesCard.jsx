@@ -1,24 +1,35 @@
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { fetchMyCourses } from '@/api/student';
+import { fetchMyCourses, startTest } from '@/api/student';
 import { ContentItemCard, ContentLoader } from '@/components/common';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Star from '/assets/images/star.png';
 import StarDisabled from '/assets/images/star-disable.png';
 import { PiCertificateBold } from 'react-icons/pi';
 import { MdOutlineAssessment } from 'react-icons/md';
+import { getStudentDataFromLocalStorage } from '@/utils/services';
 
 function CoursesCard() {
-  const [subjectsData, setSubjectsData] = useState(null);
+  const [subjects, setSubjects] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAll, setShowAll] = useState(false);
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
+  const navigate = useNavigate();
+  const studentData = JSON.parse(getStudentDataFromLocalStorage());
+
+  const studentId = studentData.student_id;
+  const classId = studentData.class_id;
+  const schoolId = studentData.school_id;
+  const [loading1, setLoading1] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [currentSubject, setCurrentSubject] = useState(null);
+
   const fetchSubjectsCallback = useCallback(async () => {
     try {
       const data = await fetchMyCourses();
-      setSubjectsData(data.subjects);
+      setSubjects(data.subjects);
     } catch (error) {
       setError(error);
       toast.error(error.message);
@@ -35,6 +46,51 @@ function CoursesCard() {
     setShowAll((prevShowAll) => !prevShowAll);
   };
 
+  const handleOpenModal = (subject) => {
+    setCurrentSubject(subject);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  const handleStartTestFromModal = (subjectId, latestTestId) => {
+    handleCloseModal();
+    handleStartTest(subjectId, latestTestId);
+  };
+  const handleStartTest = async (subjectId, latestTestId) => {
+    setLoading1(true);
+    const data = {
+      studentId, // Assuming this is available from context or state
+      schoolId, // Assuming this is available from context or state
+      subjectId,
+      latestTestId,
+    };
+
+    try {
+      const response = await startTest(data);
+      console.log(response, ':respsonse');
+      if (response.status === 200) {
+        setLoading1(false);
+        navigate(
+          `/student/courses/term-test/${response.token}/${latestTestId}`
+        ); // Adjusted to use response.testSessionId directly
+      } else {
+        throw new Error('Unexpected response status');
+      }
+    } catch (error) {
+      setLoading1(false);
+      console.error(error);
+      if (
+        error.response &&
+        error.response.data.message === 'Test already taken'
+      ) {
+        toast.error('You have already taken this test.');
+      } else {
+        toast.error('Unable to start the test. Please try again later.');
+      }
+    }
+  };
   return (
     <>
       <h4 className="font-xs text-grey-800 my-3 lh-22 fw-700">My Courses</h4>
@@ -43,28 +99,12 @@ function CoursesCard() {
           <div className="text-center col-12">
             <ContentLoader />
           </div>
-        ) : subjectsData !== null && subjectsData.length > 0 ? (
+        ) : subjects !== null && subjects.length > 0 ? (
           <>
-            {subjectsData
-              .slice(0, showAll ? subjectsData.length : 4)
+            {subjects
+              .slice(0, showAll ? subjects.length : 4)
               .map((subject, index) => (
-                // <ContentItemCard
-                //   key={index}
-                //   data={subject}
-                //   buttons={[
-                //     {
-                //       label: 'Learn',
-                //       action: () => `/student/courses/${subject.id}/learn`,
-                //       style: 'bg-primary-gradiant',
-                //     },
-                //     {
-                //       label: 'Finish the course to download',
-                //       action: () => ``,
-                //       style: 'bg-primary-gradiant ml-2',
-                //     },
-                //   ]}
-                // />
-                <div className="col-lg-3">
+                <div className="col-lg-3" key={index}>
                   <div
                     className="card course-card p-0 shadow-md border-0 rounded-lg overflow-hidden mr-3 mb-4 h-100"
                     key={index}
@@ -140,12 +180,29 @@ function CoursesCard() {
                     </div>
                     <div className="card-footer bg-white">
                       <div className="d-flex justify-content-around mt-2">
-                        <div className="d-flex flex-column align-items-center">
-                          <MdOutlineAssessment className="font-md text-primary" />
-                          <p className="font-xssss text-grey-900 fw-500">
-                            Test
-                          </p>
-                        </div>
+                        {subject.results && subject.results.length > 0 && (
+                          <Link
+                            className="d-flex flex-column align-items-center"
+                            to={`/student/courses/${subject.id}/results`}
+                          >
+                            <MdOutlineAssessment className="font-md text-primary" />
+                            <p className="font-xssss text-grey-900 fw-500">
+                              Result
+                            </p>
+                          </Link>
+                        )}
+                        {subject.chapter_completed &&
+                          subject.latest_test_id && (
+                            <button
+                              className="d-flex flex-column align-items-center"
+                              onClick={() => handleOpenModal(subject)}
+                            >
+                              <MdOutlineAssessment className="font-md text-primary" />
+                              <p className="font-xssss text-grey-900 fw-500">
+                                Test
+                              </p>
+                            </button>
+                          )}
                         <div className="d-flex flex-column align-items-center">
                           <PiCertificateBold className="font-md text-success text-center" />
                           <p className="font-xssss text-grey-900 fw-500">
@@ -155,9 +212,65 @@ function CoursesCard() {
                       </div>
                     </div>
                   </div>
+                  {showModal && (
+                    <div
+                      className={`modal modal-test-instructions  ${
+                        showModal ? 'show' : ''
+                      }`}
+                      onClick={handleCloseModal}
+                    >
+                      <div
+                        className="modal-content-lg bg-white"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div className="modal-header modal-test-instructions-header">
+                          <h3 className="modal-title modal-test-instructions-title ">
+                            Test Instructions{' '}
+                          </h3>{' '}
+                          <span className="modal-title  modal-test-instructions-title text-sm mt-0 ml-4">
+                            (Read Carefully before starting the test)
+                          </span>
+                          <button
+                            type="button"
+                            className="close modal-test-instructions-close"
+                            onClick={handleCloseModal}
+                          >
+                            <span>&times;</span>
+                          </button>
+                        </div>
+                        <div className="modal-body modal-test-instructions-body">
+                          {/* <div dangerouslySetInnerHTML={{ __html: currentSubject?.testDescription }} /> */}
+
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: currentSubject?.testDescription,
+                            }}
+                            style={{
+                              listStyleType: 'disc',
+                              paddingLeft: '20px',
+                            }}
+                          />
+                        </div>
+                        <div className="modal-footer modal-test-instructions-footer">
+                          <button
+                            type="button"
+                            className="btn text-white bg-success"
+                            onClick={() =>
+                              handleStartTestFromModal(
+                                currentSubject.id,
+                                currentSubject.latest_test_id
+                              )
+                            }
+                          >
+                            Start Test
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
-            {subjectsData.length > 4 && (
+            {subjects.length > 4 && (
               <div className="text-right mt-3 col-12">
                 <button
                   className="btn bg-primary font-xsss text-white"

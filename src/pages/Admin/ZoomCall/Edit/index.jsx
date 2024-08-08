@@ -16,6 +16,8 @@ function Create() {
   const [formData, setFormData] = useState({
     url: '',
     date: '',
+    time: '',
+    password: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
@@ -25,6 +27,8 @@ function Create() {
     setFormData({
       url: '',
       date: '',
+      time: '',
+      password: '',
     });
   };
 
@@ -109,6 +113,22 @@ function Create() {
             </div>
             <div className="col-lg-6 col-md-12 mb-3">
               <div className="form-group">
+                <label className="mont-font fw-600 font-xsss">Password</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleFormChange}
+                  placeholder="Enter Password"
+                />
+                {validationErrors.password && (
+                  <span className="text-danger">{validationErrors.password}</span>
+                )}
+              </div>
+            </div>
+            <div className="col-lg-6 col-md-12 mb-3">
+              <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">Date</label>
                 <input
                   type="date"
@@ -123,7 +143,22 @@ function Create() {
                 )}
               </div>
             </div>
-
+            <div className="col-lg-6 col-md-12 mb-3">
+              <div className="form-group">
+                <label className="mont-font fw-600 font-xsss">Time</label>
+                <input
+                  type="time"
+                  className="form-control dummy"
+                  name="time"
+                  value={formData.time}
+                  onChange={handleFormChange}
+                  placeholder="Enter Time"
+                />
+                {validationErrors.time && (
+                  <span className="text-danger">{validationErrors.time}</span>
+                )}
+              </div>
+            </div>
             <SaveButton isSubmitting={isSubmitting} />
           </div>
         </form>

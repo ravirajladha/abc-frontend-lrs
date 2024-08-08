@@ -73,6 +73,9 @@ function Index({ title }) {
                           <th className="border-0" scope="col">
                             Url
                           </th>
+                          <th className="border-0" scope="col">
+                            Password
+                          </th>
                           <th scope="col" className="text-right border-0 pl-1" width="20%">
                             Action
                           </th>
@@ -85,6 +88,7 @@ function Index({ title }) {
                             <td>{formatDate(zoomCall.date)}</td>
                             <td>10:30 Am</td>
                             <td>{zoomCall.url}</td>
+                            <td>pass123r</td>
                             <td className="text-right">
                               <Link
                                 to={`${zoomCall.id}/edit`}

@@ -1372,6 +1372,14 @@ export const fetchForumQuestions = async (page = 1) => {
   const response = await apiService.fetchData(`/admin/forums/questions?page=${page}`);
   return response.data;
 };
+export const updateForumStatus = async (data) => {
+  const response = await apiService.postData(`/admin/forums/update-status`,data);
+  return response.data;
+};
+export const updateForumAnswerStatus = async (data) => {
+  const response = await apiService.postData(`/admin/forums/answer/update-status`,data);
+  return response.data;
+};
 export const fetchForumQuestionDetails = async (forumId) => {
   const response = await apiService.fetchData(`/admin/forums/questions/${forumId}/answers`);
   return response.data;
@@ -1379,5 +1387,10 @@ export const fetchForumQuestionDetails = async (forumId) => {
 
 export const fetchTransactions = async (page = 1) => {
   const response = await apiService.fetchData(`/admin/transactions?page=${page}`);
+  return response.data;
+};
+
+export const updateStudentStatus = async (data) => {
+  const response = await apiService.postData(`/admin/students/update-status`,data);
   return response.data;
 };

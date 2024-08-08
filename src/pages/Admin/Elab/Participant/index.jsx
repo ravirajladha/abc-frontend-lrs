@@ -7,6 +7,7 @@ import {
   deleteElabParticipantCodeBase,
 } from '@/api/admin';
 import { useParams } from 'react-router-dom';
+import { formatDateTime, formatVideoTimestamp } from '@/utils/helpers';
 
 function Participants({ title }) {
   const [elabs, setElabs] = useState([]);
@@ -40,7 +41,12 @@ function Participants({ title }) {
       setError(error);
     }
   };
-
+  const formatTime = (seconds) => {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
   // console.log("elabs", data)
   // if (error) return <div>Error: {error.message}</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -113,8 +119,8 @@ function Participants({ title }) {
                             {elab.execution_time}
                             {elab.memory}
                           </td>
-                          <td>{elab.time_taken}</td>
-                          <td>{elab.start_timestamp}</td>
+                          <td>{formatTime(elab.time_taken)}</td>
+                          <td>{formatDateTime(elab.created_at)}</td>
                           <td>
                             {/* {elab.code_language === 0 && 'Java'}
                             {elab.code_language === 1 && 'Python'}

@@ -3,6 +3,7 @@ import {
   getPublicStudents,
   getPrivateStudents,
   addStudentImages,
+  updateStudentStatus,
 } from '@/api/admin';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -199,6 +200,21 @@ function PublicStudent({ title, isPrivate, isPublic }) {
     setShowModal(true);
   };
 
+  
+  const handleStatusChange = async (index, newStatus) => {
+    const data = {"student_auth_id": students[index].auth_id, "status": newStatus}
+    try {
+      const response = await updateStudentStatus(data);
+
+        const updatedStudentsData = [...students];
+        updatedStudentsData[index].status = newStatus;
+        setStudents(updatedStudentsData);
+      toast.success('Status updated successfully.');
+    } catch (error) {
+      console.error("There was an error updating the status!", error);
+    }
+  };
+
   const accordionItems = [
     {
       title: 'View as Table',
@@ -207,6 +223,7 @@ function PublicStudent({ title, isPrivate, isPublic }) {
           students={students}
           loading={loading}
           toggleModal={toggleModal}
+          handleStatusChange={handleStatusChange}
         />
       ),
     },

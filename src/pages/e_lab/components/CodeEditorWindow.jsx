@@ -26,7 +26,7 @@
 // };
 // export default CodeEditorWindow;
 
-import React from "react";
+import React, { useRef } from "react";
 import Editor from "@monaco-editor/react";
 
 const CodeEditorWindow = ({ onChange, language, code, theme,fontSize }) => {
@@ -34,6 +34,20 @@ const CodeEditorWindow = ({ onChange, language, code, theme,fontSize }) => {
     onChange("code", value); // This line directly notifies parent component of changes
   };
 
+  // disable copy, paste, cut, right click
+  const editorRef = useRef(null);
+  const onMount = (editor, monaco) => {
+    editorRef.current = editor;
+    editor.updateOptions({ contextmenu: false });
+    editor.focus();
+
+    editor.onKeyDown((event) => {
+      const { keyCode, ctrlKey, metaKey } = event;
+      if ((keyCode === 33 || keyCode === 52) && (metaKey || ctrlKey)) {
+        event.preventDefault();
+        alert("Copying, cutting, and pasting are disabled.")
+      }})
+  };
   return (
     <div className="overlay rounded-md overflow-hidden w-full h-full shadow-4xl">
       <Editor
@@ -46,6 +60,7 @@ const CodeEditorWindow = ({ onChange, language, code, theme,fontSize }) => {
         value={code} // Directly using code prop here
         theme={theme}
         onChange={handleEditorChange}
+        onMount={onMount}
       />
     </div>
   );

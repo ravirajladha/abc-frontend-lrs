@@ -2,9 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 
-import {
-  fetchForumQuestionDetails,
-} from '@/api/admin';
+import { fetchForumQuestionDetails, updateForumAnswerStatus } from '@/api/admin';
 
 import DefaultProfileImage from '@/assets/images/default/student.png';
 
@@ -51,10 +49,25 @@ function Show() {
     fetchForum();
   }, [fetchForum]);
 
+  const handleStatusChange = async (index, newStatus) => {
+    const data = { answer_id: forum.answers[index].id, status: newStatus };
+    try {
+      const response = await updateForumAnswerStatus(data);
+      setForum((prevForum) => {
+        const updatedAnswers = [...prevForum.answers];
+        updatedAnswers[index].status = newStatus;
+        return { ...prevForum, answers: updatedAnswers };
+      });
+      toast.success('Status updated successfully.');
+    } catch (error) {
+      console.error('There was an error updating the status!', error);
+    }
+  };
+
   if (error) return <div>Error: {error.message}</div>;
   return (
     <div>
-      <ContentHeader title={`Forum`} subtitle={'Answers'}/>
+      <ContentHeader title={`Forum`} subtitle={'Answers'} />
       <ContentCardWrapper>
         {forum && !loading ? (
           <>
@@ -112,6 +125,20 @@ function Show() {
                           <h5 className="font-xssss fw-500 mb-1 text-grey-600">
                             {formatDateTime(answer.created_at)}
                           </h5>
+                        </div>
+                        <div className="my-auto">
+                          <select
+                            value={answer.status}
+                            onChange={(e) =>
+                              handleStatusChange(index, e.target.value)
+                            }
+                            className={`badge p-1 text-white ${
+                              answer.status == 0 ? 'bg-danger' : 'bg-success'
+                            }`}
+                          >
+                            <option value="0">Deactive</option>
+                            <option value="1">Active</option>
+                          </select>
                         </div>
                         <div className="bg-grey px-2 rounded-pill d-flex">
                           <button

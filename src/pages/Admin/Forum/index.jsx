@@ -8,7 +8,7 @@ import {
 } from '@/components/common';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { fetchForumQuestions } from '@/api/admin';
+import { fetchForumQuestions, updateForumStatus } from '@/api/admin';
 import Swal from 'sweetalert2';
 import { formatDateTime } from '@/utils/helpers';
 
@@ -16,7 +16,6 @@ function Index({ title }) {
   const [forumsData, setForumsData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const handlePageChange = (page) => {
@@ -33,16 +32,28 @@ function Index({ title }) {
       setLoading(false);
     }
   };
+
+  const handleStatusChange = async (index, newStatus) => {
+    const data = { forum_id: forumsData[index].id, status: newStatus };
+    try {
+      const response = await updateForumStatus(data);
+
+      // Update the local forumsData state with the new status
+      const updatedForumsData = [...forumsData];
+      updatedForumsData[index].status = newStatus;
+      setForumsData(updatedForumsData);
+      toast.success('Status updated successfully.');
+    } catch (error) {
+      console.error('There was an error updating the status!', error);
+    }
+  };
   useEffect(() => {
     fetchData();
   }, [currentPage]);
 
   return (
     <>
-      <ContentHeader
-        title="Forum"
-        subtitle="Questions"
-      />
+      <ContentHeader title="Forum" subtitle="Questions" />
       {loading ? (
         <ContentLoader />
       ) : (
@@ -55,9 +66,6 @@ function Index({ title }) {
                   <h4 className="font-xss text-grey-800 mt-3 fw-700">
                     {title}
                   </h4>
-                  {/* <select className="form-select ml-auto float-right border-0 font-xssss fw-600 text-grey-700 bg-transparent">
-                    <option>Sort by latest</option>
-                  </select> */}
                 </div>
                 <div className="card-body p-4">
                   <div className="table-responsive">
@@ -76,7 +84,14 @@ function Index({ title }) {
                           <th className="border-0" scope="col">
                             Asked At
                           </th>
-                          <th scope="col" className="text-right border-0 pl-1" width="20%">
+                          <th className="border-0" scope="col">
+                            Status
+                          </th>
+                          <th
+                            scope="col"
+                            className="text-right border-0 pl-1"
+                            width="20%"
+                          >
                             Action
                           </th>
                         </tr>
@@ -90,6 +105,20 @@ function Index({ title }) {
                             </td>
                             <td>{item.student_name}</td>
                             <td>{formatDateTime(item.created_at)}</td>
+                            <td>
+                              <select
+                                value={item.status}
+                                onChange={(e) =>
+                                  handleStatusChange(index, e.target.value)
+                                }
+                                className={`badge p-1 text-white ${
+                                  item.status == 0 ? 'bg-danger' : 'bg-success'
+                                }`}
+                              >
+                                <option value="0">Deactive</option>
+                                <option value="1">Active</option>
+                              </select>
+                            </td>
                             <td className="text-right">
                               <Link
                                 to={`${item.id}/answers`}
