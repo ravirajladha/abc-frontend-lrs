@@ -1,11 +1,9 @@
 const USER_TYPES = {
   ADMIN: 0,
-  SCHOOL: 1,
-  TEACHER: 2,
-  PARENT: 3,
-  STUDENT: 4,
-  RECRUITER: 5,
-  GUEST: 6,
+  STUDENT: 1,
+  TRAINER: 2,
+  RECRUITER: 3,
+  INTERNSHIP_ADMIN: 4,
 };
 
 

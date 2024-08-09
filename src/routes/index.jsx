@@ -43,14 +43,11 @@ function Index() {
     case USER_TYPES.ADMIN:
       userTypePath = USERS[USER_TYPES.ADMIN].path;
       break;
-    case USER_TYPES.SCHOOL:
-      userTypePath = USERS[USER_TYPES.SCHOOL].path;
+    case USER_TYPES.INTERNSHIP_ADMIN:
+      userTypePath = USERS[USER_TYPES.INTERNSHIP_ADMIN].path;
       break;
-    case USER_TYPES.TEACHER:
-      userTypePath = USERS[USER_TYPES.TEACHER].path;
-      break;
-    case USER_TYPES.PARENT:
-      userTypePath = USERS[USER_TYPES.PARENT].path;
+    case USER_TYPES.TRAINER:
+      userTypePath = USERS[USER_TYPES.TRAINER].path;
       break;
     case USER_TYPES.RECRUITER:
       userTypePath = USERS[USER_TYPES.RECRUITER].path;
@@ -97,8 +94,8 @@ function Index() {
                 ))}
               </Route>
             )}
-            {/* School Routes */}
-            {authenticatedUserType === USER_TYPES.SCHOOL && (
+            {/* INTERNSHIP_ADMIN Routes */}
+            {authenticatedUserType === USER_TYPES.INTERNSHIP_ADMIN && (
               <Route path="/academic-admin" element={<SchoolLayout />}>
                 {SchoolRoutes.map((route, index) => (
                   <Route
@@ -109,8 +106,8 @@ function Index() {
                 ))}
               </Route>
             )}
-            {/* Teacher Routes */}
-            {authenticatedUserType === USER_TYPES.TEACHER && (
+            {/* TRAINER Routes */}
+            {authenticatedUserType === USER_TYPES.TRAINER && (
               <>
                 <Route path="/teacher" element={<TeacherLayout />}>
                   {TeacherRoutes.map((route, index) => (
@@ -146,7 +143,7 @@ function Index() {
               </Route>
             )}
             {/* Parent Routes */}
-            {authenticatedUserType === USER_TYPES.PARENT && (
+            {/* {authenticatedUserType === USER_TYPES.PARENT && (
               <Route path="/parent" element={<ParentLayout />}>
                 {ParentRoutes.map((route, index) => (
                   <Route
@@ -156,7 +153,7 @@ function Index() {
                   />
                 ))}
               </Route>
-            )}
+            )} */}
 
             {/* Recruiter Routes */}
             {authenticatedUserType === USER_TYPES.RECRUITER && (
