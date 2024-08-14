@@ -15,8 +15,8 @@ export const fetchPrivateSchools = async () => {
   console.log(response.data.schools, "response data")
   return response.data.schools;
 };
-export const fetchClasses = async () => {
-  const response = await apiService.fetchData('/classes');
+export const fetchSubjects = async () => {
+  const response = await apiService.fetchData('/subjects');
   return response.data.classes;
 };
 
@@ -25,20 +25,9 @@ export const fetchSections = async () => {
   return response.data.sections;
 };
 
-export const getClassData = async (classId) => {
-  const response = await apiService.fetchData(`/classes/${classId}`);
+export const getSubjectData = async (classId) => {
+  const response = await apiService.fetchData(`/subjects/${subjectId}`);
   return response.data.class;
-};
-
-export const fetchClassResult = async (classId, term) => {
-  const response = await apiService.fetchData(`/classes/${classId}/results?term=${term}`);
-  return response.data;
-};
-
-
-export const fetchSubjects = async (classId) => {
-  const response = await apiService.fetchData(`/classes/${classId}/subjects`);
-  return response.data;
 };
 
 export const fetchSubjectResult = async (subjectId, term) => {
@@ -46,14 +35,25 @@ export const fetchSubjectResult = async (subjectId, term) => {
   return response.data;
 };
 
-export const fetchSubjectData = async (subjectId) => {
-  const response = await apiService.fetchData(`/subjects/${subjectId}`);
+
+export const fetchCourses = async (subjectId) => {
+  const response = await apiService.fetchData(`/subjects/${subjectId}/courses`);
+  return response.data;
+};
+
+export const fetchCourseResult = async (courseId, term) => {
+  const response = await apiService.fetchData(`/courses/${courseId}/results?term=${term}`);
+  return response.data;
+};
+
+export const fetchCourseData = async (courseId) => {
+  const response = await apiService.fetchData(`/courses/${courseId}`);
   return response.data.subject;
 };
 
-export const fetchChapters = async (classId, subjectId) => {
+export const fetchChapters = async (subjectId, courseId) => {
   const response = await apiService.fetchData(
-    `/classes/${classId}/subjects/${subjectId}/chapters`
+    `/subjects/${subjectId}/courses/${courseId}/chapters`
   );
   return response.data;
 };
@@ -64,18 +64,18 @@ export const fetchChapterData = async (classId, subjectId, chapterId) => {
   );
   return response.data;
 };
-export const fetchSelectedActiveElabs = async (classId, subjectId=null) => {
-  console.log(`Fetching ${classId} ${subjectId}`);
+export const fetchSelectedActiveElabs = async (subjectId, courseId=null) => {
+  console.log(`Fetching ${subjectId} ${courseId}`);
   const response = await apiService.fetchData(
-    `/admin/elabs/get-selected-active-elabs/${classId}/${subjectId !== null ? subjectId : ''}`
+    `/admin/elabs/get-selected-active-elabs/${subjectId}/${courseId !== null ? courseId : ''}`
   );
   console.log(response.data, "response data");
   return response.data;
 };
-export const fetchSelectedActiveElabsWithoutSubjectId = async (classId) => {
-  console.log(`Fetching ${classId}`);
+export const fetchSelectedActiveElabsWithoutCourseId= async (subjectId) => {
+  console.log(`Fetching ${subjectId}`);
   const response = await apiService.fetchData(
-    `/admin/elabs/get-selected-active-elabs-without-subject/${classId}`
+    `/admin/elabs/get-selected-active-elabs-without-subject/${subjectId}`
   );
   console.log(response.data, "response data");
   return response.data;

@@ -6,16 +6,16 @@ import { AdminDashboard, EditStudent } from '@/pages';
 import {
   Settings,
   Payment,
-  CreateClass,
-  EditClass,
-  Classes,
+  CreateSubject,
+  EditSubject,
+  Subjects,
   EditChapter,
   ShowChapter,
   Chapter,
   CreateChapter,
-  Subject,
-  SubjectEdit,
-  SubjectCreate,
+  Course,
+  CourseEdit,
+  CourseCreate,
   School,
   ShowSchoolDetail,
   EditSchool,
@@ -96,8 +96,8 @@ import {
   EbookElementEdit,
   AssessmentsResult,
   TermTestResult,
-  SubjectResult,
-  ClassResult,
+  CourseResult,
+ SubjectResult,
   ProjectReportModuleShow,
   ProjectReportModuleCreate,
   ProjectReportSectionShow,
@@ -182,63 +182,63 @@ const AdminRoutes = [
   { path: 'dashboard', element: <AdminDashboard title="Dashboard" /> },
 
   // Classes Routes
-  { path: 'subjects', element: <Classes title="Subjects" /> },
-  { path: 'subjects/create', element: <CreateClass title="Create Subject" /> },
+  { path: 'subjects', element: <Subjects title="Subjects" /> },
+  { path: 'subjects/create', element: <CreateSubject title="Create Subject" /> },
   {
-    path: 'subjects/:classId/edit',
-    element: <EditClass title="Edit Subject" />,
+    path: 'subjects/:subjectId/edit',
+    element: <EditSubject title="Edit Subject" />,
   },
   {
-    path: 'subjects/:classId/results',
-    element: <ClassResult title="Show Subject Results" />,
+    path: 'subjects/:subjectId/results',
+    element: <SubjectResult title="Show Subject Results" />,
   },
   // Subjects Routes
-  {
-    path: 'subjects/:classId/courses',
-    element: <Subject title="Courses" />,
-  },
-  {
-    path: 'subjects/:classId/courses/create',
-    element: <SubjectCreate title="Courses" />,
-  },
-  {
-    path: 'subjects/:classId/courses/:subjectId/edit',
-    element: <SubjectEdit title="Courses" />,
-  },
-  {
-    path: 'subjects/:classId/courses/:subjectId/results',
-    element: <SubjectResult title="Show Course Results" />,
-  },
+  // {
+  //   path: 'subjects/:subjectId/courses',
+  //   element: <Course title="Courses" />,
+  // },
+  // {
+  //   path: 'subjects/:subjectId/courses/create',
+  //   element: <CourseCreate title="Courses" />,
+  // },
+  // {
+  //   path: 'subjects/:subjectId/courses/:courseId/edit',
+  //   element: <CourseEdit title="Courses" />,
+  // },
+  // {
+  //   path: 'subjects/:subjectId/courses/:courseId/results',
+  //   element: <CourseResult title="Show Course Results" />,
+  // },
 
   // Chapters Routes
   {
-    path: 'subjects/:classId/courses/:subjectId/chapters',
+    path: 'subjects/:subjectId/courses/:courseId/chapters',
     element: <Chapter title="Chapters" />,
   },
   {
-    path: 'subjects/:classId/courses/:subjectId/chapters/create',
+    path: 'subjects/:subjectId/courses/:courseId/chapters/create',
     element: <CreateChapter title="Add New Chapter" />,
   },
   {
-    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId/edit',
+    path: 'subjects/:subjectId/courses/:courseId/chapters/:chapterId/edit',
     element: <EditChapter title="Edit Chapter Details" />,
   },
   {
-    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId',
+    path: 'subjects/:subjectId/courses/:courseId/chapters/:chapterId',
     element: <ShowChapter title="Show Chapter Details" />,
   },
 
   //Contents
   {
-    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId/create',
+    path: 'subjects/:subjectId/courses/:courseId/chapters/:chapterId/create',
     element: <VideoCreate title="Create New Content" />,
   },
   {
-    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId/content/:contentId',
+    path: 'subjects/:subjectId/courses/:courseId/chapters/:chapterId/content/:contentId',
     element: <VideoDetails title="Show Content" />,
   },
   {
-    path: 'subjects/:classId/courses/:subjectId/chapters/:chapterId/content/:contentId/edit',
+    path: 'subjects/:subjectId/courses/:courseId/chapters/:chapterId/content/:contentId/edit',
     element: <VideoEdit title="Edit Content" />,
   },
 
@@ -295,18 +295,6 @@ const AdminRoutes = [
     element: <EditSchool title="Edit Academic Admin" />,
   },
 
-
-
-  // // {
-  // //   path: 'academic-admin/:schoolId/students/:studentId',
-  // //   element: (
-  // //     <StudentProfile
-  // //       title="Student Profile Students"
-  // //       isAdmin="true"
-  // //       isStudent="false"
-  // //     />
-  // //   ),
-  // // },
 
 
   //trainers
@@ -374,7 +362,7 @@ const AdminRoutes = [
     path: 'tests/:testId/results',
     element: <TermTestResult title="Show Tests Results" />,
   },
-  { path: 'tests/:testId/results/:subjectId/:studentId', element: <StudentSubjectResults isAdmin={true} isStudent={false}/>  },
+  { path: 'tests/:testId/results/:courseId/:studentId', element: <StudentSubjectResults isAdmin={true} isStudent={false}/>  },
   //Tests Question
   {
     path: 'tests/question-bank',

@@ -1,8 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 import { fetchSubjects } from '@/api/common';
 import { deleteSubject } from '@/api/admin';
@@ -14,38 +13,32 @@ import {
 } from '@/components/common';
 
 function Subjects({ title }) {
-  let { classId } = useParams();
-
-  const [className, setClassName] = useState(null);
   const [subjectsData, setSubjectsData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const fetchSubjectsCallback = useCallback(async () => {
+console.log("from subjects index");
+  const fetchData = async () => {
     try {
-      const data = await fetchSubjects(classId);
-      setClassName(data?.class);
-      setSubjectsData(data.subjects);
+      const response = await fetchSubjects();
+      setSubjectsData(response);
     } catch (error) {
-      setError(error);
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      setLoading(false);    
     }
-  }, [classId]);
+  };
 
   const handleDelete = async (subjectId) => {
     Swal.fire({
       title: 'Confirm!',
       showDenyButton: true,
       confirmButtonText: 'Yes',
-      text: 'Do you want to delete this course?',
+      text: 'Do you want to delete this subject?',
       icon: 'warning',
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await deleteSubject(classId, subjectId);
-          fetchSubjectsCallback();
+          const response = await deleteSubject(subjectId);
+          fetchData();
           toast.success(response.message);
         } catch (error) {
           toast.error(error.message);
@@ -55,60 +48,50 @@ function Subjects({ title }) {
   };
 
   useEffect(() => {
-    fetchSubjectsCallback();
-  }, [fetchSubjectsCallback]);
-
-  if (error) return <div>Error: {error.message}</div>;
+    fetchData();
+  }, []);
 
   return (
     <div className="px-2">
-      {loading ? (
-        <ContentLoader />
-      ) : (
-        <ContentHeader
-          title={`${className}`}
-          subtitle={title}
-          buttons={[
-            {
-              link: `create`,
-              text: 'New Course',
-            },
-          ]}
-        />
-      )}
+      <ContentHeader
+        title={title}
+        backLink="/admin/dashboard"
+        buttons={[
+          {
+            link: 'create',
+            text: 'New Subject',
+          },
+        ]}
+      />
+
       <div className="row">
         {loading ? (
-          <div className="text-center mt-5 col-12"></div>
-        ) : subjectsData !== null & subjectsData.length>0 ? (
-          subjectsData.map((subject, index) => (
-            
+          <ContentLoader />
+        ) : subjectsData && subjectsData.length > 0 ? (
+          subjectsData.map((subjectItem, index) => (
             <ContentItemCard
               key={index}
-              data={subject}
+              data={subjectItem}
               buttons={[
                 {
-                  label: 'Chapters',
-                  action: () =>
-                    `/admin/subjects/${classId}/courses/${subject.id}/chapters`,
+                  label: 'Courses',
+                  action: (item) => `/admin/subjects/${item.id}/courses`,
                   style: ' bg-primary-gradiant',
                 },
                 {
                   label: 'Results',
-                  action: () =>
-                    `/admin/subjects/${classId}/courses/${subject.id}/results`,
+                  action: (item) => `/admin/subjects/${item.id}/results`,
                   style: ' bg-success ml-2',
                 },
               ]}
-              handleDelete={() => handleDelete(subject.id)}
-              handleEdit={() =>
-                `/admin/subjects/${classId}/courses/${subject.id}/edit`
-              }
+              handleDelete={() => handleDelete(subjectItem.id)}
+              handleEdit={(item) => `/admin/subjects/${item.id}/edit`}
             />
           ))
         ) : (
           <div className="text-center mt-5 col-12">
             <div className="alert" role="alert">
-               There are no courses available at the moment.
+              There are no subjects available at the moment.
             </div>
           </div>
         )}

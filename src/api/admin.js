@@ -113,24 +113,24 @@ export const editSchool = async (schoolId, data) => {
     });
 };
 
-export const createClass = (data) => {
-  return apiService.postData(`/admin/class/store`, data);
+export const createSubject = (data) => {
+  return apiService.postData(`/admin/subject/store`, data);
 };
 
-export const updateClass = (classId, data) => {
-  return apiService.putData(`/admin/class/${classId}/update`, data);
+export const updateSubject= (subjectId, data) => {
+  return apiService.putData(`/admin/subject/${subjectId}/update`, data);
 };
 
-export const deleteClass = (classId) => {
-  return apiService.deleteData(`/admin/class/${classId}/delete`);
+export const deleteSubject = (subjectId) => {
+  return apiService.deleteData(`/admin/subject/${subjectId}/delete`);
 };
 
 
 // Subject APIs
 
-export const createSubject = (data) => {
+export const createCourse = (data) => {
   return apiService
-    .postData(`/admin/subjects/store`, data)
+    .postData(`/admin/courses/store`, data)
     .then((response) => {
       return response.data;
     })
@@ -140,9 +140,9 @@ export const createSubject = (data) => {
     });
 };
 
-export const updateSubject = (subjectId, data) => {
+export const updateCourse = (courseId, data) => {
   return apiService
-    .postData(`/admin/subjects/${subjectId}/update`, data, { method: 'POST' })
+    .postData(`/admin/courses/${courseId}/update`, data, { method: 'POST' })
     .then((response) => {
       return response.data;
     })
@@ -151,10 +151,11 @@ export const updateSubject = (subjectId, data) => {
     });
 };
 
-export const deleteSubject = (subjectId) => {
-  return apiService.deleteData(`/admin/subjects/${subjectId}/delete`);
+export const deleteCourse = (courseId) => {
+  return apiService.deleteData(`/admin/courses/${courseId}/delete`);
 };
 
+//pending
 export const fetchSuperSubjects = async () => {
   const response = await apiService.fetchData(
     `/admin/super-subjects`

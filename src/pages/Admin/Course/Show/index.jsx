@@ -1,9 +1,10 @@
+import { ContentHeader } from '@/components/common';
 import React from 'react';
 
 function Show() {
   return (
     <div>
-      Show
+      <ContentHeader title="Subject Details" />
     </div>
   );
 }

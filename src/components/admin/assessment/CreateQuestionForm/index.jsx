@@ -2,13 +2,13 @@ import { SelectInput } from '@/components/common/form';
 import PropTypes from 'prop-types';
 
 function CreateQuestionForm({
-  classes,
   subjects,
+  courses,
   formData,
   validationErrors,
   handleInputChange,
-  handleClassChange,
   handleSubjectChange,
+  handleCourseChange,
   handleAction,
 }) {
   return (
@@ -19,15 +19,15 @@ function CreateQuestionForm({
             <label className="mont-font fw-600 font-xsss">Select Subject</label>
             <SelectInput
               className="form-control"
-              options={classes}
-              name="selectedClass"
+              options={subjects}
+              name="selectedSubject"
               label="name"
-              value={formData.selectedClass || ''}
-              onChange={handleClassChange}
+              value={formData.selectedSubject || ''}
+              onChange={handleSubjectChange}
               placeholder="Select Subject"
               required
             />
-            {validationErrors.selectedClass && (
+            {validationErrors.selectedSubject && (
               <span className="text-danger">
                 Subject empty or not found
               </span>
@@ -40,15 +40,15 @@ function CreateQuestionForm({
             <label className="mont-font fw-600 font-xsss">Select Course</label>
             <SelectInput
               className="form-control"
-              options={subjects}
-              name="selectedSubject"
+              options={courses}
+              name="selectedCourse"
               label="name"
-              value={formData.selectedSubject || ''}
-              onChange={handleSubjectChange}
+              value={formData.selectedCourse || ''}
+              onChange={handleCourseChange}
               placeholder="Select Course"
               required
             />
-            {validationErrors.selectedSubject && (
+            {validationErrors.selectedCourse && (
               <span className="text-danger">
               Course empty or not found
               </span>
@@ -176,10 +176,10 @@ function CreateQuestionForm({
 }
 
 CreateQuestionForm.propTypes = {
-  classes: PropTypes.array.isRequired,
+  courses: PropTypes.array.isRequired,
   subjects: PropTypes.array.isRequired,
   formData: PropTypes.shape({
-    selectedClass: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    selectedCourse: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     selectedSubject: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     noOfQuestions: PropTypes.number,
     assessmentName: PropTypes.string,
@@ -187,19 +187,19 @@ CreateQuestionForm.propTypes = {
     duration: PropTypes.any,
   }).isRequired,
   validationErrors: PropTypes.shape({
-    selectedClass: PropTypes.string,
+    selectedCourse: PropTypes.string,
     selectedSubject: PropTypes.string,
     assessmentName: PropTypes.string,
     description: PropTypes.string,
     duration: PropTypes.any,
   }).isRequired,
-  setClasses: PropTypes.func.isRequired,
+  setCourses: PropTypes.func.isRequired,
   setSubjects: PropTypes.func.isRequired,
   setFormData: PropTypes.func.isRequired,
   setValidationErrors: PropTypes.func.isRequired,
   fetchSubjectsDropdownData: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
-  handleClassChange: PropTypes.func.isRequired,
+  handleCourseChange: PropTypes.func.isRequired,
   handleSubjectChange: PropTypes.func.isRequired,
   handleAction: PropTypes.func.isRequired,
 };

@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 function EditAssessmentForm({
   loading,
-  classes,
+  courses,
   subjects,
   formData,
   validationErrors,
   handleInputChange,
-  handleClassChange,
   handleSubjectChange,
+  handleCourseChange,
   handleAction,
 }) {
   return (

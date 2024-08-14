@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/theme-github';
-//git test
+
 
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SelectInput } from '@/components/common/form';
