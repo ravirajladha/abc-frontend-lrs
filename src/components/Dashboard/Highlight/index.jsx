@@ -38,9 +38,10 @@ console.log("userData: " + userData.name);
               Welcome,
             </span>
             {' '}
-            {USER_TYPES.STUDENT == userData?.type
+            {userData['username']}
+            {/* {USER_TYPES.STUDENT == userData?.type
               ? `${studentData['student_name']}`
-              : `${userData['name']}`}
+              : `${userData['username']}`} */}
             <span
               className="font-xsss fw-600 text-grey-700 d-block mt-2"
               style={{ fontSize: '20px' }}

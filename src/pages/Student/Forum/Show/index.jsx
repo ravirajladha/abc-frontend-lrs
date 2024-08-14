@@ -25,7 +25,7 @@ function Show() {
 
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
 
-  const studentId = studentData.student_id;
+  const studentId = studentData.student_auth_id;
   const schoolId = studentData.school_id;
 
   const { forumId } = useParams();

@@ -61,29 +61,6 @@ function Settings() {
     }
   };
 
-  const fetchData = async () => {
-    setLoading(true);
-
-    try {
-      const response = await getParentDetails(studentData.student_id);
-      if (response && response.parent) {
-        setParentCode(response.parent.parent_code);
-        setParentDetail(response.parent);
-        setLoading(false);
-      } else {
-        console.warn('Response or parent details are missing.');
-        // Handle missing data case if needed
-      }
-    } catch (error) {
-      console.error('Error fetching parent details:', error);
-      // Handle error case if needed
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
 
 
   return (

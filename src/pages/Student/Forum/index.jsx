@@ -13,8 +13,7 @@ import { searchForumQuestion, storeForumQuestion } from '@/api/student';
 
 function Forum({ title }) {
   const studentData = useOutletContext();
-  const studentId = studentData.student_id;
-  const schoolId = studentData.school_id;
+  const studentId = studentData.student_auth_id;
 
   const [question, setQuestion] = useState('');
   const [validationErrors, setValidationErrors] = React.useState({});
@@ -27,7 +26,6 @@ function Forum({ title }) {
     event.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('schoolId', schoolId);
       formData.append('studentId', studentId);
       formData.append('question', question);
 
