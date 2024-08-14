@@ -99,7 +99,7 @@ function CoursesCard() {
           <div className="text-center col-12">
             <ContentLoader />
           </div>
-        ) : subjects !== null && subjects.length > 0 ? (
+        ) : subjects && subjects !== null && subjects.length > 0 ? (
           <>
             {subjects
               .slice(0, showAll ? subjects.length : 4)
