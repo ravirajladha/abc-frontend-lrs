@@ -5,18 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SaveButton, SelectInput } from '@/components/common/form';
 
-import { fetchClasses } from '@/api/dropdown';
+import { fetchSubjects } from '@/api/dropdown';
 import { createInternship } from '@/api/admin';
 
 function Create() {
   const navigate = useNavigate();
 
-  const [classes, setClasses] = useState([]);
-  // const [subjects, setSubjects] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState({
-    class: '',
-    // subject: '',
+    subject: '',
     name: '',
     image: '',
     description: '',
@@ -26,29 +24,10 @@ function Create() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  const [userType, setUserType] = useState('');
-  const [showCorporate, setShowCorporate] = useState(false);
-  const [showInstitute, setShowInstitute] = useState(false);
-
-  const handleUserTypeChange = (event) => {
-    setUserType(event.target.value);
-    setShowCorporate(false);
-    setShowInstitute(false);
-  };
-
-  const handleCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-    if (name === 'corporate') {
-      setShowCorporate(checked);
-    } else if (name === 'institute') {
-      setShowInstitute(checked);
-    }
-  };
-
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -56,23 +35,12 @@ function Create() {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  // const fetchSubjectsDropdownData = useCallback((classId) => {
-  //   fetchSubjects(classId)
-  //     .then((data) => {
-  //       setSubjects(data.subjects);
-  //     })
-  //     .catch((error) => {
-  //       toast.error(error.message);
-  //     });
-  // }, []);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
   const clearForm = () => {
     setFormData({
-      class: '',
-      // subject: '',
+      subject: '',
       name: '',
       image: '',
       description: '',
@@ -80,23 +48,15 @@ function Create() {
     setSelectedImage(null);
   };
 
-  const handleClassChange = ({ target: { value } }) => {
-    setValidationErrors(({ class: _, ...prevErrors }) => prevErrors);
+  const handleSubjectChange = ({ target: { value } }) => {
+    setValidationErrors(({ subject: _, ...prevErrors }) => prevErrors);
     setFormData({
-      class: value,
-      // subject: '',
+      subject: value,
       name: '',
       image: null,
       description: '',
     });
-
-    // fetchSubjectsDropdownData(value);
   };
-
-  // const handleSubjectChange = ({ target: { value } }) => {
-  //   setFormData((prevData) => ({ ...prevData, subject: value }));
-  //   setValidationErrors(({ subject: _, ...prevErrors }) => prevErrors);
-  // };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -114,8 +74,7 @@ function Create() {
 
     try {
       const submissionData = new FormData();
-      submissionData.append('class', formData.class);
-      // submissionData.append('subject', formData.subject);
+      submissionData.append('subject', formData.subject);
       submissionData.append('name', formData.name);
       submissionData.append('description', formData.description);
 
@@ -154,14 +113,14 @@ function Create() {
                 </label>
                 <SelectInput
                   className="form-control"
-                  options={classes}
-                  name="class"
+                  options={subjects}
+                  name="subject"
                   label="name"
-                  value={formData.class}
-                  onChange={handleClassChange}
+                  value={formData.subject}
+                  onChange={handleSubjectChange}
                   placeholder="Select Subject"
                 />
-                {validationErrors.class && (
+                {validationErrors.subject && (
                   <span className="text-danger">Subject must not be empty or found.</span>
                 )}
               </div>

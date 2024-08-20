@@ -6,49 +6,28 @@ import { useNavigate } from 'react-router-dom';
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SaveButton, SelectInput } from '@/components/common/form';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
-import { createReadableCourses } from '@/api/admin';
-import {
-  fetchEbooks,
-  fetchProjectReports,
-  fetchCaseStudies,
-} from '@/api/dropdown';
+import { fetchSubjects, fetchCourses } from '@/api/dropdown';
+import { createProjectReport } from '@/api/admin';
+
 function Create() {
   const navigate = useNavigate();
 
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState({
-    class: '',
     subject: '',
-    ebook: '',
-    projectReport: '',
-    caseStudy: '',
+    course: '',
+    title: '',
+    image: '',
+    description: '',
   });
+  const imageRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  const [ebooks, setEbooks] = useState([]);
-  const [projectReports, setProjectReports] = useState([]);
-  const [caseStudies, setCaseStudies] = useState([]);
-
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -57,62 +36,57 @@ function Create() {
       });
   }, []);
 
+  useEffect(() => {
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
+
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
   const clearForm = () => {
     setFormData({
-      class: '',
       subject: '',
-      ebook: '',
-    projectReport: '',
-    caseStudy: '',
+      course: '',
+      title: '',
+      image: '',
+      description: '',
     });
     setSelectedImage(null);
   };
 
-  const handleClassChange = ({ target: { value } }) => {
-    setValidationErrors(({ class: _, ...prevErrors }) => prevErrors);
+  const handleSubjectChange = ({ target: { value } }) => {
+    setValidationErrors(({ subject: _, ...prevErrors }) => prevErrors);
     setFormData({
-      class: value,
-      subject: '',
-      ebook: '',
-    projectReport: '',
-    caseStudy: '',
+      subject: value,
+      course: '',
+      title: '',
+      image: null,
+      description: '',
     });
 
-    fetchSubjectsDropdownData(value);
+    fetchCoursesDropdownData(value);
   };
 
-  const handleSubjectChange = ({ target: { value } }) => {
-    setFormData((prevData) => ({ ...prevData, subject: value }));
-    setValidationErrors(({ subject: _, ...prevErrors }) => prevErrors);
-
-    fetchEbooks(value)
-      .then((data) => {
-        setEbooks(data.ebooks);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-
-    fetchProjectReports(value)
-      .then((data) => {
-        setProjectReports(data.projectReports);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-
-    fetchCaseStudies(value)
-      .then((data) => {
-        setCaseStudies(data.caseStudies);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
+  const handleCourseChange = ({ target: { value } }) => {
+    setFormData((prevData) => ({ ...prevData, course: value }));
+    setValidationErrors(({ course: _, ...prevErrors }) => prevErrors);
   };
 
-  const handleInputChange = (e,fieldName) => {
-    const value = e.target.value;
-    setFormData((prevData) => ({ ...prevData, [fieldName]: value }));
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    setSelectedImage(selectedImage);
   };
 
   const handleSubmit = async (e) => {
@@ -121,20 +95,23 @@ function Create() {
 
     try {
       const submissionData = new FormData();
-      submissionData.append('class', formData.class);
       submissionData.append('subject', formData.subject);
-      submissionData.append('ebook', formData.ebook);
-      submissionData.append('project_report', formData.projectReport);
-      submissionData.append('case_study', formData.caseStudy);
+      submissionData.append('course', formData.course);
+      submissionData.append('title', formData.title);
+      submissionData.append('description', formData.description);
 
-      const response = await createReadableCourses(submissionData);
+      if (selectedImage) {
+        submissionData.append('image', selectedImage);
+      }
+
+      const response = await createProjectReport(submissionData);
       toast.success(response.message);
 
       clearForm();
       setTimeout(() => {
         setIsSubmitting(false);
       }, 1500);
-      navigate('/admin/readable-courses');
+      navigate('/admin/project-reports');
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
@@ -147,8 +124,8 @@ function Create() {
 
   return (
     <div>
-      <ContentHeader title="Create Readable Courses" />
-      <ContentFormWrapper formTitle="New Readable Courses">
+      <ContentHeader title="Create Project Report" />
+      <ContentFormWrapper formTitle="New Project Report">
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
             <div className="col-lg-6 mb-2">
@@ -158,15 +135,15 @@ function Create() {
                 </label>
                 <SelectInput
                   className="form-control"
-                  options={classes}
-                  name="class"
+                  options={subjects}
+                  name="subject"
                   label="name"
-                  value={formData.class}
-                  onChange={handleClassChange}
+                  value={formData.subject}
+                  onChange={handleSubjectChange}
                   placeholder="Select Subject"
                 />
-                {validationErrors.class && (
-                  <span className="text-danger">   Subject empty or not found.</span>
+                {validationErrors.subject && (
+                  <span className="text-danger">Subject empty or not found.</span>
                 )}
               </div>
             </div>
@@ -177,16 +154,16 @@ function Create() {
                 </label>
                 <SelectInput
                   className="form-control"
-                  options={subjects}
-                  name="subject"
+                  options={courses}
+                  name="course"
                   label="name"
-                  value={formData.subject || ''}
-                  onChange={handleSubjectChange}
+                  value={formData.course || ''}
+                  onChange={handleCourseChange}
                   placeholder="Select Course"
                 />
-                {validationErrors.subject && (
+                {validationErrors.course && (
                   <span className="text-danger">
-                       Course empty or not found.
+                   Course empty or not found.
                   </span>
                 )}
               </div>
@@ -194,75 +171,80 @@ function Create() {
             <div className="col-lg-6 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                  Select Ebook
+                  Project Report Title
                 </label>
-                {ebooks && (
-                  <SelectInput
-                    className="form-control"
-                    options={ebooks}
-                    name="ebook"
-                    label="title"
-                    value={formData.ebook || ''}
-                    onChange={(e) => handleInputChange(e,'ebook')}
-                    placeholder="Select Ebook"
-                  />
-                )}
-
-                {validationErrors.ebook && (
-                  <span className="text-danger">
-                    {validationErrors.ebook}
-                  </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="title"
+                  placeholder="Enter Project Report Title"
+                  value={formData.title}
+                  onChange={handleInputChange}
+                />
+                {validationErrors.title && (
+                  <span className="text-danger">{validationErrors.title}</span>
                 )}
               </div>
             </div>
             <div className="col-lg-6 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                  Select Project Report
+                  Project Report Image
                 </label>
-                {projectReports && (
-                  <SelectInput
-                    className="form-control"
-                    options={projectReports}
-                    name="projectReport"
-                    label="title"
-                    value={formData.projectReport || ''}
-                    onChange={(e) => handleInputChange(e,'projectReport')}
-                    placeholder="Select Project Report"
-                  />
-                )}
-                {validationErrors.projectReport && (
-                  <span className="text-danger">
-                    {validationErrors.projectReport}
+                <input
+                  type="file"
+                  name="image"
+                  id="file"
+                  className="input-file"
+                  ref={imageRef}
+                  onChange={handleImageChange}
+                />
+                <label
+                  htmlFor="file"
+                  className="rounded-lg text-center bg-white btn-tertiary js-labelFile py-1 w-100 border-dashed"
+                >
+                  <i className="ti-cloud-down small-icon mr-3"></i>
+                  <span className="js-fileName">
+                    {selectedImage ? (
+                      <>
+                        {selectedImage.name}{' '}
+                        <img
+                          src={URL.createObjectURL(selectedImage)}
+                          alt="thumbnail"
+                          width="20"
+                          height="20"
+                        />
+                      </>
+                    ) : (
+                      'Click to select an image'
+                    )}
                   </span>
+                </label>
+                {validationErrors.image && (
+                  <span className="text-danger">{validationErrors.image}</span>
                 )}
               </div>
             </div>
-            <div className="col-lg-6 mb-2">
+            <div className="col-lg-12 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                  Select Case Study
+                  Description
                 </label>
-                {caseStudies && (
-                  <SelectInput
-                    className="form-control"
-                    options={caseStudies}
-                    name="caseStudy"
-                    label="title"
-                    value={formData.caseStudy || ''}
-                    onChange={(e) => handleInputChange(e,'caseStudy')}
-                    placeholder="Select Case Study"
-                  />
-                )}
-
-                {validationErrors.caseStudy && (
+                <textarea
+                  className="form-control mb-0 p-3 h100 lh-16"
+                  name="description"
+                  placeholder="Enter Description"
+                  rows="4"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                />
+                {validationErrors.description && (
                   <span className="text-danger">
-                    {validationErrors.caseStudy}
+                    {validationErrors.description}
                   </span>
                 )}
               </div>
             </div>
-
             <SaveButton isSubmitting={isSubmitting} />
           </div>
         </form>

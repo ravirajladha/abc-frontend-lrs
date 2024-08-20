@@ -6,38 +6,24 @@ import PropTypes from 'prop-types';
 
 import { ContentHeader, ContentLoader } from '@/components/common';
 
-import { deleteTermTest, fetchTermTests } from '@/api/admin';
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { deleteTest, fetchTests } from '@/api/admin';
+import { fetchCourses, fetchSubjects } from '@/api/dropdown';
 
 import { TERM_TYPES } from '@/utils/constants';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
 import StatusBadge from '@/components/common/StatusBadge';
 
 function Tests({ title }) {
-  const [termTests, setTermTests] = useState([]);
+  const [tests, setTests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [classes, setClasses] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [selectedClass, setSelectedClass] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState([]);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -46,30 +32,44 @@ function Tests({ title }) {
       });
   }, []);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setSelectedClass(value);
-    setSubjects([]);
-    setSelectedSubject();
+  useEffect(() => {
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
+
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, []);
+
+  const handleSubjectChange = ({ target: { value } }) => {
+    setSelectedSubject(value);
+    setCourses([]);
+    setSelectedCourse();
     if (value) {
-      fetchSubjectsDropdownData(value);
+      fetchCoursesDropdownData(value);
     }
   };
 
-  const handleSubjectChange = (event) => {
-    setSelectedSubject(event.target.value);
+  const handleCourseChange = (event) => {
+    setSelectedCourse(event.target.value);
   };
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetchTermTests(selectedClass, selectedSubject);
-      const data = response.term_tests;
-      setTermTests(data);
+      const response = await fetchTests(selectedSubject, selectedCourse);
+      const data = response.tests;
+      setTests(data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching tests:', error);
       setLoading(false);
     }
-  }, [setTermTests, setLoading, selectedClass, selectedSubject]);
+  }, [setTests, setLoading, selectedSubject, selectedCourse]);
 
   useEffect(() => {
     fetchData();
@@ -85,7 +85,7 @@ function Tests({ title }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await deleteTermTest(testId);
+          const response = await deleteTest(testId);
           toast.success(response.message);
           await fetchData();
         } catch (error) {
@@ -125,20 +125,20 @@ function Tests({ title }) {
                 <h4 className="font-xss text-grey-800 mt-3 fw-700">{title}</h4>
                 <div className="d-flex g-4">
                   <ContentSelectFilter
-                    options={classes}
-                    name="selectedClass"
+                    options={subjects}
+                    name="selectedSubject"
                     label="name"
-                    value={selectedClass || ''}
-                    onChange={handleClassChange}
+                    value={selectedSubject || ''}
+                    onChange={handleSubjectChange}
                     defaultText="All Subjects"
                     className="float-right filter mr-2"
                   />
                   <ContentSelectFilter
-                    options={subjects}
-                    name="selectedClass"
+                    options={courses}
+                    name="selectedSubject"
                     label="name"
-                    value={selectedSubject || ''}
-                    onChange={handleSubjectChange}
+                    value={selectedCourse || ''}
+                    onChange={handleCourseChange}
                     placeholder="Select a Course"
                     defaultText="All Courses"
                     className="float-right filter mr-2"
@@ -175,15 +175,15 @@ function Tests({ title }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {termTests && termTests.length > 0 ? (
-                        termTests.map((test, index) => (
+                      {tests && tests.length > 0 ? (
+                        tests.map((test, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{test.title}</td>
-                            <td>{test.class}</td>
                             <td>{test.subject}</td>
+                            <td>{test.course}</td>
                             <td><StatusBadge status={test.status} /></td>
-                            <td className="text-right pl-1">
+                            <td className="text-right pl-1 d-flex justify-content-end align-items-center">
                               <Link
                                 to={`/admin/tests/${test.id}/results`}
                                 className="btn btn-outline-success mr-2 btn-icon btn-sm"

@@ -9,7 +9,7 @@ import {
   SelectQuestion,
 } from '@/components/admin/assessment';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchCourses, fetchSubjects } from '@/api/dropdown';
 import {
   updateAssessment,
   fetchSingleAssessment,
@@ -22,12 +22,12 @@ function Edit() {
   const { assessmentId } = useParams();
 
   const [loading, setLoading] = useState([]);
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [assessmentQuestions, setAssessmentQuestions] = useState([]);
   const [formData, setFormData] = useState({
-    selectedClass: '',
     selectedSubject: '',
+    selectedCourse: '',
     noOfQuestions: 0,
     assessmentName: '',
     selectedQuestions: '',
@@ -40,22 +40,8 @@ function Edit() {
   const [isFormVerified, setIsFormVerified] = useState(false);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -64,21 +50,35 @@ function Edit() {
       });
   }, []);
 
-  const handleClassChange = ({ target: { value } }) => {
+  useEffect(() => {
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
+
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
+  const handleSubjectChange = ({ target: { value } }) => {
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
-      selectedClass: '',
+      selectedSubject: '',
     }));
     setFormData({
       ...formData,
-      selectedClass: value,
-      selectedSubject: '',
+      selectedSubject: value,
+      selectedCourse: '',
     });
-    fetchSubjectsDropdownData(value);
+    fetchCoursesDropdownData(value);
   };
 
-  const fetchQuestionsCount = (selectedSubject) => {
-    fetchAssessmentQuestionsCount(selectedSubject)
+  const fetchQuestionsCount = (selectedCourse) => {
+    fetchAssessmentQuestionsCount(selectedCourse)
       .then((data) => {
         setFormData((prevData) => ({
           ...prevData,
@@ -90,18 +90,17 @@ function Edit() {
       });
   };
 
-  const handleSubjectChange = (event) => {
-    const selectedSubject = event.target.value;
+  const handleCourseChange = (event) => {
+    const selectedCourse = event.target.value;
     setFormData((prevData) => ({
       ...prevData,
-      selectedSubject: selectedSubject,
+      selectedCourse: selectedCourse,
     }));
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
       selectedSubject: '',
     }));
-
-    fetchQuestionsCount(selectedSubject);
+    fetchQuestionsCount(selectedCourse);
   };
 
   const handleInputChange = ({ target: { name, value } }) => {
@@ -112,7 +111,7 @@ function Edit() {
   const verifyForm = async (event) => {
     event.preventDefault();
     const isVerified =
-      formData.selectedClass &&
+      formData.selectedCourse &&
       formData.selectedSubject &&
       formData.assessmentName;
     setIsFormVerified(isVerified);
@@ -123,13 +122,13 @@ function Edit() {
       const response = await fetchSingleAssessment(assessmentId);
       const data = response.assessment;
       if (data) {
-        fetchSubjectsDropdownData(data.class_id);
-        fetchQuestionsCount(data.subject_id);
+        fetchCoursesDropdownData(data.subject_id);
+        fetchQuestionsCount(data.course_id);
         const arr = data?.question_ids?.split(',').map(Number);
         setSelectedQuestions(arr);
         setFormData({
-          selectedClass: data.class_id,
           selectedSubject: data.subject_id,
+          selectedCourse: data.course_id,
           assessmentName: data.title,
           selectedQuestions: data.question_ids,
           duration: data.time_limit,
@@ -142,7 +141,7 @@ function Edit() {
       toast.error(error.message);
       setLoading(false);
     }
-  }, [assessmentId, fetchSubjectsDropdownData]);
+  }, [assessmentId, fetchSubjectDropdownData]);
 
   useEffect(() => {
     fetchAssessment();
@@ -152,8 +151,8 @@ function Edit() {
     const fetchData = async () => {
       try {
         const data = await fetchAssessmentQuestionsByIds(
-          formData.selectedClass,
-          formData.selectedSubject
+          formData.selectedSubject,
+          formData.selectedCourse
         );
         setAssessmentQuestions(data.assessment_questions);
       } catch (error) {
@@ -161,10 +160,10 @@ function Edit() {
       }
     };
 
-    if (formData.selectedClass && formData.selectedSubject) {
+    if (formData.selectedCourse && formData.selectedSubject) {
       fetchData();
     }
-  }, [isFormVerified, formData.selectedClass, formData.selectedSubject]);
+  }, [isFormVerified, formData.selectedCourse, formData.selectedSubject]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -178,8 +177,8 @@ function Edit() {
       toast.success(response.message);
       setFormData({
         ...formData,
-        selectedClass: '',
         selectedSubject: '',
+        selectedCourse: '',
         noOfQuestions: '',
         assessmentName: '',
         selectedQuestions: '',
@@ -236,18 +235,18 @@ function Edit() {
         ) : (
           <Form
             loading={loading}
-            classes={classes}
             subjects={subjects}
+            courses={courses}
             formData={formData}
             validationErrors={validationErrors}
-            setClasses={setClasses}
             setSubjects={setSubjects}
+            setCourses={setCourses}
             setFormData={setFormData}
             setValidationErrors={setValidationErrors}
-            fetchSubjectsDropdownData={fetchSubjectsDropdownData}
+            fetchSubjectDropdownData={fetchSubjectDropdownData}
             handleInputChange={handleInputChange}
-            handleClassChange={handleClassChange}
             handleSubjectChange={handleSubjectChange}
+            handleCourseChange={handleCourseChange}
             handleAction={verifyForm}
           />
         )}

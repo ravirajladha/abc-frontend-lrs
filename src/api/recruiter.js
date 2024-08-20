@@ -16,9 +16,9 @@ export const fetchStudents = async () => {
 };
 
 //Test Questions APIs
-export const fetchTestQuestions = async (classId, subjectId) => {
+export const fetchTestQuestions = async (subjectId, courseId) => {
   const response = await apiService.fetchData(
-    `/recruiter/job-tests-questions?classId=${classId}&subjectId=${subjectId}`
+    `/recruiter/job-tests-questions?subjectId=${subjectId}&courseId=${courseId}`
   );
   return response.data;
 };
@@ -43,16 +43,16 @@ export const deleteTestQuestion = (testQuestionId) => {
     `/recruiter/job-tests-questions/${testQuestionId}/delete`
   );
 };
-//Term Test APIs
 
+//Test APIs
 export const fetchTestDetails = async (testId) => {
   const response = await apiService.fetchData(`/recruiter/job-tests/${testId}`);
   return response.data;
 };
 
-export const fetchJobTests = async (classId) => {
+export const fetchJobTests = async (subjectId) => {
   const response = await apiService.fetchData(
-    `/recruiter/job-tests?classId=${classId}`
+    `/recruiter/job-tests?subjectId=${subjectId}`
   );
   return response.data;
 };
@@ -62,45 +62,45 @@ export const fetchJobTests = async (classId) => {
 //   console.log("Recruiter response", response.data);
 //   return response.data;
 // };
-export const fetchTermTestResult = async (testId) => {
+export const fetchTestResult = async (testId) => {
   const response = await apiService.fetchData(
     `/recruiter/job-tests/${testId}/results`
   );
   return response.data;
 };
 
-export const fetchTermTestQuestionsByIds = async (subjectId) => {
+export const fetchTestQuestionsByIds = async (courseId) => {
   const response = await apiService.fetchData(
-    `/minimal/term-test-questions?subjectId=${subjectId}`
+    `/minimal/test-questions?courseId=${courseId}`
   );
   return response.data;
 };
 
-export const fetchTermTestQuestionsByClassIds = async (classIds) => {
-  const idsArray = Array.isArray(classIds) ? classIds : [classIds];
+export const fetchTestQuestionsBySubjectIds = async (subjectIds) => {
+  const idsArray = Array.isArray(subjectIds) ? subjectIds : [subjectIds];
   const ids = idsArray.join(',');
 
   // const ids = classIds.join(',');
-  const response = await apiService.fetchData(`/minimal/term-test-questions-by-class-id?classIds=${ids}`);
+  const response = await apiService.fetchData(`/minimal/test-questions-by-subject-id?subjectIds=${ids}`);
   console.log("call from api", response.data)
   return response.data;
 };
 
-export const createTermTest = (data) => {
+export const createTest = (data) => {
   return apiService.postData(`recruiter/job-tests/store`, data);
 };
 
-export const deleteTermTest = (testId) => {
+export const deleteTest = (testId) => {
   return apiService.deleteData(`/recruiter/job-tests/${testId}/delete`);
 };
 
-export const updateTermTest = async (testId, data) => {
+export const updateTest = async (testId, data) => {
   return apiService.putData(`/recruiter/job-tests/${testId}/update`, data);
 };
 
-export const checkTermTestAvailability = async (subjectId) => {
+export const checkTestAvailability = async (courseId) => {
   const response = await apiService.fetchData(
-    `/recruiter/job-tests/availability/${subjectId}`
+    `/recruiter/job-tests/availability/${courseId}`
   );
   return response.data;
 };

@@ -18,15 +18,15 @@ import {
   ContentHeader,
   ContentLoader,
 } from '@/components/common';
-import { fetchClasses, fetchSections } from '@/api/common';
+import { fetchSubjects, fetchSections } from '@/api/common';
 
 function Result() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const tableRef = useRef();
 
-  const [classes, setClasses] = useState([]);
-  const [selectedClass, setSelectedClass] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState([]);
 
   const [sections, setSections] = useState([]);
   const [selectedSection, setSelectedSection] = useState('');
@@ -34,12 +34,12 @@ function Result() {
   const [results, setResults] = useState([]);
   const [selectedTerm, setSelectedTerm] = useState(1);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data);
+        setSubjects(data);
         if (data.length > 0) {
-          setSelectedClass(data[0].id);
+          setSelectedSubject(data[0].id);
         }
       })
       .catch((error) => {
@@ -56,9 +56,10 @@ function Result() {
         toast.error(error.message);
       });
   }, []);
+
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
   useEffect(() => {
     fetchSectionsDropdownData();
@@ -75,7 +76,7 @@ function Result() {
       }
 
       const response = await fetchResults(
-        selectedClass,
+        selectedSubject,
         selectedSection,
         selectedTerm
       );
@@ -89,7 +90,7 @@ function Result() {
       setError(error);
       setLoading(false);
     }
-  }, [selectedClass, selectedSection, selectedTerm]);
+  }, [selectedSubject, selectedSection, selectedTerm]);
 
   useEffect(() => {
     fetchData();
@@ -108,8 +109,8 @@ function Result() {
     }
   }, [results]);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setSelectedClass(value);
+  const handleSubjectChange = ({ target: { value } }) => {
+    setSelectedSubject(value);
   };
   const handleSectionChange = ({ target: { value } }) => {
     setSelectedSection(value);
@@ -130,14 +131,14 @@ function Result() {
           <div className="d-flex">
             <select
               className="searchCat float-right mr-4 sort"
-              value={selectedClass}
-              onChange={handleClassChange}
+              value={selectedSubject}
+              onChange={handleSubjectChange}
             >
               <option value="" disabled>
-                Select a class
+                Select a Subject
               </option>
-              {classes &&
-                classes.map((item, index) => (
+              {subjects &&
+                subjects.map((item, index) => (
                   <option key={index} value={item.id}>
                     {item.name}
                   </option>

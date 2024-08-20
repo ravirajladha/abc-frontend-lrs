@@ -3,16 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { createStudent } from '@/api/school';
-import { fetchClasses, fetchSections } from '@/api/common';
+
 
 import { ContentCardWrapper, ContentHeader } from '@/components/common';
-import { SelectInput } from '@/components/common/form';
+
 import { getUserDataFromLocalStorage } from '@/utils/services';
 function Create() {
   const navigate = useNavigate();
-
-  const [classes, setClasses] = useState([]);
-  const [sections, setSections] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
   const userData = JSON.parse(getUserDataFromLocalStorage());
 console.log(userData,"user data session");
@@ -20,7 +17,6 @@ console.log(userData,"user data session");
     name: '',
     email: '',
     phone_number: '',
-    class_id: '',
     section_id: '',
     profile_image: '',
     doj: '',

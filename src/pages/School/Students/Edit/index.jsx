@@ -3,10 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { editStudent, fetchStudent } from '@/api/school';
-import { fetchClasses, fetchSections } from '@/api/common';
+import { fetchSubjects, fetchSections } from '@/api/common';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-import { ContentCardWrapper, ContentHeader,ContentLoader } from '@/components/common';
+import {
+  ContentCardWrapper,
+  ContentHeader,
+  ContentLoader,
+} from '@/components/common';
 import { SelectInput } from '@/components/common/form';
 
 function Edit() {
@@ -15,7 +19,7 @@ function Edit() {
 
   const fileInputRef = useRef();
   const [loading, setLoading] = useState(true);
-  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [sections, setSections] = useState([]);
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -26,9 +30,9 @@ function Edit() {
     name: '',
     email: '',
     password: '',
-    confirmPassword:'',
+    confirmPassword: '',
     phone_number: '',
-    class_id: '',
+    subject_id: '',
     section_id: '',
     profile_image: '',
     doj: '',
@@ -37,8 +41,8 @@ function Edit() {
     state: '',
     pincode: '',
     description: '',
-    dob:'',
-    profile_image:'',
+    dob: '',
+    profile_image: '',
     status: '',
   });
 
@@ -55,30 +59,29 @@ function Edit() {
           confirmPassword: '',
           email: data.email || '',
           phone_number: data.phone_number || '',
-          class_id: data.class_id || '',
+          subject_id: data.subject_id || '',
           section_id: data.section_id || '',
           dob: data.dob || '',
           pincode: data.pincode || '',
           address: data.address || '',
           profile_image: data.profile_image || '',
-          status: data.student_status !== undefined ? String(data.student_status) : '', // Ensure
-          
+          status:
+            data.student_status !== undefined
+              ? String(data.student_status)
+              : '', // Ensure
         };
         setForm(updatedForm);
         setLoading(false);
-
       }
     } catch (error) {
       console.error('Error fetching teacher data:', error);
-      setLoading(false)
+      setLoading(false);
     }
   }, [studentId]);
 
   useEffect(() => {
     fetchTeacherData();
   }, [fetchTeacherData]);
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,7 +93,7 @@ function Edit() {
       submissionData.append('phone_number', form.phone_number || '');
       submissionData.append('password', form.password || '');
       submissionData.append('confirmPassword', form.confirmPassword || '');
-      submissionData.append('class_id', form.class_id || null);
+      submissionData.append('subject_id', form.subject_id || null);
       submissionData.append('section_id', form.section_id || null);
       if (form.profile_image) {
         submissionData.append('profile_image', form.profile_image);
@@ -99,7 +102,7 @@ function Edit() {
       submissionData.append('dob', form.dob || '');
       submissionData.append('pincode', form.pincode || '');
       submissionData.append('address', form.address || '');
-      submissionData.append('status', form.status );
+      submissionData.append('status', form.status);
 
       const response = await editStudent(studentId, submissionData);
       toast.success('Student added successfully', response);
@@ -161,30 +164,32 @@ function Edit() {
       <ContentHeader title="Edit" subtitle="Student" />
 
       <ContentCardWrapper>
-      {loading ? (
-              <div className="my-5">
-                <ContentLoader />
+        {loading ? (
+          <div className="my-5">
+            <ContentLoader />
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} autoComplete="off">
+            <div className="row">
+              <div className="col-lg-6 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">
+                    Name <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="name"
+                    value={form.name}
+                    onChange={handleFormChange}
+                    placeholder="Enter Name"
+                  />
+                  {validationErrors.name && (
+                    <span className="text-danger">{validationErrors.name}</span>
+                  )}
+                </div>
               </div>
-            ) : (
-        <form onSubmit={handleSubmit} autoComplete="off">
-          <div className="row">
-            <div className="col-lg-6 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Name <span className="text-danger">*</span></label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  value={form.name}
-                  onChange={handleFormChange}
-                  placeholder="Enter Name"
-                />
-                {validationErrors.name && (
-                  <span className="text-danger">{validationErrors.name}</span>
-                )}
-              </div>
-            </div>
-            {/* <div className="col-lg-3 mb-2">
+              {/* <div className="col-lg-3 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
                   Select Class <span className="text-danger">*</span>
@@ -222,214 +227,218 @@ function Edit() {
                 )}
               </div>
             </div> */}
-          
-            <div className="col-lg-6 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Email </label>
-                <input
-                  type="email"
-                  name="email"
-                  className="form-control"
-                  value={form.email}
-                  onChange={handleFormChange}
-                  placeholder="Enter Email"
-                />
-                {validationErrors.email && (
-                  <span className="text-danger">{validationErrors.email}</span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-6 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">
-                  Phone Number <span className="text-danger">*</span>
-                </label>
-                <input
-                  type="tel"
-                  name="phone_number"
-                  className="form-control"
-                  value={form.phone_number}
-                  onChange={handleFormChange}
-                  placeholder="Enter Phone Number"
-                />
-                {validationErrors.phone_number && (
-                  <span className="text-danger">
-                    {validationErrors.phone_number}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-6 mb-3">
-              <div className="form-group">
-                <label className="mont-font form-label fw-600 font-xsss">
-                  Profile Image
-                  {form.profile_image ? (
-                          <a
-                            href={baseUrl + form.profile_image} // URL of the uploaded image
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="ml-2"
-                          >
-                            <FaEye />
-                          </a>
-                        ) : (
-                          <FaEyeSlash className="ml-2" />
-                        )}
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Select Profile Image"
-                  value={form.profile_image_name}
-                  onClick={() => fileInputRef.current.click()}
-                  readOnly
-                />
-                <input
-                  type="file"
-                  className="custom-file-input"
-                  name="profile_image"
-                  onChange={handleFileChange}
-                  ref={fileInputRef}
-                  style={{ display: 'none' }}
-                />
-                {validationErrors.profile_image && (
-                  <span className="text-danger">
-                    {validationErrors.profile_image}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-6 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">
-                  Date of Birth <span className="text-danger">*</span>
-                </label>
-                <input
-                  type="date"
-                  name="dob"
-                  className="form-control"
-                  value={form.dob}
-                  onChange={handleFormChange}
-                  placeholder="Enter Date of Birth"
-                />
-                {validationErrors.dob && (
-                  <span className="text-danger">{validationErrors.dob}</span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-6 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Pincode <span className="text-danger">*</span></label>
-                <input
-                  type="number"
-                  name="pincode"
-                  className="form-control"
-                  value={form.pincode}
-                  onChange={handleFormChange}
-                  placeholder="Enter Pincode (only 6 digits allowed)"
-                  maxLength="10"
-                />
-                {validationErrors.pincode && (
-                  <span className="text-danger">
-                    {validationErrors.pincode}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-12 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Address <span className="text-danger">*</span> </label>
-                <textarea
-                  className="form-control mb-0 p-3 h100 lh-16"
-                  name="address"
-                  placeholder="Enter Address"
-                  rows="4"
-                  value={form.address}
-                  onChange={handleFormChange}
-                />
-                {validationErrors.address && (
-                  <span className="text-danger">
-                    {validationErrors.address}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-6 mb-3">
-                  <div className="form-group">
-                    <label className="mont-font fw-600 font-xsss">
-                      Password *
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      className="form-control"
-                      value={form.password}
-                      onChange={handleFormChange}
-                      placeholder="Enter new password"
-                    />
-                    {validationErrors.password && (
-                      <span className="text-danger">
-                        {validationErrors.password}
-                      </span>
-                    )}
-                  </div>
-                </div>
 
-                <div className="col-lg-6 mb-3">
-                  <div className="form-group">
-                    <label className="mont-font fw-600 font-xsss">
-                      Confirm Password *
-                    </label>
-                    <input
-                      type="password"
-                      name="confirmPassword"
-                      className={`form-control ${
-                        !passwordMatch && 'border-danger'
-                      }`}
-                      value={form.confirmPassword}
-                      onChange={handleFormChange}
-                      placeholder="Confirm new password"
-                    />
-                    {!passwordMatch && (
-                      <small className="text-danger">
-                        Passwords do not match.
-                      </small>
-                    )}
-                    {validationErrors.confirmPassword && (
-                      <span className="text-danger">
-                        {validationErrors.confirmPassword}
-                      </span>
-                    )}
-                  </div>
+              <div className="col-lg-6 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">Email </label>
+                  <input
+                    type="email"
+                    name="email"
+                    className="form-control"
+                    value={form.email}
+                    onChange={handleFormChange}
+                    placeholder="Enter Email"
+                  />
+                  {validationErrors.email && (
+                    <span className="text-danger">
+                      {validationErrors.email}
+                    </span>
+                  )}
                 </div>
-          </div>
-          <div className="col-lg-12 mb-2">
+              </div>
+              <div className="col-lg-6 mb-3">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                 Status 
+                    Phone Number <span className="text-danger">*</span>
                   </label>
-                  <select
+                  <input
+                    type="tel"
+                    name="phone_number"
                     className="form-control"
-                    name="status"
-                    value={form.status}
-                    onChange={handleDropdownChange}
-                  >
-                    <option value="1">Active</option>
-                    <option value="0">Inactive</option>
-                  </select>
+                    value={form.phone_number}
+                    onChange={handleFormChange}
+                    placeholder="Enter Phone Number"
+                  />
+                  {validationErrors.phone_number && (
+                    <span className="text-danger">
+                      {validationErrors.phone_number}
+                    </span>
+                  )}
                 </div>
               </div>
-          <div className="row"></div>
-          <div className="col-lg-12 mb-0 mt-2 pl-0">
-            <button
-              type="submit"
-              className="bg-current border-0 text-center float-right text-white font-xsss fw-600 p-3 w150 rounded-lg d-inline-block"
-            >
-              <i className="feather-save mr-2"></i> Save
-            </button>
-          </div>
-        </form>
-            )}
+              <div className="col-lg-6 mb-3">
+                <div className="form-group">
+                  <label className="mont-font form-label fw-600 font-xsss">
+                    Profile Image
+                    {form.profile_image ? (
+                      <a
+                        href={baseUrl + form.profile_image} // URL of the uploaded image
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2"
+                      >
+                        <FaEye />
+                      </a>
+                    ) : (
+                      <FaEyeSlash className="ml-2" />
+                    )}
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Select Profile Image"
+                    value={form.profile_image_name}
+                    onClick={() => fileInputRef.current.click()}
+                    readOnly
+                  />
+                  <input
+                    type="file"
+                    className="custom-file-input"
+                    name="profile_image"
+                    onChange={handleFileChange}
+                    ref={fileInputRef}
+                    style={{ display: 'none' }}
+                  />
+                  {validationErrors.profile_image && (
+                    <span className="text-danger">
+                      {validationErrors.profile_image}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="col-lg-6 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">
+                    Date of Birth <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    name="dob"
+                    className="form-control"
+                    value={form.dob}
+                    onChange={handleFormChange}
+                    placeholder="Enter Date of Birth"
+                  />
+                  {validationErrors.dob && (
+                    <span className="text-danger">{validationErrors.dob}</span>
+                  )}
+                </div>
+              </div>
+              <div className="col-lg-6 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">
+                    Pincode <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    name="pincode"
+                    className="form-control"
+                    value={form.pincode}
+                    onChange={handleFormChange}
+                    placeholder="Enter Pincode (only 6 digits allowed)"
+                    maxLength="10"
+                  />
+                  {validationErrors.pincode && (
+                    <span className="text-danger">
+                      {validationErrors.pincode}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="col-lg-12 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">
+                    Address <span className="text-danger">*</span>{' '}
+                  </label>
+                  <textarea
+                    className="form-control mb-0 p-3 h100 lh-16"
+                    name="address"
+                    placeholder="Enter Address"
+                    rows="4"
+                    value={form.address}
+                    onChange={handleFormChange}
+                  />
+                  {validationErrors.address && (
+                    <span className="text-danger">
+                      {validationErrors.address}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="col-lg-6 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">
+                    Password *
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    className="form-control"
+                    value={form.password}
+                    onChange={handleFormChange}
+                    placeholder="Enter new password"
+                  />
+                  {validationErrors.password && (
+                    <span className="text-danger">
+                      {validationErrors.password}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="col-lg-6 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">
+                    Confirm Password *
+                  </label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    className={`form-control ${
+                      !passwordMatch && 'border-danger'
+                    }`}
+                    value={form.confirmPassword}
+                    onChange={handleFormChange}
+                    placeholder="Confirm new password"
+                  />
+                  {!passwordMatch && (
+                    <small className="text-danger">
+                      Passwords do not match.
+                    </small>
+                  )}
+                  {validationErrors.confirmPassword && (
+                    <span className="text-danger">
+                      {validationErrors.confirmPassword}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-12 mb-2">
+              <div className="form-group">
+                <label className="mont-font fw-600 font-xsss">Status</label>
+                <select
+                  className="form-control"
+                  name="status"
+                  value={form.status}
+                  onChange={handleDropdownChange}
+                >
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+            </div>
+            <div className="row"></div>
+            <div className="col-lg-12 mb-0 mt-2 pl-0">
+              <button
+                type="submit"
+                className="bg-current border-0 text-center float-right text-white font-xsss fw-600 p-3 w150 rounded-lg d-inline-block"
+              >
+                <i className="feather-save mr-2"></i> Save
+              </button>
+            </div>
+          </form>
+        )}
       </ContentCardWrapper>
     </div>
   );

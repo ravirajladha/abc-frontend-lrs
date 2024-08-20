@@ -21,7 +21,7 @@ import {
 function EditContentForm() {
   const navigate = useNavigate();
 
-  const { classId, subjectId, chapterId, contentId } = useParams();
+  const { subjectId, courseId, chapterId, contentId } = useParams();
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -97,8 +97,8 @@ function EditContentForm() {
 
   useEffect(() => {
     getContentDetails();
-    if (subjectId) {
-      fetchAssessments(subjectId)
+    if (courseId) {
+      fetchAssessments(courseId)
         .then((data) => {
           setAssessments(data.assessments);
         })
@@ -106,7 +106,7 @@ function EditContentForm() {
           toast.error(error.message);
         });
 
-      fetchEbooks(subjectId)
+      fetchEbooks(courseId)
         .then((data) => {
           setEbooks(data.ebooks);
         })
@@ -114,7 +114,7 @@ function EditContentForm() {
           toast.error(error.message);
         });
 
-      fetchElabs(subjectId)
+      fetchElabs(courseId)
         .then((data) => {
           setElabs(data.elabs);
         })
@@ -122,7 +122,7 @@ function EditContentForm() {
           toast.error(error.message);
         });
     }
-  }, [subjectId]);
+  }, [courseId]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -153,7 +153,7 @@ function EditContentForm() {
   }, [formData.ebook_module_id]);
 
   const handleAssessmentCheckbox = () => {
-    fetchAssessments(subjectId)
+    fetchAssessments(courseId)
       .then((data) => {
         setAssessments(data.assessments);
       })
@@ -199,7 +199,7 @@ function EditContentForm() {
     setFormData((prevData) => ({
       ...prevData,
       [field]: value,
-      ["ebook_section_id"]: '',
+      ['ebook_section_id']: '',
     }));
     if (field === 'ebook_module_id') {
       fetchEbookSections(value)
@@ -232,8 +232,8 @@ function EditContentForm() {
     try {
       const submissionData = new FormData();
       submissionData.append('_method', 'PUT');
-      submissionData.append('class_id', classId);
       submissionData.append('subject_id', subjectId);
+      submissionData.append('course_id', courseId);
       submissionData.append('chapter_id', chapterId);
       submissionData.append('title', formData.title);
       submissionData.append('description', formData.description);
@@ -268,7 +268,7 @@ function EditContentForm() {
       clearSelectedVideo();
       setIsSubmitting(false);
       navigate(
-        `/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapterId}`
+        `/admin/subjects/${subjectId}/courses/${courseId}/chapters/${chapterId}`
       );
     } catch (error) {
       if (error.validationErrors) {
@@ -286,8 +286,8 @@ function EditContentForm() {
 
   const clearForm = () => {
     setFormData({
-      class_id: '',
       subject_id: '',
+      course_id: '',
       chapter_id: '',
       title: '',
       description: '',

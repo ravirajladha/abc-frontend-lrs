@@ -6,7 +6,7 @@ import { Spinner } from 'react-bootstrap';
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { Form, SelectQuestion } from '@/components/admin/assessment';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchSubjects, fetchCourses } from '@/api/dropdown';
 import {
   createAssessment,
   fetchAssessmentQuestionsCount,
@@ -15,13 +15,12 @@ import {
 
 function Create() {
   const navigate = useNavigate();
-
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [assessmentQuestions, setAssessmentQuestions] = useState([]);
   const [formData, setFormData] = useState({
-    selectedClass: '',
     selectedSubject: '',
+    selectedCourse: '',
     noOfQuestions: 0,
     assessmentName: '',
     selectedQuestions: '',
@@ -29,27 +28,14 @@ function Create() {
     passingPercentage: '',
     description: '',
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const [isFormVerified, setIsFormVerified] = useState(false);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -58,14 +44,30 @@ function Create() {
       });
   }, []);
 
-  const handleClassChange = ({ target: { value } }) => {
+  useEffect(() => {
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
+
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
+  const handleSubjectChange = ({ target: { value } }) => {
+    console.log("Selected Subject:", value); 
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
-      selectedClass: '',
-    }));
-    setFormData({
-      selectedClass: value,
       selectedSubject: '',
+    }));
+
+    setFormData({
+      selectedSubject: value,
+      selectedCourse: '',
       noOfQuestions: 0,
       assessmentName: '',
       duration: '',
@@ -73,29 +75,37 @@ function Create() {
       description: '',
     });
 
-    fetchSubjectsDropdownData(value);
+    fetchCoursesDropdownData(value);
   };
 
-  const handleSubjectChange = (event) => {
-    setFormData((prevData) => ({ ...prevData, selectedSubject }));
+  const handleCourseChange = (event) => {
+    const selectedCourse = event.target.value;  // Get the selected course value
+    console.log("Selected Course:", selectedCourse); 
+    setFormData((prevData) => ({ ...prevData, selectedCourse }));
+
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
-      selectedSubject: '',
+      selectedCourse: '',
     }));
 
-    const selectedSubject = event.target.value;
-    fetchAssessmentQuestionsCount(selectedSubject)
+    fetchAssessmentQuestionsCount(selectedCourse)
       .then((data) => {
+     
+        console.log("Data from fetchAssessmentQuestionsCount:", data);
+        console.log("Assessment Questions:", data.assessmentQuestions);
+
         setFormData((prevData) => ({
           ...prevData,
           noOfQuestions: data.assessmentQuestions,
         }));
       })
       .catch((error) => {
+        console.error("Error fetching question count:", error.message);
         toast.error(error.message);
       });
-    setFormData((prevData) => ({ ...prevData, selectedSubject }));
   };
+
+
 
   const handleInputChange = ({ target: { name, value } }) => {
     setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
@@ -105,46 +115,58 @@ function Create() {
   const verifyForm = async (event) => {
     event.preventDefault();
     const isVerified =
-      formData.selectedClass &&
-      formData.selectedSubject &&
-      formData.assessmentName;
+    formData.selectedSubject &&
+    formData.selectedCourse &&
+    formData.assessmentName;
     setIsFormVerified(isVerified);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("Fetching questions for Subject:", formData.selectedSubject);
+        console.log("Fetching questions for Course:", formData.selectedCourse);
+
         const data = await fetchAssessmentQuestionsByIds(
-          formData.selectedClass,
-          formData.selectedSubject
+          formData.selectedSubject,
+          formData.selectedCourse
         );
+
+        console.log("Fetched Questions Data:", data);
         setAssessmentQuestions(data.assessment_questions);
+        console.log("Updated assessmentQuestions State:", data.assessment_questions);
       } catch (error) {
         toast.error(error.message);
       }
     };
 
-    if (formData.selectedClass && formData.selectedSubject) {
+    if (formData.selectedCourse && formData.selectedSubject) {
       fetchData();
     }
-  }, [isFormVerified, formData.selectedClass, formData.selectedSubject]);
+  }, [isFormVerified, formData.selectedCourse, formData.selectedSubject]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
+    console.log("Submitting Form Data:", formData);
+
     try {
       const updatedFormData = {
         ...formData,
-        noOfQuestions: selectedQuestions.length,
+        noOfQuestions: parseInt(selectedQuestions, 10), 
+
         selectedQuestions: selectedQuestions,
       };
       const response = await createAssessment(updatedFormData);
+
+      console.log("Submission Response:", response); 
+
       toast.success(response.message);
       setFormData({
         ...formData,
-        selectedClass: '',
+        selectedCourse: '',
         selectedSubject: '',
-        noOfQuestions: '',
+        noOfQuestions: 0,
         assessmentName: '',
         selectedQuestions: '',
         duration: '',
@@ -199,17 +221,17 @@ function Create() {
           </>
         ) : (
           <Form
-            classes={classes}
+            courses={courses}
             subjects={subjects}
             formData={formData}
             validationErrors={validationErrors}
-            setClasses={setClasses}
+            selectedCourse={formData.selectedCourse} 
             setSubjects={setSubjects}
             setFormData={setFormData}
             setValidationErrors={setValidationErrors}
-            fetchSubjectsDropdownData={fetchSubjectsDropdownData}
+            fetchCoursesDropdownData={fetchCoursesDropdownData}
             handleInputChange={handleInputChange}
-            handleClassChange={handleClassChange}
+            handleCourseChange={handleCourseChange}
             handleSubjectChange={handleSubjectChange}
             handleAction={verifyForm}
           />

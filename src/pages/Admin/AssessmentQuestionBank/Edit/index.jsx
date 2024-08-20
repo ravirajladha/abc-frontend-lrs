@@ -14,7 +14,7 @@ import {
 } from '@/components/common';
 import { SelectInput } from '@/components/common/form';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchCourses, fetchSubjects } from '@/api/dropdown';
 import {
   fetchAssessmentQuestionDetails,
   editAssessmentQuestion,
@@ -23,11 +23,11 @@ import {
 function Edit({ title }) {
   const navigate = useNavigate();
   const { questionId } = useParams();
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [formData, setFormData] = useState({
-    selectedClass: '',
+    selectedCourse: '',
     selectedSubject: '',
     question: '',
     code: '',
@@ -41,10 +41,10 @@ function Edit({ title }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -52,13 +52,13 @@ function Edit({ title }) {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
-  const fetchSubjectsDropDown = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchCoursesDropDown = useCallback((subjectId) => {
+    fetchCourses(subjectId)
       .then((data) => {
-        setSubjects(data.subjects);
+        setCourses(data.courses);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -70,8 +70,8 @@ function Edit({ title }) {
       .then((response) => {
         const questionDetails = response.assessment_question;
         setFormData({
-          selectedClass: questionDetails.class_id.toString(),
           selectedSubject: questionDetails.subject_id.toString(),
+          selectedCourse: questionDetails.course_id.toString(),
           question: questionDetails.text,
           code: questionDetails.code || '',
           option_one: questionDetails.option_one,
@@ -80,27 +80,27 @@ function Edit({ title }) {
           option_four: questionDetails.option_four,
           answer_key: questionDetails.answer_key,
         });
-        fetchSubjectsDropDown(questionDetails.class_id);
+        fetchCoursesDropDown(questionDetails.subject_id);
         setLoading(false);
       })
       .catch((error) => {
         toast.error(error.message);
       });
-  }, [questionId, fetchSubjectsDropDown]);
+  }, [questionId, fetchCoursesDropDown]);
 
   useEffect(() => {
-    fetchClassDropdownData();
+    fetchSubjectDropdownData();
     fetchQuestionDetails();
-  }, [fetchClassDropdownData, fetchQuestionDetails]);
+  }, [fetchSubjectDropdownData, fetchQuestionDetails]);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setFormData((prevData) => ({ ...prevData, selectedClass: value }));
-    fetchSubjectsDropDown(value);
+  const handleSubjectChange = ({ target: { value } }) => {
+    setFormData((prevData) => ({ ...prevData, selectedSubject: value }));
+    fetchCoursesDropDown(value);
   };
 
-  const handleSubjectChange = (event) => {
-    const selectedSubject = event.target.value;
-    setFormData((prevData) => ({ ...prevData, selectedSubject }));
+  const handleCourseChange = (event) => {
+    const selectedCourse = event.target.value;
+    setFormData((prevData) => ({ ...prevData, selectedCourse }));
   };
 
   const handleOptionChange = (event) => {
@@ -122,8 +122,8 @@ function Edit({ title }) {
       setShowCodeInput(false);
       setFormData({
         ...formData,
-        selectedClass: '',
         selectedSubject: '',
+        selectedCourse: '',
         question: '',
         code: '',
         option_one: '',
@@ -174,14 +174,14 @@ function Edit({ title }) {
                   </label>
                   <SelectInput
                     className="form-control"
-                    options={classes}
-                    name="selectedClass"
+                    options={subjects}
+                    name="selectedSubject"
                     label="name"
-                    value={formData.selectedClass}
-                    onChange={handleClassChange}
+                    value={formData.selectedSubject}
+                    onChange={handleSubjectChange}
                     placeholder="Select Subject"
                   />
-                  {validationErrors.selectedClass && (
+                  {validationErrors.selectedSubject && (
                     <span className="text-danger">
                     Subject empty or not found.
                     </span>
@@ -196,14 +196,14 @@ function Edit({ title }) {
                   </label>
                   <SelectInput
                     className="form-control"
-                    options={subjects}
-                    name="selectedSubject"
+                    options={courses}
+                    name="selectedCourse"
                     label="name"
-                    value={formData.selectedSubject}
-                    onChange={handleSubjectChange}
+                    value={formData.selectedCourse}
+                    onChange={handleCourseChange}
                     placeholder="Select Course"
                   />
-                  {validationErrors.selectedSubject && (
+                  {validationErrors.selectedCourse && (
                     <span className="text-danger">
                       Course empty or not found.
                     </span>

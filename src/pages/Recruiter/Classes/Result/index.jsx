@@ -9,7 +9,7 @@ import 'datatables.net-buttons/js/dataTables.buttons';
 import 'datatables.net-buttons/js/buttons.html5';
 import 'datatables.net-buttons/js/buttons.print';
 
-import { fetchClassResult } from '@/api/common';
+import { fetchSubjectResult } from '@/api/common';
 
 import {
   ContentCardWrapper,
@@ -20,7 +20,7 @@ import {
 import { formatNumber } from '@/utils/helpers';
 
 function Result() {
-  const { classId } = useParams();
+  const { subjectId } = useParams();
 
   const [error, setError] = useState(null);
   const [results, setResults] = useState([]);
@@ -39,7 +39,7 @@ function Result() {
         table.destroy();
       }
 
-      const response = await fetchClassResult(classId, selectedTerm);
+      const response = await fetchSubjectResult(subjectId, selectedTerm);
       setResults(response?.results);
       setLoading(false);
     } catch (error) {
@@ -48,7 +48,7 @@ function Result() {
       setError(error);
       setLoading(false);
     }
-  }, [classId, selectedTerm]);
+  }, [subjectId, selectedTerm]);
 
   useEffect(() => {
     fetchData();

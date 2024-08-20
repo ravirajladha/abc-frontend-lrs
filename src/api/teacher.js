@@ -46,16 +46,16 @@ export const updateChapterLockStatus = async (chapterId,status) => {
   return response.data;
 };
 
-export const fetchTeacherClasses = async () => {
+export const fetchTeacherSubjects = async () => {
   const response = await apiService.fetchData(
-    `/teacher/get-classes`
+    `/teacher/get-subjects`
   );
   return response.data;
 };
 
-export const fetchTeacherSubjects = async (classId) => {
+export const fetchTeacherCourses= async (subjectId) => {
   const response = await apiService.fetchData(
-    `/teacher/get-subjects/${classId}`
+    `/teacher/get-courses/${subjectId}`
   );
   return response.data;
 };

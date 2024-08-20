@@ -1,11 +1,11 @@
 import React from 'react';
 
-function TermTest() {
+function Test() {
   return (
     <div>
-      TermTest
+      Test
     </div>
   );
 }
 
-export default TermTest;
+export default Test;

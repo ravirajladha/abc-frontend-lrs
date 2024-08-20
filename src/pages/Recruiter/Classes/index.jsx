@@ -6,16 +6,16 @@ import {
   ContentHeader,
   ContentLoader,
 } from '@/components/common';
-import { fetchClasses } from '@/api/common';
+import { fetchSubjects } from '@/api/common';
 
-function Classes() {
-  const [classesData, setClassesData] = useState([]);
+function Subjects() {
+  const [subjectsData, setSubjectsData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
-      const response = await fetchClasses();
-      setClassesData(response);
+      const response = await fetchSubjects();
+      setSubjectsData(response);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -29,12 +29,12 @@ function Classes() {
 
   return (
     <div>
-      <ContentHeader title="All" subtitle="Classes" />
+      <ContentHeader title="All" subtitle="Subjects" />
       <div className="row">
         {loading ? (
           <ContentLoader />
-        ) : classesData.length > 0 ? (
-          classesData.map((item, index) => (
+        ) : subjectsData.length > 0 ? (
+          subjectsData.map((item, index) => (
             <ContentItemCard
               key={index}
               data={item}
@@ -42,12 +42,12 @@ function Classes() {
                 {
                   label: 'Courses',
                   action: (item) => `/teacher/subjects/${item.id}/courses`,
-                  style: ' bg-primary-gradiant',
+                  style: 'bg-primary-gradiant',
                 },
                 {
                   label: 'Results',
                   action: (item) => `/teacher/subjects/${item.id}/results`,
-                  style: ' bg-success ml-2',
+                  style: 'bg-success ml-2',
                 },
               ]}
             />
@@ -60,4 +60,4 @@ function Classes() {
   );
 }
 
-export default Classes;
+export default Subjects;

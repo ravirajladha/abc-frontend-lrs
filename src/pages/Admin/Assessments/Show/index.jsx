@@ -46,10 +46,10 @@ function Show() {
                   </h4>
                   <div className="d-flex align-items-center justify-content-center  w-100">
                     <span className="badge badge-pill badge-secondary mr-2 px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3">
-                      {assessmentData?.class}
+                      {assessmentData?.subject}
                     </span>
                     <span className="badge badge-pill badge-info px-3 py-2 text-white mr-2 font-xssss fw-500 mt-1 lh-3">
-                      {assessmentData?.subject}
+                      {assessmentData?.course}
                     </span>
                     <span className="badge badge-pill badge-danger px-4 py-2 text-white font-xssss fw-600 mt-1 lh-3">
                       {assessmentData.no_of_questions} Questions

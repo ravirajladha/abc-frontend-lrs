@@ -16,8 +16,8 @@ export const fetchPrivateSchools = async () => {
   return response.data.schools;
 };
 export const fetchSubjects = async () => {
-  const response = await apiService.fetchData('/subjects');
-  return response.data.classes;
+  const response = await apiService.fetchData('/admin/subjects');
+  return response.data.subjects;
 };
 
 export const fetchSections = async () => {
@@ -25,19 +25,20 @@ export const fetchSections = async () => {
   return response.data.sections;
 };
 
-export const getSubjectData = async (classId) => {
-  const response = await apiService.fetchData(`/subjects/${subjectId}`);
-  return response.data.class;
+export const getSubjectData = async (subjectId) => {
+  const response = await apiService.fetchData(`/admin/subjects/${subjectId}`);
+  return response.data.subject;
 };
 
 export const fetchSubjectResult = async (subjectId, term) => {
-  const response = await apiService.fetchData(`/subjects/${subjectId}/results?term=${term}`);
+  const response = await apiService.fetchData(`/admin/subjects/${subjectId}/results?term=${term}`);
   return response.data;
 };
 
 
 export const fetchCourses = async (subjectId) => {
-  const response = await apiService.fetchData(`/subjects/${subjectId}/courses`);
+  const response = await apiService.fetchData(`/admin/subjects/${subjectId}/courses`);
+  console.log("response from getting all courses", response.data); 
   return response.data;
 };
 
@@ -47,20 +48,20 @@ export const fetchCourseResult = async (courseId, term) => {
 };
 
 export const fetchCourseData = async (courseId) => {
-  const response = await apiService.fetchData(`/courses/${courseId}`);
-  return response.data.subject;
+  const response = await apiService.fetchData(`/admin/courses/${courseId}`);
+  return response.data.course;
 };
 
 export const fetchChapters = async (subjectId, courseId) => {
   const response = await apiService.fetchData(
-    `/subjects/${subjectId}/courses/${courseId}/chapters`
+    `/admin/subjects/${subjectId}/courses/${courseId}/chapters`
   );
   return response.data;
 };
 
-export const fetchChapterData = async (classId, subjectId, chapterId) => {
+export const fetchChapterData = async (chapterId) => {
   const response = await apiService.fetchData(
-    `/chapters/${chapterId}`
+    `/admin/chapters/${chapterId}`
   );
   return response.data;
 };

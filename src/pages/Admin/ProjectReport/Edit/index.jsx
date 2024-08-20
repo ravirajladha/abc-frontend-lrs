@@ -10,7 +10,7 @@ import {
 } from '@/components/common';
 import { SaveButton, SelectInput } from '@/components/common/form';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchSubjects, fetchCourses } from '@/api/dropdown';
 import { updateProjectReport, fetchProjectReportDetails } from '@/api/admin';
 
 function Edit() {
@@ -18,12 +18,12 @@ function Edit() {
   const { projectReportId } = useParams();
   const [loading, setLoading] = useState(true);
 
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState({
-    class: '',
     subject: '',
+    course: '',
     title: '',
     image: '',
     description: '',
@@ -36,11 +36,11 @@ function Edit() {
     try {
       const response = await fetchProjectReportDetails(projectReportId);
       const projectReportData = response.project_report;
-      fetchSubjectsDropdownData(projectReportData.subject_id);
+      fetchCoursesDropdownData(projectReportData.course_id);
 
       setFormData({
-        class: projectReportData.class_id,
         subject: projectReportData.subject_id,
+        course: projectReportData.course_id,
         title: projectReportData.project_report_title,
         image: null,
         description: projectReportData.project_report_description,
@@ -51,23 +51,9 @@ function Edit() {
       setLoading(false);
     }
   };
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-    fetchClassDropdownData();
-  }, []);
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -76,10 +62,25 @@ function Edit() {
       });
   }, []);
 
+  useEffect(() => {
+    fetchData();
+    fetchSubjectDropdownData();
+  }, []);
+
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
   const clearForm = () => {
     setFormData({
-      class: '',
       subject: '',
+      course: '',
       title: '',
       image: '',
       description: '',
@@ -87,22 +88,22 @@ function Edit() {
     setSelectedImage(null);
   };
 
-  const handleClassChange = ({ target: { value } }) => {
-    setValidationErrors(({ class: _, ...prevErrors }) => prevErrors);
+  const handleSubjectChange = ({ target: { value } }) => {
+    setValidationErrors(({ subject: _, ...prevErrors }) => prevErrors);
     setFormData({
-      class: value,
-      subject: '',
+      subject: value,
+      course: '',
       title: '',
       image: null,
       description: '',
     });
 
-    fetchSubjectsDropdownData(value);
+    fetchCoursesDropdownData(value);
   };
 
-  const handleSubjectChange = ({ target: { value } }) => {
-    setFormData((prevData) => ({ ...prevData, subject: value }));
-    setValidationErrors(({ subject: _, ...prevErrors }) => prevErrors);
+  const handleCourseChange = ({ target: { value } }) => {
+    setFormData((prevData) => ({ ...prevData, course: value }));
+    setValidationErrors(({ course: _, ...prevErrors }) => prevErrors);
   };
 
   const handleInputChange = (e) => {
@@ -121,8 +122,8 @@ function Edit() {
 
     try {
       const submissionData = new FormData();
-      submissionData.append('class', formData.class);
       submissionData.append('subject', formData.subject);
+      submissionData.append('course', formData.course);
       submissionData.append('title', formData.title);
       submissionData.append('description', formData.description);
 
@@ -163,17 +164,16 @@ function Edit() {
                   </label>
                   <SelectInput
                     className="form-control"
-                    options={classes}
-                    name="class"
+                    options={subjects}
+                    name="subject"
                     label="name"
-                    value={formData.class}
-                    onChange={handleClassChange}
+                    value={formData.subject}
+                    onChange={handleSubjectChange}
                     placeholder="Select Subject"
                   />
-                  {validationErrors.class && (
+                  {validationErrors.subject && (
                     <span className="text-danger">
-                     Subject empty or not found.
-
+                      Subject empty or not found.
                     </span>
                   )}
                 </div>
@@ -185,16 +185,16 @@ function Edit() {
                   </label>
                   <SelectInput
                     className="form-control"
-                    options={subjects}
-                    name="subject"
+                    options={courses}
+                    name="course"
                     label="name"
-                    value={formData.subject || ''}
-                    onChange={handleSubjectChange}
+                    value={formData.course || ''}
+                    onChange={handleCourseChange}
                     placeholder="Select Course"
                   />
-                  {validationErrors.subject && (
+                  {validationErrors.course && (
                     <span className="text-danger">
-                   Course empty or not found.
+                      Course empty or not found.
                     </span>
                   )}
                 </div>
@@ -202,7 +202,7 @@ function Edit() {
               <div className="col-lg-6 mb-2">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                  Project Report Title
+                    Project Report Title
                   </label>
                   <input
                     type="text"
@@ -222,7 +222,7 @@ function Edit() {
               <div className="col-lg-6 mb-2">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                  Project Report Image
+                    Project Report Image
                   </label>
                   <input
                     type="file"

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { createStudent } from '@/api/school';
-import { fetchClasses, fetchSections } from '@/api/common';
+import { fetchSubjects, fetchSections } from '@/api/common';
 
 import { ContentCardWrapper, ContentHeader } from '@/components/common';
 import { SelectInput } from '@/components/common/form';
@@ -11,7 +11,7 @@ import { getUserDataFromLocalStorage } from '@/utils/services';
 function Create() {
   const navigate = useNavigate();
 
-  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [sections, setSections] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
   const userData = JSON.parse(getUserDataFromLocalStorage());
@@ -20,7 +20,7 @@ console.log(userData,"user data session");
     name: '',
     email: '',
     phone_number: '',
-    class_id: '',
+    subject_id: '',
     section_id: '',
     profile_image: '',
     doj: '',
@@ -31,10 +31,10 @@ console.log(userData,"user data session");
     description: '',
   });
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data);
+        setSubjects(data);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -52,18 +52,18 @@ console.log(userData,"user data session");
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
   useEffect(() => {
     fetchSectionsDropdownData();
   }, [fetchSectionsDropdownData]);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setValidationErrors(({ class_id: _, ...prevErrors }) => prevErrors);
+  const handleSubjectChange = ({ target: { value } }) => {
+    setValidationErrors(({ subject_id: _, ...prevErrors }) => prevErrors);
     setForm((prevForm) => ({
       ...prevForm,
-      class_id: value,
+      subject_id: value,
     }));
   };
 
@@ -128,19 +128,19 @@ console.log(userData,"user data session");
             <div className="col-lg-3 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                  Select Class <span className="text-danger">*</span>
+                  Select Subject <span className="text-danger">*</span>
                 </label>
                 <SelectInput
                   className="form-control"
-                  options={classes}
-                  name="class"
+                  options={subjects}
+                  name="subject"
                   label="name"
-                  value={form.class_id}
-                  onChange={handleClassChange}
-                  placeholder="Select Class"
+                  value={form.subject_id}
+                  onChange={handleSubjectChange}
+                  placeholder="Select Subject"
                 />
-                {validationErrors.class && (
-                  <span className="text-danger">{validationErrors.class}</span>
+                {validationErrors.subject && (
+                  <span className="text-danger">{validationErrors.subject}</span>
                 )}
               </div>
             </div>
@@ -158,8 +158,8 @@ console.log(userData,"user data session");
                   onChange={handleSectionChange}
                   placeholder="Select Section"
                 />
-                {validationErrors.class && (
-                  <span className="text-danger">{validationErrors.class}</span>
+                {validationErrors.section && (
+                  <span className="text-danger">{validationErrors.section}</span>
                 )}
               </div>
             </div>

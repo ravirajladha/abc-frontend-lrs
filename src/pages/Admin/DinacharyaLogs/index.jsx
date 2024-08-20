@@ -9,17 +9,16 @@ import {
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import DefaultProfileImage from '@/assets/images/default/student.png';
-// import {BulkImageUploadModal} from '@/pages/Admin/PublicStudent/BulkImageUploadModal';
 import { DinacharyaModal } from '@/pages/Admin';
 import { DinacharyaLogsTable } from '@/pages/Admin';
-import { StudentCard } from '@/pages/Admin';
 import PropTypes from 'prop-types';
 
 import { Accordion, Pagination } from '@/components/common';
 import { getUserDataFromLocalStorage } from '@/utils/services';
-import { fetchClasses, fetchSections, fetchPrivateSchools } from '@/api/common';
+import { fetchSubjects, fetchPrivateSchools } from '@/api/common';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
 import { Spinner } from 'react-bootstrap';
+
 function PublicStudent({ title }) {
   const baseUrl = import.meta.env.VITE_BASE_URL;
   const user_detail = JSON.parse(getUserDataFromLocalStorage());
@@ -37,8 +36,8 @@ function PublicStudent({ title }) {
   const [schools, setSchools] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState('');
 
-  const [classes, setClasses] = useState([]);
-  const [selectedClass, setSelectedClass] = useState('');
+  const [subjects, setSubjects] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -52,18 +51,16 @@ function PublicStudent({ title }) {
     fetchPrivateSchools()
       .then((data) => {
         setSchools(data);
-        console.log('school data', schools);
       })
       .catch((error) => {
         toast.error(error.message);
       });
   }, []);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data);
-        console.log('classes data', classes);
+        setSubjects(data);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -72,8 +69,8 @@ function PublicStudent({ title }) {
 
   useEffect(() => {
     fetchSchoolDropdownData();
-    fetchClassDropdownData();
-  }, [fetchSchoolDropdownData, fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSchoolDropdownData, fetchSubjectDropdownData]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,9 +78,8 @@ function PublicStudent({ title }) {
         const data = await getDinacharyaLogs({
           page: currentPage,
           schoolId: selectedSchool,
-          classId: selectedClass,
+          subjectId: selectedSubject,
         });
-        console.log('dinacharya logs from inside', data.students.data);
         setStudents(data.students.data);
         setTotalPages(data.students.last_page);
         setLoading(false);
@@ -94,7 +90,7 @@ function PublicStudent({ title }) {
     };
 
     fetchData();
-  }, [currentPage, selectedSchool, selectedClass]);
+  }, [currentPage, selectedSchool, selectedSubject]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -103,13 +99,12 @@ function PublicStudent({ title }) {
   const handleSchoolChange = async (event) => {
     const schoolId = event.target.value;
     setSelectedSchool(schoolId === '' ? '' : schoolId);
-
     setCurrentPage(1);
   };
-  const handleClassChange = async (event) => {
-    const classId = event.target.value;
-    setSelectedClass(classId === '' ? '' : classId);
 
+  const handleSubjectChange = async (event) => {
+    const subjectId = event.target.value;
+    setSelectedSubject(subjectId === '' ? '' : subjectId);
     setCurrentPage(1);
   };
 
@@ -121,40 +116,6 @@ function PublicStudent({ title }) {
     setImages(newImages);
   };
 
-  // const handleSubmit = async (
-  //   e,
-  //   images,
-  //   studentId,
-  //   studentAuthId,
-  //   createdBy
-  // ) => {
-  //   if (e) e.preventDefault();
-  //   setIsSubmitting(true);
-
-  //   try {
-  //     const submissionData = new FormData();
-  //     submissionData.append('student_id', studentId);
-  //     submissionData.append('student_id', studentAuthId);
-  //     submissionData.append('created_by', createdBy);
-  //     console.log('Type of images:', typeof images, images);
-
-  //     images.forEach((image) => {
-  //       submissionData.append('images[]', image);
-  //     });
-
-  //     const response = await addStudentImages(submissionData);
-  //     toast.success(response.message);
-  //     setShowModal(false);
-  //     clearForm();
-  //     setTimeout(() => {
-  //       setIsSubmitting(false);
-  //     }, 1500);
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     toast.error(error.message);
-  //     setIsSubmitting(false);
-  //   }
-  // };
   const clearForm = () => {
     setFormData({
       student_id: '',
@@ -163,6 +124,7 @@ function PublicStudent({ title }) {
     });
     setSelectedImage(null);
   };
+
   const toggleModal = (student) => {
     setSelectedStudent(student);
     setModalOpen(!modalOpen);
@@ -180,20 +142,8 @@ function PublicStudent({ title }) {
         />
       ),
     },
-    // {
-    //   title: 'View as Cards',
-    //   content: (
-    //     <StudentCard
-    //       students={students}
-    //       loading={loading}
-    //       baseUrl={baseUrl}
-    //       toggleModal={toggleModal}
-    //     />
-    //   ),
-    // },
   ];
-  // if (error) return <div>Error: {error.message}</div>;
-  console.log('selected student', selectedStudent);
+
   const [isSendingMessages, setIsSendingMessages] = useState(false);
 
   const handleSendMessages = async () => {
@@ -207,6 +157,7 @@ function PublicStudent({ title }) {
       toast.error('Error sending the message: ' + error.message);
     }
   };
+
   return (
     <div className="px-2">
       <div className="row mb-4">
@@ -220,7 +171,7 @@ function PublicStudent({ title }) {
               <button
                 onClick={handleSendMessages}
                 className={`btn ml-auto float-right border-0 d-flex fw-600 text-uppercase py-2 px-3 rounded-lg text-center font-xsss shadow-xs mr-2 text-white bg-primary-gradiant`}
-                disabled={isSendingMessages} 
+                disabled={isSendingMessages}
               >
                 {isSendingMessages ? (
                   <Spinner
@@ -231,9 +182,7 @@ function PublicStudent({ title }) {
                     className="mr-2"
                   />
                 ) : (
-                  <>
-                    Send Messages
-                  </>
+                  'Send Messages'
                 )}
               </button>
 
@@ -247,11 +196,11 @@ function PublicStudent({ title }) {
                 className="float-right filter mr-2"
               />
               <ContentSelectFilter
-                options={classes}
-                name="selectedClass"
+                options={subjects}
+                name="selectedSubject"
                 label="name"
-                value={selectedClass}
-                onChange={handleClassChange}
+                value={selectedSubject}
+                onChange={handleSubjectChange}
                 defaultText="All Subjects"
                 className="float-right filter mr-2"
               />

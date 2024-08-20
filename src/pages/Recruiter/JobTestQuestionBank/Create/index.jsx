@@ -10,19 +10,17 @@ import 'ace-builds/src-noconflict/theme-github';
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SelectInput } from '@/components/common/form';
 
-import { fetchClasses } from '@/api/dropdown';
+import { fetchSubjects } from '@/api/dropdown';
 import { createTestQuestion } from '@/api/recruiter';
 
-function Create({ title,isAdmin }) {
-
+function Create({ title, isAdmin }) {
   const navigate = useNavigate();
 
-  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
 
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [formData, setFormData] = useState({
-    selectedClass: '',
-
+    selectedSubject: '',
     question: '',
     code: '',
     option_one: '',
@@ -34,10 +32,10 @@ function Create({ title,isAdmin }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -45,21 +43,15 @@ function Create({ title,isAdmin }) {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
-
-
-  const handleClassChange = ({ target: { value } }) => {
-    setFormData((prevData) => ({ ...prevData, selectedClass: value }));
-    fetchSubjectsDropDown(value);
+  const handleSubjectChange = ({ target: { value } }) => {
+    setFormData((prevData) => ({ ...prevData, selectedSubject: value }));
   };
 
-
-
   const handleOptionChange = (event) => {
-    const { name, value } = event.target;
-
+    const { value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
       answer_key: value === prevData.answer_key ? '' : value,
@@ -75,9 +67,7 @@ function Create({ title,isAdmin }) {
       toast.success(response.message);
       setShowCodeInput(false);
       setFormData({
-        ...formData,
-        selectedClass: '',
-  
+        selectedSubject: '',
         question: '',
         code: '',
         option_one: '',
@@ -114,6 +104,7 @@ function Create({ title,isAdmin }) {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
   return (
     <div>
       <ContentHeader title={title} />
@@ -127,14 +118,14 @@ function Create({ title,isAdmin }) {
                 </label>
                 <SelectInput
                   className="form-control"
-                  options={classes}
-                  name="selectedClass"
+                  options={subjects}
+                  name="selectedSubject"
                   label="name"
-                  value={formData.selectedClass}
-                  onChange={handleClassChange}
+                  value={formData.selectedSubject}
+                  onChange={handleSubjectChange}
                   placeholder="Select Subject"
                 />
-                {validationErrors.selectedClass && (
+                {validationErrors.selectedSubject && (
                   <span className="text-danger">
                     Subject empty or not found
                   </span>

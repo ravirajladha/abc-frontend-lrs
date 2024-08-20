@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,8 +6,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SaveButton, SelectInput } from '@/components/common/form';
 
-import { fetchSelectedActiveElabsWithoutSubjectId } from '@/api/common';
-import { createInternshipTask ,getInternshipDetail} from '@/api/admin';
+import { fetchSelectedActiveElabsWithoutCourseId } from '@/api/common';
+import { createInternshipTask, getInternshipDetail } from '@/api/admin';
 
 function Create() {
   const navigate = useNavigate();
@@ -19,24 +19,22 @@ function Create() {
     name: '',
     description: '',
   });
-  const [classId, setClassId] = useState(null);
+  const [subjectId, setSubjectId] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-
 
   const fetchMiniProjectAndElabsData = useCallback(async () => {
     try {
       const miniProjectDetailsResponse = await getInternshipDetail(internshipId);
-      const classId = miniProjectDetailsResponse.miniProject.class_id;
-      setClassId(classId);
+      const subjectId = miniProjectDetailsResponse.miniProject.subject_id;
+      setSubjectId(subjectId);
   
-      const elabsResponse = await fetchSelectedActiveElabsWithoutSubjectId(classId);
+      const elabsResponse = await fetchSelectedActiveElabsWithoutCourseId(subjectId);
       setElabs(elabsResponse.elabs);
     } catch (error) {
       toast.error(error.message);
     }
   }, [internshipId]);
-  
 
   useEffect(() => {
     fetchMiniProjectAndElabsData();
@@ -64,7 +62,7 @@ function Create() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-console.log("data to submit", formData);
+    console.log("data to submit", formData);
     try {
       const response = await createInternshipTask(formData);
       toast.success(response.message);

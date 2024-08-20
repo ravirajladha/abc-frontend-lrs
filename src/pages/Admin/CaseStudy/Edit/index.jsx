@@ -10,7 +10,7 @@ import {
 } from '@/components/common';
 import { SaveButton, SelectInput } from '@/components/common/form';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchCourses, fetchSubjects } from '@/api/dropdown';
 import { updateCaseStudy, fetchCaseStudyDetails } from '@/api/admin';
 
 function Edit() {
@@ -18,12 +18,12 @@ function Edit() {
   const { caseStudyId } = useParams();
   const [loading, setLoading] = useState(true);
 
-  const [classes, setClasses] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState({
-    class: '',
     subject: '',
+    course: '',
     title: '',
     image: '',
     description: '',
@@ -36,11 +36,11 @@ function Edit() {
     try {
       const response = await fetchCaseStudyDetails(caseStudyId);
       const caseStudyData = response.caseStudy;
-      fetchSubjectsDropdownData(caseStudyData.subject_id);
+      fetchCoursesDropdownData(caseStudyData.course_id);
       console.log(caseStudyData);
       setFormData({
-        class: caseStudyData.class_id,
         subject: caseStudyData.subject_id,
+        course: caseStudyData.course_id,
         title: caseStudyData.case_study_title,
         image: null,
         description: caseStudyData.case_study_description,
@@ -51,23 +51,8 @@ function Edit() {
       setLoading(false);
     }
   };
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-    fetchClassDropdownData();
-  }, []);
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -76,10 +61,25 @@ function Edit() {
       });
   }, []);
 
+  useEffect(() => {
+    fetchData();
+    fetchSubjectDropdownData();
+  }, []);
+
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
   const clearForm = () => {
     setFormData({
-      class: '',
       subject: '',
+      course: '',
       title: '',
       image: '',
       description: '',
@@ -87,22 +87,22 @@ function Edit() {
     setSelectedImage(null);
   };
 
-  const handleClassChange = ({ target: { value } }) => {
+  const handleSubjectChange = ({ target: { value } }) => {
     setValidationErrors(({ class: _, ...prevErrors }) => prevErrors);
     setFormData({
-      class: value,
-      subject: '',
+      subject: value,
+      course: '',
       title: '',
       image: null,
       description: '',
     });
 
-    fetchSubjectsDropdownData(value);
+    fetchCoursesDropdownData(value);
   };
 
-  const handleSubjectChange = ({ target: { value } }) => {
-    setFormData((prevData) => ({ ...prevData, subject: value }));
-    setValidationErrors(({ subject: _, ...prevErrors }) => prevErrors);
+  const handleCourseChange = ({ target: { value } }) => {
+    setFormData((prevData) => ({ ...prevData, course: value }));
+    setValidationErrors(({ course: _, ...prevErrors }) => prevErrors);
   };
 
   const handleInputChange = (e) => {
@@ -121,8 +121,8 @@ function Edit() {
 
     try {
       const submissionData = new FormData();
-      submissionData.append('class', formData.class);
       submissionData.append('subject', formData.subject);
+      submissionData.append('course', formData.course);
       submissionData.append('title', formData.title);
       submissionData.append('description', formData.description);
 
@@ -163,14 +163,14 @@ function Edit() {
                   </label>
                   <SelectInput
                     className="form-control"
-                    options={classes}
-                    name="class"
+                    options={subjects}
+                    name="subject"
                     label="name"
-                    value={formData.class}
-                    onChange={handleClassChange}
+                    value={formData.subject}
+                    onChange={handleSubjectChange}
                     placeholder="Select Subject"
                   />
-                  {validationErrors.class && (
+                  {validationErrors.subject && (
                     <span className="text-danger">
                       Subject must not be empty
                     </span>
@@ -184,14 +184,14 @@ function Edit() {
                   </label>
                   <SelectInput
                     className="form-control"
-                    options={subjects}
+                    options={courses}
                     name="subject"
                     label="name"
-                    value={formData.subject || ''}
-                    onChange={handleSubjectChange}
+                    value={formData.course || ''}
+                    onChange={handleCourseChange}
                     placeholder="Select Course"
                   />
-                  {validationErrors.subject && (
+                  {validationErrors.course && (
                     <span className="text-danger">
                      Course must not be empty
                     </span>

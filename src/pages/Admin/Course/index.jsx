@@ -16,23 +16,23 @@ import {
 function Subjects({ title }) {
   let { subjectId } = useParams();
 
-  const [className, setClassName] = useState(null);
-  const [subjectsData, setSubjectsData] = useState(null);
+  const [subjectName, setSubjectName] = useState(null);
+  const [coursesData, setCoursesData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchSubjectsCallback = useCallback(async () => {
+  const fetchCoursesCallback = useCallback(async () => {
     try {
       const data = await fetchCourses(subjectId);
-      setClassName(data?.class);
-      setSubjectsData(data.subjects);
+      setSubjectName(data?.subject);
+      setCoursesData(data.courses);
     } catch (error) {
       setError(error);
       toast.error(error.message);
     } finally {
       setLoading(false);
     }
-  }, [classId]);
+  }, [subjectId]);
 
   const handleDelete = async (subjectId) => {
     Swal.fire({
@@ -45,7 +45,7 @@ function Subjects({ title }) {
       if (result.isConfirmed) {
         try {
           const response = await deleteCourse(subjectId, courseId);
-          fetchSubjectsCallback();
+          fetchCoursesCallback();
           toast.success(response.message);
         } catch (error) {
           toast.error(error.message);
@@ -55,8 +55,8 @@ function Subjects({ title }) {
   };
 
   useEffect(() => {
-    fetchSubjectsCallback();
-  }, [fetchSubjectsCallback]);
+    fetchCoursesCallback();
+  }, [fetchCoursesCallback]);
 
   if (error) return <div>Error: {error.message}</div>;
 
@@ -66,7 +66,7 @@ function Subjects({ title }) {
         <ContentLoader />
       ) : (
         <ContentHeader
-          title={`${className}`}
+          title={`${subjectName}`}
           subtitle={title}
           buttons={[
             {
@@ -79,29 +79,29 @@ function Subjects({ title }) {
       <div className="row">
         {loading ? (
           <div className="text-center mt-5 col-12"></div>
-        ) : subjectsData !== null & subjectsData.length>0 ? (
-          subjectsData.map((subject, index) => (
+        ) : coursesData !== null & coursesData.length>0 ? (
+          coursesData.map((course, index) => (
             
             <ContentItemCard
               key={index}
-              data={subject}
+              data={course}
               buttons={[
                 {
                   label: 'Chapters',
                   action: () =>
-                    `/admin/subjects/${classId}/courses/${subject.id}/chapters`,
+                    `/admin/subjects/${subjectId}/courses/${course.id}/chapters`,
                   style: ' bg-primary-gradiant',
                 },
                 {
                   label: 'Results',
                   action: () =>
-                    `/admin/subjects/${classId}/courses/${subject.id}/results`,
+                    `/admin/subjects/${subjectId}/courses/${course.id}/results`,
                   style: ' bg-success ml-2',
                 },
               ]}
-              handleDelete={() => handleDelete(subject.id)}
+              handleDelete={() => handleDelete(course.id)}
               handleEdit={() =>
-                `/admin/subjects/${classId}/courses/${subject.id}/edit`
+                `/admin/subjects/${subjectId}/courses/${course.id}/edit`
               }
             />
           ))

@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { fetchCourseData } from '@/api/common';
-import { updateSubject } from '@/api/admin';
+import { fetchCourseData } from '@/api/common'; // Fetch data for the subject
+import { updateCourse } from '@/api/admin'; // Update the course
 import { ContentHeader, ContentLoader } from '@/components/common';
 
 function Edit({ title }) {
-  const { subjectId, courseId } = useParams();
+  const { subjectId, courseId } = useParams(); // Parameters are now subjectId and courseId
   const [formData, setFormData] = useState({
-    subject_name: '',
-    subject_image: null,
-    subject_image_name: '',
+    course_name: '',
+    course_image: null,
+    course_image_name: '',
   });
   const [validationErrors, setValidationErrors] = useState({});
   const [loading, setLoading] = useState(true);
@@ -21,22 +21,22 @@ function Edit({ title }) {
 
   const navigate = useNavigate();
 
-  const getSubjectDetails = useCallback(async () => {
+  const getCourseDetails = useCallback(async () => {
     try {
-      const subjectData = await fetchCourseData(courseId);
+      const courseData = await fetchCourseData(courseId); // Fetching subject data for the course
       setFormData({
         ...formData,
-        subject_name: subjectData.name,
+        course_name: courseData.name,
       });
       setLoading(false);
     } catch (error) {
       toast.error(error.message);
       setLoading(false);
     }
-  }, [formData, subjectId]);
+  }, [formData, courseId]);
 
   useEffect(() => {
-    getSubjectDetails();
+    getCourseDetails();
   }, []);
 
   const handleFormChange = (event) => {
@@ -52,8 +52,8 @@ function Edit({ title }) {
     if (file) {
       setFormData({
         ...formData,
-        subject_image: file,
-        subject_image_name: file.name,
+        course_image: file,
+        course_image_name: file.name,
       });
       setSelectedImage(file);
     }
@@ -65,19 +65,19 @@ function Edit({ title }) {
     try {
       const submissionData = new FormData();
       submissionData.append('_method', 'PUT');
-      submissionData.append('class_id', classId);
-      submissionData.append('subject_name', formData.subject_name);
+      submissionData.append('subject_id', subjectId); // Updated to subject_id
+      submissionData.append('course_name', formData.course_name);
       if (selectedImage) {
-        submissionData.append('subject_image', selectedImage);
+        submissionData.append('course_image', selectedImage); // Updated to course_image
       }
-      const response = await updateSubject(subjectId, submissionData);
+      const response = await updateCourse(courseId, submissionData); // Updated to updateCourse
 
       toast.success('Course updated successfully', response);
-      navigate(`/admin/subjects/${classId}/courses`);
+      navigate(`/admin/subjects/${subjectId}/courses`);
       setFormData({
-        subject_name: '',
-        subject_image: null,
-        subject_image_name: '',
+        course_name: '',
+        course_image: null,
+        course_image_name: '',
       });
     } catch (error) {
       if (error.validationErrors) {
@@ -111,14 +111,14 @@ function Edit({ title }) {
                     <input
                       type="text"
                       className="form-control"
-                      name="subject_name"
-                      value={formData.subject_name}
+                      name="course_name"
+                      value={formData.course_name}
                       onChange={handleFormChange}
                       placeholder="Enter Course Name"
                     />
-                    {validationErrors.subject_name && (
+                    {validationErrors.course_name && (
                       <span className="text-danger">
-                    Course empty or not found
+                        Course name is required or not found
                       </span>
                     )}
                   </div>
@@ -158,9 +158,9 @@ function Edit({ title }) {
                         )}
                       </span>
                     </label>
-                    {validationErrors.subject_image && (
+                    {validationErrors.course_image && (
                       <span className="text-danger">
-                        {validationErrors.subject_image}
+                        {validationErrors.course_image}
                       </span>
                     )}
                   </div>

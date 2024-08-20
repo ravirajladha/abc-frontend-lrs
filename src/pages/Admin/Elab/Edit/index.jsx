@@ -11,18 +11,18 @@ import { ContentFormWrapper, ContentHeader ,ContentLoader} from '@/components/co
 import { SelectInput } from '@/components/common/form';
 import { ELAB_LANGUAGES } from '@/utils/constants';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchSubjects, fetchCourses} from '@/api/dropdown';
 import { getElabDetails ,editElab} from '@/api/admin';
 
 function Edit({ title }) {
   const navigate = useNavigate();
   const { elabId } = useParams();
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   //setting the form data empty initially
   const initialFormData = {
-    selectedClass: '',
     selectedSubject: '',
+    selectedCourse: '',
     selectedLanguage: null,
     elabName: '',
     // code: '',
@@ -40,19 +40,13 @@ function Edit({ title }) {
 
   const [formData, setFormData] = useState(initialFormData);
   const [loading, setLoading] = useState(true);
-
-  // Function to reset the form data
-  // const resetFormData = () => {
-  //   setFormData(initialFormData);
-  // };
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -60,13 +54,13 @@ function Edit({ title }) {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
       .then((data) => {
-        setSubjects(data.subjects);
+        setCourses(data.courses);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -78,8 +72,8 @@ function Edit({ title }) {
     try {
       const submissionData = new FormData();
       submissionData.append('_method', 'PUT');
-      submissionData.append('selectedClass', formData.selectedClass || '');
       submissionData.append('selectedSubject', formData.selectedSubject || '');
+      submissionData.append('selectedCourse', formData.selectedCourse|| '');
       submissionData.append('selectedLanguage', formData.selectedLanguage || '');
       submissionData.append('elabName', formData.elabName || '');
       // submissionData.append('code', formData.code || '');
@@ -114,23 +108,6 @@ function Edit({ title }) {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log('form details', formData);
-  //   try {
-  //     const response = await createElab(formData);
-  //     toast.success('Elab added successfully', response);
-
-  //     resetFormData();
-  //     navigate('/admin/elabs/create');
-  //   } catch (error) {
-  //     console.log('error', error.validationErrors);
-  //     if (error.validationErrors) {
-  //       setValidationErrors(error.validationErrors);
-  //     }
-  //     toast.error(error.message);
-  //   }
-  // };
 
   const fetchElabData = useCallback(async () => {
     try {
@@ -138,13 +115,12 @@ function Edit({ title }) {
       console.log('elabdata', elabData);
       if (elabData) {
         const updatedForm = {
-          className: elabData.class.name || '',
           subjectName: elabData.subject.name || '',
-          selectedClass: elabData.class_id || '',
+          courseName: elabData.course.name || '',
           selectedSubject: elabData.subject_id || '',
+          selectedCourse: elabData.course_id || '',
           selectedLanguage: elabData.code_language || '',
           elabName: elabData.title || '',
-          // code: elabData.code || '',
           io_format: elabData.io_format || '',
           description: elabData.description || '',
           constraints: elabData.constraints || '',
@@ -169,33 +145,33 @@ function Edit({ title }) {
     fetchElabData();
   }, [fetchElabData]);
 
-  const handleClassChange = ({ target: { value } }) => {
-    console.log('classId', value);
+  const handleSubjectChange = ({ target: { value } }) => {
+    console.log('subjectId', value);
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
-      selectedClass: '',
+      selectedSubject: '',
     }));
     setFormData({
-      selectedClass: value,
-      selectedSubject: '',
+      selectedSubject: value,
+      selectedCourse: '',
     });
 
-    fetchSubjectsDropdownData(value);
+    fetchCoursesDropdownData(value);
   };
-  const handleSubjectChange = (event) => {
-    console.log('subject value', event.target.value);
-    const selectedSubjectId = event.target.value;
+  const handleCourseChange = (event) => {
+    console.log('course value', event.target.value);
+    const selectedCourseId = event.target.value;
     setFormData((prevData) => ({
       ...prevData,
-      selectedSubject: selectedSubjectId,
+      selectedCourse: selectedCourseId,
     }));
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
-      selectedSubject: '',
+      selectedCourse: '',
     }));
 
-    const selectedSubject = event.target.value;
-    setFormData((prevData) => ({ ...prevData, selectedSubject }));
+    const selectedCourse = event.target.value;
+    setFormData((prevData) => ({ ...prevData, selectedCourse }));
   };
 
   const handleLanguageChange = (event) => {
@@ -248,7 +224,7 @@ function Edit({ title }) {
             <div className="col-6">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                Subject: <span class="font-italic text-dark">{formData.className.toUpperCase()}</span>
+                Subject: <span class="font-italic text-dark">{formData.subjectName.toUpperCase()}</span>
                 </label>
                
               </div>
@@ -258,7 +234,7 @@ function Edit({ title }) {
             <div className="col-6">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                  Course: <span class="font-italic text-dark">{formData.subjectName.toUpperCase()}</span>
+                  Course: <span class="font-italic text-dark">{formData.courseName.toUpperCase()}</span>
                 </label>
             
               </div>
@@ -317,33 +293,6 @@ function Edit({ title }) {
               </div>
             </div>
 
-            {/* Code AceEditor */}
-            {/* <div className="col-6">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Langauge</label>
-                <AceEditor
-                  mode="java"
-                  theme="github"
-                  name="code"
-                  onChange={(value) => handleFormSpecialChange(value, 'code')}
-                  value={formData.code}
-                  editorProps={{ $blockScrolling: true }}
-                  // Add onChange handler if needed
-                  setOptions={{
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: true,
-                    showLineNumbers: true,
-                    tabSize: 2,
-                  }}
-                  className="w-100 h200 font-xss"
-                />
-                {validationErrors.code && (
-                  <span className="text-danger">{validationErrors.code}</span>
-                )}
-              </div>
-            </div> */}
-
             {/* Description Textarea */}
             <div className="col-12">
               <div className="form-group">
@@ -365,8 +314,6 @@ function Edit({ title }) {
                 )}
               </div>
             </div>
-
-       
 
             {/* io_format Textarea */}
             <div className="col-6">

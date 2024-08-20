@@ -11,7 +11,7 @@ import {
   fetchAssessmentQuestions,
   deleteAssessmentQuestion,
 } from '@/api/admin';
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchCourses, fetchSubjects } from '@/api/dropdown';
 
 import { ContentSelectFilter } from '@/components/common';
 
@@ -21,27 +21,13 @@ function AssessmentQuestionBank({ title }) {
   const [questions, setQuestions] = useState([]);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
 
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [selectedClass, setSelectedClass] = useState('');
+  const [courses, setCourses] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedCourse, setSelectedCourse] = useState('');
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -50,17 +36,31 @@ function AssessmentQuestionBank({ title }) {
       });
   }, []);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setSelectedClass(value);
-    setSubjects([]);
-    setSelectedSubject();
+  useEffect(() => {
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
+
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, []);
+
+  const handleSubjectChange = ({ target: { value } }) => {
+    setSelectedSubject(value);
+    setCourses([]);
+    setSelectedCourse();
     if (value) {
-      fetchSubjectsDropdownData(value);
+      fetchCoursesDropdownData(value);
     }
   };
 
-  const handleSubjectChange = (event) => {
-    setSelectedSubject(event.target.value || '');
+  const handleCourseChange = (event) => {
+    setSelectedCourse(event.target.value || '');
   };
 
   const handleShowModal = (question) => {
@@ -75,8 +75,8 @@ function AssessmentQuestionBank({ title }) {
   const fetchQuestions = useCallback(async () => {
     try {
       const data = await fetchAssessmentQuestions(
-        selectedClass,
-        selectedSubject
+        selectedSubject,
+        selectedCourse
       );
       setQuestions(data.assessment_questions);
       setLoading(false);
@@ -84,7 +84,7 @@ function AssessmentQuestionBank({ title }) {
       console.error('Error fetching assessment questions:', error);
       setLoading(false);
     }
-  }, [selectedClass, selectedSubject]);
+  }, [selectedCourse, selectedSubject]);
 
   useEffect(() => {
     fetchQuestions();
@@ -138,20 +138,20 @@ function AssessmentQuestionBank({ title }) {
                 <h4 className="font-xss text-grey-800 mt-3 fw-700">{title}</h4>
                 <div className="d-flex g-4">
                   <ContentSelectFilter
-                    options={classes}
-                    name="selectedClass"
-                    label="name"
-                    value={selectedClass || ''}
-                    onChange={handleClassChange}
-                    defaultText="All Subjects"
-                    className="float-right filter mr-2"
-                  />
-                  <ContentSelectFilter
                     options={subjects}
                     name="selectedSubject"
                     label="name"
                     value={selectedSubject || ''}
                     onChange={handleSubjectChange}
+                    defaultText="All Subjects"
+                    className="float-right filter mr-2"
+                  />
+                  <ContentSelectFilter
+                    options={courses}
+                    name="selectedCourse"
+                    label="name"
+                    value={selectedCourse || ''}
+                    onChange={handleCourseChange}
                     placeholder="Select a Course"
                     defaultText="All Courses"
                     className="float-right filter mr-2"
@@ -199,8 +199,8 @@ function AssessmentQuestionBank({ title }) {
                               <td>
                                 <strong>{truncatedQuestion}</strong>
                               </td>
-                              <td>{question.class}</td>
                               <td>{question.subject}</td>
+                              <td>{question.course}</td>
                               <td className="text-right">
                                 <Link
                                   to="#"

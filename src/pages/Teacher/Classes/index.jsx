@@ -6,17 +6,17 @@ import {
   ContentHeader,
   ContentLoader,
 } from '@/components/common';
-import { fetchTeacherClasses } from '@/api/teacher';
+import { fetchTeacherSubjects } from '@/api/teacher';
 
-function Classes() {
-  const [classesData, setClassesData] = useState([]);
+function Subjects() {
+  const [subjectsData, setSubjectsData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
-      const response = await fetchTeacherClasses();
+      const response = await fetchTeacherSubjects();
       console.log(response);
-      setClassesData(response.classes);
+      setSubjectsData(response.subjects);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -30,12 +30,12 @@ function Classes() {
 
   return (
     <div>
-      <ContentHeader title="All" subtitle="Subjects" />
+      <ContentHeader title="All" subtitle="Courses" />
       <div className="row">
         {loading ? (
           <ContentLoader />
-        ) : classesData.length > 0 ? (
-          classesData.map((item, index) => (
+        ) : subjectsData.length > 0 ? (
+          subjectsData.map((item, index) => (
             <ContentItemCard
               key={index}
               data={item}
@@ -61,4 +61,4 @@ function Classes() {
   );
 }
 
-export default Classes;
+export default Subjects;

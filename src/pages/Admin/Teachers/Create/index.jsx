@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { createTeacher } from '@/api/school';
-import { fetchClasses } from '@/api/common';
+import { fetchSubjects } from '@/api/common';
 
 import { ContentCardWrapper, ContentHeader } from '@/components/common';
-import { fetchSubjects } from '@/api/dropdown';
+import { fetchCourses } from '@/api/dropdown';
 
 function Create() {
   const navigate = useNavigate();
 
-  const [classes, setClasses] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
 
@@ -20,7 +20,7 @@ function Create() {
     email: '',
     phone_number: '',
     emp_id: '',
-    class_id: '',
+    course_id: '',
     subject_id: '',
     profile_image: '',
     doj: '',
@@ -31,10 +31,10 @@ function Create() {
     description: '',
   });
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data);
+        setSubjects(data);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -42,32 +42,32 @@ function Create() {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setValidationErrors(({ class_id: _, ...prevErrors }) => prevErrors);
+  const handleSubjectChange = ({ target: { value } }) => {
+    setValidationErrors(({ subject_id: _, ...prevErrors }) => prevErrors);
     setForm((prevForm) => ({
       ...prevForm,
-      class_id: value,
+      subject_id: value,
     }));
 
-    fetchSubjectsDropdownData(value);
+    fetchCoursesDropdownData(value);
   };
 
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
       .then((data) => {
-        setSubjects(data.subjects);
+        setCourses(data.courses);
       })
       .catch((error) => {
         toast.error(error.message);
       });
   }, []);
 
-  const handleSubjectChange = ({ target: { value } }) => {
-    setForm((prevData) => ({ ...prevData, subject: value }));
-    setValidationErrors(({ subject_id: _, ...prevErrors }) => prevErrors);
+  const handleCourseChange = ({ target: { value } }) => {
+    setForm((prevData) => ({ ...prevData, course: value }));
+    setValidationErrors(({ course_id: _, ...prevErrors }) => prevErrors);
   };
 
   const handleSubmit = async (e) => {

@@ -8,7 +8,7 @@ import { ContentCardWrapper, ContentHeader } from '@/components/common';
 
 function Create({ title }) {
   const navigate = useNavigate();
-  const { classId, subjectId } = useParams();
+  const { subjectId,courseId } = useParams();
 
   const [chapters, setChapters] = useState([
     {
@@ -55,14 +55,14 @@ function Create({ title }) {
       for (const chapter of chapters) {
         const submissionData = new FormData();
         submissionData.append('chapter_name', chapter.chapter_name);
-        submissionData.append('class_id', classId);
+        submissionData.append('course_id', courseId);
         submissionData.append('subject_id', subjectId);
 
         response = await createChapter(submissionData);
       }
       if (response) {
         toast.success('Chapter added successfully', response);
-        navigate(`/admin/subjects/${classId}/courses/${subjectId}/chapters`);
+        navigate(`/admin/subjects/${subjectId}/courses/${courseId}/chapters`);
       }
     } catch (error) {
       if (error.validationErrors) {

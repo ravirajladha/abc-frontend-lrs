@@ -82,20 +82,20 @@ import {
   AssessmentQuestionCreate,
   AssessmentQuestionShow,
   AssessmentQuestionEdit,
-  TermTest,
-  TermTestCreate,
-  TermTestShow,
-  TermTestEdit,
-  TermTestQuestionBank,
-  TermTestQuestionCreate,
-  TermTestQuestionEdit,
-  TermTestQuestionShow,
+  Test,
+  TestCreate,
+  TestShow,
+  TestEdit,
+  TestQuestionBank,
+  TestQuestionCreate,
+  TestQuestionEdit,
+  TestQuestionShow,
   EbookModuleShow,
   EbookSectionShow,
   EbookElementCreate,
   EbookElementEdit,
   AssessmentsResult,
-  TermTestResult,
+TestResult,
   CourseResult,
  SubjectResult,
   ProjectReportModuleShow,
@@ -193,22 +193,22 @@ const AdminRoutes = [
     element: <SubjectResult title="Show Subject Results" />,
   },
   // Subjects Routes
-  // {
-  //   path: 'subjects/:subjectId/courses',
-  //   element: <Course title="Courses" />,
-  // },
-  // {
-  //   path: 'subjects/:subjectId/courses/create',
-  //   element: <CourseCreate title="Courses" />,
-  // },
-  // {
-  //   path: 'subjects/:subjectId/courses/:courseId/edit',
-  //   element: <CourseEdit title="Courses" />,
-  // },
-  // {
-  //   path: 'subjects/:subjectId/courses/:courseId/results',
-  //   element: <CourseResult title="Show Course Results" />,
-  // },
+  {
+    path: 'subjects/:subjectId/courses',
+    element: <Course title="Courses" />,
+  },
+  {
+    path: 'subjects/:subjectId/courses/create',
+    element: <CourseCreate title="Courses" />,
+  },
+  {
+    path: 'subjects/:subjectId/courses/:courseId/edit',
+    element: <CourseEdit title="Courses" />,
+  },
+  {
+    path: 'subjects/:subjectId/courses/:courseId/results',
+    element: <CourseResult title="Show Course Results" />,
+  },
 
   // Chapters Routes
   {
@@ -297,6 +297,18 @@ const AdminRoutes = [
 
 
 
+  // // {
+  // //   path: 'academic-admin/:schoolId/students/:studentId',
+  // //   element: (
+  // //     <StudentProfile
+  // //       title="Student Profile Students"
+  // //       isAdmin="true"
+  // //       isStudent="false"
+  // //     />
+  // //   ),
+  // // },
+
+
   //trainers
 
   { path: 'trainers', element: <SchoolTeachers /> },
@@ -345,40 +357,40 @@ const AdminRoutes = [
   },
 
   //Tests
-  { path: 'tests', element: <TermTest title="All Tests" /> },
+  { path: 'tests', element: <Test title="All Tests" /> },
   {
     path: 'tests/create',
-    element: <TermTestCreate title="Create New Tests" />,
+    element: <TestCreate title="Create New Tests" />,
   },
   {
     path: 'tests/:testId/edit',
-    element: <TermTestEdit title="Edit Tests" />,
+    element: <TestEdit title="Edit Tests" />,
   },
   {
     path: 'tests/:testId',
-    element: <TermTestShow title="Show Tests Details" />,
+    element: <TestShow title="Show Tests Details" />,
   },
   {
     path: 'tests/:testId/results',
-    element: <TermTestResult title="Show Tests Results" />,
+    element: <TestResult title="Show Tests Results" />,
   },
   { path: 'tests/:testId/results/:courseId/:studentId', element: <StudentSubjectResults isAdmin={true} isStudent={false}/>  },
   //Tests Question
   {
     path: 'tests/question-bank',
-    element: <TermTestQuestionBank title="Tests Questions" />,
+    element: <TestQuestionBank title="Tests Questions" />,
   },
   {
     path: 'tests/question-bank/create',
-    element: <TermTestQuestionCreate title="Create Tests Question" />,
+    element: <TestQuestionCreate title="Create Tests Question" />,
   },
   {
     path: 'tests/question-bank/:questionId/edit',
-    element: <TermTestQuestionEdit title="Edit Tests Question" />,
+    element: <TestQuestionEdit title="Edit Tests Question" />,
   },
   {
     path: 'tests/question-bank/:questionId',
-    element: <TermTestQuestionShow title="Show Tests Question" />,
+    element: <TestQuestionShow title="Show Tests Question" />,
   },
 
   //Mini Projects

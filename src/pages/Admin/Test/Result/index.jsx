@@ -9,7 +9,7 @@ import 'datatables.net-buttons/js/dataTables.buttons';
 import 'datatables.net-buttons/js/buttons.html5';
 import 'datatables.net-buttons/js/buttons.print';
 
-import { fetchTermTestResult } from '@/api/admin';
+import { fetchTestResult } from '@/api/admin';
 
 import {
   ContentCardWrapper,
@@ -40,9 +40,9 @@ function Result() {
         table.destroy();
       }
 
-      const response = await fetchTermTestResult(testId);
+      const response = await fetchTestResult(testId);
       const data = response?.results || [];
-      console.log("data inside adminresult", data)
+      console.log('data inside adminresult', data);
       setResults(data);
       setLoading(false);
     } catch (error) {
@@ -107,12 +107,15 @@ function Result() {
                     <td>{result.student_name}</td>
                     <td>{result.score}</td>
                     <td>{result.percentage}</td>
-                    <td>  <Link
-                          to={result.subject_id + '/'+ result.student_id}
-                          className={`px-2 py-1 mt-2 mx-1 d-inline-block text-white fw-700 lh-32 rounded-lg w100 text-center font-xsssss ls-3 bg-current`}
-                        >
-                          RESULTS
-                        </Link></td>
+                    <td>
+                      {' '}
+                      <Link
+                        to={result.subject_id + '/' + result.student_id}
+                        className={`px-2 py-1 mt-2 mx-1 d-inline-block text-white fw-700 lh-32 rounded-lg w100 text-center font-xsssss ls-3 bg-current`}
+                      >
+                        RESULTS
+                      </Link>
+                    </td>
                     {/* <td> */}
                     {/* <Link
                         to={`/admin/tests/${testId}/results/${result.student_id}/show`}

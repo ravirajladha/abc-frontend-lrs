@@ -12,9 +12,9 @@ export { default as SchoolOldApplicationUpload } from './OldApplication/Upload';
 export { default as SchoolBlackListedApplication } from './BlackListedApplication';
 
 export { default as SchoolResults } from './Results';
-export { default as SchoolTermResults } from './Results/TermTest';
+export { default as SchoolTermResults } from './Results/Test';
 export { default as SchoolSubjectAssessmentResults } from './Results/Subject/Assessment';
-export { default as SchoolSubjectTermResults } from './Results/Subject/TermTest';
+export { default as SchoolSubjectResults } from './Results/Subject/Test';
 
 export { default as SchoolAssessmentResults } from './Results/Assessment';
 

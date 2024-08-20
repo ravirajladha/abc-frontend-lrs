@@ -8,7 +8,6 @@ import {
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import DefaultProfileImage from '@/assets/images/default/student.png';
-// import {BulkImageUploadModal} from '@/pages/Admin/PublicStudent/BulkImageUploadModal';
 import { CustomModal } from '@/pages/Admin';
 import { StudentTable } from '@/pages/Admin';
 import { StudentCard } from '@/pages/Admin';
@@ -16,10 +15,10 @@ import PropTypes from 'prop-types';
 
 import { Accordion, ContentHeader, Pagination } from '@/components/common';
 import { getUserDataFromLocalStorage } from '@/utils/services';
-import { fetchClasses, fetchSections, fetchPrivateSchools } from '@/api/common';
+import { fetchSubjects, fetchSections, fetchPrivateSchools } from '@/api/common';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
+
 function PublicStudent({ title, isPrivate, isPublic }) {
-  console.log('title', title);
   const baseUrl = import.meta.env.VITE_BASE_URL;
   const user_detail = JSON.parse(getUserDataFromLocalStorage());
   const createdBy = user_detail?.id;
@@ -36,8 +35,8 @@ function PublicStudent({ title, isPrivate, isPublic }) {
   const [schools, setSchools] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState('');
 
-  const [classes, setClasses] = useState([]);
-  const [selectedClass, setSelectedClass] = useState('');
+  const [subjects, setSubjects] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState('');
   const [sections, setSections] = useState([]);
   const [selectedSection, setSelectedSection] = useState('');
 
@@ -45,16 +44,16 @@ function PublicStudent({ title, isPrivate, isPublic }) {
     fetchPrivateSchools()
       .then((data) => {
         setSchools(data);
-        console.log('school data', schools);
       })
       .catch((error) => {
         toast.error(error.message);
       });
   }, []);
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data);
+        setSubjects(data);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -73,34 +72,27 @@ function PublicStudent({ title, isPrivate, isPublic }) {
 
   useEffect(() => {
     fetchSchoolDropdownData();
-  }, [fetchSchoolDropdownData]);
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  useEffect(() => {
+    fetchSubjectDropdownData();
     fetchSectionsDropdownData();
-  }, [fetchSectionsDropdownData]);
+  }, [
+    fetchSchoolDropdownData,
+    fetchSubjectDropdownData,
+    fetchSectionsDropdownData,
+  ]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const data = isPrivate ? await getPrivateStudents(currentPage) : await getPublicStudents(currentPage);
         const data = isPrivate
           ? await getPrivateStudents(
               currentPage,
               selectedSchool,
-              selectedClass,
+              selectedSubject,
               selectedSection
             )
-          : await getPublicStudents(
-              currentPage,
-              selectedClass,
-              selectedSection
-            );
+          : await getPublicStudents(currentPage, selectedSubject, selectedSection);
         setStudents(data.students.data);
         setTotalPages(data.students.last_page);
-        console.log('data of students', data.students);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -109,7 +101,8 @@ function PublicStudent({ title, isPrivate, isPublic }) {
     };
 
     fetchData();
-  }, [isPrivate, currentPage, selectedSchool, selectedClass, selectedSection]);
+  }, [isPrivate, currentPage, selectedSchool, selectedSubject, selectedSection]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -133,15 +126,17 @@ function PublicStudent({ title, isPrivate, isPublic }) {
     });
     setSelectedImage(null);
   };
+
   const handleSchoolChange = async (event) => {
     const schoolId = event.target.value;
     setSelectedSchool(schoolId === '' ? '' : schoolId);
 
     setCurrentPage(1);
   };
-  const handleClassChange = async (event) => {
-    const classId = event.target.value;
-    setSelectedClass(classId === '' ? '' : classId);
+
+  const handleSubjectChange = async (event) => {
+    const subjectId = event.target.value;
+    setSelectedSubject(subjectId === '' ? '' : subjectId);
     setSelectedSection('');
     setCurrentPage(1);
   };
@@ -149,8 +144,9 @@ function PublicStudent({ title, isPrivate, isPublic }) {
   const handleSectionChange = async (event) => {
     const sectionId = event.target.value;
     setSelectedSection(sectionId === '' ? '' : sectionId);
-    setCurrentPage(1); // Reset to first page when filters change
+    setCurrentPage(1);
   };
+
   const handleCloseModal = () => {
     setModalOpen(false);
   };
@@ -159,22 +155,15 @@ function PublicStudent({ title, isPrivate, isPublic }) {
     setImages(newImages);
   };
 
-  const handleSubmit = async (
-    e,
-    images,
-    studentId,
-    studentAuthId,
-    createdBy
-  ) => {
-    if (e) e.preventDefault(); // Only call preventDefault if event is provided
+  const handleSubmit = async (e, images, studentId, studentAuthId, createdBy) => {
+    if (e) e.preventDefault();
     setIsSubmitting(true);
 
     try {
       const submissionData = new FormData();
       submissionData.append('student_id', studentId);
-      submissionData.append('student_auth_id', studentAuthId); // Ensure this is set correctly elsewhere in your component
+      submissionData.append('student_auth_id', studentAuthId);
       submissionData.append('created_by', createdBy);
-      console.log('Type of images:', typeof images, images);
 
       images.forEach((image) => {
         submissionData.append('images[]', image);
@@ -200,18 +189,17 @@ function PublicStudent({ title, isPrivate, isPublic }) {
     setShowModal(true);
   };
 
-  
   const handleStatusChange = async (index, newStatus) => {
-    const data = {"student_auth_id": students[index].auth_id, "status": newStatus}
+    const data = { student_auth_id: students[index].auth_id, status: newStatus };
     try {
       const response = await updateStudentStatus(data);
 
-        const updatedStudentsData = [...students];
-        updatedStudentsData[index].status = newStatus;
-        setStudents(updatedStudentsData);
+      const updatedStudentsData = [...students];
+      updatedStudentsData[index].status = newStatus;
+      setStudents(updatedStudentsData);
       toast.success('Status updated successfully.');
     } catch (error) {
-      console.error("There was an error updating the status!", error);
+      console.error('There was an error updating the status!', error);
     }
   };
 

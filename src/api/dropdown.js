@@ -1,8 +1,8 @@
 import { apiService } from '@/utils/services';
 
-export const fetchClasses = () => {
+export const fetchSubjects = () => {
   return apiService
-    .fetchData('/minimal/classes')
+    .fetchData('/minimal/subjects')
     .then((response) => {
       return response.data;
     })
@@ -11,9 +11,9 @@ export const fetchClasses = () => {
     });
 };
 
-export const fetchSubjects = (classId) => {
+export const fetchCourses = (subjectId) => {
   return apiService
-    .fetchData(`/minimal/classes/${classId}/subjects`)
+    .fetchData(`/minimal/subjects/${subjectId}/courses`)
     .then((response) => {
       return response.data;
     })
@@ -21,20 +21,9 @@ export const fetchSubjects = (classId) => {
       throw error;
     });
 };
-export const fetchSubjectsForTest = (classId) => {
+export const fetchCoursesForTest = (subjectId) => {
   return apiService
-    .fetchData(`/minimal/tests/classes/${classId}/subjects`)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      throw error;
-    });
-};
-
-export const fetchAssessments = (subjectId) => {
-  return apiService
-    .fetchData(`/minimal/assessments?subjectId=${subjectId}`)
+    .fetchData(`/minimal/tests/subjects/${subjectId}/courses`)
     .then((response) => {
       return response.data;
     })
@@ -43,9 +32,20 @@ export const fetchAssessments = (subjectId) => {
     });
 };
 
-export const fetchEbooks = (subjectId) => {
+export const fetchAssessments = (courseId) => {
   return apiService
-    .fetchData(`/minimal/ebooks?subjectId=${subjectId}`)
+    .fetchData(`/minimal/assessments?courseId=${courseId}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export const fetchEbooks = (courseId) => {
+  return apiService
+    .fetchData(`/minimal/ebooks?courseId=${courseId}`)
     .then((response) => {
       return response.data;
     })
@@ -76,9 +76,9 @@ export const fetchEbookSections = (ebookModuleId) => {
     });
 };
 
-export const fetchElabs = (subjectId) => {
+export const fetchElabs = (courseId) => {
   return apiService
-    .fetchData(`/minimal/elabs?subjectId=${subjectId}`)
+    .fetchData(`/minimal/elabs?courseId=${courseId}`)
     .then((response) => {
       return response.data;
     })
@@ -88,10 +88,10 @@ export const fetchElabs = (subjectId) => {
 };
 
 
-export const fetchChapters = async (subjectId) => {
+export const fetchChapters = async (courseId) => {
   try {
     const response = await apiService
-      .fetchData(`/subjects/${subjectId}/chapters`);
+      .fetchData(`/courses/${courseId}/chapters`);
     return response.data;
   } catch (error) {
     throw error;
@@ -99,20 +99,20 @@ export const fetchChapters = async (subjectId) => {
 };
 
 
-export const fetchProjectReports = async (subjectId) => {
+export const fetchProjectReports = async (courseId) => {
   try {
     const response = await apiService
-      .fetchData(`/minimal/project-reports?subjectId=${subjectId}`);
+      .fetchData(`/minimal/project-reports?courseId=${courseId}`);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const fetchCaseStudies = async (subjectId) => {
+export const fetchCaseStudies = async (courseId) => {
   try {
     const response = await apiService
-      .fetchData(`/minimal/case-studies?subjectId=${subjectId}`);
+      .fetchData(`/minimal/case-studies?courseId=${courseId}`);
     return response.data;
   } catch (error) {
     throw error;

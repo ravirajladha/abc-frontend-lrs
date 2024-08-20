@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {  useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Spinner } from 'react-bootstrap';
+
 import { useNavigate } from 'react-router-dom';
 
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SaveButton, SelectInput } from '@/components/common/form';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
 import { uploadOldApplication } from '@/api/school';
 
 function Upload() {

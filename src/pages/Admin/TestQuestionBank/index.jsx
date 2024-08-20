@@ -5,39 +5,25 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { fetchTestQuestions, deleteTestQuestion } from '@/api/admin';
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchSubjects, fetchCourses } from '@/api/dropdown';
 
 import { ContentHeader, ContentLoader } from '@/components/common';
-import { TestQuestionShowModal } from '@/components/admin/term-test';
+import { TestQuestionShowModal } from '@/components/admin/test';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
 
-function TermTestQuestionBank({ title }) {
+function TestQuestionBank({ title }) {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
 
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [selectedClass, setSelectedClass] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState([]);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -46,17 +32,31 @@ function TermTestQuestionBank({ title }) {
       });
   }, []);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setSelectedClass(value);
-    setSubjects([]);
-    setSelectedSubject();
+  useEffect(() => {
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
+
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, []);
+
+  const handleSubjectChange = ({ target: { value } }) => {
+    setSelectedSubject(value);
+    setCourses([]);
+    setSelectedCourse();
     if (value) {
-      fetchSubjectsDropdownData(value);
+      fetchCoursesDropdownData(value);
     }
   };
 
-  const handleSubjectChange = (event) => {
-    setSelectedSubject(event.target.value);
+  const handleCourseChange = (event) => {
+    setSelectedCourse(event.target.value);
   };
 
   const handleShowModal = (question) => {
@@ -70,14 +70,14 @@ function TermTestQuestionBank({ title }) {
 
   const fetchQuestions = useCallback(async () => {
     try {
-      const data = await fetchTestQuestions(selectedClass, selectedSubject);
-      setQuestions(data.term_test_questions);
+      const data = await fetchTestQuestions(selectedSubject, selectedCourse);
+      setQuestions(data.test_questions);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching term test questions:', error);
+      console.error('Error fetching test questions:', error);
       setLoading(false);
     }
-  }, [setQuestions, setLoading, selectedClass, selectedSubject]);
+  }, [setQuestions, setLoading, selectedSubject, selectedCourse]);
 
   useEffect(() => {
     fetchQuestions();
@@ -101,7 +101,7 @@ function TermTestQuestionBank({ title }) {
           }
           fetchQuestions();
         } catch (error) {
-          console.error('Error deleting term test question:', error);
+          console.error('Error deleting test question:', error);
         }
       }
     });
@@ -131,20 +131,20 @@ function TermTestQuestionBank({ title }) {
                 <h4 className="font-xss text-grey-800 mt-3 fw-700">{title}</h4>
                 <div className="d-flex g-4">
                   <ContentSelectFilter
-                    options={classes}
-                    name="selectedClass"
+                    options={subjects}
+                    name="selectedSubject"
                     label="name"
-                    value={selectedClass || ''}
-                    onChange={handleClassChange}
+                    value={selectedSubject || ''}
+                    onChange={handleSubjectChange}
                     defaultText="All Subjects"
                     className="float-right filter mr-2"
                   />
                   <ContentSelectFilter
-                    options={subjects}
-                    name="selectedClass"
+                    options={courses}
+                    name="selectedCourse"
                     label="name"
-                    value={selectedSubject || ''}
-                    onChange={handleSubjectChange}
+                    value={selectedCourse || ''}
+                    onChange={handleCourseChange}
                     placeholder="Select a Course"
                     defaultText="All Courses"
                     className="float-right filter mr-2"
@@ -192,9 +192,9 @@ function TermTestQuestionBank({ title }) {
                               <td>
                                 <strong>{truncatedQuestion}</strong>
                               </td>
-                              <td>{question.class}</td>
                               <td>{question.subject}</td>
-                              <td className="text-right">
+                              <td>{question.course}</td>
+                              <td className="text-right pl-1 d-flex justify-content-end align-items-center">
                                 <Link
                                   to="#"
                                   onClick={() => handleShowModal(question)}
@@ -244,8 +244,8 @@ function TermTestQuestionBank({ title }) {
   );
 }
 
-TermTestQuestionBank.propTypes = {
+TestQuestionBank.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default TermTestQuestionBank;
+export default TestQuestionBank;

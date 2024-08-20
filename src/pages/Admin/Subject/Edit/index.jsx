@@ -20,7 +20,7 @@ function Edit({ title }) {
     try {
       const subjectData = await getSubjectData(subjectId);
       setFormData({ 
-        class_name: subjectData.name,
+        subject_name: subjectData.name,
         status: subjectData.status.toString(), // Assuming the active field is part of the classData
         position: subjectData.position,
 
@@ -52,6 +52,7 @@ function Edit({ title }) {
       navigate('/admin/subjects');
       setFormData({ ...formData, subject_name: '' });
     } catch (error) {
+      console.log("error", error);
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
       }

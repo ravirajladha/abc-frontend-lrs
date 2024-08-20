@@ -7,36 +7,22 @@ import { ContentLoader } from '@/components/common';
 import { ContentHeader } from '@/components/common';
 import { Link } from 'react-router-dom';
 
-import { fetchChapters, fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchChapters, fetchCourses, fetchSubjects } from '@/api/dropdown';
 import { fetchAssessments, deleteAssessment } from '@/api/admin';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
 
 function Assessments({ title }) {
   const [loading, setLoading] = useState(true);
 
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [chapters, setChapters] = useState([]);
-  const [selectedClass, setSelectedClass] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState([]);
   const [selectedChapter, setSelectedChapter] = useState([]);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -45,18 +31,32 @@ function Assessments({ title }) {
       });
   }, []);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setSelectedClass(value);
-    setSubjects([]);
-    setSelectedSubject();
+  useEffect(() => {
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
+
+  const fetchSubjectsDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
+  const handleSubjectChange = ({ target: { value } }) => {
+    setSelectedSubject(value);
+    setCourses([]);
+    setSelectedCourse();
     if (value) {
-      fetchSubjectsDropdownData(value);
+      fetchCoursesDropdownData(value);
     }
   };
 
 
-  const handleSubjectChange = ({ target: { value } }) => {
-    setSelectedSubject(value);
+  const handleCourseChange = ({ target: { value } }) => {
+    setSelectedCourse(value);
   };
 
   const [assessments, setAssessments] = useState([]);
@@ -64,7 +64,7 @@ function Assessments({ title }) {
   const fetchAssessmentsData = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await fetchAssessments(selectedClass, selectedSubject);
+      const data = await fetchAssessments(selectedSubject, selectedCourse);
       setAssessments(data.assessments);
       setLoading(false);
     } catch (error) {
@@ -72,7 +72,7 @@ function Assessments({ title }) {
       toast.error('Failed to fetch assessments', error.message);
       setLoading(false);
     }
-  }, [selectedClass, selectedSubject]);
+  }, [selectedCourse, selectedSubject]);
 
   const handleDelete = useCallback(
     async (assessmentId) => {
@@ -129,21 +129,21 @@ function Assessments({ title }) {
                 <h4 className="font-xss text-grey-800 mt-3 fw-700">{title}</h4>
                 <div className="d-flex g-4">
                   <ContentSelectFilter
-                    options={classes}
-                    name="selectedClass"
+                    options={subjects}
+                    name="selectedSubject"
                     label="name"
-                    value={selectedClass || ''}
-                    onChange={handleClassChange}
+                    value={selectedSubject || ''}
+                    onChange={handleSubjectChange}
                     defaultText="All Subjects"
                     className="float-right filter mr-2"
                   />
                   <ContentSelectFilter
-                    options={subjects}
-                    name="selectedClass"
+                    options={courses}
+                    name="selectedCourse"
                     label="name"
-                    value={selectedSubject || ''}
-                    onChange={handleSubjectChange}
-                    placeholder="Select a Subject"
+                    value={selectedCourse || ''}
+                    onChange={handleCourseChange}
+                    placeholder="Select a Course"
                     defaultText="All Courses"
                     className="float-right filter mr-2"
                   />
@@ -184,8 +184,8 @@ function Assessments({ title }) {
                             <td>
                               <strong>{assessment.title}</strong>
                             </td>
-                            <td>{assessment.class}</td>
                             <td>{assessment.subject}</td>
+                            <td>{assessment.course}</td>
                             <td className="text-right">
                               <Link
                                 to={`${assessment.id}/results`}

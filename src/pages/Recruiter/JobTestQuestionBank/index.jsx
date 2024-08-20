@@ -5,24 +5,24 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { fetchTestQuestions, deleteTestQuestion } from '@/api/recruiter';
-import { fetchClasses } from '@/api/dropdown';
+import { fetchSubjects } from '@/api/dropdown';
 
 import { ContentHeader, ContentLoader } from '@/components/common';
-import { TestQuestionShowModal } from '@/components/admin/term-test';
+import { TestQuestionShowModal } from '@/components/admin/test';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
 
-function TermTestQuestionBank({ title, isAdmin }) {
+function TestQuestionBank({ title, isAdmin }) {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
-  const [classes, setClasses] = useState([]);
-  const [selectedClass, setSelectedClass] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState([]);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects);
       })
       .catch((error) => {
         console.error(error.message);
@@ -30,13 +30,8 @@ function TermTestQuestionBank({ title, isAdmin }) {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  // const handleClassChange = ({ target: { value } }) => {
-  //   setSelectedClass(value);
-  
-  // };
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
   const handleShowModal = (question) => {
     setSelectedQuestion(question);
@@ -49,14 +44,14 @@ function TermTestQuestionBank({ title, isAdmin }) {
 
   const fetchQuestions = useCallback(async () => {
     try {
-      const data = await fetchTestQuestions(selectedClass);
+      const data = await fetchTestQuestions(selectedSubject);
       setQuestions(data.term_test_questions);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching test questions:', error);
       setLoading(false);
     }
-  }, [setQuestions, setLoading, selectedClass]);
+  }, [setQuestions, setLoading, selectedSubject]);
 
   useEffect(() => {
     fetchQuestions();
@@ -109,16 +104,16 @@ function TermTestQuestionBank({ title, isAdmin }) {
               <div className="card-body d-flex align-items-center justify-content-between pt-4 px-4 pb-0">
                 <h4 className="font-xss text-grey-800 mt-3 fw-700">{title}</h4>
                 <div className="d-flex g-4">
+                  {/* You can re-enable this filter if needed */}
                   {/* <ContentSelectFilter
-                    options={classes}
-                    name="selectedClass"
+                    options={subjects}
+                    name="selectedSubject"
                     label="name"
-                    value={selectedClass || ''}
-                    onChange={handleClassChange}
+                    value={selectedSubject || ''}
+                    onChange={handleSubjectChange}
                     defaultText="All Subjects"
                     className="float-right filter mr-2"
                   /> */}
-                  
                 </div>
               </div>
               <div className="card-body p-4">
@@ -160,7 +155,7 @@ function TermTestQuestionBank({ title, isAdmin }) {
                               <td>
                                 <strong>{truncatedQuestion}</strong>
                               </td>
-                              <td>{question.class}</td>
+                              <td>{question.subject}</td>
 
                               <td className="text-right">
                                 <Link
@@ -212,8 +207,8 @@ function TermTestQuestionBank({ title, isAdmin }) {
   );
 }
 
-TermTestQuestionBank.propTypes = {
+TestQuestionBank.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default TermTestQuestionBank;
+export default TestQuestionBank;

@@ -1,45 +1,48 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
+import { TextEditor } from '@/components/common';
 
-import { TERM_TYPES } from '@/utils/constants';
+
 
 import {
   ContentFallback,
   ContentFormWrapper,
   ContentHeader,
+  ContentLoader
 } from '@/components/common';
-import { SelectQuestion } from '@/components/admin/term-test';
+import { SelectQuestion } from '@/components/admin/test';
 
-import { fetchClasses, fetchSubjectsForTest } from '@/api/dropdown';
+import { fetchSubjects, fetchCoursesForTest } from '@/api/dropdown';
 
 import {
-  createTermTest,
-  fetchTermTestQuestionsByIds,
-  checkTermTestAvailability,
+  updateTest,
+  fetchTestQuestionsByIds,
+  fetchTestDetails
 } from '@/api/admin';
 import { SelectInput, DisabledSelectInput } from '@/components/common/form';
-import { TextEditor } from '@/components/common';
 
-function Create({ title }) {
+function Edit({ title }) {
   const navigate = useNavigate();
+  const { testId } = useParams();
 
-  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [testQuestions, setTestQuestions] = useState([]);
   const [formData, setFormData] = useState({
-    selectedClass: '',
     selectedSubject: '',
+    selectedCourse: '',
     numberOfQuestions: '',
     testTitle: '',
-    // testTerm: '',
     startTime: '',
     endTime: '',
     duration: '',
     description: '',
     instruction: '',
+    status: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,57 +51,9 @@ function Create({ title }) {
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // const [existingTerms, setExistingTerms] = useState([]);
-
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectsDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  // const fetchSubjectsDropdownData = useCallback((classId) => {
-  //   fetchSubjects(classId)
-  //     .then((data) => {
-  //       setSubjects(data.subjects);
-  //     })
-  //     .catch((error) => {
-  //       toast.error(error.message);
-  //     });
-  // }, []);
-
-  const handleClassChange = ({ target: { value } }) => {
-    setErrorMessage('');
-    setValidationErrors((prevErrors) => ({
-      ...prevErrors,
-      selectedClass: '',
-    }));
-    setFormData({
-      selectedClass: value,
-      selectedSubject: '',
-      numberOfQuestions: '',
-      testTitle: '',
-      // testTerm: '',
-      startTime: '',
-      endTime: '',
-      duration: '',
-      description: '',
-      instruction: '',
-    });
-    fetchSubjectsDropdownData(value);
-  };
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjectsForTest(classId)
-      .then((data) => {
-        console.log(data, 'subject data');
         setSubjects(data.subjects);
       })
       .catch((error) => {
@@ -106,25 +61,53 @@ function Create({ title }) {
       });
   }, []);
 
-  const handleSubjectChange = (event) => {
-    const selectedSubject = event.target.value;
-    setFormData((prevData) => ({ ...prevData, selectedSubject }));
+  useEffect(() => {
+    fetchSubjectsDropdownData();
+  }, [fetchSubjectsDropdownData]);
+
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCoursesForTest(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
+  const handleSubjectChange = ({ target: { value } }) => {
+    setErrorMessage('');
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
       selectedSubject: '',
     }));
+    fetchCoursesDropdownData(value);
+  };
 
-    fetchTermTestQuestionsByIds(selectedSubject)
+  const handleCourseChange = (event) => {
+    setErrorMessage('');
+    const selectedCourse = event.target.value;
+    
+    setFormData((prevData) => ({ ...prevData, selectedCourse }));
+    setValidationErrors((prevErrors) => ({
+      ...prevErrors,
+      selectedCourse: '',
+    }));
+  };
+  
+
+  const fetchQuestionsCount = (selectedCourse) => {
+    fetchTestQuestionsByIds(selectedCourse)
       .then((data) => {
         setFormData((prevData) => ({
           ...prevData,
-          numberOfQuestions: data.term_question_count,
+          numberOfQuestions: data.question_count,
         }));
-        if (data.term_question_count === 0) {
-          setErrorMessage('Cannot create the test. No questions available.');
+        if (data.question_count === 0) {
+          setErrorMessage('Cannot Edit the test. No questions available.');
           return;
         }
-        setTestQuestions(data.term_questions);
+        setTestQuestions(data.questions);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -139,61 +122,109 @@ function Create({ title }) {
   const handleInstructionChange = (html) => {
     setFormData((prevData) => ({ ...prevData, instruction: html }));
   };
+  // const handleStatusChange = (event) => {
+  //   const status = event.target.value;
+  //   setFormData((prevData) => ({ ...prevData, status }));
+  // };
+
+  const handleStatusChange = (selectedOption) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      status: selectedOption.target.value,
+    }));
+  };
 
   const nextForm = async (event) => {
     event.preventDefault();
-    const isVerified = formData.selectedClass && formData.selectedSubject;
+    const isVerified = formData.selectedSubject && formData.selectedCourse;
     setIsFormVerified(isVerified);
   };
+
+  const fetchTestDetail = useCallback(async () => {
+    try {
+      const response = await fetchTestDetails(testId);
+      const data = response.test;
+      console.log('data', data);
+      if (data) {
+        fetchCoursesDropdownData(data.subject_id);
+        fetchQuestionsCount(data.course_id);
+        const arr = data?.question_ids?.split(',').map(Number);
+        setSelectedQuestions(arr);
+        setFormData({
+          selectedSubject: data.subject_id,
+          selectedCourse: data.course_id,
+          selectedQuestions: data.question_ids,
+          testTitle: data.title,
+   
+          duration: data.time_limit,
+          description: data.description,
+          instruction: data.instruction,
+          status: data.status,
+        });
+      }
+      setLoading(false);
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  }, [testId, fetchSubjectsDropdownData]);
+  console.log('formData', formData.instruction);
+  useEffect(() => {
+    fetchTestDetail();
+  }, [fetchTestDetail]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
+
     try {
       const updatedFormData = {
         ...formData,
         selectedQuestions: selectedQuestions,
         totalMarks: selectedQuestions.length,
       };
-      console.log('Data to be submitted:', updatedFormData);
-  
-      const response = await createTermTest(updatedFormData);
-
+      const response =  await updateTest(testId, updatedFormData);
       if (response.status) {
-        toast.success('Test created successfully!');
-        navigate('/admin/tests');
-        setFormData({
-          selectedClass: '',
-          selectedSubject: '',
-          numberOfQuestions: '',
-          testTitle: '',
-          startTime: '',
-          endTime: '',
-          duration: '',
-          description: '',
-          instruction: '',
-        });
-      } else {
-        toast.error(response.message);
-      }
+      toast.success('Test edited successfully!');
+      navigate('/admin/tests');
+      setFormData({
+        selectedSubject: '',
+        selectedCourse: '',
+        numberOfQuestions: '',
+        testTitle: '',
+        startTime: '',
+        endTime: '',
+        duration: '',
+        description: '',
+        instruction: '',
+        status: '',
+      });
+    }else{
+      toast.error(response.message);
+    }
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
       }
       const errorMessage = error.message || 'Test already available for this test';
       toast.error(errorMessage);
-      console.error('Error creating term test:', error);
+      console.error('Error creating test:', error);
     }
     setIsSubmitting(false);
   };
-  
   return (
     <>
-      {!isFormVerified ? (
-        <div>
+
+{loading ? ( // Show loader if still loading
+        <div className="text-center mt-5 col-12">
+          <ContentLoader />
+        </div>
+      ) : (
+        <div className={`content-transition ${!loading ? 'fade-in' : ''}`}>
+          {!isFormVerified ? (
+            <div>
           <ContentHeader title={title} />
-          <ContentFormWrapper formTitle="Create New Test">
+          <ContentFormWrapper formTitle="Edit New Test">
             {errorMessage && (
               <ContentFallback alertDanger message={errorMessage} />
             )}
@@ -208,19 +239,19 @@ function Create({ title }) {
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Select Subject *
+                      Select Subject
                     </label>
                     <SelectInput
                       className="form-control"
-                      options={classes}
-                      name="selectedClass"
+                      options={subjects}
+                      name="selectedSubject"
                       label="name"
-                      value={formData.selectedClass || ''}
-                      onChange={handleClassChange}
+                      value={formData.selectedSubject || ''}
+                      onChange={handleSubjectChange}
                       placeholder="Select Subject"
                       required
                     />
-                    {validationErrors.selectedClass && (
+                    {validationErrors.selectedSubject && (
                       <span className="text-danger font-xsss mt-2">
                         Subject empty or not found.
                       </span>
@@ -231,31 +262,22 @@ function Create({ title }) {
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Select Course *
+                      Select Course
                     </label>
-                    {/* <SelectInput
-                      className="form-control"
-                      options={subjects}
-                      name="selectedSubject"
-                      label="name"
-                      value={formData.selectedSubject || ''}
-                      onChange={handleSubjectChange}
-                      placeholder="Select Course"
-                      required
-                    /> */}
-                    {/* fetchSubjectsForTest */}
+              
                     <DisabledSelectInput
                       className="form-control"
-                      options={subjects}
-                      name="selectedSubject"
+                      options={courses}
+                      name="selectedCourse"
                       label="name"
-                      value={formData.selectedSubject || ''}
-                      onChange={handleSubjectChange}
+                      value={formData.selectedCourse || ''}
+                      onChange={handleCourseChange}
                       placeholder="Select Course"
                       required
                       valueKey="id"
                     />
-                    {validationErrors.selectedSubject && (
+
+                    {validationErrors.selectedCourse && (
                       <span className="text-danger font-xsss mt-2">
                         Course empty or not found.
                       </span>
@@ -277,50 +299,19 @@ function Create({ title }) {
                     />
                   </div>
                 </div>
-                {/* <div className="col-md-4">
-                  <div className="form-group mb30">
-                    <label className="form-label mont-font fw-600 font-xsss">
-                      Test Term *
-                    </label>
-                    <select
-                      className="form-control"
-                      placeholder="Enter Test Term"
-                      name="testTerm"
-                      onChange={handleTermChange}
-                      required
-                    >
-                      <option value="" selected disabled readOnly>
-                        Select Test Term
-                      </option>
-                      {TERM_TYPES.map((term) => (
-                        <option
-                          value={term.id}
-                          disabled={existingTerms.includes(term.id)}
-                        >
-                          {term.name}
-                        </option>
-                      ))}
-                    </select>
-                    {validationErrors.testTerm && (
-                      <span className="text-danger font-xsss mt-2">
-                        {validationErrors.testTerm}
-                      </span>
-                    )}
-                  </div>
-                </div> */}
 
                 <div className="col-md-4">
                   <div className="form-group mb30">
                     <label className="form-label mont-font fw-600 font-xsss">
-                      Test Title *
+                      Test Title
                     </label>
                     <input
                       name="testTitle"
                       onChange={handleInputChange}
                       className="form-control form_control"
+                      value={formData.testTitle || ''}
                       type="text"
-                      placeholder="Enter Test Title"
-                      required
+                      placeholder="Enter Test Title *"
                     />
                     {validationErrors.testTitle && (
                       <span className="text-danger font-xsss mt-2">
@@ -340,10 +331,9 @@ function Create({ title }) {
                       onChange={handleInputChange}
                       className="form-control form_control"
                       type="number"
+                      value={formData.duration || ''}
                       step="1"
-                      min="0"
-                      placeholder="Enter Duration (in seconds)"
-                      required
+                      placeholder="Enter Duration (in seconds) *"
                     />
                   </div>
                 </div>
@@ -351,15 +341,15 @@ function Create({ title }) {
                 <div className="col-md-12">
                   <div className="form-group mb30">
                     <label className="form-label mont-font fw-600 font-xsss">
-                      Description *
+                      Description
                     </label>
                     <textarea
                       name="description"
                       onChange={handleInputChange}
                       className="form-control form_control mb-0 p-3 h100 lh-16"
+                      value={formData.description || ''}
                       type="text"
                       placeholder="Enter Description"
-                      required
                     />
                   </div>
                 </div>
@@ -370,12 +360,28 @@ function Create({ title }) {
                     </label>
 
                     <TextEditor
-                      initialValue={formData.instruction}
+                      initialValue={formData.instruction || ''}
                       onContentChange={handleInstructionChange}
                     />
                   </div>
                 </div>
-
+                <div className="col-md-4">
+                  <div className="form-group mb30">
+                    <label className="form-label mont-font fw-600 font-xsss">
+                      Status{!formData.status}
+                    </label>
+                    <select
+                      className="form-control"
+                      name="status"
+                      value={formData.status}
+                      onChange={handleStatusChange}
+                      required
+                    >
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
+                  </div>
+                </div>
                 <div className="col-lg-12 mb-0 mt-2 pl-0">
                   <div className=" d-flex align-items-center justify-content-center">
                     <button
@@ -421,17 +427,19 @@ function Create({ title }) {
                     <i className="feather-save mr-2"></i> Submit
                   </>
                 )}
-              </button>
+                         </button>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </>
   );
 }
 
-Create.propTypes = {
+Edit.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default Create;
+export default Edit;

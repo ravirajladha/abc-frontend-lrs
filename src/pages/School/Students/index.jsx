@@ -5,24 +5,26 @@ import Swal from 'sweetalert2';
 
 import { ContentHeader, ContentLoader } from '@/components/common';
 
-import { deleteStudent, fetchStudentsByClassAndSection } from '@/api/school';
-import { fetchClasses, fetchSections } from '@/api/common';
+import { deleteStudent, fetchStudentsBySubjectAndSection } from '@/api/school';
+import { fetchSubjects, fetchSections } from '@/api/common';
 import ContentSelectFilter from '@/components/common/ContentSelectFilter';
 import { getUserDataFromLocalStorage } from '@/utils/services';
+
 function Students() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [classes, setClasses] = useState([]);
-  const [selectedClass, setSelectedClass] = useState('');
+  const [subjects, setSubjects] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState('');
   const [sections, setSections] = useState([]);
   const [selectedSection, setSelectedSection] = useState('');
   const userData = JSON.parse(getUserDataFromLocalStorage());
-  const privateSchoolBool = userData.school_type === 1; 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const privateSchoolBool = userData.school_type === 1;
+
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data);
+        setSubjects(data);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -40,7 +42,7 @@ function Students() {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
+    fetchSubjectDropdownData();
   }, []);
 
   useEffect(() => {
@@ -51,11 +53,8 @@ function Students() {
     const fetchInitialData = async () => {
       setLoading(true);
       try {
-        // Fetch all students initially without filtering by class
-        const data = await fetchStudentsByClassAndSection(null, null);
-        // console.log("student data: " + data.students)
+        const data = await fetchStudentsBySubjectAndSection(null, null);
         setStudents(data.students);
-        console.log(data.students);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -65,19 +64,19 @@ function Students() {
     fetchInitialData();
   }, []);
 
-  const handleClassChange = async (event) => {
-    const classId = event.target.value;
-    setSelectedClass(classId === '' ? '' : classId);
+  const handleSubjectChange = async (event) => {
+    const subjectId = event.target.value;
+    setSelectedSubject(subjectId === '' ? '' : subjectId);
     setSelectedSection('');
   };
+
   const handleSectionChange = async (event) => {
     const sectionId = event.target.value;
     setSelectedSection(sectionId === '' ? '' : sectionId);
     setLoading(true);
     try {
-      // Fetch students by selected class
-      const data = await fetchStudentsByClassAndSection(
-        selectedClass === '' ? null : selectedClass,
+      const data = await fetchStudentsBySubjectAndSection(
+        selectedSubject === '' ? null : selectedSubject,
         sectionId === '' ? null : sectionId
       );
       setStudents(data.students);
@@ -87,6 +86,7 @@ function Students() {
       setLoading(false);
     }
   };
+
   const handleDelete = async (studentId) => {
     Swal.fire({
       title: 'Confirm!',
@@ -107,6 +107,7 @@ function Students() {
       }
     });
   };
+
   const buttons = [
     privateSchoolBool && {
       link: 'create',
@@ -115,13 +116,10 @@ function Students() {
   ].filter(Boolean);
 
   if (error) return <div>Error: {error.message}</div>;
+
   return (
     <div>
-      <ContentHeader
-        title="All"
-        subtitle="Students"
-        buttons={buttons}
-      />
+      <ContentHeader title="All" subtitle="Students" buttons={buttons} />
       <div className="row">
         <div className="col-lg-12">
           <div className="card border-0 mt-0 rounded-lg shadow-xs">
@@ -129,11 +127,11 @@ function Students() {
               {/* <h4 className="font-xssss text-grey-700">Click on the student name to view assessment result*</h4> */}
               {/* <div className="d-flex">
                 <ContentSelectFilter
-                  options={classes}
-                  name="selectedClass"
+                  options={subjects}
+                  name="selectedSubject"
                   label="name"
-                  value={selectedClass}
-                  onChange={handleClassChange}
+                  value={selectedSubject}
+                  onChange={handleSubjectChange}
                   defaultText="All Subjects"
                   className="float-right filter mr-2"
                 />
@@ -174,7 +172,7 @@ function Students() {
                           Email
                         </th>
                         <th className="border-0" width="15%">
-                        Subject
+                          Subject
                         </th>
                         <th className="border-0" width="10%">
                           Section
@@ -188,23 +186,23 @@ function Students() {
                       {students.map((student, index) => (
                         <tr key={index}>
                           <td>{index + 1}</td>
-                          <td><Link to={`${student.auth_id}/${student.class_id}/assessment-result`}>
-                          {student.name}
-                          </Link></td>
+                          <td>
+                            <Link
+                              to={`${student.auth_id}/${student.subject_id}/assessment-result`}
+                            >
+                              {student.name}
+                            </Link>
+                          </td>
                           <td>{student.username}</td>
                           <td>{student.phone_number}</td>
                           <td>{student.email}</td>
-                          <td>{student.class_name}</td>
+                          <td>{student.subject_name}</td>
                           <td>{student.section_name}</td>
                           <td>
                             <Link
                               to={`public-students/${student.student_id}/show-profile`}
                               className="btn btn-outline-success btn-icon btn-sm mr-2"
                             >
-                            {/* <Link
-                              to={`${student.auth_id}/show`}
-                              className="btn btn-outline-success btn-icon btn-sm mr-2"
-                            > */}
                               <i className="feather-eye"></i>
                             </Link>
                             <Link

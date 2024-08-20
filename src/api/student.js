@@ -13,15 +13,10 @@ export const fetchWalletDetails  = async (studentAuthId) => {
   );
   return response.data;
 };
-// export const fetchWalletLogs   = async (studentAuthId) => {
-//   const response = await apiService.fetchData(
-//     `/student/wallets?studentId=${studentAuthId}/logs`
-//   );
-//   return response.data;
-// };
-export const fetchReportCard = async (studentId, classId, sectionId) => {
+
+export const fetchReportCard = async (studentId, subjectId, sectionId) => {
   const response = await apiService.fetchData(
-    `/student/get-report-card?studentId=${studentId}&classId=${classId}&sectionId=${sectionId}`
+    `/student/get-report-card?studentId=${studentId}&subjectId=${subjectId}&sectionId=${sectionId}`
   );
   return response.data;
 };
@@ -39,28 +34,28 @@ export const connectToParent = async (data) => {
   return response;
 };
 
-export const fetchClasses = async () => {
-  const response = await apiService.fetchData('/classes');
-  return response.data.classes;
+export const fetchSubjects = async () => {
+  const response = await apiService.fetchData('/subjects');
+  return response.data.subjects;
 };
 
-export const fetchSubjectsWithResults = async (classId, studentId) => {
+export const fetchSubjectsWithResults = async (subjectId, studentId) => {
   const response = await apiService.fetchData(
-    `student/subjects?classId=${classId}&studentId=${studentId}`
+    `student/subjects?subjectId=${subjectId}&studentId=${studentId}`
   );
   return response.data;
 };
 
-export const fetchContents = async (subjectId) => {
+export const fetchContents = async (courseId) => {
   const response = await apiService.fetchData(
-    `student/subjects/${subjectId}/contents`
+    `student/courses/${courseId}/contents`
   );
   return response.data;
 };
 
-export const fetchExternalStudentContents = async (subjectId) => {
+export const fetchExternalStudentContents = async (courseId) => {
   const response = await apiService.fetchData(
-    `student/subjects/${subjectId}/external-student-contents`
+    `student/courses/${courseId}/external-student-contents`
   );
   return response.data;
 };
@@ -83,9 +78,9 @@ export const storeVideoLog = async (data) => {
   return response.data;
 };
 
-export const fetchQnA = async (studentId, teacherId, subjectId) => {
+export const fetchQnA = async (studentId, teacherId, courseId) => {
   const response = await apiService.fetchData(
-    `student/qna/${studentId}/${teacherId}/${subjectId}`
+    `student/qna/${studentId}/${teacherId}/${courseId}`
   );
   return response.data;
 };
@@ -115,11 +110,11 @@ export const storeAssessmentResponse = async (data) => {
 
 //Test APIs
 export const fetchTestDetails = async (testId) => {
-  const response = await apiService.fetchData(`/student/term-tests/${testId}`);
+  const response = await apiService.fetchData(`/student/tests/${testId}`);
   return response.data;
 };
 export const fetchTestDetailsByToken = async (token, testId) => {
-  const response = await apiService.fetchData(`/student/term-tests/get-details-by-token/${token}/${testId}`);
+  const response = await apiService.fetchData(`/student/tests/get-details-by-token/${token}/${testId}`);
   console.log("respnse from cstudent api call", response);
   return response;
 };
@@ -130,12 +125,12 @@ export const fetchJobDetailsByToken = async (token, jobId) => {
 };
 
 export const storeTestResponse = async (data) => {
-  const response = await apiService.postData(`student/term-tests`, data);
+  const response = await apiService.postData(`student/tests`, data);
   return response.data;
 };
 
 export const storeTestResponseWithToken = async (data) => {
-  const response = await apiService.postData(`student/term-tests/token`, data);
+  const response = await apiService.postData(`student/tests/token`, data);
   return response.data;
 };
 export const storeJobResponseWithToken = async (data) => {
@@ -147,14 +142,14 @@ export const storeJobResponseWithoutToken = async (data) => {
   return response.data;
 };
 export const startTest = async (data) => {
-  const response = await apiService.postData(`student/term-tests/start`, data);
+  const response = await apiService.postData(`student/tests/start`, data);
   return response.data;
 };
 
-//Subject Term Test Results
-export const fetchStudentResultsBySubject = async (studentId, subjectId) => {
+//Subject  Test Results
+export const fetchStudentResultsByCourse= async (studentId, courseId) => {
   const response = await apiService.fetchData(
-    `/student/get-subject-results?studentId=${studentId}&subjectId=${subjectId}`
+    `/student/get-course-results?studentId=${studentId}&courseId=${courseId}`
   );
   return response.data;
 };
@@ -213,7 +208,7 @@ export const submitJobApplication = async (data) => {
 };
 
 // export const startTest = async (data) => {
-//   const response = await apiService.postData(`student/term-tests/start`, data);
+//   const response = await apiService.postData(`student/tests/start`, data);
 //   return response.data;
 // };
 

@@ -19,7 +19,7 @@ import StudentRoutes from '@/routes/StudentRoutes';
 import ParentRoutes from '@/routes/ParentRoutes';
 import RecruiterRoutes from '@/routes/RecruiterRoutes';
 
-import { NotFound, StudentTermTest, StudentJobTest } from '@/pages';
+import { NotFound, StudentTest, StudentJobTest } from '@/pages';
 import {
   SchoolApplicationPrint,
   SchoolOldApplicationPrint,
@@ -218,8 +218,8 @@ function Index() {
               }
             />
             <Route
-              path="student/courses/term-test/:token/:testId"
-              element={<StudentTermTest />}
+              path="student/courses/test/:token/:testId"
+              element={<StudentTest />}
             />
             <Route
               path="student/jobs/job-test/:token/:jobId"
@@ -283,6 +283,7 @@ function Index() {
             }
           />
         )}
+        
         {authenticatedUserType === USER_TYPES.STUDENT && (
           <Route
             path="/student/elab/check-code/:type/:redirecting_id/:labId/:elab_submission_id"

@@ -15,8 +15,8 @@ export const fetchStudents = async () => {
   const response = await apiService.fetchData(`/school/students`);
   return response.data;
 };
-export const fetchStudentsByClassAndSection = async (classId,sectionId) => {
-  const response = await apiService.fetchData(`/school/class/students/${classId}/${sectionId}`);
+export const fetchStudentsBySubjectAndSection = async (subjectId,sectionId) => {
+  const response = await apiService.fetchData(`/school/class/students/${subjectId}/${sectionId}`);
   return response.data;
 };
 
@@ -171,7 +171,7 @@ export const fetchTeacher = async (teacherId) => {
   return response.data;
 };
 
-export const fetchTeacherClassSubject = async (teacherId) => {
+export const fetchTeacherSubjectCourse = async (teacherId) => {
   const response = await apiService.fetchData(
     `/school/teachers/${teacherId}/assign`
   );

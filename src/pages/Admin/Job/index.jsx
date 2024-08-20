@@ -10,20 +10,17 @@ import {
 
 import { deleteJobDetails, fetchJobList } from '@/api/admin';
 import { Link } from 'react-router-dom';
-import { fetchClasses } from '@/api/dropdown';
+import { fetchSubjects } from '@/api/dropdown';
 import { getUserDataFromLocalStorage } from '@/utils/services';
 
 function Job(props) {
-  console.log('isadmin', props.isAdmin);
-
   const baseUrl = import.meta.env.VITE_BASE_URL;
   const userData = JSON.parse(getUserDataFromLocalStorage());
-  console.log('userdata', userData);
 
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -83,10 +80,10 @@ function Job(props) {
     setShowModal(!showModal);
   };
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects);
       })
       .catch((error) => {
         console.error(error.message);
@@ -94,8 +91,8 @@ function Job(props) {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -120,17 +117,17 @@ function Job(props) {
     console.log('Filters reset');
   };
 
-  const getClassNames = (classIds) => {
-    const ids = classIds.split(',');
-    const classNames = ids
+  const getSubjectNames = (subjectIds) => {
+    const ids = subjectIds.split(',');
+    const subjectNames = ids
       .map((id) => {
-        const classObj = classes.find((cls) => cls.id === parseInt(id));
-        return classObj ? classObj.name : null;
+        const subjectObj = subjects.find((subj) => subj.id === parseInt(id));
+        return subjectObj ? subjectObj.name : null;
       })
       .filter((name) => name !== null)
       .join(', ');
 
-    return classNames;
+    return subjectNames;
   };
 
   return (
@@ -247,7 +244,7 @@ function Job(props) {
                               <td>
                                 <strong>{job.title}</strong>
                               </td>
-                              <td>{getClassNames(job?.class_id)}</td>
+                              <td>{getSubjectNames(job?.subject_id)}</td>
                               <td>
                                 <strong>{job.test_name ? job.test_name : 'N/A'}</strong>
                               </td>
@@ -262,13 +259,7 @@ function Job(props) {
                                 >
                                   <i className="feather-eye"></i>
                                 </Link>
-                                {/* <Link
-                                  to="#"
-                                  onClick={() => handleShowModal(job)}
-                                  className="btn btn-outline-warning btn-icon btn-sm mr-2"
-                                >
-                                  <i className="feather-eye"></i>
-                                </Link> */}
+                            
 
                                 <Link
                                   to={`${job.id}/edit`}

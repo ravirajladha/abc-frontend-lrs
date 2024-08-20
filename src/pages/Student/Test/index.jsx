@@ -22,7 +22,7 @@ import {
   storeTestResponseWithToken,
 } from '@/api/student';
 
-function TermTest() {
+function Test() {
   // const { subjectId, testId } = useParams();
   const { token, testId } = useParams();
   // const subjectId = 1;
@@ -72,14 +72,14 @@ function TermTest() {
         navigate('/student/courses'); // Navigate back
         return;
       }
-      setSubjectId(data.data.term_test.subject_id);
-      setClassId(data.data.term_test.class_id);
-      setTestDetails(data.data.term_test);
-      setQuestions(data.data.term_test.questions);
+      setSubjectId(data.data.test.subject_id);
+      setClassId(data.data.test.class_id);
+      setTestDetails(data.data.test);
+      setQuestions(data.data.test.questions);
 
-      const duration = parseInt(data.data.term_test.time_limit);
+      const duration = parseInt(data.data.test.time_limit);
       console.log('duration', duration);
-      console.log('duration', data.data.term_test.time_limit);
+      console.log('duration', data.data.test.time_limit);
       setTestDuration(duration);
       setLoading(false);
     } catch (error) {
@@ -421,4 +421,4 @@ function TermTest() {
   );
 }
 
-export default TermTest;
+export default Test;

@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
-import { TextEditor } from '@/components/common';
 
 import { TERM_TYPES } from '@/utils/constants';
 
@@ -12,27 +11,26 @@ import {
   ContentFormWrapper,
   ContentHeader,
 } from '@/components/common';
-import { SelectQuestion } from '@/components/admin/term-test';
+import { SelectQuestion } from '@/components/admin/test';
 
-import { fetchClasses, fetchSubjectsForTest } from '@/api/dropdown';
+import { fetchSubjects, fetchCoursesForTest } from '@/api/dropdown';
 
 import {
-  updateTermTest,
-  fetchTermTestQuestionsByIds,
-  fetchTestDetails,
+  createTest,
+  fetchTestQuestionsByIds,
+  checkTestAvailability,
 } from '@/api/admin';
 import { SelectInput, DisabledSelectInput } from '@/components/common/form';
+import { TextEditor } from '@/components/common';
 
-function Edit({ title }) {
+function Create({ title }) {
   const navigate = useNavigate();
-  const { testId } = useParams();
 
-  const [loading, setLoading] = useState([]);
-  const [classes, setClasses] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [testQuestions, setTestQuestions] = useState([]);
   const [formData, setFormData] = useState({
-    selectedClass: '',
+    selectedCourse: '',
     selectedSubject: '',
     numberOfQuestions: '',
     testTitle: '',
@@ -42,7 +40,6 @@ function Edit({ title }) {
     duration: '',
     description: '',
     instruction: '',
-    status: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,22 +48,10 @@ function Edit({ title }) {
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
+  // const [existingTerms, setExistingTerms] = useState([]);
 
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjectsForTest(classId)
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -75,40 +60,71 @@ function Edit({ title }) {
       });
   }, []);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setErrorMessage('');
-    setValidationErrors((prevErrors) => ({
-      ...prevErrors,
-      selectedClass: '',
-    }));
-    fetchSubjectsDropdownData(value);
-  };
+  useEffect(() => {
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
-  const handleSubjectChange = (event) => {
+  // const fetchSubjectsDropdownData = useCallback((classId) => {
+  //   fetchSubjects(classId)
+  //     .then((data) => {
+  //       setSubjects(data.subjects);
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.message);
+  //     });
+  // }, []);
+
+  const handleSubjectChange = ({ target: { value } }) => {
     setErrorMessage('');
-    setFormData((prevData) => ({ ...prevData, selectedSubject }));
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
       selectedSubject: '',
     }));
-
-    const selectedSubject = event.target.value;
-
-    setFormData((prevData) => ({ ...prevData, selectedSubject }));
+    setFormData({
+      selectedSubject: value,
+      selectedCourse: '',
+      numberOfQuestions: '',
+      testTitle: '',
+      // testTerm: '',
+      startTime: '',
+      endTime: '',
+      duration: '',
+      description: '',
+      instruction: '',
+    });
+    fetchCoursesDropdownData(value);
   };
 
-  const fetchQuestionsCount = (selectedSubject) => {
-    fetchTermTestQuestionsByIds(selectedSubject)
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCoursesForTest(subjectId)
+      .then((data) => {
+        console.log(data, 'subject data');
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
+  const handleCourseChange = (event) => {
+    const selectedCourse = event.target.value;
+    setFormData((prevData) => ({ ...prevData, selectedCourse }));
+    setValidationErrors((prevErrors) => ({
+      ...prevErrors,
+      selectedCourse: '',
+    }));
+
+    fetchTestQuestionsByIds(selectedCourse)
       .then((data) => {
         setFormData((prevData) => ({
           ...prevData,
-          numberOfQuestions: data.term_question_count,
+          numberOfQuestions: data.question_count,
         }));
-        if (data.term_question_count === 0) {
-          setErrorMessage('Cannot Edit the test. No questions available.');
+        if (data.question_count === 0) {
+          setErrorMessage('Cannot create the test. No questions available.');
           return;
         }
-        setTestQuestions(data.term_questions);
+        setTestQuestions(data.questions);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -123,112 +139,61 @@ function Edit({ title }) {
   const handleInstructionChange = (html) => {
     setFormData((prevData) => ({ ...prevData, instruction: html }));
   };
-  // const handleStatusChange = (event) => {
-  //   const status = event.target.value;
-  //   setFormData((prevData) => ({ ...prevData, status }));
-  // };
-
-  const handleStatusChange = (selectedOption) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      status: selectedOption.target.value,
-    }));
-  };
-  // const handleTermChange = (event) => {
-  //   setValidationErrors((prevErrors) => ({
-  //     ...prevErrors,
-  //     testTerm: '',
-  //   }));
-
-  //   const testTerm = event.target.value;
-  //   setFormData((prevData) => ({ ...prevData, testTerm }));
-  // };
 
   const nextForm = async (event) => {
     event.preventDefault();
-    const isVerified = formData.selectedClass && formData.selectedSubject;
+    const isVerified = formData.selectedSubject && formData.selectedCourse;
     setIsFormVerified(isVerified);
   };
-
-  const fetchTermTestDetails = useCallback(async () => {
-    try {
-      const response = await fetchTestDetails(testId);
-      const data = response.term_test;
-      console.log('data', data);
-      if (data) {
-        fetchSubjectsDropdownData(data.class_id);
-        fetchQuestionsCount(data.subject_id);
-        const arr = data?.question_ids?.split(',').map(Number);
-        setSelectedQuestions(arr);
-        setFormData({
-          selectedClass: data.class_id,
-          selectedSubject: data.subject_id,
-          selectedQuestions: data.question_ids,
-          testTitle: data.title,
-          // testTerm: data.term_type,
-          duration: data.time_limit,
-          description: data.description,
-          instruction: data.instruction,
-          status: data.status,
-        });
-      }
-      setLoading(false);
-    } catch (error) {
-      toast.error(error.message);
-      setLoading(false);
-    }
-  }, [testId, fetchSubjectsDropdownData]);
-  console.log('formData', formData.instruction);
-  useEffect(() => {
-    fetchTermTestDetails();
-  }, [fetchTermTestDetails]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
+  
     try {
       const updatedFormData = {
         ...formData,
         selectedQuestions: selectedQuestions,
         totalMarks: selectedQuestions.length,
       };
-      const response =  await updateTermTest(testId, updatedFormData);
+      console.log('Data to be submitted:', updatedFormData);
+  
+      const response = await createTest(updatedFormData);
+
       if (response.status) {
-      toast.success('Test edited successfully!');
-      navigate('/admin/tests');
-      setFormData({
-        selectedClass: '',
-        selectedSubject: '',
-        numberOfQuestions: '',
-        testTitle: '',
-        // testTerm: '',
-        startTime: '',
-        endTime: '',
-        duration: '',
-        description: '',
-        instruction: '',
-        status: '',
-      });
-    }else{
-      toast.error(response.message);
-    }
+        toast.success('Test created successfully!');
+        navigate('/admin/tests');
+        setFormData({
+          selectedCourse: '',
+          selectedSubject: '',
+          numberOfQuestions: '',
+          testTitle: '',
+          startTime: '',
+          endTime: '',
+          duration: '',
+          description: '',
+          instruction: '',
+        });
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
       }
       const errorMessage = error.message || 'Test already available for this test';
       toast.error(errorMessage);
-      console.error('Error creating term test:', error);
+      console.error('Error creating test:', error);
     }
     setIsSubmitting(false);
   };
+  
   return (
     <>
       {!isFormVerified ? (
         <div>
           <ContentHeader title={title} />
-          <ContentFormWrapper formTitle="Edit New Test">
+          <ContentFormWrapper formTitle="Create New Test">
             {errorMessage && (
               <ContentFallback alertDanger message={errorMessage} />
             )}
@@ -243,19 +208,19 @@ function Edit({ title }) {
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Select Subject
+                      Select Subject *
                     </label>
                     <SelectInput
                       className="form-control"
-                      options={classes}
-                      name="selectedClass"
+                      options={subjects}
+                      name="selectedSubject"
                       label="name"
-                      value={formData.selectedClass || ''}
-                      onChange={handleClassChange}
+                      value={formData.selectedSubject || ''}
+                      onChange={handleSubjectChange}
                       placeholder="Select Subject"
                       required
                     />
-                    {validationErrors.selectedClass && (
+                    {validationErrors.selectedSubject && (
                       <span className="text-danger font-xsss mt-2">
                         Subject empty or not found.
                       </span>
@@ -266,7 +231,7 @@ function Edit({ title }) {
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
-                      Select Course
+                      Select Course *
                     </label>
                     {/* <SelectInput
                       className="form-control"
@@ -278,18 +243,18 @@ function Edit({ title }) {
                       placeholder="Select Course"
                       required
                     /> */}
+                    {/* fetchSubjectsForTest */}
                     <DisabledSelectInput
                       className="form-control"
-                      options={subjects}
-                      name="selectedSubject"
+                      options={courses}
+                      name="selectedCourse"
                       label="name"
-                      value={formData.selectedSubject || ''}
-                      onChange={handleSubjectChange}
+                      value={formData.selectedCourse || ''}
+                      onChange={handleCourseChange}
                       placeholder="Select Course"
                       required
                       valueKey="id"
                     />
-
                     {validationErrors.selectedSubject && (
                       <span className="text-danger font-xsss mt-2">
                         Course empty or not found.
@@ -315,19 +280,27 @@ function Edit({ title }) {
                 {/* <div className="col-md-4">
                   <div className="form-group mb30">
                     <label className="form-label mont-font fw-600 font-xsss">
-                      Test Term
+                      Test Term *
                     </label>
-                    <SelectInput
+                    <select
                       className="form-control"
                       placeholder="Enter Test Term"
                       name="testTerm"
-                      options={TERM_TYPES}
-                      label="name"
                       onChange={handleTermChange}
-                      value={formData.testTerm || ''}
                       required
-                    />
-
+                    >
+                      <option value="" selected disabled readOnly>
+                        Select Test Term
+                      </option>
+                      {TERM_TYPES.map((term) => (
+                        <option
+                          value={term.id}
+                          disabled={existingTerms.includes(term.id)}
+                        >
+                          {term.name}
+                        </option>
+                      ))}
+                    </select>
                     {validationErrors.testTerm && (
                       <span className="text-danger font-xsss mt-2">
                         {validationErrors.testTerm}
@@ -339,15 +312,15 @@ function Edit({ title }) {
                 <div className="col-md-4">
                   <div className="form-group mb30">
                     <label className="form-label mont-font fw-600 font-xsss">
-                      Test Title
+                      Test Title *
                     </label>
                     <input
                       name="testTitle"
                       onChange={handleInputChange}
                       className="form-control form_control"
-                      value={formData.testTitle || ''}
                       type="text"
-                      placeholder="Enter Test Title *"
+                      placeholder="Enter Test Title"
+                      required
                     />
                     {validationErrors.testTitle && (
                       <span className="text-danger font-xsss mt-2">
@@ -356,27 +329,6 @@ function Edit({ title }) {
                     )}
                   </div>
                 </div>
-
-                {/* <div className="col-md-4">
-              <div className="form-group mb30">
-                <label className="form-label">Start Time</label>
-                <input
-                  name="form_name"
-                  className="form-control form_control"
-                  type="text"
-                />
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="form-group mb30">
-                <label className="form-label">End Time</label>
-                <input
-                  name="form_name"
-                  className="form-control form_control"
-                  type="text"
-                />
-              </div>
-            </div> */}
 
                 <div className="col-md-4">
                   <div className="form-group mb30">
@@ -388,9 +340,10 @@ function Edit({ title }) {
                       onChange={handleInputChange}
                       className="form-control form_control"
                       type="number"
-                      value={formData.duration || ''}
                       step="1"
-                      placeholder="Enter Duration (in seconds) *"
+                      min="0"
+                      placeholder="Enter Duration (in seconds)"
+                      required
                     />
                   </div>
                 </div>
@@ -398,15 +351,15 @@ function Edit({ title }) {
                 <div className="col-md-12">
                   <div className="form-group mb30">
                     <label className="form-label mont-font fw-600 font-xsss">
-                      Description
+                      Description *
                     </label>
                     <textarea
                       name="description"
                       onChange={handleInputChange}
                       className="form-control form_control mb-0 p-3 h100 lh-16"
-                      value={formData.description || ''}
                       type="text"
                       placeholder="Enter Description"
+                      required
                     />
                   </div>
                 </div>
@@ -417,28 +370,12 @@ function Edit({ title }) {
                     </label>
 
                     <TextEditor
-                      initialValue={formData.instruction || 'default value'}
+                      initialValue={formData.instruction}
                       onContentChange={handleInstructionChange}
                     />
                   </div>
                 </div>
-                <div className="col-md-4">
-                  <div className="form-group mb30">
-                    <label className="form-label mont-font fw-600 font-xsss">
-                      Status{!formData.status}
-                    </label>
-                    <select
-                      className="form-control"
-                      name="status"
-                      value={formData.status}
-                      onChange={handleStatusChange}
-                      required
-                    >
-                      <option value="1">Active</option>
-                      <option value="0">Inactive</option>
-                    </select>
-                  </div>
-                </div>
+
                 <div className="col-lg-12 mb-0 mt-2 pl-0">
                   <div className=" d-flex align-items-center justify-content-center">
                     <button
@@ -493,8 +430,8 @@ function Edit({ title }) {
   );
 }
 
-Edit.propTypes = {
+Create.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default Edit;
+export default Create;

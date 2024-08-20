@@ -10,18 +10,18 @@ import 'ace-builds/src-noconflict/theme-github';
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SelectInput } from '@/components/common/form';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchSubjects, fetchCourses } from '@/api/dropdown';
 import { createTestQuestion } from '@/api/admin';
 
 function Create({ title }) {
   const navigate = useNavigate();
 
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [formData, setFormData] = useState({
-    selectedClass: '',
     selectedSubject: '',
+    selectedCourse: '',
     question: '',
     code: '',
     option_one: '',
@@ -30,25 +30,12 @@ function Create({ title }) {
     option_four: '',
     answer_key: '',
   });
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
-      .then((data) => {
-        setClasses(data.classes);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-
-  const fetchSubjectsDropDown = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);
       })
@@ -57,14 +44,28 @@ function Create({ title }) {
       });
   }, []);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setFormData((prevData) => ({ ...prevData, selectedClass: value }));
-    fetchSubjectsDropDown(value);
+  useEffect(() => {
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
+
+  const fetchCoursesDropDown = useCallback((subjectId) => {
+    fetchCourses(subjectId)
+      .then((data) => {
+        setCourses(data.courses);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
+  const handleSubjectChange = ({ target: { value } }) => {
+    setFormData((prevData) => ({ ...prevData, selectedSubject: value }));
+    fetchCoursesDropDown(value);
   };
 
-  const handleSubjectChange = (event) => {
-    const selectedSubject = event.target.value;
-    setFormData((prevData) => ({ ...prevData, selectedSubject }));
+  const handleCourseChange = (event) => {
+    const selectedCourse = event.target.value;
+    setFormData((prevData) => ({ ...prevData, selectedCourse }));
   };
 
   const handleOptionChange = (event) => {
@@ -86,8 +87,8 @@ function Create({ title }) {
       setShowCodeInput(false);
       setFormData({
         ...formData,
-        selectedClass: '',
         selectedSubject: '',
+        selectedCourse: '',
         question: '',
         code: '',
         option_one: '',
@@ -133,14 +134,14 @@ function Create({ title }) {
                 </label>
                 <SelectInput
                   className="form-control"
-                  options={classes}
-                  name="selectedClass"
+                  options={subjects}
+                  name="selectedSubject"
                   label="name"
-                  value={formData.selectedClass}
-                  onChange={handleClassChange}
+                  value={formData.selectedSubject}
+                  onChange={handleSubjectChange}
                   placeholder="Select Subject"
                 />
-                {validationErrors.selectedClass && (
+                {validationErrors.selectedSubject && (
                   <span className="text-danger">
                      Subject empty or not found.
                   </span>
@@ -155,20 +156,21 @@ function Create({ title }) {
                 </label>
                 <SelectInput
                   className="form-control"
-                  options={subjects}
-                  name="selectedSubject"
+                  options={courses}
+                  name="selectedCourse"
                   label="name"
-                  value={formData.selectedSubject}
-                  onChange={handleSubjectChange}
+                  value={formData.selectedCourse}
+                  onChange={handleCourseChange}
                   placeholder="Select Course"
                 />
-                {validationErrors.selectedSubject && (
+                {validationErrors.selectedCourse && (
                   <span className="text-danger">
                         Course empty or not found.
                   </span>
                 )}
               </div>
             </div>
+
 
             <div className="col-sm-12">
               <div className="form-group">

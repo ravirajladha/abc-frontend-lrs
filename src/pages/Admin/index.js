@@ -20,7 +20,6 @@ export { default as SchoolShowTeacher } from './School/Show/Teacher';
 export { default as ShowSchoolDetail } from './School/Show/School';
 export { default as SchoolShowStudent } from './School/Show/Student';
 export { default as CreateSchool } from './School/Create';
-// export { default as ShowSchool } from './School/Show';
 export { default as EditSchool } from './School/Edit';
 
 export { default as SchoolTeachers } from './Teachers';
@@ -67,16 +66,16 @@ export { default as CaseStudySectionEdit } from './CaseStudySection/Edit';
 export { default as CaseStudyElementCreate } from './CaseStudyElement/create';
 export { default as CaseStudyElementEdit } from './CaseStudyElement/edit';
 
-export { default as TermTest } from './TermTest';
-export { default as TermTestShow } from './TermTest/Show';
-export { default as TermTestCreate } from './TermTest/Create';
-export { default as TermTestEdit } from './TermTest/Edit';
-export { default as TermTestResult } from './TermTest/Result';
+export { default as Test } from './Test';
+export { default as TestShow } from './Test/Show';
+export { default as TestCreate } from './Test/Create';
+export { default as TestEdit } from './Test/Edit';
+export { default as TestResult } from './Test/Result';
 
-export { default as TermTestQuestionBank } from './TermTestQuestionBank';
-export { default as TermTestQuestionShow } from './TermTestQuestionBank/Show';
-export { default as TermTestQuestionCreate } from './TermTestQuestionBank/Create';
-export { default as TermTestQuestionEdit } from './TermTestQuestionBank/Edit';
+export { default as TestQuestionBank } from './TestQuestionBank';
+export { default as TestQuestionShow } from './TestQuestionBank/Show';
+export { default as TestQuestionCreate } from './TestQuestionBank/Create';
+export { default as TestQuestionEdit } from './TestQuestionBank/Edit';
 
 export { default as EbookIndex } from './Ebook';
 export { default as EbookCreate } from './Ebook/Create';

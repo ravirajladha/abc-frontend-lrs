@@ -13,7 +13,7 @@ import { Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function QnaTab({
-  subjectId,
+  courseId,
   studentId,
   teacherId,
   isTeacherAvailable,
@@ -33,7 +33,7 @@ function QnaTab({
     question: '',
     student_id: studentId,
     teacher_id: teacherId,
-    subject_id: subjectId,
+    course_id: courseId,
   });
 
   useEffect(() => {
@@ -107,9 +107,9 @@ function QnaTab({
   };
 
   const getMessages = useCallback(async () => {
-    if (isTabActive && studentId && teacherId && subjectId) {
+    if (isTabActive && studentId && teacherId && courseId) {
       try {
-        const response = await fetchQnA(studentId, teacherId, subjectId);
+        const response = await fetchQnA(studentId, teacherId, courseId);
         setChat(response);
         setLoading(false);
       } catch (error) {
@@ -120,7 +120,7 @@ function QnaTab({
     if (!teacherId) {
       setLoading(false);
     }
-  }, [isTabActive, studentId, teacherId, subjectId]);
+  }, [isTabActive, studentId, teacherId, courseId]);
 
   useEffect(() => {
     getMessages();
@@ -260,7 +260,7 @@ function QnaTab({
 }
 
 QnaTab.propTypes = {
-  subjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  courseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   studentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   teacherId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isTeacherAvailable: PropTypes.bool,

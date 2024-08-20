@@ -51,7 +51,7 @@ export const createStudent = async (data) => {
   return response.data;
 };
 
-export const fetchFeeForClass = async (classId) => {
-  const response = await apiService.fetchData(`/parent/get-fee/${classId}`);
+export const fetchFeeForSubject = async (classId) => {
+  const response = await apiService.fetchData(`/parent/get-fee/${subjectId}`);
   return response.data;
 };

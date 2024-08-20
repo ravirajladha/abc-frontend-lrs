@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { fetchTeacherSubjects } from '@/api/teacher';
+import { fetchTeacherCourses } from '@/api/teacher';
 
 import {
   ContentFallback,
@@ -12,31 +12,31 @@ import {
   EllipsisMenu,
 } from '@/components/common';
 
-function Subject() {
-  let { classId } = useParams();
+function Course() {
+  let { subjectId } = useParams();
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
-  const [className, setClassName] = useState(null);
-  const [subjectsData, setSubjectsData] = useState(null);
+  const [subjectName, setSubjectName] = useState(null);
+  const [coursesData, setCoursesData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchSubjectsCallback = useCallback(async () => {
+  const fetchCoursesCallback = useCallback(async () => {
     try {
-      const data = await fetchTeacherSubjects(classId);
-      setClassName(data?.class);
-      setSubjectsData(data.subjects);
+      const data = await fetchTeacherCourses(subjectId);
+      setSubjectName(data?.subject);
+      setCoursesData(data.courses);
     } catch (error) {
       setError(error);
       toast.error(error.message);
     } finally {
       setLoading(false);
     }
-  }, [classId]);
+  }, [subjectId]);
 
   useEffect(() => {
-    fetchSubjectsCallback();
-  }, [fetchSubjectsCallback]);
+    fetchCoursesCallback();
+  }, [fetchCoursesCallback]);
 
   if (error) return <div>Error: {error.message}</div>;
 
@@ -46,8 +46,8 @@ function Subject() {
       <div className="row">
         {loading ? (
           <ContentLoader />
-        ) : subjectsData.length > 0 ? (
-          subjectsData.map((item, index) => (
+        ) : coursesData.length > 0 ? (
+          coursesData.map((item, index) => (
             <div className="col-xl-3 col-lg-4 col-md-6 mt-2" key={index}>
               <div className="card mb-4 d-block w-100 h-100 shadow-md rounded-lg px-2 pt-5 border-0 text-center">
                 <EllipsisMenu
@@ -78,13 +78,13 @@ function Subject() {
                 <div className="clearfix"></div>
                 <div className="mb-2">
                   <Link
-                    to={`/teacher/subjects/${classId}/courses/${item.id}/chapters`}
+                    to={`/teacher/subjects/${subjectId}/courses/${item.id}/chapters`}
                     className={`mt-3 d-inline-block fw-700 text-white rounded-lg text-center font-xsssss shadow-xs py-2 px-3 text-uppercase ls-3 lh-4 bg-primary-gradiant`}
                   >
                     Chapters
                   </Link>
                   <Link
-                    to={`/teacher/subjects/${classId}/courses/${item.id}/results`}
+                    to={`/teacher/subjects/${subjectId}/courses/${item.id}/results`}
                     className={`mt-3 d-inline-block fw-700 text-white rounded-lg text-center font-xsssss shadow-xs py-2 px-3 text-uppercase ls-3 lh-4 bg-success ml-2`}
                   >
                     Results
@@ -101,4 +101,4 @@ function Subject() {
   );
 }
 
-export default Subject;
+export default Course;

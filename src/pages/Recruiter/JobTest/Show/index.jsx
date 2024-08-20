@@ -2,45 +2,48 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ContentHeader, ContentLoader } from '@/components/common';
-import { fetchClasses } from '@/api/dropdown';
+import { fetchSubjects } from '@/api/dropdown';
 
 import { fetchTestDetails } from '@/api/recruiter';
 
 function Show() {
   const [loading, setLoading] = useState(true);
   const [testData, setTestData] = useState(null);
-  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const { testId } = useParams();
+
   useEffect(() => {
     fetchTestDetails(testId).then((data) => {
       setTestData(data.term_test);
       setLoading(false);
     });
-  }, []);
+  }, [testId]);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects);
       })
       .catch((error) => {
         console.error(error.message);
       });
   }, []);
+
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
-  const getClassNames = (classIds) => {
-    const ids = classIds.split(',');
-    const classNames = ids
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
+
+  const getSubjectNames = (subjectIds) => {
+    const ids = subjectIds.split(',');
+    const subjectNames = ids
       .map((id) => {
-        const classObj = classes.find((cls) => cls.id === parseInt(id));
-        return classObj ? classObj.name : null;
+        const subjectObj = subjects.find((subj) => subj.id === parseInt(id));
+        return subjectObj ? subjectObj.name : null;
       })
       .filter((name) => name !== null)
       .join(', ');
 
-    return classNames;
+    return subjectNames;
   };
 
   return (
@@ -67,8 +70,7 @@ function Show() {
                   </h4>
                   <div className="d-flex align-items-center justify-content-center flex-wrap w-100">
                     <span className="badge badge-pill badge-secondary mr-2 px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3">
-                      {/* {testData?.class_id} */}
-                      <td>{getClassNames(testData?.class_id)}</td>
+                      <td>{getSubjectNames(testData?.subject_id)}</td>
                     </span>
 
                     <span className="badge badge-pill badge-info px-3 py-2 text-white font-xssss fw-600 mt-1 lh-3">
@@ -76,18 +78,16 @@ function Show() {
                     </span>
                   </div>
                   <div className="d-flex align-items-center justify-content-center flex-wrap w-100">
-      <span className="badge badge-pill badge-danger px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3 text-wrap">
-        Description: {testData?.description}
-      </span>
-    </div>
-    <div className="d-flex align-items-center justify-content-center flex-wrap w-100">
-     
-
-      <p
-                className="badge badge-pill badge-danger px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3 text-wrap"
-                dangerouslySetInnerHTML={{ __html: testData.instruction }}
-              ></p>
-    </div>
+                    <span className="badge badge-pill badge-danger px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3 text-wrap">
+                      Description: {testData?.description}
+                    </span>
+                  </div>
+                  <div className="d-flex align-items-center justify-content-center flex-wrap w-100">
+                    <p
+                      className="badge badge-pill badge-danger px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3 text-wrap"
+                      dangerouslySetInnerHTML={{ __html: testData.instruction }}
+                    ></p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -123,7 +123,7 @@ function Show() {
                               : ''
                           }`}
                         >
-                          1: <span className={``}></span> {question.option_one}
+                          1: {question.option_one}
                         </p>
                         <p
                           className={`font-xsss mt-3 fw-500 ${

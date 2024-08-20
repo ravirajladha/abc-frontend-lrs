@@ -14,28 +14,28 @@ import {
   ContentHeader,
 } from '@/components/common';
 
-import { SelectQuestion } from '@/components/admin/term-test';
+import { SelectQuestion } from '@/components/admin/test';
 
-import { fetchClasses } from '@/api/dropdown';
+import { fetchSubjects } from '@/api/dropdown';
 
 import {
-  updateTermTest,
-  fetchTermTestQuestionsByIds,
+  updateTest,
+  fetchTestQuestionsByIds,
   fetchTestDetails,
-  fetchTermTestQuestionsByClassIds,
+  fetchTestQuestionsBySubjectIds,
 } from '@/api/recruiter';
 import { SelectInput } from '@/components/common/form';
 
-function Edit({ title ,isAdmin}) {
+function Edit({ title, isAdmin }) {
   const navigate = useNavigate();
   const { testId } = useParams();
 
   const [loading, setLoading] = useState([]);
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [testQuestions, setTestQuestions] = useState([]);
   const [formData, setFormData] = useState({
-    selectedClass: '',
+    selectedSubject: '',
     numberOfQuestions: '',
     testTitle: '',
     testTerm: '',
@@ -64,17 +64,17 @@ function Edit({ title ,isAdmin}) {
         // Update form data with test details
         setFormData((prev) => ({
           ...prev,
-          selectedClass: data.class_id ? data.class_id.split(',') : [],
+          selectedSubject: data.subject_id ? data.subject_id.split(',') : [],
           selectedQuestions: data.question_ids,
           testTitle: data.title,
           duration: data.time_limit,
           description: data.description,
           instruction: data.instruction,
         }));
-console.log( typeof(data.class_id), "data clas_id");
-        // Fetch questions based on the class ID from test details
-        const questionData = await fetchTermTestQuestionsByClassIds(
-          data.class_id
+
+        // Fetch questions based on the subject ID from test details
+        const questionData = await fetchTestQuestionsBySubjectIds(
+          data.subject_id
         );
         if (questionData.term_question_count === 0) {
           setErrorMessage(
@@ -94,10 +94,10 @@ console.log( typeof(data.class_id), "data clas_id");
     fetchInitialData();
   }, [testId]);
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -105,25 +105,17 @@ console.log( typeof(data.class_id), "data clas_id");
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
-  // const handleClassChange = ({ target: { value } }) => {
-  //   setErrorMessage('');
-  //   setValidationErrors((prevErrors) => ({
-  //     ...prevErrors,
-  //     selectedClass: '',
-  //   }));
-  // };
-
-  const handleClassChange = ({ target: { value } }) => {
+  const handleSubjectChange = ({ target: { value } }) => {
     // Check if there's actually a change to reduce unnecessary state updates
-    if (JSON.stringify(formData.selectedClass) !== JSON.stringify(value)) {
+    if (JSON.stringify(formData.selectedSubject) !== JSON.stringify(value)) {
       setErrorMessage('');
       setFormData((prevData) => ({
         ...prevData,
-        selectedClass: value,
-        numberOfQuestions: '', // Resetting the number as new classes might change available questions
+        selectedSubject: value,
+        numberOfQuestions: '', // Resetting the number as new subjects might change available questions
       }));
     }
   };
@@ -149,18 +141,13 @@ console.log( typeof(data.class_id), "data clas_id");
 
   const nextForm = async (event) => {
     event.preventDefault();
-    const isVerified = formData.selectedClass;
+    const isVerified = formData.selectedSubject;
     setIsFormVerified(isVerified);
   };
 
   useEffect(() => {
-    if (formData.selectedClass.length > 0) {
-      // console.log(
-      //   'Fetching questions for classes:',
-      //   formData.selectedClass.join(',')
-      // );
-
-      fetchTermTestQuestionsByClassIds(formData.selectedClass)
+    if (formData.selectedSubject.length > 0) {
+      fetchTestQuestionsBySubjectIds(formData.selectedSubject)
         .then((data) => {
           setFormData((prevData) => ({
             ...prevData,
@@ -168,7 +155,7 @@ console.log( typeof(data.class_id), "data clas_id");
           }));
           console.log('number of question', formData.numberOfQuestions);
           if (data.term_question_count === 0) {
-            setErrorMessage('No questions available for the selected classes.');
+            setErrorMessage('No questions available for the selected subjects.');
           } else {
             setTestQuestions(data.term_questions);
             console.log('Setting test questions:', data.term_questions);
@@ -179,36 +166,35 @@ console.log( typeof(data.class_id), "data clas_id");
           toast.error(error.message);
         });
     } else {
-      // No classes selected, reset question-related states
+      // No subjects selected, reset question-related states
       setFormData((prevData) => ({
         ...prevData,
         numberOfQuestions: '',
       }));
       setTestQuestions([]);
     }
-  }, [formData.selectedClass]); // Dependency array ensures this only runs when selectedClass changes
+  }, [formData.selectedSubject]); // Dependency array ensures this only runs when selectedSubject changes
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const classIdsString = formData.selectedClass.join(',');
+    const subjectIdsString = formData.selectedSubject.join(',');
     try {
       const updatedFormData = {
         ...formData,
-        selectedClass: classIdsString,
+        selectedSubject: subjectIdsString,
         selectedQuestions: selectedQuestions,
         totalMarks: selectedQuestions.length,
       };
-      await updateTermTest(testId, updatedFormData);
+      await updateTest(testId, updatedFormData);
       toast.success('Job test edited successfully!');
-      // navigate('/jobs/tests');
       if (isAdmin) {
         navigate('/admin/jobs/tests');
       } else {
         navigate('/recruiter/jobs/tests');
       }
       setFormData({
-        selectedClass: '',
+        selectedSubject: '',
         numberOfQuestions: '',
         testTitle: '',
         startTime: '',
@@ -226,6 +212,7 @@ console.log( typeof(data.class_id), "data clas_id");
     }
     setIsSubmitting(false);
   };
+
 
   return (
     <>

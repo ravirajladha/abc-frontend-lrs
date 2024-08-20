@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
-
 import { fetchChapterData } from '@/api/common';
 import { deleteVideo } from '@/api/admin';
 
@@ -13,15 +12,15 @@ import {
 } from '@/components/common';
 
 function Show() {
-  const baseUrl = import.meta.env.VITE_BASE_URL;
-  const { classId, subjectId, chapterId } = useParams();
+  // const baseUrl = import.meta.env.VITE_BASE_URL;
+  const { subjectId, courseId, chapterId } = useParams();
   const [chapterData, setChapterData] = useState();
   const [contents, setContents] = useState();
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetchChapterData(classId, subjectId, chapterId);
+      const response = await fetchChapterData(chapterId);
       setChapterData(response.chapter);
       setContents(response.contents);
       setLoading(false);
@@ -29,7 +28,7 @@ function Show() {
       console.error('Error fetching chapter data:', error);
       setLoading(false);
     }
-  }, []);
+  }, [chapterId]);
 
   useEffect(() => {
     fetchData();
@@ -46,7 +45,7 @@ function Show() {
       if (result.isConfirmed) {
         try {
           const response = await deleteVideo(videoId);
-          await fetchData(classId, subjectId);
+          await fetchData(subjectId, courseId);
           toast.success(response.message);
         } catch (error) {
           toast.error(error.message);
@@ -68,12 +67,12 @@ function Show() {
             text: `Edit Chapter`,
           },
           {
-            link: `/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapterId}/create`,
+            link: `/admin/subjects/${subjectId}/courses/${courseId}/chapters/${chapterId}/create`,
             text: 'New Content',
           },
         ]}
         buttonText="Add Contents"
-        backLink={`/admin/subjects/${classId}/courses/${subjectId}/chapters`}
+        backLink={`/admin/subjects/${subjectId}/courses/${courseId}/chapters`}
       />
       {loading ? (
         <div className="text-center mt-5 col-12">
@@ -92,7 +91,7 @@ function Show() {
               <div className="row">
                 <div className="col-lg-9 pl-xl-5">
                   <span className="font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 alert-warning d-inline-block text-warning mr-1">
-                    {chapterData?.subject_name}
+                    {chapterData?.course_name}
                   </span>
                   <h2 className="fw-700 font-lg d-block lh-4 mb-1 text-white mt-2">
                     {chapterData?.chapter_name}
@@ -101,11 +100,11 @@ function Show() {
                     {chapterData?.chapter_description}
                   </p>
                   <span className="font-xss fw-600 text-primary d-inline-block ">
-                    {chapterData?.class_name}
+                    {chapterData?.subject_name}
                   </span>
                   <span className="dot ml-2 mr-2 d-inline-block btn-round-xss bg-grey"></span>
                   <span className="font-xss fw-700 text-grey-600 d-inline-block ml-0 ">
-                    {chapterData?.subject_name}
+                    {chapterData?.course_name}
                   </span>
                   <span className="dot ml-2 mr-2 d-inline-block btn-round-xss bg-grey"></span>
                   <span className="font-xss fw-700 text-grey-600 d-inline-block ml-0 ">
@@ -113,7 +112,7 @@ function Show() {
                   </span>
                   <div className="clearfix"></div>
                 </div>
-                <div className="col-lg-3 pl-xl-5">
+                {/* <div className="col-lg-3 pl-xl-5">
                   <figure className="avatar position-relative z-index-1 overflow-hidden">
                     {chapterData.chapter_image && (
                       <img
@@ -123,7 +122,7 @@ function Show() {
                       />
                     )}
                   </figure>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -19,6 +19,7 @@ console.log("from subjects index");
   const fetchData = async () => {
     try {
       const response = await fetchSubjects();
+      console.log(response);
       setSubjectsData(response);
     } catch (error) {
       toast.error(error.message);

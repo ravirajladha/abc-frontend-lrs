@@ -9,24 +9,24 @@ import {
   ContentFormWrapper,
   ContentHeader,
 } from '@/components/common';
-import { SelectQuestion } from '@/components/admin/term-test';
+import { SelectQuestion } from '@/components/admin/test';
 
-import { fetchClasses } from '@/api/dropdown';
+import { fetchSubjects } from '@/api/dropdown'; // Fetching subjects instead of classes
 
 import {
-  createTermTest,
-  fetchTermTestQuestionsByClassIds,
+  createTest,
+  fetchTestQuestionsBySubjectIds, // Updated function name to reflect the change
 } from '@/api/recruiter';
 import { SelectMultipleInput } from '@/components/common/form';
 import { TextEditor } from '@/components/common';
 
-function Create({ title ,isAdmin}) {
+function Create({ title, isAdmin }) {
   const navigate = useNavigate();
 
-  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]); // Updated from classes to subjects
   const [testQuestions, setTestQuestions] = useState([]);
   const [formData, setFormData] = useState({
-    selectedClass: '',
+    selectedSubject: '', // Updated from selectedClass to selectedSubject
     numberOfQuestions: '',
     testTitle: '',
     testTerm: '',
@@ -43,10 +43,10 @@ function Create({ title ,isAdmin}) {
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects() // Fetching subjects instead of classes
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects); // Updated to setSubjects
       })
       .catch((error) => {
         toast.error(error.message);
@@ -54,21 +54,21 @@ function Create({ title ,isAdmin}) {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData(); // Updated function call
+  }, [fetchSubjectDropdownData]);
 
-  const handleClassChange = ({ target: { value } }) => {
-    // Reset error messages and validation errors related to class selection
+  const handleSubjectChange = ({ target: { value } }) => { // Updated function name to handleSubjectChange
+    // Reset error messages and validation errors related to subject selection
     setErrorMessage('');
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
-      selectedClass: '',
+      selectedSubject: '',
     }));
 
-    // Update the formData state to reflect the selected classes
+    // Update the formData state to reflect the selected subjects
     setFormData((prevData) => ({
       ...prevData,
-      selectedClass: value,
+      selectedSubject: value, // Updated to selectedSubject
       numberOfQuestions: '',
       testTitle: '',
       testTerm: '',
@@ -79,32 +79,25 @@ function Create({ title ,isAdmin}) {
       instruction: '',
     }));
 
-    // Check if there are selected classes before fetching data
-    console.log('value', value,value.length)
+    // Check if there are selected subjects before fetching data
     if (value.length > 0) {
-    console.log('value form isnie', value,value.length)
-
-      fetchTermTestQuestionsByClassIds(value)
+      fetchTestQuestionsBySubjectIds(value) // Updated function to use subject IDs
         .then((data) => {
           setFormData((prevData) => ({
             ...prevData,
             numberOfQuestions: data.term_question_count,
           }));
-          // console.log('number of questions', formData.numberOfQuestions);
-          // console.log('data', data);
           if (data.term_question_count === 0) {
             setErrorMessage('Cannot create the job test. No questions available.');
           } else {
             setTestQuestions(data.term_questions);
-            console.log("Setting test questions:", data.term_questions);
           }
         })
         .catch((error) => {
-          console.log(error, error.message, "error")
           toast.error(error.message);
         });
     } else {
-      // No classes selected, reset question-related states
+      // No subjects selected, reset question-related states
       setFormData((prevData) => ({
         ...prevData,
         numberOfQuestions: '',
@@ -116,9 +109,7 @@ function Create({ title ,isAdmin}) {
   useEffect(() => {
     console.log('questions:', testQuestions);
     console.log('Updated number of questions:', formData.numberOfQuestions);
-  }, [formData.numberOfQuestions,testQuestions]);
-
-  
+  }, [formData.numberOfQuestions, testQuestions]);
 
   const handleInputChange = ({ target: { name, value } }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -141,34 +132,32 @@ function Create({ title ,isAdmin}) {
 
   const nextForm = async (event) => {
     event.preventDefault();
-    const isVerified = formData.selectedClass;
+    const isVerified = formData.selectedSubject; // Updated to selectedSubject
     setIsFormVerified(isVerified);
   };
-  console.log("isadmin", isAdmin);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const classIdsString = formData.selectedClass.join(',');
+    const subjectIdsString = formData.selectedSubject.join(','); // Updated to selectedSubject
     try {
       const updatedFormData = {
         ...formData,
-        selectedClass: classIdsString, 
+        selectedSubject: subjectIdsString, // Updated to selectedSubject
         selectedQuestions: selectedQuestions,
         totalMarks: selectedQuestions.length,
       };
-      console.log('data to be sumitted', updatedFormData);
-      await createTermTest(updatedFormData);
+      await createTest(updatedFormData);
 
       toast.success('Job test created successfully!');
 
-      // navigate('/recruiter/tests');
       if (isAdmin) {
         navigate('/admin/jobs/tests');
       } else {
         navigate('/recruiter/jobs/tests');
       }
       setFormData({
-        selectedClass: '',
+        selectedSubject: '', // Updated to selectedSubject
         numberOfQuestions: '',
         testTitle: '',
         testTerm: '',
@@ -188,7 +177,6 @@ function Create({ title ,isAdmin}) {
     setIsSubmitting(false);
   };
 
-  console.log('Starting', formData.numberOfQuestions);
   return (
     <>
       {!isFormVerified ? (
@@ -213,17 +201,17 @@ function Create({ title ,isAdmin}) {
                     </label>
                     <SelectMultipleInput
                       className="form-control"
-                      options={classes}
-                      name="selectedClass"
+                      options={subjects} // Updated to subjects
+                      name="selectedSubject" // Updated to selectedSubject
                       label="name"
-                      value={formData.selectedClass || []}
-                      onChange={handleClassChange}
+                      value={formData.selectedSubject || []} // Updated to selectedSubject
+                      onChange={handleSubjectChange} // Updated to handleSubjectChange
                       placeholder="Select Subject"
                       required
                     />
-                    {validationErrors.selectedClass && (
+                    {validationErrors.selectedSubject && (
                       <span className="text-danger font-xsss mt-2">
-                          Subject empty or not found.
+                        Subject empty or not found.
                       </span>
                     )}
                   </div>

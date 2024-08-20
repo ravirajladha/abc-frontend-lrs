@@ -20,7 +20,7 @@ import {
 } from '@/api/dropdown';
 
 function CreateContentForm() {
-  const { classId, subjectId, chapterId } = useParams();
+  const { subjectId, courseId, chapterId } = useParams();
   const [assessments, setAssessments] = useState([]);
   const [ebooks, setEbooks] = useState([]);
   const [elabs, setElabs] = useState([]);
@@ -29,8 +29,8 @@ function CreateContentForm() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedResource, setSelectedResource] = useState(null);
   const [formData, setFormData] = useState({
-    class_id: classId || '',
     subject_id: subjectId || '',
+    course_id: courseId || '',
     chapter_id: chapterId || '',
     title: '',
     description: '',
@@ -40,7 +40,7 @@ function CreateContentForm() {
     ebook_id: '',
     ebook_module_id: '',
     ebook_section_id: '',
-    resource:'',
+    resource: '',
   });
   const [showAssessmentDropdown, setShowAssessmentDropdown] = useState(false);
   const [showEbookDropdown, setShowEbookDropdown] = useState(false);
@@ -51,8 +51,8 @@ function CreateContentForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (subjectId) {
-      fetchAssessments(subjectId)
+    if (courseId) {
+      fetchAssessments(courseId)
         .then((data) => {
           setAssessments(data.assessments);
         })
@@ -60,14 +60,14 @@ function CreateContentForm() {
           toast.error(error.message);
         });
 
-      fetchEbooks(subjectId)
+      fetchEbooks(courseId)
         .then((data) => {
           setEbooks(data.ebooks);
         })
         .catch((error) => {
           toast.error(error.message);
         });
-      fetchElabs(subjectId)
+      fetchElabs(courseId)
         .then((data) => {
           setElabs(data.elabs);
         })
@@ -75,7 +75,7 @@ function CreateContentForm() {
           toast.error(error.message);
         });
     }
-  }, [subjectId]);
+  }, [courseId]);
 
   const handleElabCheckbox = () => {
     setShowElabDropdown(!showElabDropdown);
@@ -163,8 +163,8 @@ function CreateContentForm() {
     try {
       const submissionData = new FormData();
 
-      submissionData.append('class_id', classId);
       submissionData.append('subject_id', subjectId);
+      submissionData.append('course_id', courseId);
       submissionData.append('chapter_id', chapterId);
       submissionData.append('title', formData.title);
       submissionData.append('description', formData.description);
@@ -191,14 +191,14 @@ function CreateContentForm() {
         submissionData.append('ebook_module_id', formData.ebook_module_id);
         submissionData.append('ebook_sections', formData.ebook_section_id);
       }
-      console.log("submimssion data from creating the video", submissionData);
+      console.log("submission data from creating the video", submissionData);
       const response = await createVideo(submissionData);
       toast.success(response.message);
       clearForm();
       clearSelectedVideo();
       setIsSubmitting(false);
       navigate(
-        `/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapterId}`
+        `/admin/subjects/${subjectId}/courses/${courseId}/chapters/${chapterId}`
       );
     } catch (error) {
       if (error.validationErrors) {

@@ -22,10 +22,10 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 function Learn() {
   const studentData = useOutletContext();
   const studentId = studentData.student_auth_id;
-  const classId = studentData.class_id;
+  const subjectId = studentData.subject_id;
   const userData = JSON.parse(getUserDataFromLocalStorage());
 
-  const { subjectId } = useParams();
+  const { courseId } = useParams();
 
   const videoItems = document.querySelectorAll('.video');
   const [error, setError] = useState(null);
@@ -51,7 +51,7 @@ function Learn() {
     assessment_results: '',
   });
 
-  const [subject, setSubject] = useState(true);
+  const [course, setCourse] = useState(true);
   const [content, setContent] = useState([]);
   const [teacher, setTeacher] = useState(null);
   const [miniProjects, setMiniProjects] = useState([]);
@@ -61,7 +61,6 @@ function Learn() {
 
   const handlePlayerReady = (player) => {
     playerRef.current = player;
-    // setVideoPlayer(player);
   };
 
   const handlePlayerChange = (player) => {
@@ -82,15 +81,12 @@ function Learn() {
     videoLastTimeStamp
   ) => {
     videoItems.forEach((video) => {
-      if (videoId == video.dataset.id) {
+      if (videoId === video.dataset.id) {
         video.classList.add('active');
         video.querySelector('i').classList.remove('feather-play-circle');
         video.querySelector('i').classList.add('feather-pause-circle');
         const defaultSources = [
           {
-            // src: baseUrl + 'uploads/' + videoFile,
-            // type: 'video/mp4',
-
             src: baseUrl + 'api/video/playlist/' + videoFile,
             type: 'application/x-mpegURL',
           },
@@ -115,18 +111,17 @@ function Learn() {
       }
     });
   };
-  // console.log("video file: " + videoFile);
 
-  const fetchSubjectContents = useCallback(async () => {
+  const fetchCourseContents = useCallback(async () => {
     try {
       let data;
       if (studentData.student_type === 0) {
-        data = await fetchContents(subjectId);
+        data = await fetchContents(courseId);
       } else {
-        data = await fetchExternalStudentContents(subjectId);
+        data = await fetchExternalStudentContents(courseId);
       }
       setContent(data.contents.chapters);
-      setSubject(data.contents.subject);
+      setCourse(data.contents.course);
       setMiniProjects(data.contents.mini_projects);
       if (data && data.contents.teacher) {
         setTeacher(data.contents.teacher);
@@ -145,9 +140,6 @@ function Learn() {
 
         const defaultSources = [
           {
-            // src: baseUrl + 'uploads/' + data.contents.video.url,
-            // type: 'video/mp4',
-
             src: baseUrl + 'api/video/playlist/' + data.contents.video.url,
             type: 'application/x-mpegURL',
           },
@@ -159,7 +151,6 @@ function Learn() {
         }));
 
         if (data.contents.video.watch_time) {
-          // setLastTimestamp(data.contents.video.watch_time);
           setVideoOptions((prevOptions_1) => ({
             ...prevOptions_1,
             autoplay: false,
@@ -173,21 +164,17 @@ function Learn() {
       setError(error);
       setIsLoading(false);
     }
-  }, [subjectId, isVideoLoaded, studentData.student_type]);
+  }, [courseId, isVideoLoaded, studentData.student_type]);
 
   useEffect(() => {
-    fetchSubjectContents();
-  }, [fetchSubjectContents, subjectId]);
+    fetchCourseContents();
+  }, [fetchCourseContents, courseId]);
 
   useEffect(() => {
-    // Initialize Video.js options
     setVideoOptions((prevOptions) => ({
       ...prevOptions,
       sources: [
         {
-          // src: baseUrl + 'uploads/' + activeVideo.url,
-          // type: 'video/mp4',
-
           src: baseUrl + 'api/video/playlist/' + activeVideo.url,
           type: 'application/x-mpegURL',
         },
@@ -198,7 +185,7 @@ function Learn() {
   return (
     <div className="pb-2">
       <ContentHeader
-        title={subject.name ? subject.name : 'Learn'}
+        title={course.name ? course.name : 'Learn'}
         backLink="/student/courses"
       />
       <div className="row">
@@ -222,9 +209,9 @@ function Learn() {
         <div className="col-xl-4 col-xxl-3">
           <VideoTabs
             isLoading={isLoading}
-            subjectId={subjectId}
+            courseId={courseId}
             studentId={studentId}
-            subjectData={content}
+            courseData={content}
             isTeacherAvailable={isTeacherAvailable}
             teacherId={teacher?.auth_id}
             videoPlayer={videoPlayer}
@@ -252,7 +239,7 @@ function Learn() {
               <MiniProjects
                 key={project.id}
                 project={project}
-                subjectId={subjectId}
+                courseId={courseId}
               />
             ))}
           </div>

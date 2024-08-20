@@ -10,7 +10,7 @@ import { MdOutlineAssessment } from 'react-icons/md';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 
 function CoursesCard() {
-  const [subjects, setSubjects] = useState(null);
+  const [courses, setCourses] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAll, setShowAll] = useState(false);
@@ -20,16 +20,16 @@ function CoursesCard() {
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
 
   const studentId = studentData.student_id;
-  const classId = studentData.class_id;
+  const subjectId = studentData.subject_id;
   const schoolId = studentData.school_id;
   const [loading1, setLoading1] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [currentSubject, setCurrentSubject] = useState(null);
 
-  const fetchSubjectsCallback = useCallback(async () => {
+  const fetchCoursesCallback = useCallback(async () => {
     try {
       const data = await fetchMyCourses();
-      setSubjects(data.subjects);
+      setCourses(data.courses);
     } catch (error) {
       setError(error);
       toast.error(error.message);
@@ -39,8 +39,8 @@ function CoursesCard() {
   }, []);
 
   useEffect(() => {
-    fetchSubjectsCallback();
-  }, [fetchSubjectsCallback]);
+    fetchCoursesCallback();
+  }, [fetchCoursesCallback]);
 
   const handleToggleView = () => {
     setShowAll((prevShowAll) => !prevShowAll);
@@ -63,7 +63,7 @@ function CoursesCard() {
     const data = {
       studentId, // Assuming this is available from context or state
       schoolId, // Assuming this is available from context or state
-      subjectId,
+      courseId,
       latestTestId,
     };
 
@@ -73,7 +73,7 @@ function CoursesCard() {
       if (response.status === 200) {
         setLoading1(false);
         navigate(
-          `/student/courses/term-test/${response.token}/${latestTestId}`
+          `/student/courses/test/${response.token}/${latestTestId}`
         ); // Adjusted to use response.testSessionId directly
       } else {
         throw new Error('Unexpected response status');
@@ -99,11 +99,11 @@ function CoursesCard() {
           <div className="text-center col-12">
             <ContentLoader />
           </div>
-        ) : subjects && subjects !== null && subjects.length > 0 ? (
+        ) : courses && courses !== null && courseslength > 0 ? (
           <>
-            {subjects
-              .slice(0, showAll ? subjects.length : 4)
-              .map((subject, index) => (
+            {courses
+              .slice(0, showAll ? courses.length : 4)
+              .map((course, index) => (
                 <div className="col-lg-3" key={index}>
                   <div
                     className="card course-card p-0 shadow-md border-0 rounded-lg overflow-hidden mr-3 mb-4 h-100"
@@ -114,11 +114,11 @@ function CoursesCard() {
                       style={{ height: '200px' }}
                     >
                       <Link
-                        to={`/student/courses/${subject.id}/learn`}
+                        to={`/student/courses/${course.id}/learn`}
                         className="video-bttn position-relative d-block h-100"
                       >
                         <img
-                          src={baseUrl + subject.image}
+                          src={baseUrl + course.image}
                           alt="course"
                           className="w-100 h-100"
                           style={{ objectFit: 'cover' }}
@@ -130,7 +130,7 @@ function CoursesCard() {
                         <span
                           className={`font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 d-inline-block mr-1 alert-warning text-warning`}
                         >
-                          {subject.class_name}
+                          {course.class_name}
                         </span>
                         <div>
                           <div className="star d-flex w-100 text-left">
@@ -151,14 +151,14 @@ function CoursesCard() {
                       </div>
                       <h4 className="fw-700 font-xss mt-2 lh-26 mt-0">
                         <Link
-                          to={`/student/courses/${subject.id}/learn`}
+                          to={`/student/courses/${course.id}/learn`}
                           className="text-dark text-grey-900"
                         >
-                          {subject.name}
+                          {course.name}
                         </Link>
                       </h4>
                       <span className="font-xssss fw-500 text-grey-900 d-inline-block ml-0 text-dark">
-                      {subject.teacher_name}
+                      {course.teacher_name}
                       </span>
                       <hr />
                       <div className="progress mt-3 h10">
@@ -166,7 +166,7 @@ function CoursesCard() {
                           className="progress-bar progress-bar-striped progress-bar-animated"
                           role="progressbar"
                           aria-valuemin="0"
-                          style={{ width: `${subject.completePercentage}%` }}
+                          style={{ width: `${course.completePercentage}%` }}
                         ></div>
                       </div>
                       <div className="d-flex justify-content-between">
@@ -180,10 +180,10 @@ function CoursesCard() {
                     </div>
                     <div className="card-footer bg-white">
                       <div className="d-flex justify-content-around mt-2">
-                        {subject.results && subject.results.length > 0 && (
+                        {course.results && course.results.length > 0 && (
                           <Link
                             className="d-flex flex-column align-items-center"
-                            to={`/student/courses/${subject.id}/results`}
+                            to={`/student/courses/${course.id}/results`}
                           >
                             <MdOutlineAssessment className="font-md text-primary" />
                             <p className="font-xssss text-grey-900 fw-500">
@@ -191,11 +191,11 @@ function CoursesCard() {
                             </p>
                           </Link>
                         )}
-                        {subject.chapter_completed &&
-                          subject.latest_test_id && (
+                        {course.chapter_completed &&
+                          course.latest_test_id && (
                             <button
                               className="d-flex flex-column align-items-center"
-                              onClick={() => handleOpenModal(subject)}
+                              onClick={() => handleOpenModal(course)}
                             >
                               <MdOutlineAssessment className="font-md text-primary" />
                               <p className="font-xssss text-grey-900 fw-500">
@@ -257,8 +257,8 @@ function CoursesCard() {
                             className="btn text-white bg-success"
                             onClick={() =>
                               handleStartTestFromModal(
-                                currentSubject.id,
-                                currentSubject.latest_test_id
+                                currentCourse.id,
+                                currentCourse.latest_test_id
                               )
                             }
                           >
@@ -270,7 +270,7 @@ function CoursesCard() {
                   )}
                 </div>
               ))}
-            {subjects.length > 4 && (
+            {courses.length > 4 && (
               <div className="text-right mt-3 col-12">
                 <button
                   className="btn bg-primary font-xsss text-white"

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SelectInput } from '@/components/common/form';
-import { fetchClasses } from '@/api/dropdown';
+import { fetchSubjects } from '@/api/dropdown';
 import { SelectMultipleInput } from '@/components/common/form';
 import { TextEditor } from '@/components/common';
 
@@ -13,7 +13,7 @@ import {
 } from '@/components/common';
 
 import { updateJobDetails, fetchJobDetails } from '@/api/admin';
-import { fetchRecruiters ,fetchJobTests} from '@/api/admin';
+import { fetchRecruiters, fetchJobTests } from '@/api/admin';
 
 import { FileInput } from '@/components/common/form';
 import { getUserDataFromLocalStorage } from '@/utils/services';
@@ -21,7 +21,7 @@ import { getUserDataFromLocalStorage } from '@/utils/services';
 function Create(props) {
   const navigate = useNavigate();
   const { jobId } = useParams();
-  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const userData = JSON.parse(getUserDataFromLocalStorage());
 
   const [error, setError] = useState(null);
@@ -30,7 +30,6 @@ function Create(props) {
   const [validationErrors, setValidationErrors] = useState({});
   const [recruiters, setRecruiters] = useState([]);
   const [jobTests, setJobTests] = useState([]);
-
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState({
@@ -43,16 +42,15 @@ function Create(props) {
     recruiter_id: '',
     test_id: '',
     passing_percentage: '',
-    selectedClass:'',
+    selectedSubject: [],
     instruction: '',
     status: 'active', // Default status
-
   });
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -60,12 +58,12 @@ function Create(props) {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setFormData((prevData) => ({ ...prevData, selectedClass: value }));
-    setValidationErrors(({ selectedClass: _, ...prevErrors }) => prevErrors);
+  const handleSubjectChange = ({ target: { value } }) => {
+    setFormData((prevData) => ({ ...prevData, selectedSubject: value }));
+    setValidationErrors(({ selectedSubject: _, ...prevErrors }) => prevErrors);
   };
 
   const fetchRecruitersData = useCallback(() => {
@@ -78,7 +76,6 @@ function Create(props) {
       });
   }, []);
 
-  
   const handleRecruiterChange = ({ target: { value } }) => {
     setFormData((prevData) => ({ ...prevData, recruiter_id: value }));
     setValidationErrors(({ recruiter_id: _, ...prevErrors }) => prevErrors);
@@ -127,14 +124,11 @@ function Create(props) {
             location: data.job?.location,
             criteria: data.job?.criteria,
             recruiter_id: data.job?.recruiter_id,
-            // test_id: data.job?.test_id === null ? '' : data.job?.test_id,
             test_id: data.job?.test_id === null ? '' : data.job?.test_id,
             passing_percentage: data.job?.passing_percentage,
-            // selectedClass: data.job?.selectedClass,
-            selectedClass: data.job.class_id ? data.job.class_id.split(',') : [],
-          instruction: data.job?.instruction,
-          status:  data.job?.status ,
-
+            selectedSubject: data.job.class_id ? data.job.class_id.split(',') : [],
+            instruction: data.job?.instruction,
+            status: data.job?.status,
           });
         }
         setIsLoading(false);
@@ -163,26 +157,23 @@ function Create(props) {
     setIsSubmitting(true);
     try {
       const submissionData = new FormData();
-      // submissionData.append('_method', 'PUT');
       submissionData.append('title', formData.title);
       submissionData.append('description', formData.description);
       submissionData.append('instruction', formData.instruction);
       submissionData.append('location', formData.location);
       submissionData.append('criteria', formData.criteria);
       submissionData.append('annual_ctc', formData.annual_ctc);
-      // submissionData.append('test_id', formData.test_id);
       submissionData.append('test_id', formData.test_id === null ? '' : formData.test_id);
       submissionData.append('recruiter_id', formData.recruiter_id);
       submissionData.append('passing_percentage', formData.passing_percentage);
-      submissionData.append('selectedClass', formData.selectedClass);
+      submissionData.append('selectedSubject', formData.selectedSubject);
       submissionData.append('status', formData.status);
 
-      console.log("response before submitting", submissionData.get('test_id'));
       if (formData.image) {
         submissionData.append('image', formData.image);
       }
 
-      const response = await updateJobDetails(jobId,submissionData);
+      const response = await updateJobDetails(jobId, submissionData);
       toast.success(response.message);
 
       clearForm();
@@ -190,9 +181,9 @@ function Create(props) {
       setIsSubmitting(false);
       if (props.isRecruiter) {
         navigate(`/recruiter/jobs`);
-        }else{
+      } else {
         navigate(`/admin/jobs`);
-        }
+      }
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
@@ -218,7 +209,8 @@ function Create(props) {
       test_id: '',
       passing_percentage: '',
       criteria: '',
-      instruction:'',
+      instruction: '',
+      status: 'active',
     });
   };
 
@@ -241,24 +233,24 @@ function Create(props) {
         >
           {!isLoading ? (
             <div className="row">
-            <div className={props.isRecruiter === false ? 'col-lg-6 mb-2' : 'col-lg-12 mb-2'}>
+              <div className={props.isRecruiter === false ? 'col-lg-6 mb-2' : 'col-lg-12 mb-2'}>
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
                     Select Subject *
                   </label>
                   <SelectMultipleInput
                     className="form-control"
-                    options={classes}
-                    name="selectedClass"
+                    options={subjects}
+                    name="selectedSubject"
                     label="name"
-                    value={formData.selectedClass || []}
-                    onChange={handleClassChange}
+                    value={formData.selectedSubject || []}
+                    onChange={handleSubjectChange}
                     placeholder="Select Subject"
                     required
                   />
-                  {validationErrors.selectedClass && (
+                  {validationErrors.selectedSubject && (
                     <span className="text-danger font-xsss mt-2">
-                       Subject empty or not found
+                      Subject empty or not found
                     </span>
                   )}
                 </div>

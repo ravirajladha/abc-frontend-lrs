@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { SelectInput } from '@/components/common/form';
-import { fetchClasses } from '@/api/dropdown';
+import { fetchSubjects } from '@/api/dropdown'; // Updated to fetchSubjects
 import { TextEditor } from '@/components/common';
 
 import {
@@ -28,12 +28,12 @@ function Create(props) {
   const [validationErrors, setValidationErrors] = useState({});
   const [recruiters, setRecruiters] = useState([]);
   const [jobTests, setJobTests] = useState([]);
-  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]); // Updated from classes to subjects
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
-    selectedClass: '',
+    selectedSubject: '', // Updated from selectedClass to selectedSubject
     recruiter_id: '',
     test_id: '',
     description: '',
@@ -45,10 +45,10 @@ function Create(props) {
     passing_percentage: '0',
   });
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects() // Updated function name to fetchSubjects
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects); // Updated to setSubjects
       })
       .catch((error) => {
         toast.error(error.message);
@@ -56,8 +56,8 @@ function Create(props) {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData(); // Updated function call
+  }, [fetchSubjectDropdownData]);
 
   const handleFileChange = (file) => {
     setFormData((prevData) => ({
@@ -66,14 +66,16 @@ function Create(props) {
     }));
     setSelectedImage(file);
   };
+
   const handleInstructionChange = (html) => {
     setFormData((prevData) => ({ ...prevData, instruction: html }));
   };
 
-  const handleClassChange = ({ target: { value } }) => {
-    setFormData((prevData) => ({ ...prevData, selectedClass: value }));
-    setValidationErrors(({ selectedClass: _, ...prevErrors }) => prevErrors);
+  const handleSubjectChange = ({ target: { value } }) => { // Updated function name to handleSubjectChange
+    setFormData((prevData) => ({ ...prevData, selectedSubject: value })); // Updated to selectedSubject
+    setValidationErrors(({ selectedSubject: _, ...prevErrors }) => prevErrors);
   };
+
   const fetchRecruitersData = useCallback(() => {
     fetchRecruiters()
       .then((data) => {
@@ -89,6 +91,7 @@ function Create(props) {
       fetchRecruitersData();
     }
   }, [fetchRecruitersData, props.isRecruiter]);
+
   const fetchJobTestsData = useCallback(() => {
     fetchJobTests()
       .then((data) => {
@@ -108,10 +111,6 @@ function Create(props) {
     setFormData((prevData) => ({ ...prevData, recruiter_id: value }));
     setValidationErrors(({ recruiter_id: _, ...prevErrors }) => prevErrors);
   };
-  // const handleTestIdChange = ({ target: { value } }) => {
-  //   setFormData((prevData) => ({ ...prevData, test_id: value }));
-  //   setValidationErrors(({ test_id: _, ...prevErrors }) => prevErrors);
-  // };
 
   const handleTestIdChange = ({ target: { value } }) => {
     setFormData((prevData) => ({
@@ -126,16 +125,12 @@ function Create(props) {
     setIsSubmitting(true);
     try {
       const submissionData = new FormData();
-      // submissionData.append('_method', 'PUT');
       submissionData.append('title', formData.title);
       if (props.isRecruiter) {
-        // const userData = JSON.parse(getUserDataFromLocalStorage());
         submissionData.append('recruiter_id', userData.id);
       } else {
         submissionData.append('recruiter_id', formData.recruiter_id);
       }
-      // submissionData.append('recruiter_id', formData.recruiter_id);
-      // submissionData.append('test_id', formData.test_id);
       submissionData.append('test_id', formData.test_id === null ? '' : formData.test_id);
       submissionData.append('description', formData.description);
       submissionData.append('instruction', formData.instruction);
@@ -143,7 +138,7 @@ function Create(props) {
       submissionData.append('criteria', formData.criteria);
       submissionData.append('annual_ctc', formData.annual_ctc);
       submissionData.append('passing_percentage', formData.passing_percentage);
-      submissionData.append('selectedClass', formData.selectedClass);
+      submissionData.append('selectedSubject', formData.selectedSubject); // Updated to selectedSubject
 
       if (formData.image) {
         submissionData.append('image', formData.image);
@@ -187,15 +182,16 @@ function Create(props) {
       annual_ctc: '',
       location: '',
       criteria: '',
-      selectedClass: '',
+      selectedSubject: '', // Updated to selectedSubject
       recruiter_id: '',
       test_id: '',
       passing_percentage: '',
-      selectedClass: '',
     });
   };
+
   const jobTestsWithNoOption = [{ title: "No Test", id: 'null' }, ...jobTests];
   const backLink = props.isRecruiter ? '/recruiter/jobs' : '/admin/jobs';
+  
   return (
     <>
       <ContentHeader title="Create Job" backLink={backLink} />
@@ -208,44 +204,43 @@ function Create(props) {
         >
           {!isLoading ? (
             <div className="row">
-       <div className="col-lg-6 mb-2">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Company *</label>
-                <select
-                  className="form-control"
-                  name="company"
-                  value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                >
-                  <option value="">Select Company</option>
-                  <option value="IT">Company 1</option>
-                  <option value="Non-IT">Company 2</option>
-                </select>
-                {validationErrors.company && (
-                  <div className="text-danger">{validationErrors.company}</div>
-                )}
+              <div className="col-lg-6 mb-2">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">Company *</label>
+                  <select
+                    className="form-control"
+                    name="company"
+                    value={formData.category}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                  >
+                    <option value="">Select Company</option>
+                    <option value="IT">Company 1</option>
+                    <option value="Non-IT">Company 2</option>
+                  </select>
+                  {validationErrors.company && (
+                    <div className="text-danger">{validationErrors.company}</div>
+                  )}
+                </div>
               </div>
-            </div>
 
               <div className={props.isRecruiter === false ? 'col-lg-6 mb-2' : 'col-lg-12 mb-2'}>
-
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                    Select Subject *
+                    Select Course *
                   </label>
                   <SelectMultipleInput
                     className="form-control"
-                    options={classes}
-                    name="selectedClass"
+                    options={subjects} // Updated to subjects
+                    name="selectedSubject" // Updated to selectedSubject
                     label="name"
-                    value={formData.selectedClass || []}
-                    onChange={handleClassChange}
+                    value={formData.selectedSubject || []} // Updated to selectedSubject
+                    onChange={handleSubjectChange} // Updated to handleSubjectChange
                     placeholder="Select Subject"
                     required
                   />
-                  {validationErrors.selectedClass && (
+                  {validationErrors.selectedSubject && (
                     <span className="text-danger font-xsss mt-2">
-                Subject empty or not found.
+                      Subject empty or not found.
                     </span>
                   )}
                 </div>

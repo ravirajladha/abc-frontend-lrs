@@ -50,23 +50,23 @@ export const getStudents = async (schoolId) => {
   );
   return response.data;
 };
-export const getPublicStudents = async (page = 1, classId = '', sectionId = '') => {
+export const getPublicStudents = async (page = 1, subjectId = '', sectionId = '') => {
   const response = await apiService.fetchData(
-    `/school/students/get-public-students?page=${page}&classId=${classId}&sectionId=${sectionId}`
+    `/school/students/get-public-students?page=${page}&subjectId=${subjectId}&sectionId=${sectionId}`
   );
   return response.data;
 };
 
-export const getPrivateStudents = async (page = 1, schoolId = '', classId = '', sectionId = '') => {
+export const getPrivateStudents = async (page = 1, schoolId = '', subjectId = '', sectionId = '') => {
   const response = await apiService.fetchData(
-    `/school/students/get-private-students?page=${page}&schoolId=${schoolId}&classId=${classId}&sectionId=${sectionId}`
+    `/school/students/get-private-students?page=${page}&schoolId=${schoolId}&subjectId=${subjectId}&sectionId=${sectionId}`
   );
   return response.data;
 };
 
-export const getDinacharyaLogs = async (page = 1, schoolId = '', classId = '') => {
+export const getDinacharyaLogs = async (page = 1, schoolId = '', subjectId = '') => {
   const response = await apiService.fetchData(
-    `/admin/get-dinacharya-logs?page=${page}&schoolId=${schoolId}&classId=${classId}`
+    `/admin/get-dinacharya-logs?page=${page}&schoolId=${schoolId}&subjectId=${subjectId}`
   );
   console.log("Dinacharya Logs", response.data)
   return response.data;
@@ -164,7 +164,6 @@ export const fetchSuperSubjects = async () => {
 };
 
 // Chapter APIs
-
 export const createChapter = (data) => {
   return apiService.postData(`/admin/chapters/store`, data);
 };
@@ -180,9 +179,9 @@ export const deleteChapter = (chapterId) => {
 };
 
 //Assessment Questions APIs
-export const fetchAssessmentQuestions = async (classId, subjectId) => {
+export const fetchAssessmentQuestions = async (subjectId, courseId) => {
   const response = await apiService.fetchData(
-    `/admin/assessment-questions?classId=${classId}&subjectId=${subjectId}`
+    `/admin/assessment-questions?subjectId=${subjectId}&courseId=${courseId}`
   );
   return response.data;
 };
@@ -226,23 +225,23 @@ export const fetchAssessmentDetails = async (assessmentId) => {
   return response.data;
 };
 
-export const fetchAssessments = async (classId, subjectId) => {
+export const fetchAssessments = async (subjectId, courseId) => {
   const response = await apiService.fetchData(
-    `/admin/assessments?classId=${classId}&subjectId=${subjectId}`
+    `/admin/assessments?subjectId=${subjectId}&courseId=${courseId}`
   );
   return response.data;
 };
 
-export const fetchAssessmentQuestionsByIds = async (classId, subjectId) => {
+export const fetchAssessmentQuestionsByIds = async (subjectId, courseId) => {
   const response = await apiService.fetchData(
-    `/admin/assessment-questions?classId=${classId}&subjectId=${subjectId}`
+    `/admin/assessment-questions?subjectId=${subjectId}&courseId=${courseId}`
   );
   return response.data;
 };
 
-export const fetchAssessmentQuestionsCount = async (subjectId) => {
+export const fetchAssessmentQuestionsCount = async (courseId) => {
   const response = await apiService.fetchData(
-    `/minimal/get-assessment-questions-count?subjectId=${subjectId}`
+    `/minimal/get-assessment-questions-count?courseId=${courseId}`
   );
   return response.data;
 };
@@ -267,9 +266,9 @@ export const fetchAssessmentResult = async (assessmentId) => {
 };
 
 //Test Questions APIs
-export const fetchTestQuestions = async (classId, subjectId) => {
+export const fetchTestQuestions = async (subjectId, courseId) => {
   const response = await apiService.fetchData(
-    `/admin/tests-questions?classId=${classId}&subjectId=${subjectId}`
+    `/admin/tests-questions?subjectId=${subjectId}&courseId=${courseId}`
   );
   return response.data;
 };
@@ -278,6 +277,7 @@ export const fetchTestQuestionDetails = async (questionId) => {
   const response = await apiService.fetchData(
     `/admin/tests-questions/${questionId}/show`
   );
+  console.log("question test data", response.data)
   return response.data;
 };
 
@@ -295,61 +295,61 @@ export const deleteTestQuestion = (testQuestionId) => {
   );
 };
 
-//Term Test APIs
+// Test APIs
 
 export const fetchTestDetails = async (testId) => {
-  const response = await apiService.fetchData(`/admin/term-tests/${testId}`);
+  const response = await apiService.fetchData(`/admin/tests/${testId}`);
   return response.data;
 };
 
-export const fetchTermTests = async (classId, subjectId) => {
+export const fetchTests = async (subjectId, courseId) => {
   const response = await apiService.fetchData(
-    `/admin/term-tests?classId=${classId}&subjectId=${subjectId}`
+    `/admin/tests?subjectId=${subjectId}&courseId=${courseId}`
+  );
+  console.log("tests data", response)
+  return response.data;
+};
+
+export const fetchTestResult = async (testId) => {
+  const response = await apiService.fetchData(
+    `/admin/tests/${testId}/results`
   );
   return response.data;
 };
 
-export const fetchTermTestResult = async (testId) => {
+export const fetchTestQuestionsByIds = async (courseId) => {
   const response = await apiService.fetchData(
-    `/admin/term-tests/${testId}/results`
+    `/minimal/test-questions?courseId=${courseId}`
   );
   return response.data;
 };
-
-export const fetchTermTestQuestionsByIds = async (subjectId) => {
-  const response = await apiService.fetchData(
-    `/minimal/term-test-questions?subjectId=${subjectId}`
-  );
-  return response.data;
-};
-export const fetchTermTestQuestionsByClassIds = async (classIds) => {
-  const idsArray = Array.isArray(classIds) ? classIds : [classIds];
+export const fetchTestQuestionsBySubjectIds = async (subjectsIds) => {
+  const idsArray = Array.isArray(subjectsIds) ? subjectsIds : [subjectsIds];
   
   // Join the array into a comma-separated string
   const ids = idsArray.join(',');
   // const ids = classIds.join(',');
-  const response = await apiService.fetchData(`/minimal/term-test-questions-by-class-id?classIds=${ids}`);
+  const response = await apiService.fetchData(`/minimal/test-questions-by-subject-id?subjectsIds=${ids}`);
   return response.data;
 };
 
-
-export const createTermTest = (data) => {
-return apiService.postData(`admin/term-tests/store`, data);
-  console.log("respinse print from route", response);
+export const createTest = (data) => {
+return apiService.postData(`admin/tests/store`, data);
+  console.log("response print from route", response);
   // return response.data;
 };
 
-export const deleteTermTest = (testId) => {
-  return apiService.deleteData(`/admin/term-tests/${testId}/delete`);
+export const deleteTest = (testId) => {
+  return apiService.deleteData(`/admin/tests/${testId}/delete`);
 };
 
-export const updateTermTest = async (testId, data) => {
-  return apiService.putData(`/admin/term-tests/${testId}/update`, data);
+export const updateTest = async (testId, data) => {
+  return apiService.putData(`/admin/tests/${testId}/update`, data);
 };
 
-export const checkTermTestAvailability = async (subjectId) => {
+export const checkTestAvailability = async (subjectId) => {
   const response = await apiService.fetchData(
-    `/admin/term-tests/availability/${subjectId}`
+    `/admin/tests/availability/${courseId}`
   );
   return response.data;
 };
@@ -455,6 +455,7 @@ export const fetchEbookSections = async (ebookId, moduleId) => {
   );
   return response.data;
 };
+
 export const createEbookSections = async (ebookId, moduleId, data) => {
   const response = await apiService.postData(
     `/admin/ebooks-sections/${ebookId}/${moduleId}/store`,

@@ -9,7 +9,7 @@ import { formatDateTime } from '@/utils/helpers';
 function Show() {
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
-  const { classId, subjectId, chapterId, contentId } = useParams();
+  const { subjectId, courseId, chapterId, contentId } = useParams();
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +61,6 @@ function Show() {
                       <video
                         src={baseUrl + 'uploads/' + video?.url}
                         preload="auto"
-                        // autoPlay
                         controls
                         style={{ width: '100%', height: 'auto' }}
                       ></video>
@@ -103,12 +102,6 @@ function Show() {
                   <div className="card mb-lg-3 mb-sm-2 d-block border-0 rounded-lg overflow-hidden p-4 shadow-md">
                     <h2 className="fw-600 font-sm mb-3 mt-1 pl-1 mb-3">
                       eLab: {video?.elab_title}{' '}
-                      {/* <Link
-                        to={`/ebooks/${video.elab_id}/preview`}
-                        className=" btn-icon btn-sm mr-2"
-                      >
-                        <i className="feather-eye"></i>
-                      </Link> */}
                     </h2>
                     {video?.elab_id === null && (
                       <span className="badge badge-pill badge-danger px-3 py-2">

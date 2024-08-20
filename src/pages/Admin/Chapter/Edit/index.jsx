@@ -10,14 +10,13 @@ import { ContentLoader, ContentHeader } from '@/components/common';
 
 function Edit() {
   const navigate = useNavigate();
-  const { classId, subjectId, chapterId } = useParams();
+  const { subjectId, courseId, chapterId} = useParams();
   const fileInputRef = useRef();
 
   const [formData, setFormData] = useState({
     chapter_name: '',
     // chapter_image: null,
     // chapter_image_name: '',
-    chapter_description: '',
   });
 
   const [validationErrors, setValidationErrors] = useState({});
@@ -25,19 +24,19 @@ function Edit() {
 
   const getChapterDetails = useCallback(async () => {
     try {
-      const response = await fetchChapterData(classId, subjectId, chapterId);
+      const response = await fetchChapterData(chapterId);
       const data = response.chapter;
+   console.log("Got chapter", response)
       setFormData((prevFormData) => ({
         ...prevFormData,
         chapter_name: data.chapter_name,
-        chapter_description: data.chapter_description,
       }));
       setLoading(false);
     } catch (error) {
       toast.error(error.message);
       setLoading(false);
     }
-  }, [classId, subjectId, chapterId]);
+  }, [subjectId, courseId, chapterId]);
 
   useEffect(() => {
     getChapterDetails();
@@ -69,10 +68,6 @@ function Edit() {
 
     submissionData.append('_method', 'PUT');
     submissionData.append('chapter_name', formData.chapter_name || '');
-    submissionData.append(
-      'chapter_description',
-      formData.chapter_description || ''
-    );
 
     // if (formData.chapter_image) {
     //   submissionData.append(
@@ -85,7 +80,7 @@ function Edit() {
     try {
       const response = await updateChapter(chapterId, submissionData);
       toast.success('Chapter updated successfully', response);
-      navigate(`/admin/subjects/${classId}/courses/${subjectId}/chapters`);
+      navigate(`/admin/subjects/${subjectId}/courses/${courseId}/chapters`);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -128,54 +123,7 @@ function Edit() {
                       )}
                     </div>
                   </div>
-                {/*    <div className="col-lg-6 col-md-12 mb-3">
-                    <div className="form-group">
-                      <label className="mont-font form-label fw-600 font-xsss">
-                        Chapter Image
-                      </label>
-                     <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Select Chapter Image"
-                        value={formData.chapter_image_name}
-                        onClick={() => fileInputRef.current.click()}
-                        readOnly
-                      /> 
-                      <input
-                        type="file"
-                        className="custom-file-input"
-                        name="chapter_image"
-                        onChange={handleFileChange}
-                        ref={fileInputRef}
-                        style={{ display: 'none' }}
-                      />
-                      {validationErrors.chapter_image && (
-                        <span className="text-danger">
-                          {validationErrors.chapter_image}
-                        </span>
-                      )}
-                    </div>
-                  </div>*/}
-                  <div className="col-lg-12 col-md-12 mb-3">
-                    <div className="form-group">
-                      <label className="mont-font fw-600 font-xsss">
-                        Chapter Description
-                      </label>
-                      <textarea
-                        type="text"
-                        className="form-control mb-0 p-3 h100 lh-16"
-                        name="chapter_description"
-                        value={formData.chapter_description || ''}
-                        onChange={handleFormChange}
-                        placeholder="Enter Chapter Description"
-                      />
-                      {validationErrors.chapter_description && (
-                        <span className="text-danger">
-                          {validationErrors.chapter_description}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+              
                 </div>
                 <div className="col-lg-12 mb-0 mt-2 pl-0">
                   <button

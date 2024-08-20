@@ -7,11 +7,11 @@ export { default as StudentSubjects } from './Subjects';
 export { default as StudentSubjectResults } from './Subjects/Results';
 export { default as StudentCoursePreview } from './Subjects/CoursePreview';
 
-export { default as StudentTermTest } from './TermTest';
-export { default as EndTestModal } from './TermTest/EndTestModal';
+export { default as StudentTest } from './Test';
+export { default as EndTestModal } from './Test/EndTestModal';
 export { default as StudentJobTest } from './Jobs/JobTest';
 export { default as JobInstructionsModal } from './Jobs/JobInstructionModal';
-export { default as StudentTermTestDetails } from './TermTest/Show';
+export { default as StudentTestDetails } from './Test/Show';
 export { default as StudentAssessmentTest } from './AssessmentTest';
 
 export { default as StudentJobs } from './Jobs';

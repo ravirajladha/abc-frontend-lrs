@@ -10,18 +10,18 @@ import { deleteChapter } from '@/api/admin';
 import { ContentLoader, ContentHeader } from '@/components/common';
 
 function Chapters({ title }) {
-  let { classId, subjectId } = useParams();
+  let { subjectId, courseId } = useParams();
 
-  const [subjectName, setSubjectName] = useState();
+  const [courseName, setCourseName] = useState();
   const [chapters, setChapters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchData = async (classId, subjectId) => {
-    return await fetchChapters(classId, subjectId)
+  const fetchData = async (subjectId, courseId) => {
+    return await fetchChapters(subjectId, courseId)
       .then((data) => {
         setChapters(data.chapters);
-        setSubjectName(data.subject);
+        setCourseName(data.course);
         setLoading(false);
       })
       .catch((error) => {
@@ -31,7 +31,7 @@ function Chapters({ title }) {
   };
 
   useEffect(() => {
-    fetchData(classId, subjectId);
+    fetchData(subjectId, courseId);
   }, []);
 
   const handleDelete = async (chapterId) => {
@@ -45,7 +45,7 @@ function Chapters({ title }) {
       if (result.isConfirmed) {
         try {
           const response = await deleteChapter(chapterId);
-          await fetchData(classId, subjectId);
+          await fetchData(subjectId, courseId);
           toast.success(response.message);
         } catch (error) {
           toast.error(error.message);
@@ -60,9 +60,9 @@ function Chapters({ title }) {
   return (
     <div className="px-2">
       <ContentHeader
-        title={subjectName}
+        title={courseName}
         subtitle={title}
-        backLink={`/admin/subjects/${classId}/courses`}
+        backLink={`/admin/subjects/${subjectId}/courses`}
         buttons={[
           {
             link: 'create',
@@ -98,19 +98,19 @@ function Chapters({ title }) {
                           <td>{chapter.title}</td>
                           <td className="text-right">
                             <Link
-                              to={`/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapter.id}/create`}
+                              to={`/admin/subjects/${subjectId}/courses/${courseId}/chapters/${chapter.id}/create`}
                               className="btn btn-outline-info mr-2 btn-icon btn-sm"
                             >
                               <i className="feather-plus"></i>
                             </Link>
                             <Link
-                              to={`/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapter.id}`}
+                              to={`/admin/subjects/${subjectId}/courses/${courseId}/chapters/${chapter.id}`}
                               className="btn btn-outline-primary mr-2 btn-icon btn-sm"
                             >
                               <i className="feather-eye"></i>
                             </Link>
                             <Link
-                              to={`/admin/subjects/${classId}/courses/${subjectId}/chapters/${chapter.id}/edit`}
+                              to={`/admin/subjects/${subjectId}/courses/${courseId}/chapters/${chapter.id}/edit`}
                               className="btn btn-outline-warning btn-icon mr-2 btn-sm"
                             >
                               <i className="feather-edit"></i>

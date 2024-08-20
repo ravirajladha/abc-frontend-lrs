@@ -14,8 +14,8 @@ import {
   StudentSettings,
   StudentSubjectResults,
   StudentSubjects,
-  StudentTermTest,
-  StudentTermTestDetails,
+  StudentTest,
+  StudentTestDetails,
   InternshipParticipate,
   StudentZoomCall,
   PaymentStudent,
@@ -45,13 +45,13 @@ const StudentRoutes = [
     element: <StudentAssessmentTest />,
   },
   {
-    path: 'courses/:subjectId/term-test/:testId/results',
-    element: <StudentTermTestDetails />,
+    path: 'courses/:subjectId/test/:testId/results',
+    element: <StudentTestDetails />,
   },
   //test element
   {
-    // path: 'courses/:subjectId/term-test/:testId',
-    // element: <StudentTermTest />,
+    // path: 'courses/:subjectId/test/:testId',
+    // element: <StudentTest />,
   },
   {
     path: 'courses/:subjectId/mini-project/:miniProjectId',

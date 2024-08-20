@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { createStudent, fetchFeeForClass } from '@/api/parent';
-import { fetchClasses, fetchSections } from '@/api/common';
+import { createStudent, fetchFeeForSubject } from '@/api/parent';
+import { fetchSubjects, fetchSections } from '@/api/common';
 
 import { ContentCardWrapper, ContentHeader } from '@/components/common';
 import { SelectInput } from '@/components/common/form';
@@ -11,7 +11,7 @@ import { SelectInput } from '@/components/common/form';
 function Create() {
   const navigate = useNavigate();
 
-  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [sections, setSections] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
 
@@ -19,7 +19,7 @@ function Create() {
     name: '',
     email: '',
     phone_number: '',
-    class_id: '',
+    subject_id: '',
     section_id: '',
     profile_image: '',
     doj: '',
@@ -32,10 +32,10 @@ function Create() {
 
   const [amount, setAmount] = useState('');
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data);
+        setSubjects(data);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -53,15 +53,15 @@ function Create() {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
   useEffect(() => {
     fetchSectionsDropdownData();
   }, [fetchSectionsDropdownData]);
 
-  const fetchFee = useCallback((classId) => {
-    fetchFeeForClass(classId)
+  const fetchFee = useCallback((subjectId) => {
+    fetchFeeForSubject(subjectId)
       .then((data) => {
         setAmount(data.fee);
       })
@@ -70,11 +70,11 @@ function Create() {
       });
   }, []);
 
-  const handleClassChange = ({ target: { value } }) => {
-    setValidationErrors(({ class_id: _, ...prevErrors }) => prevErrors);
+  const handleSubjectChange = ({ target: { value } }) => {
+    setValidationErrors(({ subject_id: _, ...prevErrors }) => prevErrors);
     setForm((prevForm) => ({
       ...prevForm,
-      class_id: value,
+      subject_id: value,
     }));
     fetchFee(value);
   };
@@ -89,8 +89,8 @@ function Create() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!amount){
-      toast.error("The selected class has no fees try later.");
+    if (!amount) {
+      toast.error('The selected subject has no fees. Please try again later.');
       return;
     }
     try {
@@ -146,19 +146,19 @@ function Create() {
             <div className="col-lg-3 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                  Select Class <span className="text-danger">*</span>
+                  Select Subject <span className="text-danger">*</span>
                 </label>
                 <SelectInput
                   className="form-control"
-                  options={classes}
-                  name="class"
+                  options={subjects}
+                  name="subject"
                   label="name"
-                  value={form.class_id}
-                  onChange={handleClassChange}
-                  placeholder="Select Class"
+                  value={form.subject_id}
+                  onChange={handleSubjectChange}
+                  placeholder="Select Subject"
                 />
-                {validationErrors.class && (
-                  <span className="text-danger">{validationErrors.class}</span>
+                {validationErrors.subject && (
+                  <span className="text-danger">{validationErrors.subject}</span>
                 )}
               </div>
             </div>
@@ -176,8 +176,8 @@ function Create() {
                   onChange={handleSectionChange}
                   placeholder="Select Section"
                 />
-                {validationErrors.class && (
-                  <span className="text-danger">{validationErrors.class}</span>
+                {validationErrors.section && (
+                  <span className="text-danger">{validationErrors.section}</span>
                 )}
               </div>
             </div>
@@ -225,7 +225,7 @@ function Create() {
 
           <div className="row">
             <div className="col-lg-12">
-              <h4 className='float-right font-xss fw-500'>Rs.{amount}</h4>
+              <h4 className="float-right font-xss fw-500">Rs.{amount}</h4>
             </div>
             <div className="col-lg-12 mb-0 mt-2 pl-0">
               <button

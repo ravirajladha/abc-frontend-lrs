@@ -29,9 +29,9 @@ function Student() {
   }, [studentId]);
 
   const fetchStudentReportCard = useCallback(
-    async (studentId, classId, sectionId) => {
+    async (studentId, subjectId, sectionId) => {
       try {
-        const data = await fetchReportCard(studentId, classId, sectionId);
+        const data = await fetchReportCard(studentId, subjectId, sectionId);
         if (data) {
           setReportCard(data.report_card);
           console.log(data.report_card);

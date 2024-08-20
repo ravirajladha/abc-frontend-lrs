@@ -11,7 +11,7 @@ import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SelectInput } from '@/components/common/form';
 import { ELAB_LANGUAGES } from '@/utils/constants';
 
-import { fetchClasses, fetchSubjects } from '@/api/dropdown';
+import { fetchSubjects, fetchCourses } from '@/api/dropdown';
 import { createElab } from '@/api/admin';
 
 function Create({ title }) {
@@ -21,8 +21,8 @@ function Create({ title }) {
   const [subjects, setSubjects] = useState([]);
   //setting the form data empty initially
   const initialFormData = {
-    selectedClass: '',
     selectedSubject: '',
+    selectedCourse: '',
     selectedLanguage: null,
     elabName: '',
     // code: '',
@@ -47,10 +47,10 @@ function Create({ title }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  const fetchClassDropdownData = useCallback(() => {
-    fetchClasses()
+  const fetchSubjectDropdownData = useCallback(() => {
+    fetchSubjects()
       .then((data) => {
-        setClasses(data.classes);
+        setSubjects(data.subjects);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -58,13 +58,13 @@ function Create({ title }) {
   }, []);
 
   useEffect(() => {
-    fetchClassDropdownData();
-  }, [fetchClassDropdownData]);
+    fetchSubjectDropdownData();
+  }, [fetchSubjectDropdownData]);
 
-  const fetchSubjectsDropdownData = useCallback((classId) => {
-    fetchSubjects(classId)
+  const fetchCoursesDropdownData = useCallback((classId) => {
+    fetchCourse(subjectId)
       .then((data) => {
-        setSubjects(data.subjects);
+        setCourse(data.courses);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -89,46 +89,34 @@ function Create({ title }) {
     }
   };
 
-  const handleClassChange = ({ target: { value } }) => {
-    console.log('classId', value);
+  const handleSubjectChange = ({ target: { value } }) => {
+    console.log('subjectId', value);
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
-      selectedClass: '',
+      selectedSubject: '',
     }));
     setFormData({
-      selectedClass: value,
-      selectedSubject: '',
+      selectedSubject: value,
+      selectedCourse: '',
     });
 
-    fetchSubjectsDropdownData(value);
+    fetchCoursesDropdownData(value);
   };
-  const handleSubjectChange = (event) => {
-    console.log('subject value', event.target.value);
-    const selectedSubjectId = event.target.value;
+  const handleCourseChange = (event) => {
+    console.log('course value', event.target.value);
+    const selectedCourseId = event.target.value;
     setFormData((prevData) => ({
       ...prevData,
-      selectedSubject: selectedSubjectId,
+      selectedCourse: selectedCourseId,
     }));
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
-      selectedSubject: '',
+      selectedCourse: '',
     }));
 
-    const selectedSubject = event.target.value;
-    setFormData((prevData) => ({ ...prevData, selectedSubject }));
+    const selectedCourse = event.target.value;
+    setFormData((prevData) => ({ ...prevData, selectedCourse }));
   };
-  // const handleLanguageChange = (event) => {
-  //   const selectedLanguageId = event.target.value; // Get the selected language ID
-  //   const selectedLanguage = ELAB_LANGUAGES.find(
-  //     (language) => language.id === parseInt(selectedLanguageId)
-  //   );
-  //   setFormData({ ...formData, selectedLanguage }); // Update the selectedLanguage in the form data
-  // };
-
-  // const handleLanguageChange = (event) => {
-  //   const selectedLanguageId = event.target.value; // Get the selected language ID
-  //   const selectedLanguage = ELAB_LANGUAGES.find(language => language.id === parseInt(selectedLanguageId));
-  //   setFormData({ ...formData, selectedLanguage: selectedLanguage.value }); // Update the selectedLanguage in the form data with it
 
   const handleLanguageChange = (event) => {
     const selectedLanguageId = event.target.value; // Get the selected language ID
@@ -167,14 +155,14 @@ function Create({ title }) {
                 </label>
                 <SelectInput
                   className="form-cdgdntrol"
-                  options={classes}
-                  name="selectedClass"
+                  options={subjects}
+                  name="selectedSubject"
                   label="name"
-                  value={formData.selectedClass}
-                  onChange={handleClassChange}
+                  value={formData.selectedSubject}
+                  onChange={handleSubjectChange}
                   placeholder="Select Subject"
                 />
-                {validationErrors.selectedClass && (
+                {validationErrors.selectedSubject && (
                   <span className="text-danger">
                     Subject empty or not found.
                   </span>
@@ -191,14 +179,14 @@ function Create({ title }) {
 
                 <SelectInput
                   className="form-control"
-                  options={subjects}
-                  name="selectedSubject"
+                  options={courses}
+                  name="selectedCourse"
                   label="name"
-                  value={formData.selectedSubject || ''}
-                  onChange={handleSubjectChange}
+                  value={formData.selectedCourse || ''}
+                  onChange={handleCourseChange}
                   placeholder="Select Course"
                 />
-                {validationErrors.selectedSubject && (
+                {validationErrors.selectedCourse && (
                   <span className="text-danger">
                     Course empty or not found.
                   </span>
@@ -236,21 +224,6 @@ function Create({ title }) {
                     {validationErrors.selectedLanguage}
                   </span>
                 )}
-
-                {/* <SelectInput
-                  className="form-control"
-                  options={ELAB_LANGUAGES}
-                  label="language"
-                  name="selectedLanguage"
-                  value={formData.selectedSubject || ''}
-                  onChange={handleSubjectChange}
-                  placeholder="Select Subject"
-                />
-                {validationErrors.selectedSubject && (
-                  <span className="text-danger">
-                    {validationErrors.selectedSubject}
-                  </span>
-                )} */}
               </div>
             </div>
 
@@ -274,35 +247,6 @@ function Create({ title }) {
               </div>
             </div>
 
-            {/* Code AceEditor */}
-            {/* <div className="col-6">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Langauge</label>
-                <AceEditor
-                  mode="java"
-                  theme="github"
-                  name="code"
-                  onChange={(value) => handleFormSpecialChange(value, 'code')}
-                  value={formData.code}
-                  editorProps={{ $blockScrolling: true }}
-                  // Add onChange handler if needed
-                  setOptions={{
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: true,
-                    showLineNumbers: true,
-                    tabSize: 2,
-                  }}
-                  className="w-100 h200 font-xss"
-                />
-                 {validationErrors.code && (
-                  <span className="text-danger">
-                    {validationErrors.code}
-                  </span>
-                )}
-              </div>
-            </div> */}
-
             {/* Description Textarea */}
             <div className="col-12">
               <div className="form-group">
@@ -324,10 +268,7 @@ function Create({ title }) {
                 )}
               </div>
             </div>
-
-            {/* Textarea I/O Format */}
             
-
             {/* Constraints Textarea */}
             <div className="col-6">
               <div className="form-group">

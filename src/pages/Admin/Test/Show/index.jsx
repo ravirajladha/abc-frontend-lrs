@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { ContentHeader, ContentLoader } from '@/components/common';
 
 import { fetchTestDetails } from '@/api/admin';
-import { TERM_TYPES } from '@/utils/constants';
+
 function Show() {
   const [loading, setLoading] = useState(true);
   const [testData, setTestData] = useState(null);
@@ -12,7 +12,7 @@ function Show() {
   const { testId } = useParams();
   useEffect(() => {
     fetchTestDetails(testId).then((data) => {
-      setTestData(data.term_test);
+      setTestData(data.test);
       setLoading(false);
     });
   }, []);
@@ -41,22 +41,12 @@ function Show() {
                   </h4>
                   <div className="d-flex align-items-center justify-content-center flex-wrap w-100">
                     <span className="badge badge-pill badge-secondary mr-2 px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3">
-                      {testData?.class}
-                    </span>
-                    <span className="badge badge-pill badge-warning mr-2 px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3">
                       {testData?.subject}
                     </span>
-                    <span className="badge badge-pill badge-danger px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3">
-                      {
-                        TERM_TYPES.find(
-                          (item) => item.id === testData?.term_type
-                        )?.name
-                      }{' '}
-                      Term
+                    <span className="badge badge-pill badge-warning mr-2 px-3 py-2 text-white font-xssss fw-500 mt-1 lh-3">
+                      {testData?.course}
                     </span>
-                    <span className="badge badge-pill badge-info px-3 py-2 text-white font-xssss fw-600 mt-1 lh-3">
-                      {testData?.no_of_questions}
-                    </span>
+               
                   </div>
                 </div>
               </div>

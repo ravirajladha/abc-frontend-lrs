@@ -17,7 +17,7 @@ const ADMIN_ROUTES = {
     title: 'Study & Support',
     icon: FaBookOpenReader,
     routes: [
-      { path: '/admin/subjects', title: 'Courses', icon: 'feather-book-open' },
+      { path: '/admin/subjects', title: 'Subjects', icon: 'feather-book-open' },
       { path: '/admin/tests', title: 'Tests', icon: 'feather-target' },
       { path: '/admin/assessments', title: 'Assessments', icon: 'feather-activity' },
       { path: '/admin/trainers', title: 'Trainers', icon: 'feather-user-check' },
