@@ -4,26 +4,26 @@ import { Suspense, lazy } from 'react';
 
 import {
   AdminLayout,
-  SchoolLayout,
+  InternshipAdminLayout,
   StudentLayout,
-  TeacherLayout,
+  TrainerLayout,
   ParentLayout,
   RecruiterLayout,
 } from '@/layouts';
 
 import GuestRoutes from '@/routes/GuestRoutes';
 import AdminRoutes from '@/routes/AdminRoutes';
-import SchoolRoutes from '@/routes/SchoolRoutes';
-import TeacherRoutes from '@/routes/TeacherRoutes';
+import InternshipAdminRoutes from '@/routes/InternshipAdminRoutes';
+import TrainerRoutes from '@/routes/TrainerRoutes';
 import StudentRoutes from '@/routes/StudentRoutes';
 import ParentRoutes from '@/routes/ParentRoutes';
 import RecruiterRoutes from '@/routes/RecruiterRoutes';
 
 import { NotFound, StudentTest, StudentJobTest } from '@/pages';
-import {
-  SchoolApplicationPrint,
-  SchoolOldApplicationPrint,
-} from '@/pages/School';
+// import {
+//   InternshipAdminApplicationPrint,
+//   InternshipAdminOldApplicationPrint,
+// } from '@/pages/InternshipAdmin';
 import { CaseStudyShow, EbookShow, ProjectReportShow } from '@/pages/Admin';
 
 // import { CaseStudyShow, EbookShow, ProjectReportShow } from '@/pages/admin';
@@ -96,8 +96,8 @@ function Index() {
             )}
             {/* INTERNSHIP_ADMIN Routes */}
             {authenticatedUserType === USER_TYPES.INTERNSHIP_ADMIN && (
-              <Route path="/academic-admin" element={<SchoolLayout />}>
-                {SchoolRoutes.map((route, index) => (
+              <Route path="/internship-admin" element={<InternshipAdminLayout />}>
+                {InternshipAdminRoutes.map((route, index) => (
                   <Route
                     key={index}
                     path={route.path}
@@ -109,8 +109,8 @@ function Index() {
             {/* TRAINER Routes */}
             {authenticatedUserType === USER_TYPES.TRAINER && (
               <>
-                <Route path="/teacher" element={<TeacherLayout />}>
-                  {TeacherRoutes.map((route, index) => (
+                <Route path="/trainer" element={<TrainerLayout />}>
+                  {TrainerRoutes.map((route, index) => (
                     <Route
                       key={index}
                       path={route.path}
@@ -130,6 +130,7 @@ function Index() {
                 />
               </>
             )}
+
             {/* Student Routes */}
             {authenticatedUserType === USER_TYPES.STUDENT && (
               <Route path="/student" element={<StudentLayout />}>
@@ -142,6 +143,7 @@ function Index() {
                 ))}
               </Route>
             )}
+            
             {/* Parent Routes */}
             {/* {authenticatedUserType === USER_TYPES.PARENT && (
               <Route path="/parent" element={<ParentLayout />}>
@@ -319,14 +321,14 @@ function Index() {
 
         {/* { path: 'elab/show/:type/:redirecting_id/:type_id/:labId', element: <Editor1 title="Elab" /> }, */}
 
-        <Route
-          path="school/applications/:applicationId/view/print"
-          element={<SchoolApplicationPrint />}
+        {/* <Route
+          path="internshipAdmin/applications/:applicationId/view/print"
+          element={<InternshipAdminApplicationPrintnternshipAdminApplicationPrint />}
         />
         <Route
-          path="school/applications/old-applications/:applicationId/view/print"
-          element={<SchoolOldApplicationPrint />}
-        />
+          path="internshipAdmin/applications/old-applications/:applicationId/view/print"
+          element={<InternshipAdminOldApplicationPrint />}
+        /> */}
         <Route
           path="*"
           element={isAuthenticated ? <NotFound /> : <Navigate to="/login" />}

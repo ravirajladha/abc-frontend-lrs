@@ -38,8 +38,8 @@ const StudentRoutes = [
   { path: 'courses', element: <StudentSubjects /> },
   { path: 'courses/:subjectId/results', element: <StudentSubjectResults isAdmin={false} isStudent={true}/> },
 
-  { path: 'courses/:subjectId/learn', element: <StudentLearn /> },
-  { path: 'courses/:subjectId/course-preview', element: <StudentCoursePreview /> },
+  { path: 'courses/:courseId/learn', element: <StudentLearn /> },
+  { path: 'courses/:courseId/course-preview', element: <StudentCoursePreview /> },
   {
     path: 'courses/:subjectId/learn/:videoId/assessment/:assessmentId',
     element: <StudentAssessmentTest />,

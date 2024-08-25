@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ContentTitle({ title, teacher, chapter }) {
+function ContentTitle({ title, trainer, chapter }) {
   return (
     <div className="card d-block border-0 rounded-lg overflow-hidden dark-bg-transparent bg-transparent mt-4 pb-3">
       <div className="row">
@@ -14,7 +14,7 @@ function ContentTitle({ title, teacher, chapter }) {
       </span>
       <span className="dot ml-2 mr-2 d-inline-block btn-round-xss bg-grey"></span>
       <span className="font-xss fw-600 text-grey-500 d-inline-block ml-1">
-      {teacher}
+      {trainer}
       </span>
     </div>
   );

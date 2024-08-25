@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
-import DefaultProfileImage from '@/assets/images/default/teacher.png';
+import DefaultProfileImage from '@/assets/images/default/trainer.png';
 
 import {
   ContentFallback,
@@ -24,7 +24,7 @@ function Show({ title }) {
       const data = await fetchRecruiter(recruiterId);
       console.log("data", data)
       setRecruiterDetails(data.recruiter);
-      // setRecruiterSubjects(data.teacher_subjects);
+      // setRecruiterSubjects(data.trainer_subjects);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -84,13 +84,13 @@ function Show({ title }) {
                           {/* <div className="form-group">
                             <label className="mont-font fw-500 font-xsss">
                               <span className="fw-600 ">DOB: </span>{' '}
-                              {teacher?.dob}
+                              {trainer?.dob}
                             </label>
                           </div>
                           <div className="form-group">
                             <label className="mont-font fw-500 font-xsss">
                               <span className="fw-600 ">Address: </span>{' '}
-                              {teacher?.address}
+                              {trainer?.address}
                             </label>
                           </div> */}
                         </div>
@@ -110,14 +110,14 @@ function Show({ title }) {
                           {/* <div className="form-group">
                             <label className="mont-font fw-500 font-xsss">
                               <span className="fw-600 ">Location: </span>{' '}
-                              {teacher?.city}
-                              {teacher?.state}
+                              {trainer?.city}
+                              {trainer?.state}
                             </label>
                           </div>
                           <div className="form-group">
                             <label className="mont-font fw-500 font-xsss">
                               <span className="fw-600 ">Pincode: </span>{' '}
-                              {teacher?.pincode}
+                              {trainer?.pincode}
                             </label>
                           </div> */}
                         </div>
@@ -125,10 +125,10 @@ function Show({ title }) {
                       {/* <div className="row">
                         <div className="col-lg-12">
                           <h3 className="fw-600 font-xs my-4">
-                            Teacher Classes and Subjects:{' '}
+                            Trainer Classes and Subjects:{' '}
                           </h3>
-                          {teacherSubjects !== null ? (
-                            teacherSubjects?.map((value, index) => (
+                          {trainerSubjects !== null ? (
+                            trainerSubjects?.map((value, index) => (
                               <ol type="1" key={index}>
                                 <li className="mont-font fw-500 font-xss">
                                   {index + 1}. {value?.class_name}

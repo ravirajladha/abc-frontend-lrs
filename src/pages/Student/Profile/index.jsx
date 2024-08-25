@@ -15,7 +15,7 @@ import {
 } from '@/components/student/profile';
 
 import { fetchReportCard, fetchWalletDetails } from '@/api/student';
-import { fetchStudentFromStudents } from '@/api/school';
+import { fetchStudentFromStudents } from '@/api/internshipAdmin';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 function Profile({ isAdmin, isStudent }) {
   const { studentId: studentIdFromParams } = useParams();

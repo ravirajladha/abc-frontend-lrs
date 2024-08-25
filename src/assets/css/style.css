@@ -189,7 +189,7 @@ button.btn.btn-secondary {
   pointer-events: none;
 }
 
-.chat-wrapper .teacher-chat {
+.chat-wrapper .trainer-chat {
   height: calc(100vh - 200px) !important;
 }
 

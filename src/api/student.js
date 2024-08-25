@@ -39,10 +39,11 @@ export const fetchSubjects = async () => {
   return response.data.subjects;
 };
 
-export const fetchSubjectsWithResults = async (subjectId, studentId) => {
+export const fetchSubjectsWithResults = async (courseId , studentId) => {
   const response = await apiService.fetchData(
-    `student/subjects?subjectId=${subjectId}&studentId=${studentId}`
+    `student/courses?courseId=${courseId}&studentId=${studentId}`
   );
+  console.log("response", response);
   return response.data;
 };
 
@@ -57,6 +58,7 @@ export const fetchExternalStudentContents = async (courseId) => {
   const response = await apiService.fetchData(
     `student/courses/${courseId}/external-student-contents`
   );
+  console.log("api called for learn")
   return response.data;
 };
 
@@ -78,9 +80,9 @@ export const storeVideoLog = async (data) => {
   return response.data;
 };
 
-export const fetchQnA = async (studentId, teacherId, courseId) => {
+export const fetchQnA = async (studentId, trainerId, courseId) => {
   const response = await apiService.fetchData(
-    `student/qna/${studentId}/${teacherId}/${courseId}`
+    `student/qna/${studentId}/${trainerId}/${courseId}`
   );
   return response.data;
 };

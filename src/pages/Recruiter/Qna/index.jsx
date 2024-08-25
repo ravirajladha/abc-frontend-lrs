@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ContentHeader } from '@/components/common';
-import { ChatInterface, ChatUserList } from '@/components/teacher/qna';
-import { fetchStudents, fetchQnA, storeQnA } from '@/api/teacher';
+import { ChatInterface, ChatUserList } from '@/components/trainer/qna';
+import { fetchStudents, fetchQnA, storeQnA } from '@/api/trainer';
 import { getUserDataFromLocalStorage } from '@/utils/services';
 
 function Qna() {
   const userData = JSON.parse(getUserDataFromLocalStorage());
   const [loading, setLoading] = useState(true);
-  const [teacherId, setTeacherId] = useState(null);
+  const [trainerId, setTrainerId] = useState(null);
   const [students, setStudents] = useState([]);
   const [studentId, setStudentId] = useState(null);
-  const [teacherName, setTeacherName] = useState(null);
+  const [trainerName, setTrainerName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState({
     id: '',
     name: '',
@@ -33,26 +33,26 @@ function Qna() {
 
   const getMessages = useCallback(async () => {
     try {
-      const response = await fetchQnA(studentId, teacherId);
+      const response = await fetchQnA(studentId, trainerId);
       setMessages(response.merged_messages);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching messages:', error.message);
       setLoading(false);
     }
-  }, [studentId, teacherId]);
+  }, [studentId, trainerId]);
 
   useEffect(() => {
-    setTeacherId(userData.id);
-    setTeacherName(userData.username);
+    setTrainerId(userData.id);
+    setTrainerName(userData.username);
     getStudents();
   }, []);
 
   useEffect(() => {
-    if (studentId && teacherId) {
+    if (studentId && trainerId) {
       getMessages();
     }
-  }, [studentId, teacherId]);
+  }, [studentId, trainerId]);
 
   const handChatStudent = useCallback(
     (studentId, studentName, messageStatus) => {
@@ -75,10 +75,10 @@ function Qna() {
       (messages &&
         messages.length > 0 &&
         lastMessage &&
-        lastMessage.sender_id !== teacherId) ||
+        lastMessage.sender_id !== trainerId) ||
       (selectedStudent && selectedStudent.status)
     );
-  }, [messages, selectedStudent, teacherId]);
+  }, [messages, selectedStudent, trainerId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -87,7 +87,7 @@ function Qna() {
       const qnaId = lastMessage.qna_id;
       const updatedFormData = {
         ...formData,
-        teacher_id: teacherId,
+        trainer_id: trainerId,
         qna_id: qnaId,
       };
 
@@ -119,12 +119,12 @@ function Qna() {
   );
 
   useEffect(() => {
-    if (studentId && teacherId) {
+    if (studentId && trainerId) {
       getMessages();
     } else {
       clearSelected();
     }
-  }, [studentId, teacherId, clearSelected, getMessages]);
+  }, [studentId, trainerId, clearSelected, getMessages]);
 
   return (
     <div>
@@ -179,8 +179,8 @@ function Qna() {
             users={students}
             messages={messages}
             selectedStudent={selectedStudent}
-            teacherId={teacherId}
-            teacherName={teacherName}
+            trainerId={trainerId}
+            trainerName={trainerName}
             loading={loading}
             showInput={shouldShowInput}
           />

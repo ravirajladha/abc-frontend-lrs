@@ -5,7 +5,7 @@ import { QnaSearchResults } from '@/components/student/learn';
 import { ContentLoader } from '@/components/common';
 
 import DefaultStudentImage from '@/assets/images/default/student.png';
-import DefaultTeacherImage from '@/assets/images/default/teacher.png';
+import DefaultTrainerImage from '@/assets/images/default/trainer.png';
 
 import { formatTimestamp } from '@/utils/helpers';
 import { fetchQnA, storeQnA, searchQuestion } from '@/api/student';
@@ -15,8 +15,8 @@ import { Link } from 'react-router-dom';
 function QnaTab({
   courseId,
   studentId,
-  teacherId,
-  isTeacherAvailable,
+  trainerId,
+  isTrainerAvailable,
   isTabActive,
 }) {
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ function QnaTab({
   const [formData, setFormData] = useState({
     question: '',
     student_id: studentId,
-    teacher_id: teacherId,
+    trainer_id: trainerId,
     course_id: courseId,
   });
 
@@ -85,7 +85,7 @@ function QnaTab({
     try {
       const updatedFormData = {
         ...formData,
-        teacher_id: teacherId,
+        trainer_id: trainerId,
         qna_id: selectedQnaId,
       };
       console.log(updatedFormData);
@@ -107,9 +107,9 @@ function QnaTab({
   };
 
   const getMessages = useCallback(async () => {
-    if (isTabActive && studentId && teacherId && courseId) {
+    if (isTabActive && studentId && trainerId && courseId) {
       try {
-        const response = await fetchQnA(studentId, teacherId, courseId);
+        const response = await fetchQnA(studentId, trainerId, courseId);
         setChat(response);
         setLoading(false);
       } catch (error) {
@@ -117,10 +117,10 @@ function QnaTab({
         setLoading(false);
       }
     }
-    if (!teacherId) {
+    if (!trainerId) {
       setLoading(false);
     }
-  }, [isTabActive, studentId, teacherId, courseId]);
+  }, [isTabActive, studentId, trainerId, courseId]);
 
   useEffect(() => {
     getMessages();
@@ -148,14 +148,14 @@ function QnaTab({
                     src={
                       message.sender_id === studentId
                         ? DefaultStudentImage
-                        : DefaultTeacherImage
+                        : DefaultTrainerImage
                     }
                     alt="avatar"
                     style={{ height: 'auto' }}
                   />
                 </figure>
                 <div>
-                  <h5>{message.sender_id === studentId ? 'You' : 'Teacher'}</h5>
+                  <h5>{message.sender_id === studentId ? 'You' : 'Trainer'}</h5>
                   <div className="time">
                     {message.created_at && formatTimestamp(message.created_at)}
                     {message.sender_id === studentId && (
@@ -187,7 +187,7 @@ function QnaTab({
         ) : (
           <div className="message-item"></div>
         )}
-        {isTeacherAvailable && (
+        {isTrainerAvailable && (
           <>
             {shouldShowInput() ? (
               <>
@@ -233,7 +233,7 @@ function QnaTab({
             )}
           </>
         )}
-        {!isTeacherAvailable && (
+        {!isTrainerAvailable && (
           <>
             <span className="text-center w-100 font-xss text-warning p-3">
               Chat Unavailable <br /> No Trainer Assigned
@@ -262,8 +262,8 @@ function QnaTab({
 QnaTab.propTypes = {
   courseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   studentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  teacherId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  isTeacherAvailable: PropTypes.bool,
+  trainerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isTrainerAvailable: PropTypes.bool,
   isTabActive: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 };
 

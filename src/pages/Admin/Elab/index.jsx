@@ -4,12 +4,10 @@ import {
   ContentHeader,
   ContentLoader,
   UcFirst,
-  Toggle,
   Pagination,
 } from '@/components/common';
 import { Link } from 'react-router-dom';
 import { fetchElabs} from '@/api/admin';
-
 
 function Elabs({ title }) {
   const [elabs, setElabs] = useState([]);
@@ -40,21 +38,6 @@ function Elabs({ title }) {
         setLoading(false);
       });
   }, [currentPage]);
-
-  // const handleToggle = async (elabId, isActive) => {
-  //   try {
-  //     await updateElabStatus(elabId, isActive ? 1 : 0);
-  //     setElabs((prevElabs) =>
-  //       prevElabs.map((elab) =>
-  //         elab.id === elabId ? { ...elab, active: isActive } : elab
-  //       )
-  //     );
-  //     toast.success('Elab status updated successfully');
-  //   } catch (error) {
-  //     setError(error);
-  //     toast.error(error.message);
-  //   }
-  // };
 
   const extractValue = (elab) => {
     // Parse the JSON string
@@ -133,10 +116,10 @@ function Elabs({ title }) {
                             </strong>
                           </td>
                           <td>
-                            <UcFirst text={elab.class.name} />
+                            <UcFirst text={elab.subject.name} />
                           </td>
                           <td>
-                            <UcFirst text={elab.subject.name} />
+                            <UcFirst text={elab.course.name} />
                           </td>
                           <td>
                             <UcFirst text={extractValue(elab)} />

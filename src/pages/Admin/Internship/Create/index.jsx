@@ -20,6 +20,10 @@ function Create() {
     description: '',
   });
 
+  const [userType, setUserType] = useState('');
+  const [showCorporate, setShowCorporate] = useState(false);
+  const [showInstitute, setShowInstitute] = useState(false);
+
   const imageRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
@@ -100,6 +104,22 @@ function Create() {
     }
   };
 
+  const handleUserTypeChange = (e) => {
+    const value = e.target.value;
+    setUserType(value);
+    setShowCorporate(value === 'offline');
+    setShowInstitute(value === 'offline');
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    if (name === 'corporate') {
+      setShowCorporate(checked);
+    } else if (name === 'institute') {
+      setShowInstitute(checked);
+    }
+  };
+
   return (
     <div>
       <ContentHeader title="Create Internship" />
@@ -129,7 +149,7 @@ function Create() {
             <div className="col-lg-6 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                Internship Name <span className="text-danger">*</span>
+                  Internship Name <span className="text-danger">*</span>
                 </label>
                 <input
                   type="text"
@@ -148,7 +168,7 @@ function Create() {
             <div className="col-lg-12 mb-2">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">
-                Internship Image <span className="text-danger">*</span>
+                  Internship Image <span className="text-danger">*</span>
                 </label>
                 <input
                   type="file"
@@ -207,69 +227,70 @@ function Create() {
             </div>
 
             <div className="col-lg-6 mb-3 dummy">
-        <label htmlFor="userType">Select Type:</label>
-        <select
-          id="userType"
-          className="form-control"
-          value={userType}
-          onChange={handleUserTypeChange}
-        >
-          <option value="">Select</option>
-          <option value="online">Online</option>
-          <option value="offline">Offline</option>
-        </select>
-      </div>
+              <label htmlFor="userType">Select Type:</label>
+              <select
+                id="userType"
+                className="form-control"
+                value={userType}
+                onChange={handleUserTypeChange}
+              >
+                <option value="">Select</option>
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+              </select>
+            </div>
 
-      {( userType === 'offline') && (
-        <div className="col-lg-6 mb-3 dummy">
-          <label>Select Options:</label>
-          <div>
-            <input
-              type="checkbox"
-              id="corporateCheckbox"
-              name="corporate"
-              checked={showCorporate}
-              onChange={handleCheckboxChange}
-            />{'  '}
-            <label htmlFor="corporateCheckbox">Corporate</label>
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id="instituteCheckbox"
-              name="institute"
-              checked={showInstitute}
-              onChange={handleCheckboxChange}
-            />{'  '}
-            <label htmlFor="instituteCheckbox">Academics</label>
-          </div>
-        </div>
-      )}
+            {userType === 'offline' && (
+              <div className="col-lg-6 mb-3 dummy">
+                <label>Select Options:</label>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="corporateCheckbox"
+                    name="corporate"
+                    checked={showCorporate}
+                    onChange={handleCheckboxChange}
+                  />{' '}
+                  <label htmlFor="corporateCheckbox">Corporate</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="instituteCheckbox"
+                    name="institute"
+                    checked={showInstitute}
+                    onChange={handleCheckboxChange}
+                  />{' '}
+                  <label htmlFor="instituteCheckbox">Academics</label>
+                </div>
+              </div>
+            )}
 
-      {showCorporate && (
-        <div className="col-lg-6 mb-3 dummy">
-          <label htmlFor="corporateSelect">Corporates:</label>
-          <select id="corporateSelect" className="form-control">
-            <option value="">Select Corporate</option>
-            <option value="corporate1">Corporate 1</option>
-            <option value="corporate2">Corporate 2</option>
-          </select>
-        </div>
-      )}
+            {showCorporate && (
+              <div className="col-lg-6 mb-3 dummy">
+                <label htmlFor="corporateSelect">Corporates:</label>
+                <select id="corporateSelect" className="form-control">
+                  <option value="">Select Corporate</option>
+                  <option value="corporate1">Corporate 1</option>
+                  <option value="corporate2">Corporate 2</option>
+                </select>
+              </div>
+            )}
 
-      {showInstitute && (
-        <div className="col-lg-6 mb-3 dummy">
-          <label htmlFor="instituteSelect">Select Academics:</label>
-          <select id="instituteSelect" className="form-control">
-            <option value="">Select Institute</option>
-            <option value="institute1">Institute 1</option>
-            <option value="institute2">Institute 2</option>
-          </select>
-        </div>
-      )}
+            {showInstitute && (
+              <div className="col-lg-6 mb-3 dummy">
+                <label htmlFor="instituteSelect">Select Academics:</label>
+                <select id="instituteSelect" className="form-control">
+                  <option value="">Select Institute</option>
+                  <option value="institute1">Institute 1</option>
+                  <option value="institute2">Institute 2</option>
+                </select>
+              </div>
+            )}
 
-
-            <SaveButton isSubmitting={isSubmitting} />
+            <div className="col-lg-12 text-center">
+              <SaveButton isSubmitting={isSubmitting} />
+            </div>
           </div>
         </form>
       </ContentFormWrapper>

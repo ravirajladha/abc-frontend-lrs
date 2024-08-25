@@ -11,23 +11,22 @@ import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SelectInput } from '@/components/common/form';
 import { ELAB_LANGUAGES } from '@/utils/constants';
 
-import { fetchSubjects, fetchCourses } from '@/api/dropdown';
+import { fetchCourses, fetchSubjects } from '@/api/dropdown';
 import { createElab } from '@/api/admin';
 
 function Create({ title }) {
   const navigate = useNavigate();
 
-  const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   //setting the form data empty initially
   const initialFormData = {
     selectedSubject: '',
     selectedCourse: '',
     selectedLanguage: null,
     elabName: '',
-    // code: '',
     description: '',
-    io_format:'',
+    io_format: '',
     constraints: '',
     sampleIO: '',
     pseudocode: '',
@@ -61,10 +60,10 @@ function Create({ title }) {
     fetchSubjectDropdownData();
   }, [fetchSubjectDropdownData]);
 
-  const fetchCoursesDropdownData = useCallback((classId) => {
-    fetchCourse(subjectId)
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
+    fetchCourses(subjectId)
       .then((data) => {
-        setCourse(data.courses);
+        setCourses(data.courses);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -102,6 +101,7 @@ function Create({ title }) {
 
     fetchCoursesDropdownData(value);
   };
+
   const handleCourseChange = (event) => {
     console.log('course value', event.target.value);
     const selectedCourseId = event.target.value;
@@ -113,9 +113,6 @@ function Create({ title }) {
       ...prevErrors,
       selectedCourse: '',
     }));
-
-    const selectedCourse = event.target.value;
-    setFormData((prevData) => ({ ...prevData, selectedCourse }));
   };
 
   const handleLanguageChange = (event) => {
@@ -129,7 +126,7 @@ function Create({ title }) {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
     setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
   };
-  // onChange={handleFormChange}
+
   const handleFormSpecialChange = (value, name) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
     setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
@@ -139,7 +136,7 @@ function Create({ title }) {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-  // console.log("title", title)
+
 
   return (
     <div>

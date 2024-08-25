@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Star from '/assets/images/star.png';
 import StarDisabled from '/assets/images/star-disable.png';
 import DefaultProfileImage from '@/assets/images/default/student.png';
-import DefaultTeacherImage from '@/assets/images/default/teacher.png';
+import DefaultTrainerImage from '@/assets/images/default/trainer.png';
 import { Modal } from 'react-bootstrap';
 import StarRatings from 'react-star-ratings';
 
@@ -171,7 +171,7 @@ const index = () => {
           <div className="col-2 text-left">
             <figure className="avatar float-left mb-0">
               <img
-                src={DefaultTeacherImage}
+                src={DefaultTrainerImage}
                 alt="banner"
                 className="float-right shadow-none w40 mr-2"
               />
@@ -180,7 +180,7 @@ const index = () => {
           <div className="col-9 pl-0">
             <div className="content">
               <h6 className="author-name font-xssss fw-600 mb-0 text-grey-800">
-                Teacher
+              Trainer
               </h6>
               <h6 className="d-block font-xsssss fw-500 text-grey-500 mt-2 mb-0">
                 July 26 at 8:20 PM

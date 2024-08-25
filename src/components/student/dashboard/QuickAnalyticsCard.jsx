@@ -7,12 +7,9 @@ function QuickAnalyticsCard({
   last_login_at,
   total_watch_time,
   avg_assessment_score,
-  first_term_results,
-  second_term_results,
-  third_term_results,
-  first_term_total_marks,
-  second_term_total_marks,
-  third_term_total_marks,
+  test_results,
+  test_total_marks,
+
 }) {
   return (
     <div className="card w-100 p-1 border-0 mt-4 rounded-lg bg-white shadow-xs overflow-hidden">
@@ -48,10 +45,10 @@ function QuickAnalyticsCard({
           </div>
           <div className="col-3">
             <h2 className="text-grey-900 fw-600 font-xs mt-2 mb-2 pb-1 ls-3 lh-1">
-              {first_term_results ? first_term_results + '/' + first_term_total_marks+'.00' : '0'}
+              {test_results ? test_results + '/' + test_total_marks+'.00' : '0'}
             </h2>
             <h4 className="fw-700 text-grey-500 font-xssss ls-3 text-uppercase mb-0 mt-0">
-              TOTAL SUBJECT TEST SCORE
+              TOTAL COURSE TEST SCORE
             </h4>
           </div>
         </div>
@@ -86,12 +83,9 @@ QuickAnalyticsCard.propTypes = {
   last_login_at: PropTypes.string,
   total_watch_time: PropTypes.string,
   avg_assessment_score: PropTypes.string,
-  first_term_results: PropTypes.string,
-  second_term_results: PropTypes.string,
-  third_term_results: PropTypes.string,
-  first_term_total_marks: PropTypes.string,
-  second_term_total_marks: PropTypes.string,
-  third_term_total_marks: PropTypes.string,
+  test_results: PropTypes.string,
+  test_total_marks: PropTypes.string,
+
 };
 
 export default QuickAnalyticsCard;

@@ -16,23 +16,23 @@ import {
   Course,
   CourseEdit,
   CourseCreate,
-  School,
-  ShowSchoolDetail,
-  EditSchool,
-  CreateSchool,
+  InternshipAdmin,
+  ShowInternshipAdminDetail,
+  EditInternshipAdmin,
+  CreateInternshipAdmin,
   // AcademicAdmin,
   // // ShowAcademicAdminDetail,
   // EditAcademicAdmin,
   // CreateAcademicAdmin,
   // AcademicAdminShowApplication,
-  // AcademicAdminShowTeacher,
+  // AcademicAdminShowTrainer,
   // AcademicAdminShowStudent,
   Quote,
   CreateQuote,
   EditQuote,
-  // ShowSchool,
-  // EditSchool,
-  // CreateSchool,
+  // ShowInternshipAdmin,
+  // EditInternshipAdmin,
+  // CreateInternshipAdmin,
   EbookEdit,
   EbookIndex,
   EbookCreate,
@@ -104,14 +104,14 @@ TestResult,
   ProjectReportSectionCreate,
   ProjectReportElementCreate,
   ProjectReportElementEdit,
-  SchoolShowApplication,
-  SchoolShowTeacher,
-  SchoolShowStudent,
-  AssignTeacher,
-  CreateTeacher,
-  EditTeacher,
-  SchoolTeachers,
-  ShowTeacher,
+  InternshipAdminShowApplication,
+  InternshipAdminShowTrainer,
+  InternshipAdminShowStudent,
+  AssignTrainer,
+  CreateTrainer,
+  EditTrainer,
+  InternshipAdminTrainers,
+  ShowTrainer,
 
   Job,
   JobEdit,
@@ -242,7 +242,7 @@ const AdminRoutes = [
     element: <VideoEdit title="Edit Content" />,
   },
 
-  //School Routes
+  //InternshipAdmin Routes
   {
     path: 'quotes',
     element: <Quote title="All" subtitle="Quotes" />,
@@ -256,24 +256,24 @@ const AdminRoutes = [
     element: <EditQuote title="Edit" subtitle="Quotes" />,
   },
   {
-    path: 'academic-admin',
-    element: <School title="All" subtitle="Academic Admins" />,
+    path: 'internship-admin',
+    element: <InternshipAdmin title="All" subtitle="Internship Admins" />,
   },
-  { path: 'academic-admin/create', element: <CreateSchool title="Add  Corporate/Academic Admin" /> },
+  { path: 'internship-admin/create', element: <CreateInternshipAdmin title="Add  Corporate/Internship Admin" /> },
   {
-    path: 'academic-admin/:schoolId/applications',
-    element: <SchoolShowApplication title="Academic Admin Applications" />,
-  },
-  {
-    path: 'academic-admin/:schoolId/trainers',
-    element: <SchoolShowTeacher title="Academic Admin Teachers" />,
+    path: 'internship-admin/:internshipAdminId/applications',
+    element: <InternshipAdminShowApplication title="Internship Admin Applications" />,
   },
   {
-    path: 'academic-admin/:schoolId/students',
-    element: <SchoolShowStudent title="Academic Admin Students" />,
+    path: 'internship-admin/:internshipAdminId/trainers',
+    element: <InternshipAdminShowTrainer title="Internship Admin Trainers" />,
   },
   {
-    path: 'academic-admin/:schoolId/students/:studentId',
+    path: 'internship-admin/:internshipAdminId/students',
+    element: <InternshipAdminShowStudent title="Internship Admin Students" />,
+  },
+  {
+    path: 'internship-admin/:internshipAdminId/students/:studentId',
     element: (
       <StudentProfile
         title="Student Profile Students"
@@ -283,22 +283,22 @@ const AdminRoutes = [
     ),
   },
   {
-    path: 'academic-admin/:schoolId',
-    element: <ShowSchoolDetail title="Internship Admin  Details" />,
+    path: 'internship-admin/:internshipAdminId',
+    element: <ShowInternshipAdminDetail title="Internship Admin  Details" />,
   },
   {
-    path: 'academic-admin/:schoolId/school',
-    element: <ShowSchoolDetail title="Internship Admin  Details" />,
+    path: 'internship-admin/:internshipAdminId/internshipAdmin',
+    element: <ShowInternshipAdminDetail title="Internship Admin  Details" />,
   },
   {
-    path: 'academic-admin/:schoolId/edit',
-    element: <EditSchool title="Edit Academic Admin" />,
+    path: 'internship-admin/:internshipAdminId/edit',
+    element: <EditInternshipAdmin title="Edit Internship Admin" />,
   },
 
 
 
   // // {
-  // //   path: 'academic-admin/:schoolId/students/:studentId',
+  // //   path: 'internship-admin/:schoolId/students/:studentId',
   // //   element: (
   // //     <StudentProfile
   // //       title="Student Profile Students"
@@ -311,14 +311,14 @@ const AdminRoutes = [
 
   //trainers
 
-  { path: 'trainers', element: <SchoolTeachers /> },
-  { path: 'trainers/create', element: <CreateTeacher /> },
+  { path: 'trainers', element: <InternshipAdminTrainers /> },
+  { path: 'trainers/create', element: <CreateTrainer /> },
   {
-    path: 'trainers/:teacherId/show',
-    element: <ShowTeacher title="Teacher Details" />,
+    path: 'trainers/:trainerId/show',
+    element: <ShowTrainer title="Trainer Details" />,
   },
-  { path: 'trainers/:teacherId/edit', element: <EditTeacher /> },
-  { path: 'trainers/:teacherId/assign', element: <AssignTeacher /> },
+  { path: 'trainers/:trainerId/edit', element: <EditTrainer /> },
+  { path: 'trainers/:trainerId/assign', element: <AssignTrainer /> },
   //Assessments
   { path: 'assessments', element: <Assessments title="Assessments List" /> },
   {
@@ -858,7 +858,7 @@ const AdminRoutes = [
   {
     path: 'public-students',
     element: (
-      <Students title="All School Students" isPrivate={false} isPublic={true} />
+      <Students title="All Internship Admin Students" isPrivate={false} isPublic={true} />
     ),
   },
   {

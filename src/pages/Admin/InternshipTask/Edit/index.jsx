@@ -18,7 +18,7 @@ function Edit(props) {
   console.log('id', internshipId, internshipTaskId);
   const [elabs, setElabs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [classId, setClassId] = useState(null);
+  const [subjectId, setSubjectId] = useState(null);
 
   const [formData, setFormData] = useState({
     elabId: '',
@@ -30,62 +30,20 @@ function Edit(props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  // const fetchElabDropdownData = useCallback(() => {
-  //   fetchActiveElabs()
-  //     .then((data) => {
-  //       setElabs(data);
-  //     })
-  //     .catch((error) => {
-  //       toast.error(error.message);
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   fetchElabDropdownData();
-  // }, [fetchElabDropdownData]);
-
-  // // console.log("minip rojectis", internshipTaskId)
-  // const fetchInternshipTaskData = useCallback(async () => {
-  //   try {
-  //     const miniProjectTaskData = await getInternshipTaskDetail(
-  //       internshipTaskId
-  //     );
-  //     if (miniProjectTaskData) {
-  //       const updatedForm = {
-  //         elabId: miniProjectTaskData.elab_id || '',
-  //         name: miniProjectTaskData.name || '',
-  //         description: miniProjectTaskData.description || '',
-  //         is_active: miniProjectTaskData.is_active, // Convert boolean to string
-  //       };
-  //       setFormData(updatedForm);
-  //       setLoading(false);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching Internship Task data:', error);
-  //     setLoading(false);
-  //   }
-  // }, [internshipTaskId]);
-
-  // useEffect(() => {
-  //   fetchInternshipTaskData();
-  // }, [fetchInternshipTaskData]);
-
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch mini project details
         const miniProjectDetailsResponse = await getInternshipDetail(internshipId);
         
-        // Extract classId and subjectId from mini project details response
-        const { class_id} = miniProjectDetailsResponse.miniProject;
+        // Extract subjectId and courseId from mini project details response
+        const {subject_id} = miniProjectDetailsResponse.miniProject;
   
-        // Fetch elabs data using classId and subjectId
-        const elabsResponse = await fetchSelectedActiveElabs(class_id);
+        // Fetch elabs data using subjectId and subjectId
+        const elabsResponse = await fetchSelectedActiveElabs(subject_id);
         
         // Update state with fetched data
-        setClassId(class_id);
+        setSubjectId(subjectId);
 
         setElabs(elabsResponse.elabs);
   
@@ -138,7 +96,7 @@ function Edit(props) {
 
       clearForm();
       setIsSubmitting(false);
-      navigate(`/admin/internship-tasks/${internshipTaskId}`);
+      navigate(`/admin/internship-tasks/${internshipId}`);
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);

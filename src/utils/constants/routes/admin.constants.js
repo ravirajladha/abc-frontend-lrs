@@ -42,7 +42,7 @@ const ADMIN_ROUTES = {
       { path: '/admin/elabs', title: 'eLab', icon: 'feather-code' },
       { path: '/admin/mini-projects', title: 'Mini Projects', icon: 'feather-shopping-bag' },
       { path: '/admin/internships', title: 'Internship', icon: 'feather-file-plus' },
-    { path: '/admin/academic-admin', title: 'Internship Admin', icon: 'feather-credit-card' },
+    { path: '/admin/internship-admin', title: 'Internship Admin', icon: 'feather-credit-card' },
 
     ],
   },

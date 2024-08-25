@@ -7,7 +7,7 @@ import {
   VideoPlayer,
   ContentDescription,
   VideoTabs,
-  SubjectScore,
+  CourseScore,
   ContentTitle,
   MiniProjects,
 } from '@/components/student/learn';
@@ -22,7 +22,6 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 function Learn() {
   const studentData = useOutletContext();
   const studentId = studentData.student_auth_id;
-  const subjectId = studentData.subject_id;
   const userData = JSON.parse(getUserDataFromLocalStorage());
 
   const { courseId } = useParams();
@@ -53,9 +52,9 @@ function Learn() {
 
   const [course, setCourse] = useState(true);
   const [content, setContent] = useState([]);
-  const [teacher, setTeacher] = useState(null);
+  const [trainer, setTrainer] = useState(null);
   const [miniProjects, setMiniProjects] = useState([]);
-  const [isTeacherAvailable, setIsTeacherAvailable] = useState(false);
+  const [isTrainerAvailable, setIsTrainerAvailable] = useState(false);
 
   const playerRef = useRef(null);
 
@@ -115,17 +114,21 @@ function Learn() {
   const fetchCourseContents = useCallback(async () => {
     try {
       let data;
-      if (studentData.student_type === 0) {
-        data = await fetchContents(courseId);
-      } else {
+      // console.log("student type", studentData.student_type)
+      // if (studentData.student_type === 0) {
+      //   data = await fetchContents(courseId);
+      // } else {
+        console.log(courseId,"before data for student learn page")
+
         data = await fetchExternalStudentContents(courseId);
-      }
+        console.log(data, "real data for student learn page")
+      // }
       setContent(data.contents.chapters);
       setCourse(data.contents.course);
       setMiniProjects(data.contents.mini_projects);
-      if (data && data.contents.teacher) {
-        setTeacher(data.contents.teacher);
-        setIsTeacherAvailable(true);
+      if (data && data.contents.trainer) {
+        setTrainer(data.contents.trainer);
+        setIsTrainerAvailable(true);
       }
       if (data && data.contents.video && !isVideoLoaded) {
         setActiveVideo({
@@ -164,7 +167,7 @@ function Learn() {
       setError(error);
       setIsLoading(false);
     }
-  }, [courseId, isVideoLoaded, studentData.student_type]);
+  }, [courseId, isVideoLoaded]);
 
   useEffect(() => {
     fetchCourseContents();
@@ -203,7 +206,7 @@ function Learn() {
           <ContentTitle
             title={activeVideo?.title}
             chapter={activeVideo?.chapter}
-            teacher={teacher?.name}
+            trainer={trainer?.name}
           />
         </div>
         <div className="col-xl-4 col-xxl-3">
@@ -212,8 +215,8 @@ function Learn() {
             courseId={courseId}
             studentId={studentId}
             courseData={content}
-            isTeacherAvailable={isTeacherAvailable}
-            teacherId={teacher?.auth_id}
+            isTrainerAvailable={isTrainerAvailable}
+            trainerId={trainer?.auth_id}
             videoPlayer={videoPlayer}
             activeVideoId={activeVideo.id}
             handleVideoClick={handleVideoClick}
@@ -227,7 +230,7 @@ function Learn() {
               <ContentDescription description={activeVideo.description} />
             </Tab>
             <Tab title="Trainer Details" eventKey="trainer">
-              <TrainerCard teacher={teacher} />
+              <TrainerCard trainer={trainer} />
             </Tab>
             <Tab title="Reviews" eventKey="review">
               <ReviewCard />
@@ -246,7 +249,7 @@ function Learn() {
         </div>
 
         <div className="col-xl-4 col-xxl-3">
-          <SubjectScore results={activeVideo.assessment_results} />
+          <CourseScore results={activeVideo.assessment_results} />
         </div>
       </div>
     </div>

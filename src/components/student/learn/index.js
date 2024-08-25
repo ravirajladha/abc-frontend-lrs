@@ -10,7 +10,7 @@ export { default as LearnInfoTab } from './LearnInfoTab';
 
 export { default as ContentTitle } from './ContentTitle';
 export { default as ContentDescription } from './ContentDescription';
-export { default as SubjectScore } from './SubjectScore';
+export { default as CourseScore } from './CourseScore';
 
 export { default as QnaSearchResults } from './QnaSearchResults';
 export { default as MiniProjects } from './MiniProjects';

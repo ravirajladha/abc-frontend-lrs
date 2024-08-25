@@ -1,8 +1,8 @@
 export { default as ADMIN_ROUTES } from './routes/admin.constants';
 
-export { default as TEACHER_ROUTES } from './routes/teacher.constants';
+export { default as TRAINER_ROUTES } from './routes/trainer.constants';
 
-export { default as SCHOOL_ROUTES } from './routes/school.constants';
+export { default as INTERNSHIP_ADMIN_ROUTES } from './routes/internshipAdmin.constants';
 
 export { default as PARENT_ROUTES } from './routes/parent.constants';
 

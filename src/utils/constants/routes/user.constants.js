@@ -11,7 +11,7 @@ const USERS = [
   {
     name: 'TRAINER',
     type: USER_TYPES.TRAINER,
-    path: '/teacher/dashboard',
+    path: '/trainer/dashboard',
     value: 2,
   },
   {

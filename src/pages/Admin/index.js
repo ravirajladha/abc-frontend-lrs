@@ -14,19 +14,19 @@ export { default as CourseCreate } from './Course/Create';
 export { default as CourseEdit } from './Course/Edit';
 export { default as CourseResult } from './Course/Result';
 
-export { default as School } from './School';
-export { default as SchoolShowApplication } from './School/Show/Application';
-export { default as SchoolShowTeacher } from './School/Show/Teacher';
-export { default as ShowSchoolDetail } from './School/Show/School';
-export { default as SchoolShowStudent } from './School/Show/Student';
-export { default as CreateSchool } from './School/Create';
-export { default as EditSchool } from './School/Edit';
+export { default as InternshipAdmin } from './InternshipAdmin';
+export { default as InternshipAdminShowApplication } from './InternshipAdmin/Show/Application';
+export { default as InternshipAdminShowTrainer } from './InternshipAdmin/Show/Trainer';
+export { default as ShowInternshipAdminDetail } from './InternshipAdmin/Show/InternshipAdmin';
+export { default as InternshipAdminShowStudent } from './InternshipAdmin/Show/Student';
+export { default as CreateInternshipAdmin } from './InternshipAdmin/Create';
+export { default as EditInternshipAdmin } from './InternshipAdmin/Edit';
 
-export { default as SchoolTeachers } from './Teachers';
-export { default as CreateTeacher } from './Teachers/Create';
-export { default as EditTeacher } from './Teachers/Edit';
-export { default as ShowTeacher } from './Teachers/Show';
-export { default as AssignTeacher } from './Teachers/Assign';
+export { default as InternshipAdminTrainers } from './Trainer';
+export { default as CreateTrainer} from './Trainer/Create';
+export { default as EditTrainer} from './Trainer/Edit';
+export { default as ShowTrainer} from './Trainer/Show';
+export { default as AssignTrainer} from './Trainer/Assign';
 
 export { default as Recruiter } from './Recruiter';
 export { default as CreateRecruiter } from './Recruiter/Create';

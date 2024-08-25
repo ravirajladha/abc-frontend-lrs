@@ -1,7 +1,7 @@
 import React from 'react';
-import DefaultTeacherImage from '@/assets/images/default/teacher.png';
+import DefaultTrainerImage from '@/assets/images/default/trainer.png';
 
-const index = ({teacher}) => {
+const index = ({trainer}) => {
   return (
     <div className="card d-block border-0 rounded-lg overflow-hidden p-4 shadow-xss mt-4 bg-lightblue">
       <h2 className="fw-700 font-sm mb-3 mt-1 pl-1 text-primary mb-4">
@@ -9,9 +9,9 @@ const index = ({teacher}) => {
       </h2>
       <div className="row">
         <div className="col-lg-3 text-center">
-          <img src={DefaultTeacherImage} alt="" />
+          <img src={DefaultTrainerImage} alt="" />
           <h4 className="font-xss fw-600 mt-2 mb-3 pl-2 position-relative lh-24">
-            {teacher?.name}
+            {trainer?.name}
           </h4>
         </div>
         <div className="col-lg-9">

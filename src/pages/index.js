@@ -8,7 +8,7 @@
   2. Authentication
   3. Admin
   4. School
-  5. Teacher
+  5. Trainer
   6. Student
   7. Parent
 
@@ -24,10 +24,10 @@ export * from './Auth';
 export * from './Admin';
 
 // School Pages
-export * from './School';
+export * from './InternshipAdmin';
 
-// Teacher Pages
-export * from './Teacher';
+// Trainer Pages
+export * from './Trainer';
 
 // Student Pages
 export * from './Student';

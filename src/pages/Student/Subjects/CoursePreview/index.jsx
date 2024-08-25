@@ -5,7 +5,6 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-
 import { ContentHeader, ContentLoader } from '@/components/common';
 
 import { ContentFallback, ContentError } from '@/components/common';
@@ -26,36 +25,36 @@ import { fetchFeeDetails } from '@/api/admin';
 
 function Subjects() {
   const baseUrl = import.meta.env.VITE_BASE_URL;
-  const { subjectId } = useParams();
+  const { courseId } = useParams();
   // const studentData = useOutletContext();
   const navigate = useNavigate();
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
 
   const studentId = studentData.student_id;
-  const classId = studentData.class_id;
+  // const classId = studentData.class_id;
   console.log(studentData);
-  const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [chapters, setChapters] = useState([]);
   const [feesData, setFeesData] = useState(null);
-  const [teacher, setTeacher] = useState(null);
+  const [trainer, setTrainer] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isPaid, setIsPaid] = useState(false);
 
-  const fetchSubjectsCallback = useCallback(async () => {
+  const fetchCoursesCallback = useCallback(async () => {
     try {
-      const data = await fetchCoursePreviewData(subjectId);
+      const data = await fetchCoursePreviewData(courseId);
       console.log('Fetching', data);
-      setSubjects(data.subject);
+      setCourses(data.course);
       setChapters(data.chapters);
-      setTeacher(data.teacher);
+      setTrainer(data.trainer);
       setLoading(false);
     } catch (error) {
       setError(error);
       setLoading(false);
     }
-  }, [classId]);
+  }, [courseId]);
 
   const fetchData = async () => {
     try {
@@ -93,7 +92,7 @@ function Subjects() {
   };
 
   useEffect(() => {
-    fetchSubjectsCallback();
+    fetchCoursesCallback();
     fetchData();
     const studentData = JSON.parse(getStudentDataFromLocalStorage());
     const isPaidStatus = studentData.is_paid;
@@ -110,7 +109,7 @@ function Subjects() {
           </div>
         ) : error ? (
           <ContentError message={error.message} />
-        ) : subjects ? (
+        ) : courses ? (
           <>
             <div className="col-xl-8 col-xxl-9">
               <div className="card border-0 mb-0 rounded-lg overflow-hidden">
@@ -128,7 +127,7 @@ function Subjects() {
                 <div className="row">
                   <div className="col-10">
                     <h2 className="fw-700 font-md d-block lh-4 mb-2">
-                      {subjects.name}
+                      {courses.name}
                     </h2>
                   </div>
                   {/* <div className="col-2">
@@ -141,15 +140,15 @@ function Subjects() {
                   </div> */}
                 </div>
                 <span className="font-xssss fw-600 text-grey-500 d-inline-block ml-1">
-                  {subjects?.class_name}
+                  {courses?.course_name}
                 </span>
                 <span className="dot ml-2 mr-2 d-inline-block btn-round-xss bg-grey"></span>
                 <span className="font-xssss fw-700 text-grey-900 d-inline-block ml-0 text-dark">
-                  Created by: {teacher?.name}
+                  Created by: {trainer?.name}
                 </span>
                 <span className="dot ml-2 mr-2 d-inline-block btn-round-xss bg-grey"></span>
                 <span className="font-xssss fw-700 text-grey-900 d-inline-block ml-0 text-dark">
-                  Created on: {formatDate(subjects.created_at)}
+                  Created on: {formatDate(courses.created_at)}
                 </span>
               </div>
               <div className="card d-block border-0 rounded-lg overflow-hidden p-4 shadow-xss mt-4 alert-success">
@@ -161,7 +160,7 @@ function Subjects() {
                 </h4> */}
                 <h4
                   className="font-xssss fw-600 text-grey-600 mb-3 pl-2 position-relative lh-24"
-                  dangerouslySetInnerHTML={{ __html: subjects.benefits }}
+                  dangerouslySetInnerHTML={{ __html: courses.benefits }}
                 ></h4>
                   <h4
                   className="font-xssss fw-600 text-grey-600 mb-3 pl-2 position-relative lh-24"
@@ -175,11 +174,11 @@ function Subjects() {
                 </h2>
                 <p
                   className="font-xssss fw-500 lh-28 text-grey-600 mb-0 pl-2"
-                  dangerouslySetInnerHTML={{ __html: subjects.description }}
+                  dangerouslySetInnerHTML={{ __html: courses.description }}
                 ></p>
               </div>
 
-              <TrainerCard teacher={teacher} />
+              <TrainerCard trainer={trainer} />
               <FAQs />
             </div>
             <div className="col-xl-4 col-xxl-3">
@@ -197,7 +196,7 @@ function Subjects() {
                       {feesData?.amount}
                     </h1>
                     <Link
-                      to={`/student/payment/${subjectId}`}
+                      to={`/student/payment/${courseId}`}
                       className="btn btn-block border-0 w-100 bg-white p-3 text-primary fw-600 rounded-lg d-inline-block font-xssss btn-light"
                     >
                       Buy Now
@@ -209,7 +208,7 @@ function Subjects() {
                       Subscribed
                     </h2>
                     <Link
-                      to={`/student/courses/${subjectId}/learn`}
+                      to={`/student/courses/${courseId}/learn`}
                       className="btn btn-sm btn-block border-0 w-100 bg-white p-1 text-primary fw-600 rounded-lg d-inline-block font-xssss btn-light"
                     >
                       Continue
@@ -242,7 +241,7 @@ function Subjects() {
             </div>
           </>
         ) : (
-          <ContentFallback message="  There are no subjects available at the moment." />
+          <ContentFallback message="  There are no courses available at the moment." />
         )}
       </div>
     </div>

@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ContentHeader, ContentLoader } from '@/components/common';
 
 import { fetchSubjectsWithResults, startTest } from '@/api/student';
+import Star from '/assets/images/star.png';
+import StarDisabled from '/assets/images/star.png';
 
 import { ContentFallback, ContentError } from '@/components/common';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
@@ -16,23 +18,22 @@ function Courses() {
 
   const studentId = studentData.student_id;
   const subjectId = studentData.subject_id;
-  const schoolId = studentData.school_id;
   const [courses, setCourses] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchCoursesCallback = useCallback(() => {
-    return fetchSubjectsWithResults(subjectId, studentId)
+    return fetchSubjectsWithResults(1, studentId)
       .then((data) => {
-        setCourses(data.subjects);
+        setCourses(data.courses);
         setLoading(false);
       })
       .catch((error) => {
         setError(error);
         setLoading(false);
       });
-  }, [subjectId]);
+  }, []);
 
   useEffect(() => {
     fetchCoursesCallback();
@@ -97,7 +98,7 @@ function Courses() {
                     </Link>
                   </h4>
                   <span className="font-xssss fw-500 text-grey-900 d-inline-block ml-0 text-dark">
-                    {course.teacher_name}
+                    {course.trainer_name}
                   </span>
                 </div>
               </div>

@@ -98,8 +98,8 @@ function MiniProject({ title }) {
                             <td>
                               <strong>{item.name}</strong>
                             </td>
-                            <td>{item.class_name}</td>
                             <td>{item.subject_name}</td>
+                            <td>{item.course_name}</td>
                             <td>
                               {' '}
                               {/* Column for the image */}

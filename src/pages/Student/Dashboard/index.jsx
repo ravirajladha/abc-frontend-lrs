@@ -62,8 +62,8 @@ function Dashboard() {
             last_login_at={dashboard.last_login_at}
             total_watch_time={dashboard.total_watch_time}
             avg_assessment_score={dashboard.avg_assessment_score}
-            first_term_results={dashboard.first_term_results}
-            first_term_total_marks={dashboard.first_term_total_marks}
+            test_results={dashboard.test_results}
+            test_total_marks={dashboard.test_total_marks}
             // second_term_results={dashboard.second_term_results}
             // second_term_total_marks={dashboard.second_term_total_marks}
             // third_term_results={dashboard.third_term_results}

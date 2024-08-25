@@ -114,7 +114,7 @@ const PaymentModal = ({
               <div className="card w-100 border-0 bg-white shadow-md p-0 mb-4">
                 <div className="card-body p-4 w-100 border-0 rounded-lg">
                   <h4 className="font-xss fw-700 pt-2 text-black mb-0 w-50">
-                    Complete Payment
+                    Complete Payment  
                   </h4>
                   <div className="card border-0 shadow-none mb-4 mt-3">
                     <div className="card-body d-block text-left p-0">

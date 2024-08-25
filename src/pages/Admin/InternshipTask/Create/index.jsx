@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SaveButton, SelectInput } from '@/components/common/form';
 
-import { fetchSelectedActiveElabsWithoutCourseId } from '@/api/common';
+import { fetchActiveElabsForSubject } from '@/api/common';
 import { createInternshipTask, getInternshipDetail } from '@/api/admin';
 
 function Create() {
@@ -19,26 +19,30 @@ function Create() {
     name: '',
     description: '',
   });
+
   const [subjectId, setSubjectId] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  const fetchMiniProjectAndElabsData = useCallback(async () => {
+  // Fetch Internship Detail and Set Subject ID
+  const fetchInternshipDetails = useCallback(async () => {
     try {
       const miniProjectDetailsResponse = await getInternshipDetail(internshipId);
-      const subjectId = miniProjectDetailsResponse.miniProject.subject_id;
-      setSubjectId(subjectId);
-  
-      const elabsResponse = await fetchSelectedActiveElabsWithoutCourseId(subjectId);
-      setElabs(elabsResponse.elabs);
+      const subjectId1 = miniProjectDetailsResponse.miniProject.subject_id;
+      setSubjectId(subjectId1); // Set the subjectId state here
+
+      if (subjectId1) { // Ensure the subjectId is available before making the API call
+        const elabsResponse = await fetchActiveElabsForSubject(subjectId1);
+        setElabs(elabsResponse.elabs);
+      }
     } catch (error) {
       toast.error(error.message);
     }
   }, [internshipId]);
 
   useEffect(() => {
-    fetchMiniProjectAndElabsData();
-  }, [fetchMiniProjectAndElabsData]);
+    fetchInternshipDetails(); // Fetch details once on component mount
+  }, [fetchInternshipDetails]);
 
   const clearForm = () => {
     setFormData({
@@ -62,7 +66,6 @@ function Create() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    console.log("data to submit", formData);
     try {
       const response = await createInternshipTask(formData);
       toast.success(response.message);
@@ -76,12 +79,10 @@ function Create() {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
       }
-      console.error('Error:', error.message);
       toast.error('Error submitting the form. Please try again.');
       setIsSubmitting(false);
     }
   };
-
   return (
     <div>
       <ContentHeader title="Create Internship Task" />

@@ -19,7 +19,7 @@ function Create() {
     name: '',
     description: '',
   });
-  const [classId, setClassId] = useState(null);
+  const [courseId, setCourseId] = useState(null);
   const [subjectId, setSubjectId] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
@@ -29,10 +29,10 @@ function Create() {
     try {
       const miniProjectDetailsResponse = await getMiniProjectDetail(projectId);
       console.log("minin project detail from inside the task creation", miniProjectDetailsResponse);
-      setClassId(miniProjectDetailsResponse.miniProject.class_id); // Extract classId from the response
+      setCourseId(miniProjectDetailsResponse.miniProject.course_id); // Extract classId from the response
       setSubjectId(miniProjectDetailsResponse.miniProject.subject_id); // Extract subjectId from the response
   
-      const elabsResponse = await fetchSelectedActiveElabs(miniProjectDetailsResponse.miniProject.class_id, miniProjectDetailsResponse.miniProject.subject_id);
+      const elabsResponse = await fetchSelectedActiveElabs(miniProjectDetailsResponse.miniProject.subject_id, miniProjectDetailsResponse.miniProject.course_id);
       console.log(elabsResponse, "elab response");
       setElabs(elabsResponse.elabs);
     } catch (error) {

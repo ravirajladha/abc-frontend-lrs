@@ -108,7 +108,8 @@ function Edit({ title, isAdmin }) {
   const fetchQuestionDetails = useCallback(() => {
     fetchTestQuestionDetails(questionId)
       .then((response) => {
-        const questionDetails = response.term_test_question;
+        const questionDetails = response.test_question;
+
         setFormData({
           selectedSubject: questionDetails.subject_id.toString(),
           question: questionDetails.question,

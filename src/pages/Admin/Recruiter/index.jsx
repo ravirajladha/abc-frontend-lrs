@@ -69,7 +69,8 @@ function Recruiters() {
                         <tr key={recruiter.id}>
                           <td>{index + 1}</td>
                           <td>{recruiter.name}</td>
-                          <td>{recruiter.phone_number}</td>
+                          <td>{recruiter.name}</td>
+                          {/* <td>{recruiter.phone_number}</td> */}
                           <td>{recruiter.email}</td>
                           {/* <td>
                             {recruiter.recruiter_classes.map((item) => (

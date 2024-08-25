@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { SaveButton } from '@/components/common/form';
-// import { fetchTeacher, editTeacher } from '@/api/school';
+// import { fetchTrainer, editTrainer } from '@/api/school';
 import { fetchRecruiter, editRecruiter } from '@/api/admin';
 
 import { ContentCardWrapper, ContentHeader } from '@/components/common';
@@ -29,7 +29,7 @@ function Edit() {
     description: '',
   });
 
-  const fetchTeacherData = useCallback(async () => {
+  const fetchTrainerData = useCallback(async () => {
     try {
       const response = await fetchRecruiter(recruiterId);
       const data = response.recruiter;
@@ -44,15 +44,15 @@ function Edit() {
         setForm(updatedForm);
       }
     } catch (error) {
-      console.error('Error fetching teacher data:', error);
+      console.error('Error fetching trainer data:', error);
     } finally {
       setDataLoading(false); // Stop data loading
     }
   }, [recruiterId]);
 
   useEffect(() => {
-    fetchTeacherData();
-  }, [fetchTeacherData]);
+    fetchTrainerData();
+  }, [fetchTrainerData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -115,7 +115,7 @@ function Edit() {
       <ContentCardWrapper>
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
-            <div className="col-lg-6 mb-3">
+            <div className="col-lg-12 mb-3">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">Name</label>
                 <input
@@ -218,7 +218,7 @@ function Edit() {
             </div>
           </div>
           <div className="col-lg-12 mb-0 mt-2 pl-0">
-              <button
+              {/* <button
                 type="submit"
                 className="bg-current border-0 text-center float-right text-white font-xsss fw-600 p-3 w150 rounded-lg d-inline-block"
                 disabled={loading} // Disable button when loading
@@ -229,7 +229,7 @@ function Edit() {
                   <i className="feather-save mr-2"></i>
                 )}
                 {loading ? 'Saving...' : 'Save'}
-              </button>
+              </button> */}
 
 
              

@@ -9,11 +9,11 @@ import { getUserDataFromLocalStorage } from '@/utils/services';
 
 const LearnTab = ({
   isLoading,
-  subjectData,
+  courseData,
   activeVideoId,
   handleVideoClick,
 }) => {
-  console.log('subjectdata', subjectData);
+  console.log('courseData', courseData);
   const [elabSubmissionIds, setElabSubmissionIds] = useState({});
   const userDetail = JSON.parse(getUserDataFromLocalStorage());
 
@@ -21,7 +21,7 @@ const LearnTab = ({
     const fetchElabSubmissions = async () => {
       if (userDetail && userDetail.id) {
         const elabSubmissionIdsObj = {};
-        for (const chapter of subjectData) {
+        for (const chapter of courseData) {
           for (const video of chapter.videos) {
             if (video.elab_id) {
               try {
@@ -46,7 +46,7 @@ const LearnTab = ({
     };
 
     fetchElabSubmissions();
-  }, [userDetail.userId, subjectData]); // Include dependencies in useEffect
+  }, [userDetail.userId, courseData]); // Include dependencies in useEffect
 
   return (
     <div className="video-playlist h-100" style={{ height: 400 }}>
@@ -59,12 +59,12 @@ const LearnTab = ({
             // alwaysOpen
             className="accordion accordion-course"
           >
-            {!subjectData || subjectData.length === 0 ? (
+            {!courseData || courseData.length === 0 ? (
               <div className="text-center mt-5 col-12 h100">
                 No content available.
               </div>
             ) : (
-              subjectData.map((chapter, index) => {
+              courseData.map((chapter, index) => {
                 const chapterVideos = chapter.videos;
                 const hasVideos = chapterVideos && chapterVideos.length > 0;
                 const isChapterLocked = chapter.lock_status === 0;
@@ -176,7 +176,7 @@ const LearnTab = ({
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="font-xsssss fw-600 text-uppercase text-white"
-                                        to={`/student/elab/show/1/${video.subject_id}/${video.elab_id}`}
+                                        to={`/student/elab/show/1/${video.course_id}/${video.elab_id}`}
                                       >
                                         eLab
                                       </Link>
@@ -190,7 +190,7 @@ const LearnTab = ({
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="font-xsssss fw-600 text-uppercase text-white"
-                                        to={`/student/elab/check-code/1/${video.subject_id}/${video.elab_id}/${elabSubmissionId}`}
+                                        to={`/student/elab/check-code/1/${video.course_id}/${video.elab_id}/${elabSubmissionId}`}
                                       >
                                         eLab <i className="feather-eye"></i>
                                       </Link>
@@ -216,7 +216,7 @@ const LearnTab = ({
 
 LearnTab.propTypes = {
   isLoading: PropTypes.bool,
-  subjectData: PropTypes.array,
+  courseData: PropTypes.array,
   activeVideoId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   handleVideoClick: PropTypes.func,
 };

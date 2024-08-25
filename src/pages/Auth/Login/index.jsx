@@ -50,7 +50,7 @@ function Login() {
             // console.log('USERS', USERS[user.type].value);
             // return (USERS[user.type].value)
             // if(USERS[user.type].value===1){
-            //   navigate('/academic-admin/dashboard');
+            //   navigate('/internship-admin/dashboard');
             // }else{
             //   const dashboardPath = USERS[user.type].path || '/';
             //   navigate(dashboardPath);

@@ -18,11 +18,11 @@ import {
 
 const VideoTabs = ({
   isLoading,
-  subjectId,
-  subjectData,
+  courseId,
+  courseData,
   studentId,
-  isTeacherAvailable,
-  teacherId,
+  isTrainerAvailable,
+  trainerId,
   videoPlayer,
   activeVideoId,
   handleVideoClick,
@@ -59,29 +59,29 @@ const VideoTabs = ({
           onSelect={(key) => setActiveTab(key)}
           className="list-inline-center d-flex text-center border-0 custom-tabs"
         >
-          <Tab eventKey="learn" title="SUBJECT" className="list-inline-item">
-            {studentData.student_type === 0 ? (
+          <Tab eventKey="learn" title="COURSE" className="list-inline-item">
+            {/* {studentData.student_type === 0 ? (
               <LearnTab
                 isLoading={isLoading}
-                subjectData={subjectData}
+                courseData={courseData}
                 activeVideoId={activeVideoId}
                 handleVideoClick={handleVideoClick}
               />
-            ) : (
+            ) : ( */}
               <ExternalStudentLearnTab
                 isLoading={isLoading}
-                subjectData={subjectData}
+                courseData={courseData}
                 activeVideoId={activeVideoId}
                 handleVideoClick={handleVideoClick}
               />
-            )}
+            {/* )} */}
           </Tab>
           <Tab eventKey="chat" title="Q&A" className="list-inline-item">
             <QnaTab
               studentId={studentId}
-              subjectId={subjectId}
-              teacherId={teacherId}
-              isTeacherAvailable={isTeacherAvailable}
+              courseId={courseId}
+              trainerId={trainerId}
+              isTrainerAvailable={isTrainerAvailable}
               isTabActive={isTabActive}
             />
           </Tab>
@@ -127,11 +127,11 @@ const VideoTabs = ({
 
 VideoTabs.propTypes = {
   isLoading: PropTypes.bool,
-  subjectData: PropTypes.array,
-  subjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  courseData: PropTypes.array,
+  courseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   studentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  isTeacherAvailable: PropTypes.bool,
-  teacherId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isTrainerAvailable: PropTypes.bool,
+  trainerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   videoPlayer: PropTypes.object,
   activeVideoId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   handleVideoClick: PropTypes.func,

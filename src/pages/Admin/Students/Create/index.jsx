@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { createStudent } from '@/api/school';
+import { createStudent } from '@/api/internshipAdmin';
 
 
 import { ContentCardWrapper, ContentHeader } from '@/components/common';

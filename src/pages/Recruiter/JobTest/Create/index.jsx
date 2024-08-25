@@ -85,12 +85,12 @@ function Create({ title, isAdmin }) {
         .then((data) => {
           setFormData((prevData) => ({
             ...prevData,
-            numberOfQuestions: data.term_question_count,
+            numberOfQuestions: data.question_count,
           }));
-          if (data.term_question_count === 0) {
+          if (data.question_count === 0) {
             setErrorMessage('Cannot create the job test. No questions available.');
           } else {
-            setTestQuestions(data.term_questions);
+            setTestQuestions(data.questions);
           }
         })
         .catch((error) => {

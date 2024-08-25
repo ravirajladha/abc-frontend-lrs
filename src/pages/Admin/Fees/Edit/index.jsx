@@ -84,7 +84,7 @@ function EditFee({ title }) {
               <div className="row">
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
-                    <label className="mont-font fw-600 font-xsss">Amount</label>
+                    <label className="mont-font fw-600 font-xsss">Offer Amount</label>
                     <input
                       type="text"
                       className="form-control"
@@ -102,14 +102,14 @@ function EditFee({ title }) {
                 </div>
                 <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
-                    <label className="mont-font fw-600 font-xsss">Slash Amount</label>
+                    <label className="mont-font fw-600 font-xsss">Original Amount</label>
                     <input
                       type="text"
                       className="form-control"
                       name="slashAmount"
                       value={formData.slashAmount}
                       onChange={handleFormChange}
-                      placeholder="Enter Slash Amount"
+                      placeholder="Enter Original Amount"
                     />
                     {validationErrors.slashAmount && (
                       <span className="text-danger">

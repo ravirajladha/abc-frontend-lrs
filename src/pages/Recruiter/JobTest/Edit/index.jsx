@@ -6,7 +6,7 @@ import { Spinner } from 'react-bootstrap';
 import { TextEditor } from '@/components/common';
 import { SelectMultipleInput } from '@/components/common/form';
 
-import { TERM_TYPES } from '@/utils/constants';
+// import { TERM_TYPES } from '@/utils/constants';
 
 import {
   ContentFallback,
@@ -38,7 +38,7 @@ function Edit({ title, isAdmin }) {
     selectedSubject: '',
     numberOfQuestions: '',
     testTitle: '',
-    testTerm: '',
+    // testTerm: '',
     startTime: '',
     endTime: '',
     duration: '',
@@ -57,7 +57,7 @@ function Edit({ title, isAdmin }) {
       try {
         // Fetch test details first
         const response = await fetchTestDetails(testId);
-        const data = response.term_test;
+        const data = response.test;
         console.log('Test details fetched:', data);
         const arr = data?.question_ids?.split(',').map(Number);
         setSelectedQuestions(arr);
@@ -76,12 +76,12 @@ function Edit({ title, isAdmin }) {
         const questionData = await fetchTestQuestionsBySubjectIds(
           data.subject_id
         );
-        if (questionData.term_question_count === 0) {
+        if (questionData.question_count === 0) {
           setErrorMessage(
             'Cannot create the job test. No questions available.'
           );
         } else {
-          setTestQuestions(questionData.term_questions);
+          setTestQuestions(questionData.questions);
         }
       } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -129,15 +129,15 @@ function Edit({ title, isAdmin }) {
     setFormData((prevData) => ({ ...prevData, instruction: html }));
   };
 
-  const handleTermChange = (event) => {
-    setValidationErrors((prevErrors) => ({
-      ...prevErrors,
-      testTerm: '',
-    }));
+  // const handleTermChange = (event) => {
+  //   setValidationErrors((prevErrors) => ({
+  //     ...prevErrors,
+  //     testTerm: '',
+  //   }));
 
-    const testTerm = event.target.value;
-    setFormData((prevData) => ({ ...prevData, testTerm }));
-  };
+  //   const testTerm = event.target.value;
+  //   setFormData((prevData) => ({ ...prevData, testTerm }));
+  // };
 
   const nextForm = async (event) => {
     event.preventDefault();
@@ -151,14 +151,14 @@ function Edit({ title, isAdmin }) {
         .then((data) => {
           setFormData((prevData) => ({
             ...prevData,
-            numberOfQuestions: data.term_question_count,
+            numberOfQuestions: data.question_count,
           }));
           console.log('number of question', formData.numberOfQuestions);
-          if (data.term_question_count === 0) {
+          if (data.question_count === 0) {
             setErrorMessage('No questions available for the selected subjects.');
           } else {
-            setTestQuestions(data.term_questions);
-            console.log('Setting test questions:', data.term_questions);
+            setTestQuestions(data.questions);
+            console.log('Setting test questions:', data.questions);
           }
         })
         .catch((error) => {
@@ -238,15 +238,15 @@ function Edit({ title, isAdmin }) {
                     </label>
                     <SelectMultipleInput
                       className="form-control"
-                      options={classes}
-                      name="selectedClass"
+                      options={subjects}
+                      name="selectedSubject"
                       label="name"
-                      value={formData.selectedClass || []}
-                      onChange={handleClassChange}
+                      value={formData.selectedSubject || []}
+                      onChange={handleSubjectChange}
                       placeholder="Select Subject"
                       required
                     />
-                    {validationErrors.selectedClass && (
+                    {validationErrors.selectedSubject && (
                       <span className="text-danger font-xsss mt-2">
                             Subject empty or not found.
                       </span>

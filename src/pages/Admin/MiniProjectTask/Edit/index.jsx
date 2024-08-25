@@ -22,7 +22,7 @@ function Edit(props) {
     is_active: '',
   });
 
-  const [classId, setClassId] = useState(null);
+  const [courseId, setCourseId] = useState(null);
   const [subjectId, setSubjectId] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
@@ -34,13 +34,13 @@ function Edit(props) {
         const miniProjectDetailsResponse = await getMiniProjectDetail(miniProjectId);
         
         // Extract classId and subjectId from mini project details response
-        const { class_id, subject_id } = miniProjectDetailsResponse.miniProject;
+        const { subject_id, course_id } = miniProjectDetailsResponse.miniProject;
   
         // Fetch elabs data using classId and subjectId
-        const elabsResponse = await fetchSelectedActiveElabs(class_id, subject_id);
+        const elabsResponse = await fetchSelectedActiveElabs(subject_id, course_id);
         
         // Update state with fetched data
-        setClassId(class_id);
+        setCourseId(course_id);
         setSubjectId(subject_id);
         setElabs(elabsResponse.elabs);
   

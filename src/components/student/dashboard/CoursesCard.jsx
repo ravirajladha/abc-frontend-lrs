@@ -99,7 +99,7 @@ function CoursesCard() {
           <div className="text-center col-12">
             <ContentLoader />
           </div>
-        ) : courses && courses !== null && courseslength > 0 ? (
+        ) : courses && courses !== null && courses.length > 0 ? (
           <>
             {courses
               .slice(0, showAll ? courses.length : 4)
@@ -158,7 +158,7 @@ function CoursesCard() {
                         </Link>
                       </h4>
                       <span className="font-xssss fw-500 text-grey-900 d-inline-block ml-0 text-dark">
-                      {course.teacher_name}
+                      {course.trainer_name}
                       </span>
                       <hr />
                       <div className="progress mt-3 h10">

@@ -26,7 +26,7 @@ function Create() {
     setLoading(true);
 
     try {
-      const response = await createRecruiter(form); // Use the API function for creating teachers
+      const response = await createRecruiter(form); // Use the API function for creating trainers
       toast.success('Recruiter added successfully', response);
       navigate('/admin/recruiters');
     } catch (error) {

@@ -11,7 +11,7 @@ export const updateSettings = async (recruiterId, data) => {
 };
 
 export const fetchStudents = async () => {
-  const response = await apiService.fetchData(`/teacher/get-students`);
+  const response = await apiService.fetchData(`/trainer/get-students`);
   return response.data;
 };
 

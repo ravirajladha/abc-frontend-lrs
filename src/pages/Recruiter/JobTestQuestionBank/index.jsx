@@ -44,8 +44,11 @@ function TestQuestionBank({ title, isAdmin }) {
 
   const fetchQuestions = useCallback(async () => {
     try {
+      console.log("Fetching questions for selectedSubject:", selectedSubject);
       const data = await fetchTestQuestions(selectedSubject);
-      setQuestions(data.term_test_questions);
+      console.log("selected subject", selectedSubject);
+      console.log("data.test_questions", data.test_questions);
+      setQuestions(data.test_questions);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching test questions:', error);

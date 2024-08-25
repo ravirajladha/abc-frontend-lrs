@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ContentFormWrapper, ContentHeader, ContentLoader } from '@/components/common';
@@ -10,7 +9,6 @@ import { fetchZoomCallDetail, updateZoomCall } from '@/api/admin';
 
 function Create() {
   const { zoomCallId } = useParams();
-
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -35,16 +33,16 @@ function Create() {
   const fetchData = async () => {
     try {
       const response = await fetchZoomCallDetail(zoomCallId);
-      console.log(response);
       setFormData({
         url: response.zoomCall.url,
         date: response.zoomCall.date,
+        time: response.zoomCall.time,
+        password: response.zoomCall.passcode,
       });
     } catch (error) {
       toast.error(error.message);
     } finally {
       setLoading(false);
-
     }
   };
 
@@ -55,6 +53,7 @@ function Create() {
       [name]: value,
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -63,6 +62,8 @@ function Create() {
       const submissionData = new FormData();
       submissionData.append('url', formData.url);
       submissionData.append('date', formData.date);
+      submissionData.append('time', formData.time);
+      submissionData.append('password', formData.password);
 
       const response = await updateZoomCall(submissionData, zoomCallId);
       toast.success(response.message);
@@ -92,79 +93,78 @@ function Create() {
       {loading ? (
         <ContentLoader />
       ) : (
-      <ContentFormWrapper formTitle="Edit Live Sessions">
-        <form onSubmit={handleSubmit} autoComplete="off">
-          <div className="row">
-            <div className="col-lg-6 col-md-12 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Url</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="url"
-                  value={formData.url}
-                  onChange={handleFormChange}
-                  placeholder="Enter Url"
-                />
-                {validationErrors.url && (
-                  <span className="text-danger">{validationErrors.url}</span>
-                )}
+        <ContentFormWrapper formTitle="Edit Live Sessions">
+          <form onSubmit={handleSubmit} autoComplete="off">
+            <div className="row">
+              <div className="col-lg-6 col-md-12 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">Url</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="url"
+                    value={formData.url}
+                    onChange={handleFormChange}
+                    placeholder="Enter Url"
+                  />
+                  {validationErrors.url && (
+                    <span className="text-danger">{validationErrors.url}</span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="col-lg-6 col-md-12 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Password</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleFormChange}
-                  placeholder="Enter Password"
-                />
-                {validationErrors.password && (
-                  <span className="text-danger">{validationErrors.password}</span>
-                )}
+              <div className="col-lg-6 col-md-12 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">Password</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleFormChange}
+                    placeholder="Enter Password"
+                  />
+                  {validationErrors.password && (
+                    <span className="text-danger">{validationErrors.password}</span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="col-lg-6 col-md-12 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleFormChange}
-                  placeholder="Enter Date"
-                />
-                {validationErrors.date && (
-                  <span className="text-danger">{validationErrors.date}</span>
-                )}
+              <div className="col-lg-6 col-md-12 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleFormChange}
+                    placeholder="Enter Date"
+                  />
+                  {validationErrors.date && (
+                    <span className="text-danger">{validationErrors.date}</span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="col-lg-6 col-md-12 mb-3">
-              <div className="form-group">
-                <label className="mont-font fw-600 font-xsss">Time</label>
-                <input
-                  type="time"
-                  className="form-control dummy"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleFormChange}
-                  placeholder="Enter Time"
-                />
-                {validationErrors.time && (
-                  <span className="text-danger">{validationErrors.time}</span>
-                )}
+              <div className="col-lg-6 col-md-12 mb-3">
+                <div className="form-group">
+                  <label className="mont-font fw-600 font-xsss">Time</label>
+                  <input
+                    type="time"
+                    className="form-control"
+                    name="time"
+                    value={formData.time}
+                    onChange={handleFormChange}
+                    placeholder="Enter Time"
+                  />
+                  {validationErrors.time && (
+                    <span className="text-danger">{validationErrors.time}</span>
+                  )}
+                </div>
               </div>
+              <SaveButton isSubmitting={isSubmitting} />
             </div>
-            <SaveButton isSubmitting={isSubmitting} />
-          </div>
-        </form>
-      </ContentFormWrapper>
-      )
-    }
+          </form>
+        </ContentFormWrapper>
+      )}
     </div>
   );
 }

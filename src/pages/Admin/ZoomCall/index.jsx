@@ -5,10 +5,9 @@ import {
   ContentHeader,
   ContentLoader,
 } from '@/components/common';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchZoomCalls } from '@/api/admin';
-import Swal from 'sweetalert2';
 import { formatDate } from '@/utils/helpers';
 
 function Index({ title }) {
@@ -19,7 +18,6 @@ function Index({ title }) {
     try {
       const response = await fetchZoomCalls();
       setZoomCalls(response.zoomCallUrls);
-      console.log(response.zoomCallUrls);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -46,8 +44,7 @@ function Index({ title }) {
       {loading ? (
         <ContentLoader />
       ) : (
-        zoomCalls &&
-        (zoomCalls.length > 0 ? (
+        zoomCalls && zoomCalls.length > 0 ? (
           <div className="row">
             <div className="col-lg-12">
               <div className="card border-0 mt-0 rounded-lg shadow-sm">
@@ -58,37 +55,25 @@ function Index({ title }) {
                 </div>
                 <div className="card-body p-4">
                   <div className="table-responsive">
-                  <table className="table table-admin mb-0 ">
-                      <thead className="bg-greylight rounded-10 ">
+                    <table className="table table-admin mb-0">
+                      <thead className="bg-greylight rounded-10">
                         <tr>
-                          <th className="border-0" scope="col">
-                            #
-                          </th>
-                          <th className="border-0" scope="col">
-                            Date
-                          </th>
-                          <th className="border-0" scope="col">
-                            Time
-                          </th>
-                          <th className="border-0" scope="col">
-                            Url
-                          </th>
-                          <th className="border-0" scope="col">
-                            Password
-                          </th>
-                          <th scope="col" className="text-right border-0 pl-1" width="20%">
-                            Action
-                          </th>
+                          <th className="border-0" scope="col">#</th>
+                          <th className="border-0" scope="col">Date</th>
+                          <th className="border-0" scope="col">Time</th>
+                          <th className="border-0" scope="col">Url</th>
+                          <th className="border-0" scope="col">Password</th>
+                          <th scope="col" className="text-right border-0 pl-1" width="20%">Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         {zoomCalls.map((zoomCall, index) => (
-                          <tr key={index}>
+                          <tr key={zoomCall.id}>
                             <td>{index + 1}</td>
                             <td>{formatDate(zoomCall.date)}</td>
-                            <td>10:30 Am</td>
+                            <td>{zoomCall.time}</td>
                             <td>{zoomCall.url}</td>
-                            <td>pass123r</td>
+                            <td>{zoomCall.passcode}</td>
                             <td className="text-right">
                               <Link
                                 to={`${zoomCall.id}/edit`}
@@ -108,7 +93,7 @@ function Index({ title }) {
           </div>
         ) : (
           <ContentFallback />
-        ))
+        )
       )}
     </>
   );

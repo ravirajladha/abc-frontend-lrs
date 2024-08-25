@@ -1,11 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
-import { SaveButton, SelectInput } from '@/components/common/form';
-
+import { SaveButton } from '@/components/common/form';
 import { createZoomCall } from '@/api/admin';
 
 function Create() {
@@ -15,7 +12,7 @@ function Create() {
     url: '',
     date: '',
     time: '',
-    password: '',
+    password: '', // Assuming you want to use password field for passcode
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
@@ -36,6 +33,7 @@ function Create() {
       [name]: value,
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -44,6 +42,8 @@ function Create() {
       const submissionData = new FormData();
       submissionData.append('url', formData.url);
       submissionData.append('date', formData.date);
+      submissionData.append('time', formData.time);
+      submissionData.append('passcode', formData.password); // Passcode
 
       const response = await createZoomCall(submissionData);
       toast.success(response.message);
@@ -122,7 +122,7 @@ function Create() {
                 <label className="mont-font fw-600 font-xsss">Time</label>
                 <input
                   type="time"
-                  className="form-control dummy"
+                  className="form-control"
                   name="time"
                   value={formData.time}
                   onChange={handleFormChange}

@@ -61,7 +61,7 @@ function Create() {
     setSelectedImage(null);
   };
 
-  const handleClassChange = ({ target: { value } }) => {
+  const handleSubjectChange = ({ target: { value } }) => {
     setValidationErrors(({ class: _, ...prevErrors }) => prevErrors);
     setFormData({
       subject: value,

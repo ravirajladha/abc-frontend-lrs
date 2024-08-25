@@ -14,7 +14,7 @@ function Show() {
 
   useEffect(() => {
     fetchTestDetails(testId).then((data) => {
-      setTestData(data.term_test);
+      setTestData(data.test);
       setLoading(false);
     });
   }, [testId]);

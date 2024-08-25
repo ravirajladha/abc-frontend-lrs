@@ -31,18 +31,37 @@ function Tests({ title }) {
     fetchSubjectDropdownData();
   }, [fetchSubjectDropdownData]);
 
+  // const getSubjectNames = (subjectIds) => {
+  //   const ids = subjectIds.split(',');
+  //   const subjectNames = ids
+  //     .map((id) => {
+  //       const subjectObj = subjects.find((sub) => sub.id === parseInt(id));
+  //       return subjectObj ? subjectObj.name : null;
+  //     })
+  //     .filter((name) => name !== null)
+  //     .join(', ');
+
+  //   return subjectNames;
+  // };
+
   const getSubjectNames = (subjectIds) => {
+    if (!subjectIds) {
+      return 'N/A'; // or any appropriate default value
+    }
+  
     const ids = subjectIds.split(',');
     const subjectNames = ids
       .map((id) => {
         const subjectObj = subjects.find((sub) => sub.id === parseInt(id));
-        return subjectObj ? subjectObj.name : null;
+        return subjectObj ? subjectObj.name : 'Unknown Subject';
       })
-      .filter((name) => name !== null)
+      .filter((name) => name !== 'Unknown Subject')
       .join(', ');
-
+  
     return subjectNames;
   };
+  
+  
 
   const handleSubjectChange = ({ target: { value } }) => {
     setSelectedSubject(value);
@@ -52,6 +71,7 @@ function Tests({ title }) {
     try {
       const response = await fetchJobTests(selectedSubject);
       const data = response.tests;
+      console.log(data);
       setTests(data);
       setLoading(false);
     } catch (error) {

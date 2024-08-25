@@ -80,7 +80,7 @@ function Dashboard() {
               itemName="Students Applied"
               itemIcon="users"
               itemValue={dashboard?.job_applications_count}
-              // itemLink="/teacher/qna"
+              // itemLink="/trainer/qna"
             />
             {/* <Card
               itemName="Average Score"
@@ -96,7 +96,7 @@ function Dashboard() {
                     itemName="Course"
                     itemIcon="book"
                     itemValue={item.subject_name}
-                    itemLink={`/teacher/subjects/${item.class_id}/courses/${item.subject_id}/results`}
+                    itemLink={`/trainer/subjects/${item.class_id}/courses/${item.subject_id}/results`}
                   />
                   <Card
                     itemName="Students"

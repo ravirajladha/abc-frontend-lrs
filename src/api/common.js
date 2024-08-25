@@ -73,14 +73,16 @@ export const fetchSelectedActiveElabs = async (subjectId, courseId=null) => {
   console.log(response.data, "response data");
   return response.data;
 };
-export const fetchSelectedActiveElabsWithoutCourseId= async (subjectId) => {
+
+export const fetchActiveElabsForSubject = async (subjectId) => {
   console.log(`Fetching ${subjectId}`);
   const response = await apiService.fetchData(
-    `/admin/elabs/get-selected-active-elabs-without-subject/${subjectId}`
+    `/admin/elabs/get-active-elabs-for-subject/${subjectId}`
   );
   console.log(response.data, "response data");
   return response.data;
 };
+
 
 export const fetchActiveElabs = async () => {
   const response = await apiService.fetchData('/admin/elabs/get-active-elabs');

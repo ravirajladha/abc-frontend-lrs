@@ -11,7 +11,7 @@ const index = () => {
     {
       title: 'How can we ask the next question in the Q&A tab?',
       description:
-        'Students can ask a single question in the provided tab at any given time. After submitting their question, they need to wait for a response from the teacher before they can ask another question. This system ensures that each query is addressed individually, allowing for a more organized and effective learning experience.',
+        'Students can ask a single question in the provided tab at any given time. After submitting their question, they need to wait for a response from the trainer before they can ask another question. This system ensures that each query is addressed individually, allowing for a more organized and effective learning experience.',
     },
     {
       title: 'How can I see the test button or pursue the test in any course?',

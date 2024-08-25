@@ -112,7 +112,7 @@ function Internship({ title }) {
                             <td>
                               <strong>{item.name}</strong>
                             </td>
-                            <td>{item.class_name}</td>
+                            <td>{item.subject_name}</td>
                             {/* <td>{item.subject_name}</td> */}
                             <td>
                               {' '}

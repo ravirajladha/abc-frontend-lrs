@@ -41,12 +41,12 @@ function Subjects() {
               buttons={[
                 {
                   label: 'Courses',
-                  action: (item) => `/teacher/subjects/${item.id}/courses`,
+                  action: (item) => `/trainer/subjects/${item.id}/courses`,
                   style: 'bg-primary-gradiant',
                 },
                 {
                   label: 'Results',
-                  action: (item) => `/teacher/subjects/${item.id}/results`,
+                  action: (item) => `/trainer/subjects/${item.id}/results`,
                   style: 'bg-success ml-2',
                 },
               ]}

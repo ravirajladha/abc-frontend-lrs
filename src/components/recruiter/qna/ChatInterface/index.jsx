@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import DefaultStudentImage from '@/assets/images/default/student.png';
-import DefaultTeacherImage from '@/assets/images/default/user.png';
+import DefaultTrainerImage from '@/assets/images/default/user.png';
 
 import { formatTimestamp } from '@/utils/helpers';
 
@@ -12,14 +12,14 @@ function ChatInterface({
   users,
   messages,
   loading,
-  teacherName,
-  teacherId,
+  trainerName,
+  trainerId,
   selectedStudent,
   showInput,
 }) {
   return (
     <>
-      <div className="chat-wrapper pt-0 w-100 position-relative scroll-bar bg-white theme-dark-bg teacher-chat" style={{marginBottom: "90px", height: "calc(100vh - 240px)"}}>
+      <div className="chat-wrapper pt-0 w-100 position-relative scroll-bar bg-white theme-dark-bg trainer-chat" style={{marginBottom: "90px", height: "calc(100vh - 240px)"}}>
         <div className="chat-body p-3">
           <div className="messages-content pb-5" style={{ height: 660 }}>
             {selectedStudent?.id ? (
@@ -31,7 +31,7 @@ function ChatInterface({
                         const user = users.find(
                           (user) => user.auth_id === message.receiver_id
                         );
-                        const isOutgoing = message.sender_id === teacherId;
+                        const isOutgoing = message.sender_id === trainerId;
                         return (
                           <div
                             className={`message-item ${
@@ -44,7 +44,7 @@ function ChatInterface({
                                 <img
                                   src={
                                     isOutgoing
-                                      ? DefaultTeacherImage
+                                      ? DefaultTrainerImage
                                       : user?.profile_image
                                       ? `assets/images/${user.profile_image}`
                                       : DefaultStudentImage
@@ -55,7 +55,7 @@ function ChatInterface({
                               <div>
                                 <h5>
                                   {isOutgoing
-                                    ? teacherName
+                                    ? trainerName
                                     : selectedStudent?.name}
                                 </h5>
                                 <div className="time">
@@ -117,15 +117,15 @@ ChatInterface.propTypes = {
   messages: PropTypes.array,
   loading: PropTypes.bool.isRequired,
   showInput: PropTypes.bool.isRequired,
-  teacherName: PropTypes.string,
-  teacherId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  trainerName: PropTypes.string,
+  trainerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   selectedStudent: PropTypes.shape({
     name: PropTypes.string.isRequired,
   }),
 };
 
 ChatInterface.defaultProps = {
-  teacherName: '',
+trainerName: '',
 };
 
 export default ChatInterface;

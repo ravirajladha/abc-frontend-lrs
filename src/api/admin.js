@@ -12,99 +12,98 @@ export const updateSettings = async (data) => {
   return response;
 };
 
-export const fetchSchools = () => {
+export const fetchInternshipAdmins = () => {
   return apiService
-    .fetchData('/admin/schools')
+    .fetchData('/admin/internshipAdmins')
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      // console.error('Error fetching schools:', error);
+      // console.error('Error fetching internshipAdmins:', error);
       throw error;
     });
 };
 
-export const getSchoolData = async (schoolId) => {
+export const getInternshipAdminData = async (internshipAdminId) => {
   return apiService
-    .fetchData(`/admin/schools/${schoolId}`)
+    .fetchData(`/admin/internshipAdmins/${internshipAdminId}`)
     .then((response) => {
-      return response.data.school;
+      return response.data.internshipAdmin;
     })
     .catch((error) => {
-      // console.error('Error fetching school details:', error);
+      // console.error('Error fetching internship Admins details:', error);
       throw error;
     });
 };
 
 
-export const getTeachers = async (schoolId) => {
+export const getTrainers = async (internshipAdminId) => {
   const response = await apiService.fetchData(
-    `/admin/schools/${schoolId}/teachers`
+    `/admin/internshipAdmins/${internshipAdminId}/trainers`
   );
   return response.data;
 };
 
-export const getStudents = async (schoolId) => {
+export const getStudents = async (internshipAdminId) => {
   const response = await apiService.fetchData(
-    `/admin/schools/${schoolId}/students`
+    `/admin/internshipAdmins/${internshipAdminId}/students`
   );
   return response.data;
 };
 export const getPublicStudents = async (page = 1, subjectId = '', sectionId = '') => {
   const response = await apiService.fetchData(
-    `/school/students/get-public-students?page=${page}&subjectId=${subjectId}&sectionId=${sectionId}`
+    `/internshipAdmin/students/get-public-students?page=${page}&subjectId=${subjectId}&sectionId=${sectionId}`
   );
   return response.data;
 };
 
-export const getPrivateStudents = async (page = 1, schoolId = '', subjectId = '', sectionId = '') => {
+export const getPrivateStudents = async (page = 1, internshipAdminId = '', subjectId = '', sectionId = '') => {
   const response = await apiService.fetchData(
-    `/school/students/get-private-students?page=${page}&schoolId=${schoolId}&subjectId=${subjectId}&sectionId=${sectionId}`
+    `/school/students/get-private-students?page=${page}&internshipAdminId=${internshipAdminId}&subjectId=${subjectId}&sectionId=${sectionId}`
   );
   return response.data;
 };
 
-export const getDinacharyaLogs = async (page = 1, schoolId = '', subjectId = '') => {
+export const getDinacharyaLogs = async (page = 1, internshipAdminId = '', subjectId = '') => {
   const response = await apiService.fetchData(
-    `/admin/get-dinacharya-logs?page=${page}&schoolId=${schoolId}&subjectId=${subjectId}`
+    `/admin/get-dinacharya-logs?page=${page}&internshipAdminId=${internshipAdminId}&subjectId=${subjectId}`
   );
   console.log("Dinacharya Logs", response.data)
   return response.data;
 };
 
 export const addStudentImages = async (data) => {
-  return apiService.postData(`/school/students/add-student-images`, data);
+  return apiService.postData(`/internshipAdmin/students/add-student-images`, data);
 };
 
 export const getStudentImages = async (studentId) => {
   return apiService
-    .fetchData(`/school/students/${studentId}/get-images`)
+    .fetchData(`/internshipAdmin/students/${studentId}/get-images`)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      // console.error('Error fetching school details:', error);
-      throw error;
+      // console.error('Error fetching internshipAdmin
     });
 };
 
 export const deleteStudentImage = (imageId) => {
-  return apiService.deleteData(`/school/students/${imageId}/delete`);
+  return apiService.deleteData(`/internshipAdmin/students/${imageId}/delete`);
 };
-export const getApplications = async (schoolId) => {
+export const getApplications = async (internshipAdminId) => {
   const response = await apiService.fetchData(
-    `/admin/schools/${schoolId}/applications`
+    `/admin/internshipAdmins/${internshipAdminId}/applications`
   );
   return response.data;
 };
 
-export const createSchool = async (data) => {
-  return apiService.postData(`/admin/schools/store`, data);
+export const createInternshipAdmin = async (data) => {
+  return apiService.postData(`/admin/internshipAdmins/store`, data);
 };
 
-export const editSchool = async (schoolId, data) => {
+export const editInternshipAdmin= async (internshipAdminId, data) => {
   return apiService
-    .postData(`/admin/schools/${schoolId}/update`, data, { method: 'POST' })
+    .postData(`/admin/internshipAdmins/${internshipAdminId}/update`, data, { method: 'POST' })
     .then((response) => {
       return response;
     })
@@ -1045,7 +1044,7 @@ export const fetchElabs = (page = 1) => {
       return response.data;
     })
     .catch((error) => {
-      // console.error('Error fetching schools:', error);
+      // console.error('Error fetching internshipAdmins:', error);
       throw error;
     });
 };
@@ -1248,7 +1247,7 @@ export const updateFee = async (data, feeId) => {
 
 };
 //Recruiter APIS
-//Teacher APIs
+//Trainer APIs
 
 export const fetchRecruiters= async () => {
   const response = await apiService.fetchData('/admin/recruiters');
@@ -1284,19 +1283,19 @@ export const editRecruiter = async (recruiterId, data) => {
 };
 
 export const resetRecruiterPassword = async (recruiterId, data) => {
-  return apiService.putData(`/school/teachers/${recruiterId}/reset`, data);
+  return apiService.putData(`/internshipAdmin/trainers/${recruiterId}/reset`, data);
 };
 
-export const assignTeacher = async (recruiterId, data) => {
+export const assignTrainer = async (recruiterId, data) => {
   const response = await apiService.postData(
-    `/school/teachers/${recruiterId}/assign`,
+    `/internshipAdmin/trainers/${recruiterId}/assign`,
     data
   );
   return response.data;
 };
 
-export const deleteTeacher = (recruiterId) => {
-  return apiService.deleteData(`/school/teachers/${recruiterId}/delete`);
+export const deleteTrainer = (recruiterId) => {
+  return apiService.deleteData(`/internshipAdmin/trainers/${recruiterId}/delete`);
 };
 
 export const fetchQuotes = (currentPage) => {
@@ -1306,7 +1305,7 @@ export const fetchQuotes = (currentPage) => {
       return response.data;
     })
     .catch((error) => {
-      // console.error('Error fetching schools:', error);
+      // console.error('Error fetching internshipAdmins:', error);
       throw error;
     });
 };
@@ -1325,7 +1324,7 @@ export const getQuoteDetail = async (quoteId) => {
       return response.data.quote;
     })
     .catch((error) => {
-      // console.error('Error fetching school details:', error);
+      // console.error('Error fetching internshipAdmin details:', error);
       throw error;
     });
 };
