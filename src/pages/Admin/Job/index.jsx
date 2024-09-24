@@ -118,17 +118,42 @@ function Job(props) {
   };
 
   const getSubjectNames = (subjectIds) => {
-    const ids = subjectIds.split(',');
+    let ids = [];
+    console.log("subjectIds:", subjectIds); // Debug: Check the actual structure of subjectIds
+  
+    // Check for different possible structures of subjectIds
+    if (Array.isArray(subjectIds)) {
+      if (subjectIds.length > 0 && typeof subjectIds[0] === 'object') {
+        // If subjectIds is an array of objects, extract the IDs
+        ids = subjectIds.map((subject) => subject.id);
+      } else {
+        // If subjectIds is an array of numbers or strings, ensure conversion to numbers
+        ids = subjectIds.map(Number);
+      }
+    } else if (typeof subjectIds === 'string') {
+      // If it's a string of comma-separated IDs
+      ids = subjectIds.split(',').map(Number);
+    } else if (typeof subjectIds === 'object' && subjectIds !== null) {
+      // If subjectIds is a single object with id and name properties
+      ids = [subjectIds.id];
+    }
+  
+    console.log("Extracted IDs:", ids); // Debug: Check extracted IDs
+  
+    // Map IDs to corresponding subject names
     const subjectNames = ids
       .map((id) => {
-        const subjectObj = subjects.find((subj) => subj.id === parseInt(id));
+        const subjectObj = subjects.find((subj) => subj.id === id);
         return subjectObj ? subjectObj.name : null;
       })
       .filter((name) => name !== null)
       .join(', ');
-
+  
+    console.log("Subject Names:", subjectNames); // Debug: Check extracted names
     return subjectNames;
   };
+  
+  
 
   return (
     <>

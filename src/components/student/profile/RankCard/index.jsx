@@ -7,14 +7,14 @@ function RankCard({ reportData }) {
       {reportData && (
   <div className="card-body p-lg-5 p-4 w-100 border-0 mb-0">
     <div className="row">
-      {reportData.class_rank && Object.keys(reportData.class_rank).map((className, index) => (
+      {reportData.subject_rank && Object.keys(reportData.subject_rank).map((subjectName, index) => (
         <div className="col-6" key={index}>
           <div className="item w-100 h50 bg-blue-gradiant mt-4 rounded-xxl overflow-hidden text-left shadow-md pl-3 pt-3 align-items-end d-flex">
             <h4 className="text-white font-xxl fw-700 mont-font mb-3">
               <span className="d-block fw-500 text-white font-xss mt-1">
-                {className}
+                {subjectName}
               </span>
-              {reportData.class_rank[className] !== undefined ? reportData.class_rank[className] : '-'}
+              {reportData.subject_rank[subjectName] !== undefined ? reportData.subject_rank[subjectName] : '-'}
             </h4>
           </div>
         </div>

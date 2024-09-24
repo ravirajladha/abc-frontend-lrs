@@ -26,7 +26,7 @@ function CreateEbook() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  const fetchClassDropdownData = useCallback(() => {
+  const fetchSubjectDropdownData = useCallback(() => {
     fetchSubjects()
       .then((data) => {
         setSubjects(data.subjects);

@@ -80,7 +80,10 @@ function Learn() {
     videoLastTimeStamp
   ) => {
     videoItems.forEach((video) => {
-      if (videoId === video.dataset.id) {
+    console.log("dataset id",video.dataset.id);
+    console.log("videoid",videoId);
+
+      if (videoId == video.dataset.id) {
         video.classList.add('active');
         video.querySelector('i').classList.remove('feather-play-circle');
         video.querySelector('i').classList.add('feather-pause-circle');

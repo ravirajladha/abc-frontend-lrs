@@ -34,7 +34,7 @@ function AssessmentQuestionBank({ title }) {
       .catch((error) => {
         console.error(error.message);
       });
-  }, []);
+  });
 
   useEffect(() => {
     fetchSubjectDropdownData();

@@ -153,13 +153,13 @@ function Dashboard() {
           />
           <Card
             itemIcon="codepen"
-            itemValue={dashboard?.jobs}
+            itemValue={dashboard?.placements}
             itemLink="/admin/jobs"
             itemName="Jobs"
           />
           <Card
             itemIcon="codepen"
-            itemValue={dashboard?.job_tests}
+            itemValue={dashboard?.placement_tests}
             itemLink="/admin/jobs/tests"
             itemName="Job Tests"
           />

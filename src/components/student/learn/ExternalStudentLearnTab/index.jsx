@@ -18,31 +18,31 @@ const LearnTab = ({
   const userDetail = JSON.parse(getUserDataFromLocalStorage());
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
-    const handleDownload = async () => {
-      try {
-        const response = await fetch(`${baseUrl}api/download-zip`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(`${baseUrl}api/download-zip`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        if (response) {
-          const blob = await response.blob();
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'resources.zip'; // The name of the file to be downloaded
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-        } else {
-          console.error('Failed to download file');
-        }
-      } catch (error) {
-        console.error('Error:', error);
+      if (response) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'resources.zip'; // The name of the file to be downloaded
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } else {
+        console.error('Failed to download file');
       }
-    };
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   useEffect(() => {
     const fetchElabSubmissions = async () => {
       if (userDetail && userDetail.id) {
@@ -73,7 +73,7 @@ const LearnTab = ({
 
     fetchElabSubmissions();
   }, [userDetail.userId, courseData]); // Include dependencies in useEffect
-
+  console.log('inside externsalstudenlearn tab', courseData);
   let isPreviousChapterCompleted = true;
   return (
     <div className="video-playlist h-100" style={{ height: 400 }}>
@@ -92,6 +92,7 @@ const LearnTab = ({
               </div>
             ) : (
               courseData.map((chapter, index) => {
+                
                 const chapterVideos = chapter.videos;
                 const hasVideos = chapterVideos && chapterVideos.length > 0;
 
@@ -102,18 +103,39 @@ const LearnTab = ({
                 //   chapter.superSubjectChaptersCompleted;
                 // Determine if the current chapter is in progress or completed
                 const isInProgressOrCompleted = isCompleted || isProgress;
-
+console.log("isCompleted || isProgress", chapter.title, isCompleted, isProgress, isInProgressOrCompleted);
                 // Lock the current chapter if the previous chapter was not completed or if superSubjectChaptersCompleted is false,
                 // but only if the chapter is not already in progress or completed
-                const shouldLockChapter =
-                  !isPreviousChapterCompleted ||
-                  (!isInProgressOrCompleted);
+                // const shouldLockChapter =  !isPreviousChapterCompleted ||  (!isInProgressOrCompleted);
+                const shouldLockChapter =   (!isInProgressOrCompleted);
+
+                 
+                if (!shouldLockChapter) {
+                  console.log(
+                    'is in progress status post locking',
+                    isInProgressOrCompleted,
+                    isCompleted,
+                    isProgress
+                  );
+                }
+
+                console.log('Chapter Status:', {
+                  chapterTitle: chapter.title,
+                  progressStatus: chapter.progress_status,
+                  completedBufferTime: chapter.completedBufferTime,
+                  shouldLockChapter,
+                  isPreviousChapterCompleted,
+                  isInProgressOrCompleted,
+                });
 
                 if (isCompleted && completedBufferTime) {
                   isPreviousChapterCompleted = true;
                 } else {
                   isPreviousChapterCompleted = false;
                 }
+
+                console.log('after if block', isPreviousChapterCompleted);
+                // Debugging output to ensure correct state logic
 
                 return hasVideos ? (
                   <Accordion.Item
@@ -258,7 +280,7 @@ const LearnTab = ({
                                       // to={`${baseUrl}uploads/zip/resources.zip`}
                                       onClick={handleDownload}
                                     >
-                                      <i className='feather-file'></i>
+                                      <i className="feather-file"></i>
                                     </Link>
                                   </div>
                                 </div>

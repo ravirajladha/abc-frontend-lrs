@@ -29,13 +29,13 @@ function Assessments({ title }) {
       .catch((error) => {
         toast.error(error.message);
       });
-  }, []);
+  });
 
   useEffect(() => {
     fetchSubjectDropdownData();
   }, [fetchSubjectDropdownData]);
 
-  const fetchSubjectsDropdownData = useCallback((subjectId) => {
+  const fetchCoursesDropdownData = useCallback((subjectId) => {
     fetchCourses(subjectId)
       .then((data) => {
         setCourses(data.courses);

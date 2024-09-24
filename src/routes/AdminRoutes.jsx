@@ -2,7 +2,7 @@
 
 // const AdminDashboard = lazy(() => import('@/pages'));
 
-import { AdminDashboard, EditStudent } from '@/pages';
+import { AdminDashboard } from '@/pages';
 import {
   Settings,
   Payment,
@@ -155,6 +155,7 @@ TestResult,
   ForumQuestions,
   ForumQuestionAnswers,
   StudentsCreate,
+  StudentEdit,
 } from '@/pages/Admin';
 import{
 
@@ -927,7 +928,7 @@ const AdminRoutes = [
   {
     path: 'public-students/:studentId/edit-profile',
     element: (
-      <EditStudent
+      <StudentEdit
         title="Student Profile Students"
       />
     ),

@@ -15,7 +15,7 @@ import {
 function Subjects({ title }) {
   const [subjectsData, setSubjectsData] = useState(null);
   const [loading, setLoading] = useState(true);
-console.log("from subjects index");
+  console.log('from subjects index');
   const fetchData = async () => {
     try {
       const response = await fetchSubjects();
@@ -24,7 +24,7 @@ console.log("from subjects index");
     } catch (error) {
       toast.error(error.message);
     } finally {
-      setLoading(false);    
+      setLoading(false);
     }
   };
 

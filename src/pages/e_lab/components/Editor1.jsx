@@ -41,25 +41,26 @@ import SubmitButtonWithModal from './SubmitButtonWithModal';
 //submit code hook
 // import useSubmitCode from './hooks/useSubmitCode';
 function Editor1({ title, studentView, isTestCode, isShowCodebase }) {
-
   // disable copy, right click
-  useEffect(() => {
-    const handleCopy = (e) => {
-      e.preventDefault();
-      alert('Copying, cutting, and pasting are disabled.');
-    };
-    const handleContextMenu = (e) => {
-      e.preventDefault();
-    };
 
-    document.addEventListener('copy', handleCopy);
-    document.addEventListener('contextmenu', handleContextMenu);
+  // useEffect(() => {
+  //   const handleCopy = (e) => {
+  //     e.preventDefault();
+  //     alert('Copying, cutting, and pasting are disabled.');
+  //   };
+  //   const handleContextMenu = (e) => {
+  //     e.preventDefault();
+  //   };
 
-    return () => {
-      document.removeEventListener('copy', handleCopy);
-      document.removeEventListener('contextmenu', handleContextMenu);
-    };
-  }, []);
+  //   document.addEventListener('copy', handleCopy);
+  //   document.addEventListener('contextmenu', handleContextMenu);
+
+  //   return () => {
+  //     document.removeEventListener('copy', handleCopy);
+  //     document.removeEventListener('contextmenu', handleContextMenu);
+  //   };
+  // }, []);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -86,6 +87,7 @@ function Editor1({ title, studentView, isTestCode, isShowCodebase }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const user_detail = JSON.parse(getUserDataFromLocalStorage());
+  console.log('user detail: ' + user_detail.type);
   let subjectId, miniProjectId, miniProjectTaskid, internshipId;
   // console.log(user_detail)
   const {
@@ -313,7 +315,12 @@ function Editor1({ title, studentView, isTestCode, isShowCodebase }) {
     setCode(newCode);
   };
 
-  const processCompilation = async (encodedCode, inputVariables, testId, customStatus) => {
+  const processCompilation = async (
+    encodedCode,
+    inputVariables,
+    testId,
+    customStatus
+  ) => {
     const formData = {
       language_id: language.id,
       source_code: encodedCode,
@@ -335,9 +342,7 @@ function Editor1({ title, studentView, isTestCode, isShowCodebase }) {
     try {
       const response = await axios.request(options);
       const token = response.data.token;
-     
 
-    
       const result = await checkStatus(token, testId); // Modify checkStatus if needed to handle custom input
       // if(!customStatus){
       return { testId, ...result };
@@ -345,7 +350,6 @@ function Editor1({ title, studentView, isTestCode, isShowCodebase }) {
       // return { 1, ...result };
 
       // }
- 
     } catch (err) {
       console.error(
         'Error during compile request for test case:',
@@ -402,7 +406,7 @@ ${harnessCode}
       return; // Exit the function if language is not recognized
     }
     const encodedFinalCode = btoa(finalCode);
-   
+
     // Process test cases
     if (labs && Array.isArray(labs.testcase)) {
       for (const test of labs.testcase) {
@@ -549,11 +553,9 @@ ${harnessCode}
       return { output, passed };
     } catch (err) {
       // Handle errors from the GET request
-     if(test != 'custom')
-{
-
-  showErrorToast(`"Error during status check:", err`);
-}
+      if (test != 'custom') {
+        showErrorToast(`"Error during status check:", err`);
+      }
       // console.error("Error during status check:", err);
       setProcessing(false);
     }
@@ -925,7 +927,7 @@ ${harnessCode}
                           Submit Code
                         </button>
                       ) : null} */}
-                      {user_detail.type === 4 && !isTestCode ? (
+                      {user_detail.type === 1 && !isTestCode ? (
                         <SubmitButtonWithModal
                           handleSubmitCode={handleSubmitCode}
                           allTestCasesPassed={allTestCasesPassed}

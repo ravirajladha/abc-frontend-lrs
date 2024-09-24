@@ -12,10 +12,10 @@ import { ContentHeader, ContentLoader } from '@/components/common';
 import { fetchAssessmentDetails, storeAssessmentResponse } from '@/api/student';
 
 function AssessmentTest() {
-  const { subjectId, videoId, assessmentId } = useParams();
+  const { courseId, videoId, assessmentId } = useParams();
   const studentData = useOutletContext();
-  const studentId = studentData.student_id;
-  const schoolId = studentData.school_id;
+  const studentId = studentData.student_auth_id;
+
 
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
@@ -53,7 +53,7 @@ function AssessmentTest() {
 
   useEffect(() => {
     getAssessmentDetails();
-  }, [getAssessmentDetails, subjectId, videoId, assessmentId]);
+  }, [getAssessmentDetails, courseId, videoId, assessmentId]);
 
   //Handle Back Button Click
   useEffect(() => {
@@ -115,9 +115,9 @@ function AssessmentTest() {
       formData.append('selectedQuestionIds', selectedQuestionIds);
       formData.append('timeTaken', timeTaken);
       formData.append('studentId', studentId);
-      formData.append('schoolId', schoolId);
+    
       formData.append('videoId', videoId);
-      formData.append('subjectId', subjectId);
+      formData.append('courseId', courseId);
       formData.append('assessmentId', assessmentId);
 
       const response = await storeAssessmentResponse(formData);
@@ -133,7 +133,7 @@ function AssessmentTest() {
     timeTaken,
     studentId,
     videoId,
-    subjectId,
+    courseId,
     assessmentId,
   ]);
 
@@ -282,7 +282,7 @@ function AssessmentTest() {
           result={result}
           submitting={loading}
           retakeAction={retakeAssessment}
-          subjectId={subjectId}
+          courseId={courseId}
         />
       )}
     </>

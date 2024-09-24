@@ -64,19 +64,11 @@ function Show({ title,isPrivate, isPublic}) {
     }
   };
   
-
   const backLink = isPrivate ? '/admin/private-students' : '/admin/public-students';
   return (
     <div className="px-2">
-      <ContentHeader title={title} backLink={backLink} />
-
-
-     
-                
-               
-
-
-
+      <ContentHeader title={title} backLink={backLink} />      
+      
       {loading && (
         <div className="row my-5">
           <ContentLoader />

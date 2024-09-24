@@ -36,6 +36,7 @@ export const fetchAssessments = (courseId) => {
   return apiService
     .fetchData(`/minimal/assessments?courseId=${courseId}`)
     .then((response) => {
+      console.log("fetching assessment data", courseId, response.data)
       return response.data;
     })
     .catch((error) => {
@@ -80,6 +81,7 @@ export const fetchElabs = (courseId) => {
   return apiService
     .fetchData(`/minimal/elabs?courseId=${courseId}`)
     .then((response) => {
+      console.log("elab response", response.data);
       return response.data;
     })
     .catch((error) => {

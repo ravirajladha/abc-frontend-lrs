@@ -9,31 +9,9 @@ import { ContentLoader } from '@/components/common';
 function ReportCard({ studentData, reportData, loading }) {
   console.log(reportData, 'student data inside performance card');
   const baseUrl = import.meta.env.VITE_BASE_URL;
-
-  const termTotals = [0, 0, 0];
-
   const d = new Date();
   let year = d.getFullYear();
 
-  // const fetchCourseWiseCard = useCallback(async () => {
-  //   console.log('Fetching wallet student details', studentData);
-  //   const studentAuthId = studentData.student_id;
-  //   try {
-  //     const data = await fetchCourseWiseScore(studentAuthId);
-  //     if (data) {
-  //       console.log('wallet details', data);
-  //       setWalletData(data.wallet_details);
-  //       setWalletLogs(data.wallet_logs);
-  //       setLoading(false);
-  //     }
-  //   } catch (error) {
-  //     console.error('Failed to fetch wallet details:', error);
-  //     setError(true);
-  //     toast.error('Failed to load wallet details: ' + error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, [studentData]);
 
   return (
     <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
@@ -100,32 +78,6 @@ function ReportCard({ studentData, reportData, loading }) {
                     </div>
                   </div>
                   <div className="clearfix"></div>
-
-                  {/* <div className="card border-0 shadow-none mb-4">
-                    <div className="card-bod6 d-block text-left 2 fw-600-0">
-                      <div className="item w-100 h50 bg-gold-gradiant rounded-xxl overflow-hidden text-left shadow-md pl-3 pt-3 align-items-end d-flex">
-                        <h4 className="text-white font-sm fw-700 mont-font mb-3 ">
-                          <span className="d-block fw-500 text-white font-xssss mt-1">
-                            Subject Rank
-                          </span>
-                          {reportData?.class_rank && reportData?.class_rank}
-                        </h4>
-                      </div>
-                    </div>
-                  </div> */}
-
-                  {/* <div className="card border-0 mb-4 shadow-none">
-                    <div className="card-body d-block text-left p-0">
-                      <div className="item w-100 h50 bg-primary rounded-xxl text-left shadow-md pl-3 pt-3 align-items-end d-flex">
-                        <h4 className="text-white mb-3 font-sm fw-700 mont-font">
-                          <span className="d-block fw-500 text-grey-300 font-xssss mt-1">
-                            Section Rank
-                          </span>
-                          {reportData?.section_rank && reportData?.section_rank}
-                        </h4>
-                      </div>
-                    </div>
-                  </div> */}
 
                   <p
                     to="#"

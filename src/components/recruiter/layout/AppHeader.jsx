@@ -11,7 +11,8 @@ import { HeaderSearchBar, Notification } from '@/components/common';
 function AppHeader({ toggleNav }) {
 
   return (
-    <div className="middle-sidebar-header bg-white">
+    <div className="middle-sidebar-header" style={{ background: "linear-gradient(90deg, #ffa629 0%, #ff9500 100%)"}}>
+
       <button onClick={toggleNav} className="header-menu"></button>
       <div className=" d-inline-block float-left mb-0 text-grey-900">
         <h1
@@ -30,12 +31,12 @@ function AppHeader({ toggleNav }) {
         <DarkButton />
         <Notification/>
         <li>
-          <OverlayTrigger
+        <OverlayTrigger
             placement="bottom"
             overlay={<Tooltip>Settings</Tooltip>}
           >
-            <Link to="/recruiter/settings">
-              <i className="feather-settings font-xl text-current"></i>
+            <Link to="/admin/settings">
+              <i className="feather-settings font-xl text-white"></i>
             </Link>
           </OverlayTrigger>
         </li>

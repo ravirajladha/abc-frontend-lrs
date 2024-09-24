@@ -104,8 +104,8 @@ function Index({ title }) {
                             <td>
                               <strong>{caseStudyItem.title}</strong>
                             </td>
-                            <td>{caseStudyItem.class_name}</td>
                             <td>{caseStudyItem.subject_name}</td>
+                            <td>{caseStudyItem.course_name}</td>
                             <td className="text-right">
                               <Link
                                 to={`/case-studies/${caseStudyItem.id}/preview`}

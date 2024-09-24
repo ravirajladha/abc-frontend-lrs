@@ -36,12 +36,12 @@ const StudentRoutes = [
   { path: 'dashboard', element: <StudentDashboard /> },
 
   { path: 'courses', element: <StudentSubjects /> },
-  { path: 'courses/:subjectId/results', element: <StudentSubjectResults isAdmin={false} isStudent={true}/> },
+  { path: 'courses/:courseId/results', element: <StudentSubjectResults isAdmin={false} isStudent={true}/> },
 
   { path: 'courses/:courseId/learn', element: <StudentLearn /> },
   { path: 'courses/:courseId/course-preview', element: <StudentCoursePreview /> },
   {
-    path: 'courses/:subjectId/learn/:videoId/assessment/:assessmentId',
+    path: 'courses/:courseId/learn/:videoId/assessment/:assessmentId',
     element: <StudentAssessmentTest />,
   },
   {

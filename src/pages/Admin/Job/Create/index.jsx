@@ -95,7 +95,7 @@ function Create(props) {
   const fetchJobTestsData = useCallback(() => {
     fetchJobTests()
       .then((data) => {
-        setJobTests(data.term_tests);
+        setJobTests(data.tests);
         console.log("jobstest", jobTests);
       })
       .catch((error) => {

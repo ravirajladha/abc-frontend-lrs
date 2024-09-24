@@ -19,9 +19,13 @@ function CoursesCard() {
   const navigate = useNavigate();
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
 
-  const studentId = studentData.student_id;
-  const subjectId = studentData.subject_id;
-  const schoolId = studentData.school_id;
+  const studentId = studentData.student_auth_id;
+  if (!studentId) {
+    console.error('Student auth ID is not available');
+    return;
+  }
+
+
   const [loading1, setLoading1] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [currentSubject, setCurrentSubject] = useState(null);
@@ -29,6 +33,7 @@ function CoursesCard() {
   const fetchCoursesCallback = useCallback(async () => {
     try {
       const data = await fetchMyCourses();
+      console.log("fetch my coures", data.courses)
       setCourses(data.courses);
     } catch (error) {
       setError(error);
@@ -58,11 +63,10 @@ function CoursesCard() {
     handleCloseModal();
     handleStartTest(subjectId, latestTestId);
   };
-  const handleStartTest = async (subjectId, latestTestId) => {
+  const handleStartTest = async (courseId, latestTestId) => {
     setLoading1(true);
     const data = {
       studentId, // Assuming this is available from context or state
-      schoolId, // Assuming this is available from context or state
       courseId,
       latestTestId,
     };
@@ -130,7 +134,7 @@ function CoursesCard() {
                         <span
                           className={`font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 d-inline-block mr-1 alert-warning text-warning`}
                         >
-                          {course.class_name}
+                          {course.subject_name}
                         </span>
                         <div>
                           <div className="star d-flex w-100 text-left">
@@ -191,8 +195,8 @@ function CoursesCard() {
                             </p>
                           </Link>
                         )}
-                        {course.chapter_completed &&
-                          course.latest_test_id && (
+                        {/* {course.chapter_completed && */}
+                         {course.latest_test_id && (
                             <button
                               className="d-flex flex-column align-items-center"
                               onClick={() => handleOpenModal(course)}
@@ -257,8 +261,8 @@ function CoursesCard() {
                             className="btn text-white bg-success"
                             onClick={() =>
                               handleStartTestFromModal(
-                                currentCourse.id,
-                                currentCourse.latest_test_id
+                                course.id,
+                                course.latest_test_id
                               )
                             }
                           >

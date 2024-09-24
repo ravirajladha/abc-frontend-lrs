@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { debounce } from 'lodash';
 import {
   ContentFormWrapper,
   ContentHeader,
@@ -179,21 +179,26 @@ function EditContentForm() {
     setShowEbookDropdown(!showEbookDropdown);
   };
 
-  const handleEbookChange = useCallback((field, value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }));
-    if (field === 'ebook_id') {
-      fetchEbookModules(value)
-        .then((data) => {
-          setEbookModules(data.ebook_modules);
-        })
-        .catch((error) => {
-          toast.error(error.message);
-        });
-    }
-  }, []);
+
+
+  // const handleEbookModuleChange = useCallback(
+  //   debounce((field, value) => {
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       [field]: value,
+  //       ['ebook_section_id']: '',
+  //     }));
+  //     if (field === 'ebook_module_id') {
+  //       fetchEbookSections(value)
+  //         .then((data) => {
+  //           setEbookSections(data.ebook_sections);
+  //         })
+  //         .catch((error) => {
+  //           toast.error(error.message);
+  //         });
+  //     }
+  //   }, 300), []); // Adjust the debounce delay as needed
+  
 
   const handleEbookModuleChange = useCallback((field, value) => {
     setFormData((prevData) => ({
@@ -212,12 +217,15 @@ function EditContentForm() {
     }
   }, []);
 
-  const handleEbookSectionChange = useCallback((field, value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }));
-  }, []);
+  const handleEbookSectionChange = useCallback(
+    debounce((field, value) => {
+      setFormData((prevData) => ({
+        ...prevData,
+        [field]: value,
+      }));
+    }, 300),
+    [] // The empty dependency array ensures the debounce function is not recreated on every render
+  );
 
   const handleElabCheckbox = () => {
     setShowElabDropdown(!showElabDropdown);

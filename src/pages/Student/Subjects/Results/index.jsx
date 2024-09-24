@@ -18,7 +18,7 @@ function Results({ isAdmin, isStudent }) {
   const navigate = useNavigate();
   const { courseId, studentId: paramStudentId } = useParams();
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
-  const localStudentId = isAdmin ? paramStudentId : studentData.student_id;
+  const localStudentId = isAdmin ? paramStudentId : studentData.student_auth_id;
   
   const studentId = isAdmin ? paramStudentId : localStudentId;
 
@@ -30,8 +30,8 @@ function Results({ isAdmin, isStudent }) {
   const getCourseDetails = useCallback(async () => {
     try {
       const res = await fetchStudentResultsByCourse(studentId, courseId);
-      console.log("result inside result page", res.term_test_results);
-      setResultData(res.term_test_results);
+      console.log("result inside result page1", res.test_results);
+      setResultData(res.test_results);
       setLoading(false);
     } catch (error) {
       toast.error(error.message);

@@ -21,7 +21,7 @@ import { formatNumber } from '@/utils/helpers';
 
 function Result() {
   const { subjectId } = useParams();
-
+console.log('same course result page');
   const [error, setError] = useState(null);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);

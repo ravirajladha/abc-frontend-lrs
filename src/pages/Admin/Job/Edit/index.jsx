@@ -105,7 +105,7 @@ function Create(props) {
   const fetchJobTestsData = useCallback(() => {
     fetchJobTests()
       .then((data) => {
-        setJobTests([{ title: 'No Test', id: '' }, ...data.term_tests]);
+        setJobTests([{ title: 'No Test', id: '' }, ...data.tests]);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -183,7 +183,7 @@ function Create(props) {
       }
 
       const response = await updateJobDetails(jobId,submissionData);
-      toast.success(response.message);
+      toast.success("Jobs updated successfully");
 
       clearForm();
       clearSelectedImage();

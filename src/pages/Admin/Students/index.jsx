@@ -1,24 +1,14 @@
-import { useState, useEffect, useCallback } from 'react';
-import {
-  getPublicStudents,
-  getPrivateStudents,
-  addStudentImages,
-  updateStudentStatus,
-} from '@/api/admin';
+import { useState, useEffect } from 'react';
+import { getPublicStudents, addStudentImages, updateStudentStatus } from '@/api/admin';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import DefaultProfileImage from '@/assets/images/default/student.png';
-import { CustomModal } from '@/pages/Admin';
-import { StudentTable } from '@/pages/Admin';
-import { StudentCard } from '@/pages/Admin';
+import { CustomModal, StudentTable, StudentCard } from '@/pages/Admin';
 import PropTypes from 'prop-types';
-
 import { Accordion, ContentHeader, Pagination } from '@/components/common';
 import { getUserDataFromLocalStorage } from '@/utils/services';
-import { fetchSubjects, fetchSections, fetchPrivateSchools } from '@/api/common';
-import ContentSelectFilter from '@/components/common/ContentSelectFilter';
 
-function PublicStudent({ title, isPrivate, isPublic }) {
+function PublicStudent({ title }) {
   const baseUrl = import.meta.env.VITE_BASE_URL;
   const user_detail = JSON.parse(getUserDataFromLocalStorage());
   const createdBy = user_detail?.id;
@@ -32,65 +22,12 @@ function PublicStudent({ title, isPrivate, isPublic }) {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [schools, setSchools] = useState([]);
-  const [selectedSchool, setSelectedSchool] = useState('');
-
-  const [subjects, setSubjects] = useState([]);
-  const [selectedSubject, setSelectedSubject] = useState('');
-  const [sections, setSections] = useState([]);
-  const [selectedSection, setSelectedSection] = useState('');
-
-  const fetchSchoolDropdownData = useCallback(() => {
-    fetchPrivateSchools()
-      .then((data) => {
-        setSchools(data);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  const fetchSubjectDropdownData = useCallback(() => {
-    fetchSubjects()
-      .then((data) => {
-        setSubjects(data);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  const fetchSectionsDropdownData = useCallback(() => {
-    fetchSections()
-      .then((data) => {
-        setSections(data);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchSchoolDropdownData();
-    fetchSubjectDropdownData();
-    fetchSectionsDropdownData();
-  }, [
-    fetchSchoolDropdownData,
-    fetchSubjectDropdownData,
-    fetchSectionsDropdownData,
-  ]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = isPrivate
-          ? await getPrivateStudents(
-              currentPage,
-              selectedSchool,
-              selectedSubject,
-              selectedSection
-            )
-          : await getPublicStudents(currentPage, selectedSubject, selectedSection);
+        const data = await getPublicStudents(currentPage);
         setStudents(data.students.data);
         setTotalPages(data.students.last_page);
         setLoading(false);
@@ -101,50 +38,14 @@ function PublicStudent({ title, isPrivate, isPublic }) {
     };
 
     fetchData();
-  }, [isPrivate, currentPage, selectedSchool, selectedSubject, selectedSection]);
+  }, [currentPage]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  if (error) return <div>Error: {error.message}</div>;
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [formData, setFormData] = useState({
-    student_id: '',
-    student_auth_id: '',
-    created_by: '',
-    image: '',
-  });
-
   const clearForm = () => {
-    setFormData({
-      student_id: '',
-      student_auth_id: '',
-      created_by: '',
-    });
     setSelectedImage(null);
-  };
-
-  const handleSchoolChange = async (event) => {
-    const schoolId = event.target.value;
-    setSelectedSchool(schoolId === '' ? '' : schoolId);
-
-    setCurrentPage(1);
-  };
-
-  const handleSubjectChange = async (event) => {
-    const subjectId = event.target.value;
-    setSelectedSubject(subjectId === '' ? '' : subjectId);
-    setSelectedSection('');
-    setCurrentPage(1);
-  };
-
-  const handleSectionChange = async (event) => {
-    const sectionId = event.target.value;
-    setSelectedSection(sectionId === '' ? '' : sectionId);
-    setCurrentPage(1);
   };
 
   const handleCloseModal = () => {
@@ -234,30 +135,20 @@ function PublicStudent({ title, isPrivate, isPublic }) {
         title={title}
         buttons={[
           {
-            link: `create`,
+            link: 'create',
             text: 'New student',
           },
         ]}
       />
       <div className="px-2">
         <Accordion items={accordionItems} />
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         {modalOpen && (
           <CustomModal
             isOpen={showModal}
             onClose={handleCloseModal}
             handleSubmit={(e, images) =>
-              handleSubmit(
-                e,
-                images,
-                selectedStudent.student_id,
-                selectedStudent.auth_id,
-                createdBy
-              )
+              handleSubmit(e, images, selectedStudent.student_id, selectedStudent.auth_id, createdBy)
             }
             handleFileChange={handleFileChange}
             studentId={selectedStudent.student_id}
@@ -271,7 +162,6 @@ function PublicStudent({ title, isPrivate, isPublic }) {
 
 PublicStudent.propTypes = {
   title: PropTypes.string,
-  subtitle: PropTypes.string,
 };
 
 export default PublicStudent;

@@ -87,8 +87,8 @@ function Index({ title }) {
                         {readableCourses.map((readableCourse, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{readableCourse.class_name}</td>
                             <td>{readableCourse.subject_name}</td>
+                            <td>{readableCourse.course_name}</td>
                             <td>{readableCourse.ebook_title}</td>
                             <td>{readableCourse.project_report_title ?? '-'}</td>
                             <td>{readableCourse.case_study_title ?? '-'}</td>

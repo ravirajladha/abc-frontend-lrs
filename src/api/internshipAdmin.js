@@ -2,79 +2,79 @@
 import { apiService } from '@/utils/services';
 
 export const fetchDashboard = async () => {
-  const response = await apiService.fetchData(`/school/dashboard`);
+  const response = await apiService.fetchData(`/internship-admin/dashboard`);
   return response.data;
 };
 
 export const updateSettings = async (schoolId, data) => {
-  const response = await apiService.putData(`/school/${schoolId}/update`, data);
+  const response = await apiService.putData(`/internship-admin/${schoolId}/update`, data);
   return response.data;
 };
 
 export const fetchStudents = async () => {
-  const response = await apiService.fetchData(`/school/students`);
+  const response = await apiService.fetchData(`/internship-admin/students`);
   return response.data;
 };
 export const fetchStudentsBySubjectAndSection = async (subjectId,sectionId) => {
-  const response = await apiService.fetchData(`/school/class/students/${subjectId}/${sectionId}`);
+  const response = await apiService.fetchData(`/internship-admin/class/students/${subjectId}/${sectionId}`);
   return response.data;
 };
 
 export const fetchStudent = async (studentId) => {
-  const response = await apiService.fetchData(`/school/students/${studentId}`);
+  const response = await apiService.fetchData(`/internship-admin/students/${studentId}`);
   return response.data;
 };
 
 export const fetchStudentFromStudents= async (studentId) => {
   console.log( "response from api route1",studentId)
 
-  const response = await apiService.fetchData(`/school/students/get-student-details/${studentId}`);
+  const response = await apiService.fetchData(`/admin/students/get-student-details/${studentId}`);
   console.log(response.data, "response from api route",studentId)
   return response.data;
 };
 // Applications
 export const fetchApplications = async (status) => {
-  const response = await apiService.fetchData(`/school/applications/${status}`);
+  const response = await apiService.fetchData(`/internship-admin/applications/${status}`);
   return response.data;
 };
 export const updateApplicationStatus = async (data) => {
   const response = await apiService.postData(
-    `/school/applications/update-status`,
+    `/internship-admin/applications/update-status`,
     data
   );
   return response.data;
 };
 export const updateWhatsappStatus = async (data) => {
   const response = await apiService.postData(
-    `/school/applications/update-whatsapp-status`,
+    `/internship-admin/applications/update-whatsapp-status`,
     data
   );
   return response.data;
 };
 export const storeApplicationRemark = async (data) => {
   const response = await apiService.postData(
-    `/school/applications/store-application-remark`,
+    `/internship-admin/applications/store-application-remark`,
     data
   );
   return response.data;
 };
 export const fetchApplicationById = async (applicationId) => {
   const response = await apiService.fetchData(
-    `/school/applications/get-application/${applicationId}`
+    `/internship-admin/applications/get-application/${applicationId}`
   );
   return response.data;
 };
 
 export const sendWhatsappMessage = async (contact, messageType) => {
   const response = await apiService.postData(
-    `/school/applications/send-whatsapp-message/${contact}/${messageType}`
+    `/internship-admin/applications/send-whatsapp-message/${contact}/${messageType}`
   );
   return response.data;
 };
 
 export const sendWhatsappBulkMessage = async (messageType, data) => {
   const response = await apiService.postData(
-    `/school/applications/send-bulk-whatsapp-message/${messageType}`,data
+    `/internship-admin/applications/send-bulk-whatsapp-message/${messageType}`,data
   );
   return response.data;
 };
@@ -88,34 +88,34 @@ export const fetchOldApplications = async (status) => {
 };
 export const updateOldApplicationStatus = async (data) => {
   const response = await apiService.postData(
-    `/school/old-applications/update-status`,
+    `/internship-admin/old-applications/update-status`,
     data
   );
   return response.data;
 };
 export const updateOldApplicationWhatsappStatus = async (data) => {
   const response = await apiService.postData(
-    `/school/old-applications/update-whatsapp-status`,
+    `/internship-admin/old-applications/update-whatsapp-status`,
     data
   );
   return response.data;
 };
 export const storeOldApplicationRemark = async (data) => {
   const response = await apiService.postData(
-    `/school/old-applications/store-application-remark`,
+    `/internship-admin/old-applications/store-application-remark`,
     data
   );
   return response.data;
 };
 export const fetchOldApplicationById = async (applicationId) => {
   const response = await apiService.fetchData(
-    `/school/old-applications/get-application/${applicationId}`
+    `/internship-admin/old-applications/get-application/${applicationId}`
   );
   return response.data;
 };
 export const uploadOldApplication = async (data) => {
   const response = await apiService.postData(
-    `/school/old-applications/upload`,
+    `/internship-admin/old-applications/upload`,
     data,
     { method: 'POST' }
   );
@@ -123,7 +123,7 @@ export const uploadOldApplication = async (data) => {
 };
 export const sendOldWhatsappBulkMessage = async (messageType, data) => {
   const response = await apiService.postData(
-    `/school/old-applications/send-bulk-whatsapp-message/${messageType}`,data
+    `/internship-admin/old-applications/send-bulk-whatsapp-message/${messageType}`,data
   );
   return response.data;
 };
@@ -131,13 +131,13 @@ export const sendOldWhatsappBulkMessage = async (messageType, data) => {
 
 
 export const createStudent = async (data) => {
-  const response = await apiService.postData(`/school/students/store`, data);
+  const response = await apiService.postData(`/internship-admin/students/store`, data);
   return response.data;
 };
 
 export const editStudent = async (studentId, data) => {
   return apiService
-    .postData(`/school/students/${studentId}/update`, data, { method: 'POST' })
+    .postData(`/admin/students/${studentId}/update`, data, { method: 'POST' })
     .then((response) => {
       return response;
     })
@@ -147,11 +147,11 @@ export const editStudent = async (studentId, data) => {
 };
 
 export const deleteStudent = (studentId) => {
-  return apiService.deleteData(`/school/students/${studentId}/delete`);
+  return apiService.deleteData(`/internship-admin/students/${studentId}/delete`);
 };
 
 export const resetStudentPassword = async (studentId, data) => {
-  return apiService.putData(`/school/students/${studentId}/reset`, data);
+  return apiService.putData(`/internship-admin/students/${studentId}/reset`, data);
 };
 
 //Trainer APIs
@@ -209,28 +209,28 @@ export const deleteTrainer = (trainerId) => {
 
 export const fetchResults = async (selectedClass,selectedSection, selectedTerm) => {
   const response = await apiService.fetchData(
-    `/school/results?classId=${selectedClass}&sectionId=${selectedSection}&term=${selectedTerm}`
+    `/internship-admin/results?classId=${selectedClass}&sectionId=${selectedSection}&term=${selectedTerm}`
   );
   return response.data;
 };
 
 export const fetchClassResult = async (classId) => {
   const response = await apiService.fetchData(
-    `/school/classes/${classId}/results`
+    `/internship-admin/classes/${classId}/results`
   );
   return response.data;
 };
 
 export const fetchSubjectResult = async (subjectId) => {
   const response = await apiService.fetchData(
-    `/school/subject/${subjectId}/results`
+    `/internship-admin/subject/${subjectId}/results`
   );
   return response.data;
 };
 
 export const fetchAssessmentResults = async (chapterId,studentId) => {
   const response = await apiService.fetchData(
-    `/school/chapter/assessment-results?studentId=${studentId}&chapterId=${chapterId}`
+    `/internship-admin/chapter/assessment-results?studentId=${studentId}&chapterId=${chapterId}`
   );
   return response.data;
 };

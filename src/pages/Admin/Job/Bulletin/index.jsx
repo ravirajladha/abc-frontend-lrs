@@ -55,7 +55,7 @@ const BulletinForm = (props) => {
 
   return (
     <>
-      <ContentHeader title="Edit Job" backLink="/admin/jobs" />
+      <ContentHeader title="Edit Job" />
       <ContentFormWrapper formTitle={`Edit Job Post`}>
         <form>
           <div className="col-lg-12 mb-2">

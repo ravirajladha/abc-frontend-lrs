@@ -103,8 +103,8 @@ function ProjectReport({ title }) {
                             <td>
                               <strong>{projectReportItem.title}</strong>
                             </td>
-                            <td>{projectReportItem.class_name}</td>
                             <td>{projectReportItem.subject_name}</td>
+                            <td>{projectReportItem.course_name}</td>
                             <td className="text-right">
                               <Link
                                 to={`/project-reports/${projectReportItem.id}/preview`}

@@ -15,7 +15,6 @@ function Jobs() {
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
   console.log(studentData);
   const studentId = studentData.student_auth_id;
-  const schoolId = studentData.school_id;
   // const classId = studentData.class_id;
   const navigate = useNavigate();
 

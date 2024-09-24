@@ -52,7 +52,7 @@ export const getStudents = async (internshipAdminId) => {
 };
 export const getPublicStudents = async (page = 1, subjectId = '', sectionId = '') => {
   const response = await apiService.fetchData(
-    `/internshipAdmin/students/get-public-students?page=${page}&subjectId=${subjectId}&sectionId=${sectionId}`
+    `/admin/students/get-public-students?page=${page}&subjectId=${subjectId}&sectionId=${sectionId}`
   );
   return response.data;
 };

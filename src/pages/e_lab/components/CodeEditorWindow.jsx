@@ -41,12 +41,13 @@ const CodeEditorWindow = ({ onChange, language, code, theme,fontSize }) => {
     editor.updateOptions({ contextmenu: false });
     editor.focus();
 
-    editor.onKeyDown((event) => {
-      const { keyCode, ctrlKey, metaKey } = event;
-      if ((keyCode === 33 || keyCode === 52) && (metaKey || ctrlKey)) {
-        event.preventDefault();
-        alert("Copying, cutting, and pasting are disabled.")
-      }})
+    // editor.onKeyDown((event) => {
+    //   const { keyCode, ctrlKey, metaKey } = event;
+    //   if ((keyCode === 33 || keyCode === 52) && (metaKey || ctrlKey)) {
+    //     event.preventDefault();
+    //     alert("Copying, cutting, and pasting are disabled.")
+    //   }}
+    // )
   };
   return (
     <div className="overlay rounded-md overflow-hidden w-full h-full shadow-4xl">

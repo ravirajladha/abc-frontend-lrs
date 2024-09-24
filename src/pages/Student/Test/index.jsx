@@ -32,7 +32,7 @@ function Test() {
   const studentData = JSON.parse(getStudentDataFromLocalStorage());
 
   // console.log(studentData1, 'Student');
-  const studentId = studentData.student_id;
+  const studentId = studentData.student_auth_id;
   const schoolId = studentData.school_id;
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
@@ -151,7 +151,7 @@ function Test() {
       formData.append('selectedQuestionIds', selectedQuestionIds);
       formData.append('timeTaken', timeTaken);
       formData.append('studentId', studentId);
-      formData.append('schoolId', schoolId);
+      // formData.append('schoolId', schoolId);
       formData.append('subjectId', subjectId);
       formData.append('classId', classId);
       formData.append('testId', testId);

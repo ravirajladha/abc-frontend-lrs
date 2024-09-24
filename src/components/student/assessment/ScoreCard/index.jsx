@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Spinner } from 'react-bootstrap';
 
-function ScoreCard({ result, submitting, retakeAction, subjectId }) {
+function ScoreCard({ result, submitting, retakeAction, courseId }) {
   return (
     <div className="row">
       <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
@@ -58,7 +58,7 @@ function ScoreCard({ result, submitting, retakeAction, subjectId }) {
                   ''
                 )}
                 <Link
-                  to={`/student/courses/${subjectId}/learn`}
+                  to={`/student/courses/${courseId}/learn`}
                   className="py-2 px-3 text-uppercase mt-3 d-inline-block text-white fw-700 lh-30 rounded-lg  text-center font-xssss ls-3 bg-current"
                 >
                   Go To Course

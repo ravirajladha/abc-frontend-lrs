@@ -17,6 +17,7 @@ import {
 import { fetchReportCard, fetchWalletDetails } from '@/api/student';
 import { fetchStudentFromStudents } from '@/api/internshipAdmin';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
+
 function Profile({ isAdmin, isStudent }) {
   const { studentId: studentIdFromParams } = useParams();
   const navigate = useNavigate();
@@ -57,10 +58,12 @@ function Profile({ isAdmin, isStudent }) {
       setError(new Error('No student ID provided in URL parameters.'));
       return;
     }
+    console.log('student id', studentIdFromParams);
 
     try {
       const data = await fetchStudentFromStudents(studentIdFromParams);
       if (data && data.student) {
+        console.log('Student data fetched', data);
         setStudentData(data.student);
         setLoading(false);
       } else {
@@ -76,11 +79,10 @@ function Profile({ isAdmin, isStudent }) {
 
   const fetchStudentReportCard = useCallback(async () => {
     console.log('Fetching student', studentData);
-    const studentId = studentData.student_id;
-    const classId = studentData.class_id;
-    const sectionId = studentData.section_id;
+    const studentId = studentData.student_auth_id;
+
     try {
-      const data = await fetchReportCard(studentId, classId, sectionId);
+      const data = await fetchReportCard(studentId);
       if (data) {
         console.log('report card restult', data.report_card);
         setReportCard(data.report_card);
@@ -95,8 +97,14 @@ function Profile({ isAdmin, isStudent }) {
     }
   }, [studentData]);
   const fetchWalletDetailsCard = useCallback(async () => {
-    console.log('Fetching wallet student details', studentData);
+    // console.log('Fetching wallet student details', studentData);
     const studentAuthId = studentData.student_auth_id;
+    // const studentAuthId = studentData?.student_auth_id;
+    if (!studentAuthId) {
+      console.error('Student auth ID is not available');
+      return;
+    }
+
     try {
       const data = await fetchWalletDetails(studentAuthId);
       if (data) {
@@ -140,9 +148,13 @@ function Profile({ isAdmin, isStudent }) {
     if (studentData && studentData.student_id) {
       const studentId = studentData.student_id;
       const studentAuthId = studentData.student_auth_id;
-      const classId = studentData.class_id;
-      const sectionId = studentData.section_id;
-      fetchStudentReportCard(studentId, classId, sectionId);
+
+      if (!studentAuthId) {
+        console.error('Student auth ID is not available');
+        return;
+      }
+
+      fetchStudentReportCard(studentId);
       fetchWalletDetailsCard(studentAuthId);
     }
   }, [studentData, fetchStudentReportCard, fetchWalletDetailsCard]);
@@ -175,9 +187,13 @@ function Profile({ isAdmin, isStudent }) {
               isProfileEditable={isProfileEditable}
             />
           </Tab>
-          <Tab eventKey="subject" title="Courses">
-            <SubjectCard subjects={studentData?.subjects} />
-          </Tab>
+
+          {/* here the courses card is expecting the student_auth_id which is coming from the localstorage for the student, for the admin we needs to pass thorugh the parameter. currenlty commented out for the admin */}
+          {isAdmin == true && (
+            <Tab eventKey="subject" title="Courses">
+              <SubjectCard subjects={studentData?.subjects} />
+            </Tab>
+          )}
           <Tab eventKey="ranks" title="RANKS">
             <RankCard reportData={reportCard} />
           </Tab>

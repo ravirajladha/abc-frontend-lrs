@@ -1,3 +1,4 @@
+import { StudentTable } from '@/pages';
 import { apiService } from '@/utils/services';
 
 export const fetchDashboard = async (studentId) => {
@@ -8,15 +9,18 @@ export const fetchDashboard = async (studentId) => {
 };
 
 export const fetchWalletDetails  = async (studentAuthId) => {
+  console.log("student auth id for wallet", studentAuthId);
+
   const response = await apiService.fetchData(
     `/student/wallet-details/${studentAuthId}`
   );
+  console.log("wallet api response", response.data);
   return response.data;
 };
 
 export const fetchReportCard = async (studentId, subjectId, sectionId) => {
   const response = await apiService.fetchData(
-    `/student/get-report-card?studentId=${studentId}&subjectId=${subjectId}&sectionId=${sectionId}`
+    `/student/get-report-card?studentId=${studentId}`
   );
   return response.data;
 };
