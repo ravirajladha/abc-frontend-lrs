@@ -2,11 +2,13 @@ import PropTypes from 'prop-types';
 
 import DefaultProfileImage from '@/assets/images/default/student.png';
 import { Link } from 'react-router-dom';
+import { getUserDataFromLocalStorage } from '@/utils/services';
 
 function AboutCard({ studentData, isProfileEditable }) {
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const student = studentData;
+  const userData = JSON.parse(getUserDataFromLocalStorage());
   return (
     <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
       {student && (
@@ -38,11 +40,11 @@ function AboutCard({ studentData, isProfileEditable }) {
                 <div className="clearfix"></div>
                 <span className="d-block font-xssss fw-500 mt-1 lh-3 text-grey-700">
                   <span className="text-grey-900 fw-600">Email:</span>{' '}
-                  {student?.email || 'N/A'}
+                  {userData?.email || 'N/A'}
                 </span>
                 <span className="d-block font-xssss fw-500 mt-1 lh-3 text-grey-700">
                   <span className="text-grey-900 fw-600">Phone Number: </span>{' '}
-                  {student?.phone_number || 'N/A'}
+                  {userData?.phone_number || 'N/A'}
                 </span>
               </div>
             </div>

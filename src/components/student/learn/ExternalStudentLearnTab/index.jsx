@@ -99,43 +99,14 @@ const LearnTab = ({
                 const isCompleted = chapter.progress_status == 2;
                 const isProgress = chapter.progress_status == 1;
                 const completedBufferTime = chapter.completedBufferTime;
-                // const superSubjectChaptersCompleted =
-                //   chapter.superSubjectChaptersCompleted;
-                // Determine if the current chapter is in progress or completed
-                const isInProgressOrCompleted = isCompleted || isProgress;
-console.log("isCompleted || isProgress", chapter.title, isCompleted, isProgress, isInProgressOrCompleted);
-                // Lock the current chapter if the previous chapter was not completed or if superSubjectChaptersCompleted is false,
-                // but only if the chapter is not already in progress or completed
-                // const shouldLockChapter =  !isPreviousChapterCompleted ||  (!isInProgressOrCompleted);
-                const shouldLockChapter =   (!isInProgressOrCompleted);
 
-                 
-                if (!shouldLockChapter) {
-                  console.log(
-                    'is in progress status post locking',
-                    isInProgressOrCompleted,
-                    isCompleted,
-                    isProgress
-                  );
-                }
-
-                console.log('Chapter Status:', {
-                  chapterTitle: chapter.title,
-                  progressStatus: chapter.progress_status,
-                  completedBufferTime: chapter.completedBufferTime,
-                  shouldLockChapter,
-                  isPreviousChapterCompleted,
-                  isInProgressOrCompleted,
-                });
-
+                const shouldLockChapter =   (!isPreviousChapterCompleted);
+                
                 if (isCompleted && completedBufferTime) {
                   isPreviousChapterCompleted = true;
                 } else {
                   isPreviousChapterCompleted = false;
                 }
-
-                console.log('after if block', isPreviousChapterCompleted);
-                // Debugging output to ensure correct state logic
 
                 return hasVideos ? (
                   <Accordion.Item

@@ -12,7 +12,7 @@ function SidebarRight({ studentData }) {
   const fetchSubjectsCallback = useCallback(async () => {
     try {
       const data = await fetchMyCourses();
-      setSubjectsData(data.subjects);
+      setSubjectsData(data.courses);
     } catch (error) {
       setError(error);
       toast.error(error.message);
