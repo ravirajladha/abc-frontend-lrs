@@ -349,7 +349,7 @@ function JobDetail({}) {
               <div
                 className="card d-block w-100 border-0 shadow-xss rounded-lg overflow-hidden mb-3"
                 style={{
-                  backgroundImage: `url("https://via.placeholder.com/1200x500.png")`,
+                  backgroundImage: `url("https://img.freepik.com/free-vector/halftone-background-with-circles_23-2148907689.jpg?w=996&t=st=1727762357~exp=1727762957~hmac=2e241eb832a5774342c27a655bf1d02b8daf30255e62b13ad6bb61de1428ce3d")`,
                 }}
               >
                 <div className="card-body p-sm-5 p-4 bg-black-08">

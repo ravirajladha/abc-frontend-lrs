@@ -11,15 +11,15 @@ import { ContentLoader, ContentHeader } from '@/components/common';
 import { updateChapterLockStatus } from '@/api/trainer';
 
 function Chapters({ title }) {
-  let { classId, subjectId } = useParams();
+  let { courseId, subjectId } = useParams();
 
   const [subjectName, setSubjectName] = useState();
   const [chapters, setChapters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchData = async (classId, subjectId) => {
-    return await fetchChapters(classId, subjectId)
+  const fetchData = async (courseId, subjectId) => {
+    return await fetchChapters(courseId, subjectId)
       .then((data) => {
         setChapters(data.chapters);
         setSubjectName(data.subject);
@@ -32,7 +32,7 @@ function Chapters({ title }) {
   };
 
   useEffect(() => {
-    fetchData(classId, subjectId);
+    fetchData(courseId, subjectId);
   }, []);
 
   const toggleChapterStatus = async (chapterId, newStatus) => {
@@ -62,7 +62,7 @@ function Chapters({ title }) {
       <ContentHeader
         title={subjectName}
         subtitle={title}
-        backLink={`/trainer/subjects/${classId}/courses`}
+        backLink={`/trainer/subjects/${courseId}/courses`}
         // buttons={[
         //   {
         //     link: 'create',
@@ -117,7 +117,7 @@ function Chapters({ title }) {
                               </button>
                             )} */}
                             <Link
-                              to={`/trainer/subjects/${classId}/courses/${subjectId}/chapters/${chapter.id}`}
+                              to={`/trainer/subjects/${courseId}/courses/${subjectId}/chapters/${chapter.id}`}
                               className="btn btn-outline-primary mx-1 btn-icon btn-sm"
                             >
                               <i className="feather-eye"></i>

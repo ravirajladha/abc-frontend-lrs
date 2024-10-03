@@ -71,7 +71,7 @@ function Dashboard() {
             // third_term_total_marks={dashboard.third_term_total_marks}
           />
           <VideoAnalyticsCard stats={dashboard.video_stats} />
-          <CoursesCard/>
+          <CoursesCard title={"My Courses"}/>
         </>
       )}
     </div>

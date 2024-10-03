@@ -10,7 +10,7 @@ export { default as TrainerQna } from './Qna';
 
 export { default as TrainerSettings } from './Settings';
 
-export { default as TrainerAssessmentResult } from './Subject/AssessmentResult';
+export { default as TrainerAssessmentResult } from './Course/AssessmentResult';
 
 export { default as TrainerChapters } from './Chapters';
 export { default as TrainerShowChapter } from './Chapters/Show';

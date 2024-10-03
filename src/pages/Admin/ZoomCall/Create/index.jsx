@@ -52,7 +52,7 @@ function Create() {
       setTimeout(() => {
         setIsSubmitting(false);
       }, 1500);
-      navigate('/admin/live-sessions');
+      navigate(-1);
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);

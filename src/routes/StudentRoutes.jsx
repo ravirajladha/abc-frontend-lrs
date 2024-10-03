@@ -35,7 +35,7 @@ import Editor1 from '@/pages/e_lab/components/Editor1';
 const StudentRoutes = [
   { path: 'dashboard', element: <StudentDashboard /> },
 
-  { path: 'courses', element: <StudentSubjects /> },
+  { path: 'courses', element: <StudentSubjects title="Courses"/> },
   { path: 'courses/:courseId/results', element: <StudentSubjectResults isAdmin={false} isStudent={true}/> },
 
   { path: 'courses/:courseId/learn', element: <StudentLearn /> },

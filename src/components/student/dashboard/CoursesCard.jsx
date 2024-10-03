@@ -9,7 +9,7 @@ import { PiCertificateBold } from 'react-icons/pi';
 import { MdOutlineAssessment } from 'react-icons/md';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 
-function CoursesCard() {
+function CoursesCard({ title }) {
   const [courses, setCourses] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,7 +28,7 @@ function CoursesCard() {
 
   const [loading1, setLoading1] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [currentSubject, setCurrentSubject] = useState(null);
+  const [currentCourse, setCurrentCourse] = useState(null);
 
   const fetchCoursesCallback = useCallback(async () => {
     try {
@@ -51,8 +51,8 @@ function CoursesCard() {
     setShowAll((prevShowAll) => !prevShowAll);
   };
 
-  const handleOpenModal = (subject) => {
-    setCurrentSubject(subject);
+  const handleOpenModal = (course) => {
+    setCurrentCourse(course);
     setShowModal(true);
   };
 
@@ -97,7 +97,7 @@ function CoursesCard() {
   };
   return (
     <>
-      <h4 className="font-xs text-grey-800 my-3 lh-22 fw-700">My Courses</h4>
+      <h4 className="font-xs text-grey-800 my-3 lh-22 fw-700">{title}</h4>
       <div className="row">
         {loading ? (
           <div className="text-center col-12">
@@ -247,7 +247,7 @@ function CoursesCard() {
 
                           <div
                             dangerouslySetInnerHTML={{
-                              __html: currentSubject?.testDescription,
+                              __html: currentCourse?.testDescription,
                             }}
                             style={{
                               listStyleType: 'disc',
@@ -261,8 +261,8 @@ function CoursesCard() {
                             className="btn text-white bg-success"
                             onClick={() =>
                               handleStartTestFromModal(
-                                course.id,
-                                course.latest_test_id
+                                currentCourse.id,
+                                currentCourse.latest_test_id
                               )
                             }
                           >

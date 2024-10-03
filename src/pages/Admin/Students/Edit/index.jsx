@@ -271,7 +271,7 @@ function Edit() {
               <div className="col-lg-6 mb-3">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                    Date of Birth1 <span className="text-danger">*</span>
+                    Date of Birth <span className="text-danger">*</span>
                   </label>
                   <input
                     type="date"
@@ -330,7 +330,7 @@ function Edit() {
               <div className="col-lg-6 mb-3">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                    Password *
+                    Password
                   </label>
                   <input
                     type="password"
@@ -351,7 +351,7 @@ function Edit() {
               <div className="col-lg-6 mb-3">
                 <div className="form-group">
                   <label className="mont-font fw-600 font-xsss">
-                    Confirm Password *
+                    Confirm Password
                   </label>
                   <input
                     type="password"

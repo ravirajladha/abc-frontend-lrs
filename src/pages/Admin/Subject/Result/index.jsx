@@ -42,7 +42,7 @@ function Result() {
         table.destroy();
       }
 
-      const response = await fetchSubjectResult(subjectId, selectedTerm);
+      const response = await fetchSubjectResult(subjectId);
 
       setResults(response?.results);
       setLoading(false);
@@ -52,7 +52,7 @@ function Result() {
       setError(error);
       setLoading(false);
     }
-  }, [classId, selectedTerm]);
+  }, [subjectId]);
 
   useEffect(() => {
     fetchData();
@@ -74,10 +74,10 @@ function Result() {
   //   }
   // }, [results]);
 
-  const handleChangeTerm = (e) => {
-    const selectedValue = parseInt(e.target.value, 10);
-    setSelectedTerm(isNaN(selectedValue) ? '' : selectedValue);
-  };
+  // const handleChangeTerm = (e) => {
+  //   const selectedValue = parseInt(e.target.value, 10);
+  //   setSelectedTerm(isNaN(selectedValue) ? '' : selectedValue);
+  // };
 
   if (error) {
     return <div>Error: {error.message}</div>;

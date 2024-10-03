@@ -9,7 +9,7 @@ import { formatDateTime } from '@/utils/helpers';
 function Show() {
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
-  const { classId, subjectId, chapterId, contentId } = useParams();
+  const { courseId, subjectId, chapterId, contentId } = useParams();
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

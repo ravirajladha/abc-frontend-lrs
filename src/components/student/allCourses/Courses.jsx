@@ -39,8 +39,7 @@ function AllCourses() {
 
   return (
     <div>
-      <ContentHeader title="All" subtitle="Courses" />
-      <div className="row">
+      <div className="row my-3 ">
         {loading ? (
           <div className="text-center mt-5 col-12">
             <ContentLoader />

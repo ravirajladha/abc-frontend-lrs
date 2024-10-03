@@ -14,14 +14,14 @@ import {
 
 function Show() {
   const baseUrl = import.meta.env.VITE_BASE_URL;
-  const { classId, subjectId, chapterId } = useParams();
+  const { courseId, subjectId, chapterId } = useParams();
   const [chapterData, setChapterData] = useState();
   const [contents, setContents] = useState();
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetchChapterData(classId, subjectId, chapterId);
+      const response = await fetchChapterData(courseId, subjectId, chapterId);
       setChapterData(response.chapter);
       setContents(response.contents);
       setLoading(false);
@@ -46,7 +46,7 @@ function Show() {
       if (result.isConfirmed) {
         try {
           const response = await deleteVideo(videoId);
-          await fetchData(classId, subjectId);
+          await fetchData(courseId, subjectId);
           toast.success(response.message);
         } catch (error) {
           toast.error(error.message);
@@ -62,7 +62,7 @@ function Show() {
         title="Chapter :"
         subtitle={chapterData?.chapter_name}
         buttonText="Add Contents"
-        backLink={`/trainer/subjects/${classId}/courses/${subjectId}/chapters`}
+        backLink={`/trainer/subjects/${courseId}/courses/${subjectId}/chapters`}
       />
       {loading ? (
         <div className="text-center mt-5 col-12">

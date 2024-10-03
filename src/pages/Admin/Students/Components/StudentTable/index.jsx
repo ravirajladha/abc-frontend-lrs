@@ -74,7 +74,7 @@ const StudentTable = ({ students, loading, toggleModal,handleStatusChange }) => 
                     <i className="feather-edit"></i>
                   </Link>
                   <Link
-                    to={`${student.student_id}/show-profile`}
+                    to={`${student.auth_id}/show-profile`}
                     className="btn btn-outline-warning btn-icon btn-sm mx-1"
                   >
                     <i className="feather-eye"></i>

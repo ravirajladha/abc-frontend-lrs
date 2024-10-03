@@ -241,7 +241,7 @@ function Show({ title, isAdmin, isMobile }) {
                   : ''}
                 {ebook?.project_report_id && (
                   <Link
-                    to={`/mobile/project-reports/${ebook?.project_report_id}/preview`}
+                    to={`${isMobile ? '/mobile' : ''}/project-reports/${ebook?.project_report_id}/preview`}
                     className="font-xsss fw-600 text-grey-900 d-block px-4 py-3 border mt-4"
                     target="_blank"
                   >
@@ -250,7 +250,7 @@ function Show({ title, isAdmin, isMobile }) {
                 )}
                 {ebook?.case_study_id && (
                   <Link
-                    to={`/mobile/case-studies/${ebook?.case_study_id}/preview`}
+                    to={`${isMobile ? '/mobile' : ''}/case-studies/${ebook?.case_study_id}/preview`}
                     className="font-xsss fw-600 text-grey-900 d-block px-4 py-3 border"
                     target="_blank"
                   >

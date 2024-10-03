@@ -9,7 +9,7 @@ import Star from '/assets/images/star.png';
 import StarDisabled from '/assets/images/star-disable.png';
 
 const index = () => {
-  let { classId, subjectId } = useParams();
+  let { courseId, subjectId } = useParams();
   const [showModal, setShowModal] = useState(false);
   const [rating, setRating] = useState(0);
 
@@ -21,7 +21,7 @@ const index = () => {
     <div className="px-2">
       <ContentHeader
         title="Reviews"
-        backLink={`/trainer/subjects/${classId}/courses`}
+        backLink={`/trainer/subjects/${courseId}/courses`}
       />
       <div className="card w-100 border-0 mt-0 mb-4 p-4 shadow-xss position-relative rounded-lg bg-white">
         <div className="row">

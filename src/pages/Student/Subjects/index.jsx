@@ -1,10 +1,11 @@
 // CoursesAccordion.js
 import { useState } from 'react';
-import { ButtonGroup, Button, Card } from 'react-bootstrap';
-import {AllCourses} from '@/components/student/allCourses'; // All Courses component
+import { ButtonGroup, Button, Card, Tabs, Tab } from 'react-bootstrap';
+import { AllCourses } from '@/components/student/allCourses'; // All Courses component
 import { CoursesCard } from '@/components/student/dashboard'; // My Courses component
+import { ContentHeader } from '@/components/common';
 
-function CoursesAccordion() {
+function CoursesAccordion({ title }) {
   const [activeSection, setActiveSection] = useState('allCourses');
 
   const handleToggle = (section) => {
@@ -13,29 +14,14 @@ function CoursesAccordion() {
 
   return (
     <div>
-      {/* Toggle Buttons */}
-      <ButtonGroup className="mb-3">
-        <Button
-          variant={activeSection === 'allCourses' ? 'warning' : 'outline-secondary'}
-          onClick={() => handleToggle('allCourses')}
-        >
-          All Courses
-        </Button>
-        <Button
-          variant={activeSection === 'myCourses' ? 'warning' : 'outline-secondary'}
-          onClick={() => handleToggle('myCourses')}
-        >
-          My Courses
-        </Button>
-      </ButtonGroup>
-
-      {/* Accordion Content */}
-      <Card>
-        <Card.Body>
-          {activeSection === 'allCourses' && <AllCourses />}
-          {activeSection === 'myCourses' && <CoursesCard />}
-        </Card.Body>
-      </Card>
+      <ContentHeader title={title} />
+      <Tabs
+        defaultActiveKey="allCourses"
+        className="border-0 font-xss fw-600 text-dark internship-tabs"
+      >
+        <Tab eventKey="allCourses" title="All Courses"><AllCourses /></Tab>
+        <Tab eventKey="myCourses" title="My Courses"><CoursesCard/></Tab>
+      </Tabs>
     </div>
   );
 }

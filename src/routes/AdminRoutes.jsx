@@ -859,7 +859,7 @@ const AdminRoutes = [
   {
     path: 'public-students',
     element: (
-      <Students title="All Internship Admin Students" isPrivate={false} isPublic={true} />
+      <Students title="All Students" isPrivate={false} isPublic={true} />
     ),
   },
   {

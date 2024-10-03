@@ -199,6 +199,21 @@ function EditContentForm() {
   //     }
   //   }, 300), []); // Adjust the debounce delay as needed
   
+  const handleEbookChange = useCallback((field, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+    if (field === 'ebook_id') {
+      fetchEbookModules(value)
+        .then((data) => {
+          setEbookModules(data.ebook_modules);
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+    }
+  }, []);
 
   const handleEbookModuleChange = useCallback((field, value) => {
     setFormData((prevData) => ({

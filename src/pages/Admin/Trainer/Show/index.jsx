@@ -122,13 +122,13 @@ function Show({ title }) {
                       <div className="row">
                         <div className="col-lg-12">
                           <h3 className="fw-600 font-xs my-4">
-                            Trainer Classes and Subjects:{' '}
+                            Trainer Subjects and Courses:{' '}
                           </h3>
                           {trainerSubjects !== null ? (
                             trainerSubjects?.map((value, index) => (
                               <ol type="1" key={index}>
                                 <li className="mont-font fw-500 font-xss">
-                                  {index + 1}. {value?.class_name}
+                                  {index + 1}. {value?.course_name}
                                   {', '}
                                   {value?.subject_name}
                                 </li>

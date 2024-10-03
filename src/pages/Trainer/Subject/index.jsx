@@ -1,44 +1,32 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-
-import { fetchTrainerCourses } from '@/api/trainer';
-
 import {
+  ContentItemCard,
   ContentFallback,
   ContentHeader,
-  ContentItemCard,
   ContentLoader,
-  EllipsisMenu,
 } from '@/components/common';
+import { fetchTrainerSubjects } from '@/api/trainer';
 
-function Course() {
-  let { subjectId } = useParams();
-  const baseUrl = import.meta.env.VITE_BASE_URL;
-
-  const [subjectName, setSubjectName] = useState(null);
-  const [coursesData, setCoursesData] = useState(null);
+function Subjects() {
+  const [subjectsData, setSubjectsData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  const fetchCoursesCallback = useCallback(async () => {
+  const fetchData = async () => {
     try {
-      const data = await fetchTrainerCourses(subjectId);
-      setSubjectName(data?.subject);
-      setCoursesData(data.courses);
+      const response = await fetchTrainerSubjects();
+      console.log(response);
+      setSubjectsData(response.subjects);
     } catch (error) {
-      setError(error);
       toast.error(error.message);
     } finally {
       setLoading(false);
     }
-  }, [subjectId]);
+  };
 
   useEffect(() => {
-    fetchCoursesCallback();
-  }, [fetchCoursesCallback]);
-
-  if (error) return <div>Error: {error.message}</div>;
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -46,52 +34,24 @@ function Course() {
       <div className="row">
         {loading ? (
           <ContentLoader />
-        ) : coursesData.length > 0 ? (
-          coursesData.map((item, index) => (
-            <div className="col-xl-3 col-lg-4 col-md-6 mt-2" key={index}>
-              <div className="card mb-4 d-block w-100 h-100 shadow-md rounded-lg px-2 pt-5 border-0 text-center">
-                <EllipsisMenu
-                  items={[
-                    {
-                      label: 'Reviews',
-                      href: `${item.id}/reviews`,
-                    },
-                    {
-                      label: 'FAQs',
-                      href: `${item.id}/faqs`,
-                    },
-                  ]}
-                />
-                <Link
-                  to=""
-                  className="btn-round-xxxl rounded-lg bg-lightblue ml-auto mr-auto overflow-hidden"
-                >
-                  {item.image && (
-                    <img
-                      src={baseUrl + item.image}
-                      alt="icon"
-                      className="p-1 w-100 object-fit-cover fixed-avatar"
-                    />
-                  )}
-                </Link>
-                <h4 className="fw-700 font-xs my-2">{item.name}</h4>
-                <div className="clearfix"></div>
-                <div className="mb-2">
-                  <Link
-                    to={`/trainer/subjects/${subjectId}/courses/${item.id}/chapters`}
-                    className={`mt-3 d-inline-block fw-700 text-white rounded-lg text-center font-xsssss shadow-xs py-2 px-3 text-uppercase ls-3 lh-4 bg-primary-gradiant`}
-                  >
-                    Chapters
-                  </Link>
-                  <Link
-                    to={`/trainer/subjects/${subjectId}/courses/${item.id}/results`}
-                    className={`mt-3 d-inline-block fw-700 text-white rounded-lg text-center font-xsssss shadow-xs py-2 px-3 text-uppercase ls-3 lh-4 bg-success ml-2`}
-                  >
-                    Results
-                  </Link>
-                </div>
-              </div>
-            </div>
+        ) : subjectsData && subjectsData.length > 0 ? (
+          subjectsData.map((item, index) => (
+            <ContentItemCard
+              key={index}
+              data={item}
+              buttons={[
+                {
+                  label: 'Courses',
+                  action: (item) => `/trainer/subjects/${item.id}/courses`,
+                  style: ' bg-primary-gradiant',
+                },
+                {
+                  label: 'Results',
+                  action: (item) => `/trainer/subjects/${item.id}/results`,
+                  style: ' bg-success ml-2',
+                },
+              ]}
+            />
           ))
         ) : (
           <ContentFallback />
@@ -101,4 +61,4 @@ function Course() {
   );
 }
 
-export default Course;
+export default Subjects;

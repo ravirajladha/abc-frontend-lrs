@@ -104,7 +104,7 @@ function Show() {
                 forum.answers?.map((answer, index) => (
                   <div
                     className="col-xl-12 col-lg-12 col-sm-12"
-                    key={answer.id}
+                    key={index}
                   >
                     <div className="card w-100 p-3 text-left border-0 shadow-sm rounded-lg ">
                       <div className="card-header bg-transparent border-0 d-flex justify-content-between">
@@ -142,12 +142,7 @@ function Show() {
                         </div>
                         <div className="bg-grey px-2 rounded-pill d-flex">
                           <button
-                            className={`btn-round-sm border-0 d-inline-block mt-1 mx-1 ${
-                              answer.vote_type == 1
-                                ? 'text-white bg-success'
-                                : 'text-success'
-                            }`}
-                            // disabled={answer.vote_type == 1}
+                            className={`btn-round-sm border-0 d-inline-block mt-1 mx-1 text-success`}
                           >
                             <i className="feather-thumbs-up font-xs"></i>
                           </button>
@@ -155,12 +150,7 @@ function Show() {
                             {answer.vote_count}
                           </p>
                           <button
-                            className={`btn-round-sm border-0 d-inline-block my-1 mx-1 ${
-                              answer.vote_type == -1
-                                ? 'text-white bg-danger'
-                                : 'text-danger'
-                            }`}
-                            // disabled={answer.vote_type == -1}
+                            className={`btn-round-sm border-0 d-inline-block my-1 mx-1 text-danger`}
                           >
                             <i className="feather-thumbs-down font-xs"></i>
                           </button>

@@ -127,9 +127,6 @@ function InternshipParticipate({ title }) {
             <div className="card border-0 mt-0 rounded-lg shadow-sm">
               <div className="card-body d-flex pt-4 px-4 pb-0">
                 <h4 className="font-xss text-grey-800 mt-3 fw-700">{title}</h4>
-                <select className="form-select ml-auto float-right border-0 font-xssss fw-600 text-grey-700 bg-transparent">
-                  <option>Sort by latest</option>
-                </select>
               </div>
               <div className="p-5 theme-dark-bg">
                 <div className="">

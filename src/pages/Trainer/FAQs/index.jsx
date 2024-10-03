@@ -4,14 +4,14 @@ import React from 'react';
 import { useParams } from 'react-router';
 
 const index = () => {
-  let { classId, subjectId } = useParams();
+  let { courseId, subjectId } = useParams();
 
   return (
     <>
       <ContentHeader
         title="All"
         subtitle="FAQs list"
-        backLink={`/trainer/subjects/${classId}/courses`}
+        backLink={`/trainer/subjects/${subjectId}/courses`}
         buttons={[{ link: 'create', text: 'Add FAQ' }]}
       />
       <div className="row">

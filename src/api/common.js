@@ -30,8 +30,8 @@ export const getSubjectData = async (subjectId) => {
   return response.data.subject;
 };
 
-export const fetchSubjectResult = async (subjectId, term) => {
-  const response = await apiService.fetchData(`/admin/subjects/${subjectId}/results?term=${term}`);
+export const fetchSubjectResult = async (subjectId) => {
+  const response = await apiService.fetchData(`/admin/subjects/${subjectId}/results`);
   return response.data;
 };
 
@@ -42,8 +42,8 @@ export const fetchCourses = async (subjectId) => {
   return response.data;
 };
 
-export const fetchCourseResult = async (courseId, term) => {
-  const response = await apiService.fetchData(`/courses/${courseId}/results?term=${term}`);
+export const fetchCourseResult = async (courseId) => {
+  const response = await apiService.fetchData(`/admin/courses/${courseId}/results`);
   return response.data;
 };
 

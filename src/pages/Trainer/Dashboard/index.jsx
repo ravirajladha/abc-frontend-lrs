@@ -48,7 +48,7 @@ function Dashboard() {
             <Card
               itemName="Subjects"
               itemIcon="codepen"
-              itemValue={dashboard?.classes}
+              itemValue={dashboard?.courses}
               itemLink="/trainer/subjects"
             />
             <Card
@@ -112,10 +112,10 @@ function Dashboard() {
                       <th className="border-0 text-dark"></th>
                       <th className="border-0"></th>
                       <th className="border-0" scope="col">
-                        Course Name
+                        Subject
                       </th>
                       <th className="border-0" scope="col">
-                        Subject
+                        Course Name
                       </th>
                       <th className="border-0" scope="col">
                         Rating
@@ -126,8 +126,8 @@ function Dashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {dashboard.class_subjects &&
-                      dashboard.class_subjects.map((value, index) => (
+                    {dashboard.subject_courses &&
+                      dashboard.subject_courses.map((value, index) => (
                         <tr key={index}>
                           <td>{index + 1}</td>
                           <td className="product-thumbnail text-start ps-0">
@@ -147,7 +147,7 @@ function Dashboard() {
                             <b>{value.subject_name}</b>
                           </td>
                           <td>
-                            <b>{value.class_name}</b>
+                            <b>{value.course_name}</b>
                           </td>
                           <td>
                             <div className="star d-flex w-100 text-left">

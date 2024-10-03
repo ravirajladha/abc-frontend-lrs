@@ -35,7 +35,7 @@ function ContentItemCard({ data, buttons, handleDelete, handleEdit }) {
               <img
                 src={baseUrl + data.image}
                 alt="icon"
-                className="p-1 w-100 object-fit-cover fixed-avatar"
+                className="p-1 w-100 object-fit-cover"
               />
             )}
           </Link>
