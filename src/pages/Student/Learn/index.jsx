@@ -236,7 +236,7 @@ function Learn() {
               <TrainerCard trainer={trainer} />
             </Tab>
             <Tab title="Reviews" eventKey="review">
-              <ReviewCard />
+              <ReviewCard courseId={courseId}/>
             </Tab>
           </Tabs>
           <h2 className="fw-700 font-sm mb-3 mt-3 pl-1 mb-3">Mini Projects</h2>

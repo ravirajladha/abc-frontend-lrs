@@ -3,11 +3,10 @@ import { toast } from 'react-toastify';
 import { fetchMyCourses, startTest } from '@/api/student';
 import { ContentItemCard, ContentLoader } from '@/components/common';
 import { Link, useNavigate } from 'react-router-dom';
-import Star from '/assets/images/star.png';
-import StarDisabled from '/assets/images/star-disable.png';
 import { PiCertificateBold } from 'react-icons/pi';
 import { MdOutlineAssessment } from 'react-icons/md';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
+import StarRatings from 'react-star-ratings';
 
 function CoursesCard({ title }) {
   const [courses, setCourses] = useState(null);
@@ -33,7 +32,6 @@ function CoursesCard({ title }) {
   const fetchCoursesCallback = useCallback(async () => {
     try {
       const data = await fetchMyCourses();
-      console.log("fetch my coures", data.courses)
       setCourses(data.courses);
     } catch (error) {
       setError(error);
@@ -137,20 +135,16 @@ function CoursesCard({ title }) {
                           {course.subject_name}
                         </span>
                         <div>
-                          <div className="star d-flex w-100 text-left">
-                            <img src={Star} alt="star" className="w10" />
-                            <img src={Star} alt="star" className="w10" />
-                            <img src={Star} alt="star" className="w10" />
-                            <img src={Star} alt="star" className="w10" />
-                            <img
-                              src={StarDisabled}
-                              alt="star"
-                              className="w10"
-                            />
-                          </div>
-                          <h4 className="font-xsssss text-grey-600 fw-600 mt-1">
-                            433 rating
-                          </h4>
+                        <StarRatings
+                        rating={Number(course?.average_rating || 0)}
+                        starRatedColor="gold"
+                        numberOfStars={5}
+                        starDimension="15px"
+                        starSpacing="1px"
+                      />
+                      <h4 className="font-xsssss text-grey-600 fw-600 mt-1">
+                      Based on {course.total_ratings} ratings
+                      </h4>
                         </div>
                       </div>
                       <h4 className="fw-700 font-xss mt-2 lh-26 mt-0">

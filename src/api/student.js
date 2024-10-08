@@ -43,9 +43,9 @@ export const fetchSubjects = async () => {
   return response.data.subjects;
 };
 
-export const fetchSubjectsWithResults = async (courseId , studentId) => {
+export const fetchSubjectsWithResults = async () => {
   const response = await apiService.fetchData(
-    `student/courses?courseId=${courseId}&studentId=${studentId}`
+    `student/courses`
   );
   console.log("response", response);
   return response.data;
@@ -294,4 +294,14 @@ export const fetchCoursePreviewData = async (subjectId) => {
 export const getResource = async () => {
   const response = await apiService.fetchData(`/download-zip`);
   return response;
+}
+export const storeRatingReview = async (data) => {
+  console.log("rating data",data);
+  const response = await apiService.postData(`/student/courses/rating-review`,data);
+  return response.data;
+};
+
+export const fetchRatingReview = async (courseId) => {
+  const response = await apiService.fetchData(`/student/courses/${courseId}/ratings-reviews`);
+  return response.data;
 }

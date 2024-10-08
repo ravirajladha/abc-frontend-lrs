@@ -41,7 +41,7 @@ const apiService = {
           validationErrors,
         };
       }
-      throw { error: 'HTTP Error', message: 'Failed to process your request' };
+      throw { error: 'HTTP Error', message: responseData.message || 'Failed to process your request' };
     } else if (error.request) {
       throw {
         error: 'No Response',

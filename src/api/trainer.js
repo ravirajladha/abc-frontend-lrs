@@ -66,3 +66,9 @@ export const fetchUnrepliedQnACount = async (trainerId, studentId) => {
   );
   return response.data;
 };
+
+export const storeReviewReply = async (data) => {
+  console.log("rating data",data);
+  const response = await apiService.postData(`/trainer/courses/reply-review`,data);
+  return response.data;
+};

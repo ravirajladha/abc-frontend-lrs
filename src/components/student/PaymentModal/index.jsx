@@ -50,7 +50,7 @@ const PaymentModal = ({
     setLoading(true);
     try {
       // Call the API to update payment status
-      const response = await authService.updatePaymentStatus(studentId, {
+      const response = await authService.updatePaymentStatus( {
         referral_code:  referralCode , // Only include if valid
         referral_amount:  feesData.referral_amount,
         referrer_amount:  feesData.referrer_amount ,

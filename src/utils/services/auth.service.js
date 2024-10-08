@@ -84,8 +84,8 @@ const resetPassword = async (userData) => {
 }
 // Update payment status
 
-const updatePaymentStatus = async (studentId, data) => {
-  const response = await axiosInstance.post(`/update-payment-status/${studentId}`, data);
+const updatePaymentStatus = async (data) => {
+  const response = await axiosInstance.post(`/update-payment-status`, data);
   if (response.status === 200) {
     // Get the current student data from local storage
     const studentData = JSON.parse(localStorage.getItem('student_data'));

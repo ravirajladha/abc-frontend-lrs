@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ContentHeader, ContentLoader } from '@/components/common';
+import { ContentLoader } from '@/components/common';
 import { fetchSubjectsWithResults, startTest } from '@/api/student';
-import Star from '/assets/images/star.png';
-import StarDisabled from '/assets/images/star.png';
 import { ContentFallback, ContentError } from '@/components/common';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 import { toast } from 'react-toastify';
+import StarRatings from 'react-star-ratings';
 
 function AllCourses() {
   const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -21,9 +20,9 @@ function AllCourses() {
   const [error, setError] = useState(null);
 
   const fetchCoursesCallback = useCallback(() => {
-    return fetchSubjectsWithResults(1, studentId)
+    return fetchSubjectsWithResults()
       .then((data) => {
-        console.log("courses",data.courses)
+        console.log('courses', data.courses);
         setCourses(data.courses);
         setLoading(false);
       })
@@ -74,15 +73,15 @@ function AllCourses() {
                       {course.subject_name}
                     </span>
                     <div>
-                      <div className="star d-flex w-100 text-left">
-                        <img src={Star} alt="star" className="w10" />
-                        <img src={Star} alt="star" className="w10" />
-                        <img src={Star} alt="star" className="w10" />
-                        <img src={Star} alt="star" className="w10" />
-                        <img src={StarDisabled} alt="star" className="w10" />
-                      </div>
+                      <StarRatings
+                        rating={Number(course?.average_rating || 0)}
+                        starRatedColor="gold"
+                        numberOfStars={5}
+                        starDimension="15px"
+                        starSpacing="1px"
+                      />
                       <h4 className="font-xsssss text-grey-600 fw-600 mt-1">
-                        433 rating
+                      Based on {course.total_ratings} ratings
                       </h4>
                     </div>
                   </div>

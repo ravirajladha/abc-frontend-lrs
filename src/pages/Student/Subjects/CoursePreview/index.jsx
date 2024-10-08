@@ -222,7 +222,7 @@ function Subjects() {
                 </h2>
                 <ChapterAccordion isLoading={loading} chapterData={chapters} />
               </div>
-              <ReviewCard />
+              <ReviewCard courseId={courseId}/>
 
               <div className="border-0 rounded-sm mx-1 lh-24 px-2 bg-current">
                 {isPaid ? (
