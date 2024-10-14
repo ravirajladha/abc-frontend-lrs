@@ -19,4 +19,5 @@ export { default as TrainerVideoDetails } from './Videos';
 export { default as TrainerReviews } from './Reviews';
 export { default as TrainerFAQs } from './FAQs';
 export { default as TrainerFAQsCreate } from './FAQs/Create';
+export { default as TrainerFAQsEdit } from './FAQs/Edit';
 export { default as TrainerLiveQnaSessions } from './LiveQnaSessions';

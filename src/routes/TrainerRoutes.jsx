@@ -17,6 +17,7 @@ import {
   TrainerCourseResults,
   TrainerCourses,
   TrainerVideoDetails,
+  TrainerFAQsEdit,
 } from '@/pages';
 
 const TrainerRoutes = [
@@ -41,6 +42,10 @@ const TrainerRoutes = [
   {
     path: 'subjects/:subjectId/courses/:courseId/faqs/create',
     element: <TrainerFAQsCreate />,
+  },
+  {
+    path: 'subjects/:subjectId/courses/:courseId/faqs/:faqId/edit',
+    element: <TrainerFAQsEdit />,
   },
   { path: 'settings', element: <TrainerSettings title="Settings" /> },
   { path: 'subjects/:subjectId/results/:studentId/assessment-result', element: <TrainerAssessmentResult title="Assessment Result" /> },

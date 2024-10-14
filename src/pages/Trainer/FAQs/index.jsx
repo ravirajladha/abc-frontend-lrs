@@ -1,11 +1,13 @@
+import { fetchFaqs } from '@/api/trainer';
 import { ContentHeader } from '@/components/common';
 import { FAQs } from '@/components/student/previewCourse';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { toast } from 'react-toastify';
 
 const index = () => {
   let { courseId, subjectId } = useParams();
-
+  
   return (
     <>
       <ContentHeader
@@ -16,7 +18,7 @@ const index = () => {
       />
       <div className="row">
         <div className="col-lg-12">
-          <FAQs />
+          <FAQs courseId={courseId}/>
         </div>
       </div>
     </>

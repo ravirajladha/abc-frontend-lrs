@@ -10,7 +10,7 @@ import { formatDateTime } from '@/utils/helpers';
 import StarRatings from 'react-star-ratings';
 import { toast } from 'react-toastify';
 import { fetchRatingReview } from '@/api/student';
-import { storeReviewReply } from '@/api/trainer';
+import { storeReviewReply, updateReviewStatus } from '@/api/trainer';
 
 const index = () => {
   const { courseId } = useParams();
@@ -21,10 +21,10 @@ const index = () => {
   const [ratingsData, setRatingsData] = useState([]);
   const [reviewsData, setReviewsData] = useState([]);
 
-  const handleReplyClick = (reviewId) =>{
+  const handleReplyClick = (reviewId) => {
     setCurrentReviewId(reviewId);
     setShowModal(true);
-  }
+  };
 
   const submitReply = async () => {
     try {
@@ -55,7 +55,6 @@ const index = () => {
   useEffect(() => {
     fetchRatingReviewCallback();
   }, [fetchRatingReviewCallback, courseId]);
-  if (loading) return <ContentLoader />;
 
   // Create an array representing the star levels
   const starLevels = [
@@ -69,7 +68,30 @@ const index = () => {
     const totalRatings = ratingsData?.total_ratings || 0;
     return totalRatings > 0 ? (count / totalRatings) * 100 : 0;
   };
+  const handleStatusChange = async (index, newStatus) => {
+    const reviewId = reviewsData[index].id; // Get the review ID from the array
+  
+    // Optimistically update the frontend state
 
+  
+    try {
+      // Call the API to update the review status in the backend
+      const response = await updateReviewStatus({
+        review_id: reviewId,
+        status: newStatus,
+      });
+      setReviewsData((prevReviews) => {
+        const updatedReviews = [...prevReviews];
+        updatedReviews[index].status = newStatus;
+        return updatedReviews;
+      });
+      toast.success(response.message || 'Review status updated successfully');
+    } catch (error) {
+      toast.error(error.message || 'Failed to update review status');
+    }
+  };
+
+  if (loading) return <ContentLoader />;
   return (
     <div className="px-2">
       <ContentHeader
@@ -139,7 +161,7 @@ const index = () => {
                   />
                 </figure>
               </div>
-              <div className="col-10 pl-0">
+              <div className="col-9 pl-0">
                 <div className="content">
                   <h6 className="author-name font-xssss fw-600 mb-0 text-grey-800">
                     {review.student_name}
@@ -158,9 +180,21 @@ const index = () => {
                     {review.review}{' '}
                   </p>
                 </div>
+              </div>
+              <div className="col-1">
+                <select
+                  value={review.status}
+                  onChange={(e) => handleStatusChange(index, e.target.value)}
+                  className={`badge p-1 text-white ${
+                    review.status == 0 ? 'bg-danger' : 'bg-success'
+                  }`}
+                >
+                  <option value="0">Deactive</option>
+                  <option value="1">Active</option>
+                </select>
                 {!review.trainer_id && (
                   <button
-                    className="btn bg-cyan px-2 text-white font-xssss fw-700 float-right"
+                    className="btn bg-cyan mt-1 px-2 text-white font-xssss fw-700 float-right"
                     onClick={() => handleReplyClick(review.id)}
                   >
                     <i className="feather-message-square"></i>

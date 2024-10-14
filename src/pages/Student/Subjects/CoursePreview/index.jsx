@@ -179,7 +179,7 @@ function Subjects() {
               </div>
 
               <TrainerCard trainer={trainer} />
-              <FAQs />
+              <FAQs courseId={courseId}/>
             </div>
             <div className="col-xl-4 col-xxl-3">
               <div className="card p-4 mb-4 bg-primary border-0 shadow-xss rounded-lg">
