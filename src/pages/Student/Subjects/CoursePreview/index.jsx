@@ -216,12 +216,14 @@ function Subjects() {
                   </div>
                 )}
               </div>
+              
               <div className="card d-block border-0 rounded-lg overflow-hidden mt-3">
                 <h2 className="fw-700 font-sm mb-3 mt-1 pl-1 mb-3">
                   Curriculum
                 </h2>
                 <ChapterAccordion isLoading={loading} chapterData={chapters} />
               </div>
+
               <ReviewCard courseId={courseId}/>
 
               <div className="border-0 rounded-sm mx-1 lh-24 px-2 bg-current">

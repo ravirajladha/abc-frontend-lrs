@@ -13,7 +13,6 @@ const index = () => {
       <ContentHeader
         title="All"
         subtitle="FAQs list"
-        backLink={`/trainer/subjects/${subjectId}/courses`}
         buttons={[{ link: 'create', text: 'Add FAQ' }]}
       />
       <div className="row">

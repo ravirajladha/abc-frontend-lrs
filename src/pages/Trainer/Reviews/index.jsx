@@ -11,8 +11,13 @@ import StarRatings from 'react-star-ratings';
 import { toast } from 'react-toastify';
 import { fetchRatingReview } from '@/api/student';
 import { storeReviewReply, updateReviewStatus } from '@/api/trainer';
+import { selectUserType } from '@/store/authSlice';
+import { useSelector } from 'react-redux';
+import { USER_TYPES } from '@/utils/constants';
 
 const index = () => {
+  const authenticatedUserType = useSelector(selectUserType);
+
   const { courseId } = useParams();
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -96,7 +101,6 @@ const index = () => {
     <div className="px-2">
       <ContentHeader
         title="Reviews"
-        backLink={`/trainer/subjects/${courseId}/courses`}
       />
       <div className="card w-100 border-0 mt-0 mb-4 p-4 shadow-xss position-relative rounded-lg bg-white">
         <div className="row">
@@ -192,7 +196,8 @@ const index = () => {
                   <option value="0">Deactive</option>
                   <option value="1">Active</option>
                 </select>
-                {!review.trainer_id && (
+
+                {authenticatedUserType === USER_TYPES.TRAINER && !review.trainer_id && (
                   <button
                     className="btn bg-cyan mt-1 px-2 text-white font-xssss fw-700 float-right"
                     onClick={() => handleReplyClick(review.id)}
@@ -200,6 +205,7 @@ const index = () => {
                     <i className="feather-message-square"></i>
                   </button>
                 )}
+
               </div>
             </div>
             {review.trainer_id && (

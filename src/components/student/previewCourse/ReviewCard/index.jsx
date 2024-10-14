@@ -72,7 +72,10 @@ const index = ({ courseId }) => {
   };
 
   return (
-    <div className="card w-100 border-0 mt-0 mb-4 p-4 shadow-xss position-relative rounded-lg bg-white">
+    <div
+      className="card w-100 border-0 mt-0 mb-4 p-4 shadow-xss position-relative rounded-lg bg-white mt-3"
+      style={{ maxHeight: '600px', overflowY: 'auto' }}
+    >
       <div className="row">
         <div className="col-5 pr-0">
           <h2 className="display3-size lh-1 m-0 text-grey-900 fw-700">
@@ -194,7 +197,9 @@ const index = ({ courseId }) => {
           >
             Add a Review
           </button>
-        ): ""}
+        ) : (
+          ''
+        )}
 
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header

@@ -2,7 +2,7 @@
 
 // const AdminDashboard = lazy(() => import('@/pages'));
 
-import { AdminDashboard } from '@/pages';
+import { AdminDashboard, TrainerFAQs, TrainerFAQsCreate, TrainerFAQsEdit, TrainerReviews } from '@/pages';
 import {
   Settings,
   Payment,
@@ -156,6 +156,7 @@ TestResult,
   ForumQuestionAnswers,
   StudentsCreate,
   StudentEdit,
+  Colleges,
 } from '@/pages/Admin';
 import{
 
@@ -941,6 +942,28 @@ const AdminRoutes = [
   {
     path: 'forums/:forumId/answers',
     element: <ForumQuestionAnswers title="Forum Answers" />,
+  },
+
+
+  {
+    path: 'subjects/:subjectId/courses/:courseId/reviews',
+    element: <TrainerReviews />,
+  },
+  {
+    path: 'subjects/:subjectId/courses/:courseId/faqs',
+    element: <TrainerFAQs />,
+  },
+  {
+    path: 'subjects/:subjectId/courses/:courseId/faqs/create',
+    element: <TrainerFAQsCreate />,
+  },
+  {
+    path: 'subjects/:subjectId/courses/:courseId/faqs/:faqId/edit',
+    element: <TrainerFAQsEdit />,
+  },
+  {
+    path: 'colleges',
+    element: <Colleges title="Colleges" />,
   },
 ];
 

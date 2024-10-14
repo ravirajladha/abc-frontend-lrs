@@ -188,3 +188,5 @@ export { default as DinacharyaModal } from './DinacharyaLogs/Components/CustomMo
 
 export { default as ForumQuestions } from './Forum';
 export { default as ForumQuestionAnswers } from './Forum/show';
+
+export { default as Colleges } from './Colleges';

@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUserType } from '@/store/authSlice';
-import { USER_TYPES, USERS } from '@/utils/constants';
+import { USER_TYPES } from '@/utils/constants';
 
 const FaqIndex = ({ courseId }) => {
   const authenticatedUserType = useSelector(selectUserType);
@@ -69,7 +69,7 @@ const FaqIndex = ({ courseId }) => {
               <Accordion.Item eventKey={index} key={index} className="">
                 <Accordion.Header className="bg-lightgreen shadow-md p-4 font-xss fw-600 rounded mb-1">
                   {faq.question}
-                  {(authenticatedUserType === USER_TYPES.ADMIN || authenticatedUserType === USER_TYPES.TRAINER) && (
+                  {(authenticatedUserType === USER_TYPES.TRAINER) && (
                       <span className="ml-auto">
                       <Link to={`${faq.id}/edit`}>
                       <i className='feather-edit mx-1'></i>

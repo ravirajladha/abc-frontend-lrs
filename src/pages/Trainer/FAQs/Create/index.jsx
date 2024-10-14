@@ -21,7 +21,7 @@ const index = () => {
     try {
       const response = await storeFaq(form);
       toast.success(response.message);
-      navigate(`/trainer/subjects/${subjectId}/courses/${courseId}/faqs`);
+      navigate(-1);
     } catch (error) {
       toast.error(error.message);
     }
