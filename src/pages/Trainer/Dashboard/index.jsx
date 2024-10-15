@@ -48,13 +48,13 @@ function Dashboard() {
             <Card
               itemName="Subjects"
               itemIcon="codepen"
-              itemValue={dashboard?.courses}
+              itemValue={dashboard?.subjects}
               itemLink="/trainer/subjects"
             />
             <Card
               itemName="Courses"
               itemIcon="book"
-              itemValue={dashboard?.subjects}
+              itemValue={dashboard?.courses}
             />
             <Card
               itemName="Students"

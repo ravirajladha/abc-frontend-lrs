@@ -66,11 +66,11 @@ function Trainers() {
                         <th className="border-0" width="10%">
                           Email
                         </th>
-                        <th className="border-0" width="15%">
+                        {/* <th className="border-0" width="15%">
                           Subject
-                        </th>
+                        </th> */}
                         <th className="border-0" width="15%">
-                          Course
+                          Subject - Course
                         </th>
                         <th className="border-0 text-right" width="20%">
                           Actions
@@ -84,7 +84,7 @@ function Trainers() {
                           <td>{trainer.name}</td>
                           <td>{trainer.phone_number}</td>
                           <td>{trainer.email}</td>
-                          <td>
+                          {/* <td>
                             {trainer.trainer_subjects.length > 0 ? (
                               trainer.trainer_subjects.map((item) => (
                                 <span key={item.id}>
@@ -94,12 +94,12 @@ function Trainers() {
                             ) : (
                               <span>Not assigned</span>
                             )}
-                          </td>
+                          </td> */}
                           <td>
                             {trainer.trainer_courses.length > 0 ? (
                               trainer.trainer_courses.map((item) => (
                                 <span key={item.id}>
-                                  {item.course_name} &nbsp;
+                                  {item.subject_name} - {item.course_name} &nbsp;
                                 </span>
                               ))
                             ) : (
@@ -120,12 +120,12 @@ function Trainers() {
                             >
                               <i className="feather-edit"></i>
                             </Link>
-                            <Link
+                            {/* <Link
                               to={`${trainer.auth_id}/assign`}
                               className="btn btn-outline-success btn-icon btn-sm"
                             >
                               <i className="feather-airplay"></i>
-                            </Link>
+                            </Link> */}
                           </td>
                         </tr>
                       ))}

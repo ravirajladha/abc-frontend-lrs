@@ -3,7 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { fetchSubjects, fetchCourses } from '@/api/common';
-import { assignTrainer, fetchTrainerSubjectCourse } from '@/api/internshipAdmin';
+import {
+  assignTrainer,
+  fetchTrainerSubjectCourse,
+} from '@/api/internshipAdmin';
 
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SelectInput } from '@/components/common/form';
@@ -18,12 +21,12 @@ function Assign() {
   const [fields, setFields] = useState([
     {
       subject_id: '',
-      courses: [],
+      course_id: '',
     },
   ]);
 
   const handleAddFields = () => {
-    setFields([...fields, { subject_id: '', courses: [] }]);
+    setFields([...fields, { subject_id: '', course_id: '' }]);
     setValidationErrors({});
   };
 
@@ -47,6 +50,40 @@ function Assign() {
     fetchSubjectDropdownData();
   }, [fetchSubjectDropdownData]);
 
+  useEffect(() => {
+    if (trainerId) {
+      fetchTrainerSubjectCourse(trainerId)
+        .then(async (data) => {
+          if (data.length > 0) {
+            let prefilledFields = [];
+
+            // Loop through each subject and its courses
+            for (const item of data) {
+              const coursesData = await fetchCourses(item.subject_id);
+              setCoursesMap((prevMap) => ({
+                ...prevMap,
+                [item.subject_id]: coursesData.courses,
+              }));
+              // For each subject, map courses to their respective input fields
+              const subjectCourses = item.courses.map((course) => ({
+                subject_id: item.subject_id,
+                course_id: course, // Ensure course_id is correctly mapped
+              }));
+              
+              prefilledFields = [...prefilledFields, ...subjectCourses];
+            }
+
+            setFields(prefilledFields); // Set the fields correctly with subject and course
+          } else {
+            setFields([{ subject_id: '', course_id: '' }]);
+          }
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+    }
+  }, [trainerId]);
+
   const handleSubjectChange = async (index, selectedSubjectId) => {
     try {
       const coursesData = await fetchCourses(selectedSubjectId);
@@ -59,7 +96,7 @@ function Assign() {
         updatedFields[index] = {
           ...updatedFields[index],
           subject_id: selectedSubjectId,
-          courses: [],
+          course_id: '',
         };
         return updatedFields;
       });
@@ -71,10 +108,9 @@ function Assign() {
   const handleCourseChange = (index, value) => {
     setFields((prevFields) => {
       const updatedFields = [...prevFields];
-      updatedFields[index] = { ...updatedFields[index], courses: value };
+      updatedFields[index] = { ...updatedFields[index], course_id: value }; // directly set course_id
       return updatedFields;
     });
-    setValidationErrors(({ courses: _, ...prevErrors }) => prevErrors);
   };
 
   const handleSubmit = async (e) => {
@@ -82,11 +118,11 @@ function Assign() {
     try {
       const formData = [];
       for (const field of fields) {
-        const { subject_id, courses } = field;
-        if (subject_id && courses.length > 0) {
-          courses.forEach((course_id) => {
-            formData.push({ subject_id, course_id });
-          });
+        const { subject_id, course_id } = field;
+        console.log(field);
+        
+        if (subject_id && course_id) {
+          formData.push({ subject_id, course_id });
         } else {
           toast.warning('Please select both subject and course for each entry');
         }
@@ -117,13 +153,11 @@ function Assign() {
                   <div className="dynamic">
                     {fields.map((field, index) => (
                       <div className="subject-course-fields row" key={index}>
-
                         <div className="col-lg-5">
                           <div className="form-group">
                             <label className="mont-font fw-600 font-xsss">
                               Subject
                             </label>
-                            <br />
                             <SelectInput
                               className="form-control"
                               options={subjects}
@@ -143,23 +177,16 @@ function Assign() {
                             <label className="mont-font fw-600 font-xsss">
                               Course
                             </label>
-                            <br />
                             <SelectInput
                               className="form-control"
-                              options={coursesMap[field.subject_id] || []}
+                              options={coursesMap[field.subject_id] || []} // Ensure courses are fetched for the correct subject
                               name={`course_${index}`}
                               label="name"
-                              value={field.courses}
+                              value={field.course_id} // The correct value should be bound here
                               onChange={(e) =>
-                                handleCourseChange(
-                                  index,
-                                  Array.isArray(e.target.value)
-                                    ? e.target.value
-                                    : [e.target.value]
-                                )
-                              }
+                                handleCourseChange(index, e.target.value)
+                              } // Update course_id
                               placeholder="Select Course"
-                              multiple
                             />
                           </div>
                         </div>

@@ -16,14 +16,14 @@ function Show({ title }) {
 
   const { trainerId } = useParams();
   const [trainer, setTrainerDetails] = useState(null);
-  const [trainerSubjects, setTrainerSubjects] = useState(null);
+  const [trainerCourses, setTrainerCourses] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
       const data = await fetchTrainer(trainerId);
       setTrainerDetails(data.trainer);
-      setTrainerSubjects(data.trainer_subjects);
+      setTrainerCourses(data.trainer_courses);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -124,8 +124,8 @@ function Show({ title }) {
                           <h3 className="fw-600 font-xs my-4">
                             Trainer Subjects and Courses:{' '}
                           </h3>
-                          {trainerSubjects !== null ? (
-                            trainerSubjects?.map((value, index) => (
+                          {trainerCourses !== null ? (
+                            trainerCourses?.map((value, index) => (
                               <ol type="1" key={index}>
                                 <li className="mont-font fw-500 font-xss">
                                   {index + 1}. {value?.course_name}
