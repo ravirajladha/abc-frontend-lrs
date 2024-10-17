@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import {
   ContentLoader,
@@ -8,25 +8,23 @@ import {
   ContentFallback,
 } from '@/components/common';
 
-import { getStudentDataFromLocalStorage } from '@/utils/services';
 import {
   EditAboutSection,
   EditEducationSection,
   EditFamilySection,
   EditPersonalDetailSection,
 } from '@/components/student/profile';
+import { getStudentDetails, updateStudentProfile } from '@/api/student';
 
 function Index() {
-  const baseUrl = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
+  const { studentId } = useParams();
 
-  const studentData = JSON.parse(getStudentDataFromLocalStorage());
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    selectedImage: null,
   });
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -37,20 +35,51 @@ function Index() {
     setSelectedImage(selectedImage);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      selectedImage,
+      profile_image: selectedImage,
     }));
   };
 
-  const fetchData = useCallback(async () => {}, []);
-
   useEffect(() => {
-    fetchData();
-  }, []);
+    const fetchStudentDetails = async () => {
+      try {
+        const response = await getStudentDetails(studentId);
+        setFormData(response.student);
+      } catch (error) {
+        toast.error('Failed to fetch student details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStudentDetails();
+  }, [studentId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('submitted');
-    // navigate(`/student/profile`);
+    try {
+      const formDataToSend = new FormData();
+
+      // Append fields
+      Object.keys(formData).forEach((key) => {
+        formDataToSend.append(key, formData[key]);
+      });
+  
+      // If there's an image, append it to the formData
+      if (formData.profile_image) {
+        formDataToSend.append('profile_image', formData.profile_image);
+      }
+
+      const response = await updateStudentProfile(studentId, formDataToSend);
+      toast.success('Student updated successfully', response);
+      navigate(-1);
+    } catch (error) {
+      if (error.validationErrors) {
+        setValidationErrors(error.validationErrors);
+      }
+      toast.error(error.message);
+    } finally {
+      // setLoading(false);
+    }
   };
   const handleFormChange = (event) => {
     const { name, value } = event.target;
@@ -127,13 +156,13 @@ function Index() {
                     Next <i className="feather-arrow-right ml-2"></i>
                   </button>
                 ) : (
-                  <Link
-                  to={'/student/profile'}
+                  <button
                     type="button"
                     className="bg-current border-0 float-right text-center text-white font-xsss fw-600 px-3 py-2 w150 rounded-lg d-inline-block"
+                    onClick={handleSubmit}
                   >
-                    <i className="feather-save mr-2"></i> Save
-                  </Link>
+                    Save <i className="feather-arrow-right ml-2"></i>
+                  </button>
                 )}
               </form>
             </div>

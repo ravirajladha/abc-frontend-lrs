@@ -157,6 +157,8 @@ TestResult,
   StudentsCreate,
   StudentEdit,
   Colleges,
+  EditCollege,
+  CreateCollege,
 } from '@/pages/Admin';
 import{
 
@@ -964,6 +966,14 @@ const AdminRoutes = [
   {
     path: 'colleges',
     element: <Colleges title="Colleges" />,
+  },
+  {
+    path: 'colleges/create',
+    element: <CreateCollege title="Colleges" />,
+  },
+  {
+    path: 'colleges/:collegeId/edit',
+    element: <EditCollege title="Colleges" />,
   },
 ];
 

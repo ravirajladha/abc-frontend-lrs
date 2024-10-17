@@ -190,3 +190,5 @@ export { default as ForumQuestions } from './Forum';
 export { default as ForumQuestionAnswers } from './Forum/show';
 
 export { default as Colleges } from './Colleges';
+export { default as CreateCollege } from './Colleges/Create';
+export { default as EditCollege } from './Colleges/Edit';

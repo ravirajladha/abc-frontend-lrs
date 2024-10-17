@@ -1395,3 +1395,36 @@ export const updateStudentStatus = async (data) => {
   const response = await apiService.postData(`/admin/students/update-status`,data);
   return response.data;
 };
+
+export const fetchColleges = async () => {
+  const response = await apiService.fetchData(
+    `/admin/colleges`
+  );
+  return response.data;
+};
+export const getCollegeDetails = async (collegeId) => {
+  const response = await apiService.fetchData(
+    `/admin/colleges/${collegeId}`
+  );
+  return response.data;
+};
+
+export const storeCollege = async (data) => {
+  const response = await apiService.postData(
+    `/admin/colleges`, data
+  );
+  return response.data;
+};
+
+export const updateCollege = async (collegeId, data) => {
+  const response = await apiService.putData(
+    `/admin/colleges/${collegeId}`, data
+  );
+  return response.data;
+};
+export const updateCollegeStatus = async (collegeId, status) => {
+  const response = await apiService.putData(
+    `/admin/colleges/${collegeId}/update-status`, {status}
+  );
+  return response.data;
+};

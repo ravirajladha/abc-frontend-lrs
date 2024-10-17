@@ -2,6 +2,8 @@ import React from 'react';
 import DefaultProfileImage from '@/assets/images/default/student.png';
 
 const Index = ({ formData, handleFormChange,handleImageChange }) => {
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+
   return (
     <>
       <div className="row justify-content-center">
@@ -11,9 +13,9 @@ const Index = ({ formData, handleFormChange,handleImageChange }) => {
               <img
                 className="rounded-lg"
                 src={
-                    formData.selectedImage
-                    ? URL.createObjectURL(formData.selectedImage)
-                    : DefaultProfileImage
+                  formData.profile_image instanceof File
+                    ? URL.createObjectURL(formData.profile_image) // New image preview
+                    : baseUrl + formData.profile_image || DefaultProfileImage // URL from backend or default image
                 }
                 alt="thumbnail"
                 width="120"
@@ -34,8 +36,8 @@ const Index = ({ formData, handleFormChange,handleImageChange }) => {
             >
               <i className="ti-cloud-down small-icon mr-3"></i>
               <span className="js-fileName">
-                {formData.selectedImage ? (
-                  <>{formData.selectedImage.name} </>
+                {formData.profile_image ? (
+                  <>{formData.profile_image.name} </>
                 ) : (
                   'Click to Upload an image'
                 )}
@@ -65,6 +67,8 @@ const Index = ({ formData, handleFormChange,handleImageChange }) => {
               type="text"
               className="form-control"
               name="email"
+              value={formData.email}
+              onChange={handleFormChange}
               placeholder="Enter Email"
             />
           </div>
@@ -76,6 +80,8 @@ const Index = ({ formData, handleFormChange,handleImageChange }) => {
               type="text"
               className="form-control"
               name="phone_number"
+              value={formData.phone_number}
+              onChange={handleFormChange}
               placeholder="Enter Phone Number"
             />
           </div>
@@ -87,6 +93,8 @@ const Index = ({ formData, handleFormChange,handleImageChange }) => {
               type="date"
               className="form-control"
               name="dob"
+              value={formData.dob}
+              onChange={handleFormChange}
               placeholder="Enter Phone Number"
             />
           </div>
@@ -108,6 +116,8 @@ const Index = ({ formData, handleFormChange,handleImageChange }) => {
               type="text"
               className="form-control"
               name="pincode"
+              value={formData.pincode}
+              onChange={handleFormChange}
               placeholder="Enter Pincode"
             />
           </div>
@@ -119,6 +129,8 @@ const Index = ({ formData, handleFormChange,handleImageChange }) => {
               type="text"
               className="form-control mb-0 p-3 h100 lh-16"
               name="address"
+              value={formData.address}
+              onChange={handleFormChange}
               placeholder="Enter Addreess"
             />
           </div>

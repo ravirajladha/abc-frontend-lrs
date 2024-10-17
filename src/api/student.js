@@ -305,3 +305,14 @@ export const fetchRatingReview = async (courseId) => {
   const response = await apiService.fetchData(`/student/courses/${courseId}/ratings-reviews`);
   return response.data;
 }
+
+export const getStudentDetails = async (studentId) => {
+  const response = await apiService.fetchData(`/student/${studentId}/details`);
+  return response.data;
+}
+
+export const updateStudentProfile = async (studentId,data) => {
+  console.log("rating data",data);
+  const response = await apiService.postData(`/student/${studentId}/update-profile`,data);
+  return response.data;
+};

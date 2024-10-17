@@ -120,7 +120,7 @@ function Subjects() {
                   className="react-player"
                   playing
                   // light={`assets/images/${value.videoimage}`}
-                  url={`assets/images/video4.mp4`}
+                  url={baseUrl + courses.video}
                 />
               </div>
               <div className="card d-block border-0 rounded-lg overflow-hidden dark-bg-transparent bg-transparent mt-4 pb-3">
