@@ -3,14 +3,14 @@ import React from 'react';
 
 const Index = ({ formData, handleFormChange }) => {
   const achievements = [
-    { value: 1, label: 'achievements 1' },
-    { value: 2, label: 'achievements 2' },
-    { value: 3, label: 'achievements 3' },
+    { id: 1, name: 'achievements 1' },
+    { id: 2, name: 'achievements 2' },
+    { id: 3, name: 'achievements 3' },
   ];
   const hobbies = [
-    { value: 1, label: 'Cricket' },
-    { value: 2, label: 'Music' },
-    { value: 3, label: 'Book reading' },
+    { id: 1, name: 'Cricket' },
+    { id: 2, name: 'Music' },
+    { id: 3, name: 'Book reading' },
   ];
   return (
     <>

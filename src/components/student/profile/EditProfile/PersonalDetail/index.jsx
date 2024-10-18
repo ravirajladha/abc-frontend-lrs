@@ -15,7 +15,7 @@ const Index = ({ formData, handleFormChange,handleImageChange }) => {
                 src={
                   formData.profile_image instanceof File
                     ? URL.createObjectURL(formData.profile_image) // New image preview
-                    : baseUrl + formData.profile_image || DefaultProfileImage // URL from backend or default image
+                    : formData.profile_image ? baseUrl + formData.profile_image : DefaultProfileImage // URL from backend or default image
                 }
                 alt="thumbnail"
                 width="120"
@@ -83,6 +83,13 @@ const Index = ({ formData, handleFormChange,handleImageChange }) => {
               value={formData.phone_number}
               onChange={handleFormChange}
               placeholder="Enter Phone Number"
+              maxLength="10"
+              onKeyDown={(e) => {
+                // Only allow numbers (and optionally other characters like Backspace, Delete)
+                if (!/^\d*$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab') {
+                  e.preventDefault();
+                }
+              }}
             />
           </div>
         </div>
@@ -102,10 +109,10 @@ const Index = ({ formData, handleFormChange,handleImageChange }) => {
         <div className="col-lg-4 col-md-12 mb-3">
           <div className="form-group">
             <label className="mont-font fw-600 font-xsss">Gender</label>
-            <select className="form-control" name="" id="">
-              <option value="">Male</option>
-              <option value="">Female</option>
-              <option value="">Other</option>
+            <select className="form-control" name="gender" id="" value={formData.gender} onChange={handleFormChange}>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
             </select>
           </div>
         </div>

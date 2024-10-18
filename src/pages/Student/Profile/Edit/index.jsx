@@ -15,6 +15,7 @@ import {
   EditPersonalDetailSection,
 } from '@/components/student/profile';
 import { getStudentDetails, updateStudentProfile } from '@/api/student';
+import { fetchCollegesDropdown } from '@/api/common';
 
 function Index() {
   const navigate = useNavigate();
@@ -22,10 +23,9 @@ function Index() {
 
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-  });
+  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({});
+  const [colleges, setColleges] = useState([]);
 
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 4;
@@ -50,8 +50,20 @@ function Index() {
         setLoading(false);
       }
     };
+    const fetchCollegs = async () => {
+      try {
+        const response = await fetchCollegesDropdown();
+        setColleges(response);
+
+      } catch (error) {
+        toast.error('Failed to fetch college details');
+      } finally {
+        setLoading(false);
+      }
+    };
 
     fetchStudentDetails();
+    fetchCollegs();
   }, [studentId]);
 
   const handleSubmit = async (event) => {
@@ -63,7 +75,7 @@ function Index() {
       Object.keys(formData).forEach((key) => {
         formDataToSend.append(key, formData[key]);
       });
-  
+
       // If there's an image, append it to the formData
       if (formData.profile_image) {
         formDataToSend.append('profile_image', formData.profile_image);
@@ -75,6 +87,7 @@ function Index() {
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
+      toast.error(error.message);
       }
       toast.error(error.message);
     } finally {
@@ -83,11 +96,27 @@ function Index() {
   };
   const handleFormChange = (event) => {
     const { name, value } = event.target;
+    console.log(event);
+    
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
     }));
   };
+  const handleSelectChange = (selectedOption, name) => {
+    // For multi-select: selectedOption is an array of selected values
+    // For single-select: selectedOption is a single selected value
+    
+    const value = selectedOption
+      ? Array.isArray(selectedOption)
+        ? selectedOption.map((opt) => opt.value) // For multi-select
+        : selectedOption.value // For single-select
+      : '';
+  
+    // Update formData with the new value for the specific field (name)
+    setFormData({ ...formData, [name]: value });
+  };
+  
 
   const nextStep = () => {
     if (currentStep < totalSteps) {
@@ -117,6 +146,8 @@ function Index() {
       </div>
     );
   };
+
+  if(loading) return <ContentLoader/>
   return (
     <>
       <ContentHeader title="Profile" subtitle="Edit" />
@@ -135,9 +166,29 @@ function Index() {
                     handleImageChange={handleImageChange}
                   />
                 )}
-                {currentStep == 2 && <EditEducationSection />}
-                {currentStep == 3 && <EditFamilySection />}
-                {currentStep == 4 && <EditAboutSection />}
+                {currentStep == 2 && (
+                  <EditEducationSection
+                    formData={formData}
+                    handleFormChange={handleFormChange}
+                    handleImageChange={handleImageChange}
+                    handleSelectChange={handleSelectChange}
+                    colleges={colleges}
+                  />
+                )}
+                {currentStep == 3 && (
+                  <EditFamilySection
+                    formData={formData}
+                    handleFormChange={handleFormChange}
+                    handleImageChange={handleImageChange}
+                  />
+                )}
+                {currentStep == 4 && (
+                  <EditAboutSection
+                    formData={formData}
+                    handleFormChange={handleFormChange}
+                    handleImageChange={handleImageChange}
+                  />
+                )}
                 {currentStep > 1 && (
                   <button
                     type="button"
