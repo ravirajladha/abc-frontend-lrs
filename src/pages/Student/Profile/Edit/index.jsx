@@ -16,9 +16,14 @@ import {
 } from '@/components/student/profile';
 import { getStudentDetails, updateStudentProfile } from '@/api/student';
 import { fetchCollegesDropdown } from '@/api/common';
+import { getStudentDataFromLocalStorage, getUserDataFromLocalStorage } from '@/utils/services';
+import { setStudentDataInLocalStorage, setUserDataInLocalStorage } from '@/utils/helpers';
 
 function Index() {
   const navigate = useNavigate();
+  const userData = JSON.parse(getUserDataFromLocalStorage());
+  const studentData = JSON.parse(getStudentDataFromLocalStorage());
+
   const { studentId } = useParams();
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -54,7 +59,6 @@ function Index() {
       try {
         const response = await fetchCollegesDropdown();
         setColleges(response);
-
       } catch (error) {
         toast.error('Failed to fetch college details');
       } finally {
@@ -70,10 +74,18 @@ function Index() {
     event.preventDefault();
     try {
       const formDataToSend = new FormData();
-
-      // Append fields
       Object.keys(formData).forEach((key) => {
-        formDataToSend.append(key, formData[key]);
+        const value = formData[key];
+
+        if (Array.isArray(value)) {
+          // Append each array value as a separate entry with the same field name (Laravel expects this format for arrays)
+          value.forEach((item) => {
+            formDataToSend.append(`${key}[]`, item);
+          });
+        } else {
+          // Append non-array values normally
+          formDataToSend.append(key, value);
+        }
       });
 
       // If there's an image, append it to the formData
@@ -82,12 +94,32 @@ function Index() {
       }
 
       const response = await updateStudentProfile(studentId, formDataToSend);
+
+      // Update user data in localStorage (if applicable)
+      const updatedUserData = {
+        ...userData,  // existing user data
+        username: formData.name,  // assuming name is in updatedData
+        email: formData.email,
+        phone_number: formData.phone_number,
+        // Add other relevant fields as needed
+      };
+      setUserDataInLocalStorage(updatedUserData);
+
+      // Update student data in localStorage
+      const updatedStudentData = {
+        ...studentData,  // existing student data
+        student_name: formData.name,
+        email: formData.email,
+        phone_number: formData.phone_number,
+      };
+      setStudentDataInLocalStorage(updatedStudentData);
+
       toast.success('Student updated successfully', response);
       navigate(-1);
     } catch (error) {
       if (error.validationErrors) {
         setValidationErrors(error.validationErrors);
-      toast.error(error.message);
+        toast.error(error.message);
       }
       toast.error(error.message);
     } finally {
@@ -96,8 +128,6 @@ function Index() {
   };
   const handleFormChange = (event) => {
     const { name, value } = event.target;
-    console.log(event);
-    
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -106,17 +136,16 @@ function Index() {
   const handleSelectChange = (selectedOption, name) => {
     // For multi-select: selectedOption is an array of selected values
     // For single-select: selectedOption is a single selected value
-    
+
     const value = selectedOption
       ? Array.isArray(selectedOption)
         ? selectedOption.map((opt) => opt.value) // For multi-select
         : selectedOption.value // For single-select
       : '';
-  
+
     // Update formData with the new value for the specific field (name)
     setFormData({ ...formData, [name]: value });
   };
-  
 
   const nextStep = () => {
     if (currentStep < totalSteps) {
@@ -147,7 +176,7 @@ function Index() {
     );
   };
 
-  if(loading) return <ContentLoader/>
+  if (loading) return <ContentLoader />;
   return (
     <>
       <ContentHeader title="Profile" subtitle="Edit" />
@@ -187,6 +216,7 @@ function Index() {
                     formData={formData}
                     handleFormChange={handleFormChange}
                     handleImageChange={handleImageChange}
+                    handleSelectChange={handleSelectChange}
                   />
                 )}
                 {currentStep > 1 && (

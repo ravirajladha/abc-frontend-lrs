@@ -9,12 +9,9 @@ export const fetchDashboard = async (studentId) => {
 };
 
 export const fetchWalletDetails  = async (studentAuthId) => {
-  console.log("student auth id for wallet", studentAuthId);
-
   const response = await apiService.fetchData(
     `/student/wallet-details/${studentAuthId}`
   );
-  console.log("wallet api response", response.data);
   return response.data;
 };
 
@@ -296,7 +293,6 @@ export const getResource = async () => {
   return response;
 }
 export const storeRatingReview = async (data) => {
-  console.log("rating data",data);
   const response = await apiService.postData(`/student/courses/rating-review`,data);
   return response.data;
 };
@@ -312,7 +308,6 @@ export const getStudentDetails = async (studentId) => {
 }
 
 export const updateStudentProfile = async (studentId,data) => {
-  console.log("rating data",data);
   const response = await apiService.postData(`/student/${studentId}/update-profile`,data);
   return response.data;
 };

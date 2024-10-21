@@ -26,20 +26,20 @@ function AboutCard({ studentData, isProfileEditable }) {
     };
     fetchStudentDetails();
   }, [studentData]);
-  if(loading) return <ContentLoader/>
+  if (loading) return <ContentLoader />;
 
   return (
     <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
       {student && (
         <div className="card-body p-lg-5 p-4 w-100 border-0 mb-0">
-            {isProfileEditable && (
-              <Link
-                to={`${student?.student_auth_id}/edit`}
-                className="font-xs text-black float-right"
-              >
-                <i className="feather-edit" />{' '}
-              </Link>
-            )}
+          {isProfileEditable && (
+            <Link
+              to={`${student?.student_auth_id}/edit`}
+              className="font-xs text-black float-right"
+            >
+              <i className="feather-edit" />{' '}
+            </Link>
+          )}
 
           <div className="row">
             <div className="col-lg-4">
@@ -71,7 +71,8 @@ function AboutCard({ studentData, isProfileEditable }) {
             <div className="col-lg-4">
               <div className="form-group">
                 <label className="mont-font fw-500 font-xsss">
-                  <span className="fw-600 ">DOB: </span> {formatDate(student?.dob) || 'N/A'}
+                  <span className="fw-600 ">DOB: </span>{' '}
+                  {formatDate(student?.dob) || 'N/A'}
                 </label>
               </div>
               <div className="form-group">
@@ -84,7 +85,8 @@ function AboutCard({ studentData, isProfileEditable }) {
             <div className="col-lg-4">
               <div className="form-group">
                 <label className="mont-font fw-500 font-xsss">
-                  <span className="fw-600 ">Gender: </span> {student?.gender || 'N/A'}
+                  <span className="fw-600 ">Gender: </span>{' '}
+                  {student?.gender || 'N/A'}
                 </label>
               </div>
               <div className="form-group">
@@ -102,15 +104,16 @@ function AboutCard({ studentData, isProfileEditable }) {
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
-                      <span className="fw-600 ">College Name: </span>R.V.
-                      College of Engineering, Bengaluru
+                      <span className="fw-600 ">College Name: </span>
+                      {student?.college_name}
                     </label>
                   </div>
                 </div>
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
-                      <span className="fw-600 ">Start Date: </span>{formatDate(student?.college_start_date) || 'N/A'}
+                      <span className="fw-600 ">Start Date: </span>
+                      {formatDate(student?.college_start_date) || 'N/A'}
                     </label>
                   </div>
                   <div className="form-group">
@@ -138,7 +141,8 @@ function AboutCard({ studentData, isProfileEditable }) {
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
-                      <span className="fw-600 ">Father Name: </span>{student?.father_name || 'N/A'}
+                      <span className="fw-600 ">Father Name: </span>
+                      {student?.father_name || 'N/A'}
                     </label>
                   </div>
                 </div>
@@ -163,7 +167,8 @@ function AboutCard({ studentData, isProfileEditable }) {
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
-                      <span className="fw-600 ">Mother Name: </span>{student?.mother_name || 'N/A'}
+                      <span className="fw-600 ">Mother Name: </span>
+                      {student?.mother_name || 'N/A'}
                     </label>
                   </div>
                 </div>
@@ -193,31 +198,38 @@ function AboutCard({ studentData, isProfileEditable }) {
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
-                      <span className="fw-600 ">About me: </span>Lorem ipsum
-                      dolor sit amet consectetur adipisicing elit. Quas,
-                      cupiditate? Quidem explicabo blanditiis voluptatum veniam.
-                      Hic similique distinctio ut aliquid.
+                      <span className="fw-600 ">About me: </span>
+                      {student?.about || 'N/A'}
                     </label>
                   </div>
                 </div>
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
-                      <span className="fw-600 ">Hobbies: </span>Lorem, ipsum,
-                      dolor sit.
+                      <span className="fw-600 ">Hobbies: </span>
+                      {student?.hobbies?.length > 0
+                        ? student.hobbies.join(', ')
+                        : 'N/A' 
+                      }
                     </label>
                   </div>
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
                       <span className="fw-600 ">Achievements: </span>
-                      Lorem, ipsum, dolor sit.
+                      {student?.achievements?.length > 0
+                        ? student.achievements.join(', ')
+                        : 'N/A' 
+                      }
                     </label>
                   </div>
                 </div>
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
-                      <span className="fw-600 ">Language: </span> Kannda
+                      <span className="fw-600 ">Language: </span>{student?.languages?.length > 0
+                        ? student.languages.join(', ')
+                        : 'N/A' 
+                      }
                     </label>
                   </div>
                 </div>

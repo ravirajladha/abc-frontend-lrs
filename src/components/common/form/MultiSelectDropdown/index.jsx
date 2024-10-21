@@ -33,7 +33,7 @@ const MultiSelectDropdown = ({ options, isMulti, value, onChange, name }) => {
       onChange={handleChange}
       value={
         isMulti
-          ? mappedOptions.filter((option) => value.includes(option.value)) // For multi-select
+          ? mappedOptions.filter((option) => value?.includes(option.value)) // For multi-select
           : mappedOptions.find((option) => option.value === value) // For single-select
       }
     />

@@ -70,11 +70,9 @@ function Profile({ isAdmin, isStudent }) {
 
   const fetchStudentReportCard = useCallback(async () => {
     // if (!studentData || !studentData.id) return; 
-    console.log("Fetching student",studentData);
     const studentId = studentData.id;
     const classId = studentData.class_id;
     const sectionId = studentData.section_id;
-    console.log("Fetching student full data", studentId, classId, sectionId);
     setLoading(true);
     try {
       const data = await fetchReportCard(studentId, classId, sectionId);
