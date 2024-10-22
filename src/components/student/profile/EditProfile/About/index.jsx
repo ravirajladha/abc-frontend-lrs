@@ -7,7 +7,6 @@ const Index = ({
   handleImageChange,
   handleSelectChange,
 }) => {
-  
   const achievements = [
     { id: 'Achievements 1', name: 'Achievements 1' },
     { id: 'Achievements 2', name: 'Achievements 2' },
@@ -25,37 +24,65 @@ const Index = ({
   ];
   return (
     <>
+      <h4 className="text-grey-900 font-xs mb-0 fw-600 mb-2">About Me</h4>
       <div className="row">
         <div className="col-lg-4 col-md-12 mb-3">
           <div className="form-group">
             <label className="mont-font fw-600 font-xsss">Hobbies</label>
-            <MultiSelectDropdown
+            {/* <MultiSelectDropdown
               options={hobbies}
               isMulti={true}
               value={formData.hobbies}
               onChange={handleSelectChange}
               name="hobbies"
+            /> */}
+            <input
+              type="text"
+              className="form-control"
+              name="hobbies"
+              placeholder="Enter hobbies"
+              value={formData.hobbies}
+              onChange={handleFormChange}
             />
           </div>
         </div>
         <div className="col-lg-4 col-md-12 mb-3">
           <div className="form-group">
             <label className="mont-font fw-600 font-xsss">Achievements</label>
-            <MultiSelectDropdown options={achievements} isMulti={true}
+            {/* <MultiSelectDropdown
+              options={achievements}
+              isMulti={true}
               value={formData.achievements}
               onChange={handleSelectChange}
-              name="achievements"/>
+              name="achievements"
+            /> */}
+             <input
+              type="text"
+              className="form-control"
+              name="achievements"
+              placeholder="Enter achievements"
+              value={formData.achievements}
+              onChange={handleFormChange}
+            />
           </div>
         </div>
         <div className="col-lg-4 col-md-12 mb-3">
           <div className="form-group">
             <label className="mont-font fw-600 font-xsss">Language</label>
-            <MultiSelectDropdown
+            {/* <MultiSelectDropdown
               options={languages}
               isMulti={true}
               value={formData.languages}
               onChange={handleSelectChange}
               name="languages"
+            /> */}
+            <input
+              type="text"
+              className="form-control"
+              name="languages"
+              placeholder="Enter languages"
+              value={formData.languages}
+              onChange={handleFormChange}
             />
           </div>
         </div>

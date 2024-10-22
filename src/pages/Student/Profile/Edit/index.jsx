@@ -74,20 +74,23 @@ function Index() {
     event.preventDefault();
     try {
       const formDataToSend = new FormData();
+      // Object.keys(formData).forEach((key) => {
+      //   const value = formData[key];
+
+      //   if (Array.isArray(value)) {
+      //     // Append each array value as a separate entry with the same field name (Laravel expects this format for arrays)
+      //     value.forEach((item) => {
+      //       formDataToSend.append(`${key}[]`, item);
+      //     });
+      //   } else {
+      //     // Append non-array values normally
+      //     formDataToSend.append(key, value);
+      //   }
+      // });
       Object.keys(formData).forEach((key) => {
         const value = formData[key];
-
-        if (Array.isArray(value)) {
-          // Append each array value as a separate entry with the same field name (Laravel expects this format for arrays)
-          value.forEach((item) => {
-            formDataToSend.append(`${key}[]`, item);
-          });
-        } else {
-          // Append non-array values normally
-          formDataToSend.append(key, value);
-        }
+        formDataToSend.append(key, value);
       });
-
       // If there's an image, append it to the formData
       if (formData.profile_image) {
         formDataToSend.append('profile_image', formData.profile_image);
@@ -134,9 +137,6 @@ function Index() {
     }));
   };
   const handleSelectChange = (selectedOption, name) => {
-    // For multi-select: selectedOption is an array of selected values
-    // For single-select: selectedOption is a single selected value
-
     const value = selectedOption
       ? Array.isArray(selectedOption)
         ? selectedOption.map((opt) => opt.value) // For multi-select
@@ -165,8 +165,8 @@ function Index() {
         {Array.from({ length: totalSteps }, (_, index) => (
           <span
             key={index}
-            className={`font-xss fw-500 px-3 py-2 rounded-xl bg-${
-              currentStep === index + 1 ? 'lightblue' : 'grey'
+            className={`font-xss fw-500 px-3 py-2 rounded-xl text-white bg-${
+              currentStep === index + 1 ? 'secondary' : 'primary'
             }`}
           >
             Step- {index + 1}

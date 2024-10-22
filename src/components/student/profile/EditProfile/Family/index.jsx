@@ -4,6 +4,7 @@ import React from 'react';
 const Index = ({ formData, handleFormChange }) => {
   return (
     <>
+      <h4 className="text-grey-900 font-xs mb-0 fw-600 mb-2">Parent / Guardian Details</h4>
       <div className="row">
         <div className="col-lg-4 col-md-12 mb-3">
           <div className="form-group">

@@ -72,7 +72,7 @@ function AboutCard({ studentData, isProfileEditable }) {
               <div className="form-group">
                 <label className="mont-font fw-500 font-xsss">
                   <span className="fw-600 ">DOB: </span>{' '}
-                  {formatDate(student?.dob) || 'N/A'}
+                  {student?.dob && formatDate(student?.dob) || 'N/A'}
                 </label>
               </div>
               <div className="form-group">
@@ -113,13 +113,15 @@ function AboutCard({ studentData, isProfileEditable }) {
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
                       <span className="fw-600 ">Start Date: </span>
-                      {formatDate(student?.college_start_date) || 'N/A'}
+                      {student?.college_start_date && formatDate(student?.college_start_date) || 'N/A'}
                     </label>
                   </div>
+                  </div>
+                <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
                       <span className="fw-600 ">End Date: </span>
-                      {formatDate(student?.college_end_date) || 'N/A'}
+                      {student?.college_end_date && formatDate(student?.college_end_date) || 'N/A'}
                     </label>
                   </div>
                 </div>
@@ -131,11 +133,44 @@ function AboutCard({ studentData, isProfileEditable }) {
                     </label>
                   </div>
                 </div>
+                <div className="col-lg-4">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">12th Percentage: </span>
+                      {student?.percentage_12th || 'N/A'}
+                    </label>
+                  </div>
+                </div>
+                <div className="col-lg-4">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">12th End Date: </span>
+                      {student?.end_date_12th && formatDate(student?.end_date_12th) || 'N/A'}
+                    </label>
+                  </div>
+                </div>
+                <div className="col-lg-4">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">10th Percentage: </span>
+                      {student?.percentage_10th || 'N/A'}
+                    </label>
+                  </div>
+                </div>
+                <div className="col-lg-4">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">10th End Date: </span>
+                      {student?.end_date_10th && formatDate(student?.end_date_10th) || 'N/A'}
+                    </label>
+                  </div>
+                </div>
+              
               </div>
             </div>
           </div>
           <div className="card w-100 border-top-current bg-lightgreen p-2 mb-2">
-            <h4 className="font-xss fw-700 my-2">Family Details</h4>
+            <h4 className="font-xss fw-700 my-2">Parent / Guardian Details</h4>
             <div className="card-body m-4 mb-0 bg-lightblue p-4 rounded-lg">
               <div className="row">
                 <div className="col-lg-4">
@@ -192,44 +227,50 @@ function AboutCard({ studentData, isProfileEditable }) {
             </div>
           </div>
           <div className="card w-100 border-top-current bg-lightgreen p-2 mb-2">
-            <h4 className="font-xss fw-700 my-2">About Myself</h4>
+            <h4 className="font-xss fw-700 my-2">About Me</h4>
             <div className="card-body m-4 mb-0 bg-lightblue p-4 rounded-lg">
               <div className="row">
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
-                      <span className="fw-600 ">About me: </span>
-                      {student?.about || 'N/A'}
-                    </label>
-                  </div>
-                </div>
-                <div className="col-lg-4">
-                  <div className="form-group">
-                    <label className="mont-font fw-500 font-xsss">
                       <span className="fw-600 ">Hobbies: </span>
-                      {student?.hobbies?.length > 0
+                      {/* {student?.hobbies?.length > 0
                         ? student.hobbies.join(', ')
                         : 'N/A' 
-                      }
+                      } */}
+                      {student?.hobbies || 'N/A'}
                     </label>
                   </div>
+                  </div>
+                <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
                       <span className="fw-600 ">Achievements: </span>
-                      {student?.achievements?.length > 0
+                      {student?.achievements || 'N/A'}
+                      {/* {student?.achievements?.length > 0
                         ? student.achievements.join(', ')
                         : 'N/A' 
-                      }
+                      } */}
                     </label>
                   </div>
                 </div>
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label className="mont-font fw-500 font-xsss">
-                      <span className="fw-600 ">Language: </span>{student?.languages?.length > 0
+                      <span className="fw-600 ">Language: </span>
+                      {/* {student?.languages?.length > 0
                         ? student.languages.join(', ')
                         : 'N/A' 
-                      }
+                      } */}
+                      {student?.languages || 'N/A'}
+                    </label>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="form-group">
+                    <label className="mont-font fw-500 font-xsss">
+                      <span className="fw-600 ">About me: </span>
+                      {student?.about || 'N/A'}
                     </label>
                   </div>
                 </div>

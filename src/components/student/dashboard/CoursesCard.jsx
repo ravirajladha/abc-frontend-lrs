@@ -7,6 +7,7 @@ import { PiCertificateBold } from 'react-icons/pi';
 import { MdOutlineAssessment } from 'react-icons/md';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 import StarRatings from 'react-star-ratings';
+import { formatDate } from '@/utils/helpers';
 
 function CoursesCard({ title }) {
   const [courses, setCourses] = useState(null);
@@ -168,11 +169,17 @@ function CoursesCard({ title }) {
                         ></div>
                       </div>
                       <div className="d-flex justify-content-between">
+                        <div className='d-flex flex-column'>
                         <h4 className="fw-500 font-xssss mt-2">
-                          Start date: 16-07-2024
+                          Start date: {formatDate(course.start_date)}
                         </h4>
                         <h4 className="fw-500 font-xssss mt-2">
-                          Validity: 45 days
+                          End date: { course.results && course.results.length > 0 ? formatDate(course.results[0].created_at) : '-'}
+                        </h4>
+                        </div>
+                        
+                        <h4 className="fw-500 font-xssss mt-2">
+                          Validity: {course.access_validity} days
                         </h4>
                       </div>
                     </div>
