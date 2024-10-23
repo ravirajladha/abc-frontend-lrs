@@ -68,7 +68,7 @@ const TrainerRoutes = [
   },
   {
     path: 'live-sessions',
-    element: <TrainerLiveQnaSessions title="Live QnA Session" />,
+    element: <TrainerLiveQnaSessions title="Live Session" />,
   },
   {
     path: 'live-sessions/create',

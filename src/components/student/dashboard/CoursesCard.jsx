@@ -25,7 +25,6 @@ function CoursesCard({ title }) {
     return;
   }
 
-
   const [loading1, setLoading1] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [currentCourse, setCurrentCourse] = useState(null);
@@ -75,9 +74,7 @@ function CoursesCard({ title }) {
       console.log(response, ':respsonse');
       if (response.status === 200) {
         setLoading1(false);
-        navigate(
-          `/student/courses/test/${response.token}/${latestTestId}`
-        ); // Adjusted to use response.testSessionId directly
+        navigate(`/student/courses/test/${response.token}/${latestTestId}`); // Adjusted to use response.testSessionId directly
       } else {
         throw new Error('Unexpected response status');
       }
@@ -136,16 +133,16 @@ function CoursesCard({ title }) {
                           {course.subject_name}
                         </span>
                         <div>
-                        <StarRatings
-                        rating={Number(course?.average_rating || 0)}
-                        starRatedColor="gold"
-                        numberOfStars={5}
-                        starDimension="15px"
-                        starSpacing="1px"
-                      />
-                      <h4 className="font-xsssss text-grey-600 fw-600 mt-1">
-                      Based on {course.total_ratings} ratings
-                      </h4>
+                          <StarRatings
+                            rating={Number(course?.average_rating || 0)}
+                            starRatedColor="gold"
+                            numberOfStars={5}
+                            starDimension="15px"
+                            starSpacing="1px"
+                          />
+                          <h4 className="font-xsssss text-grey-600 fw-600 mt-1">
+                            Based on {course.total_ratings} ratings
+                          </h4>
                         </div>
                       </div>
                       <h4 className="fw-700 font-xss mt-2 lh-26 mt-0">
@@ -157,7 +154,7 @@ function CoursesCard({ title }) {
                         </Link>
                       </h4>
                       <span className="font-xssss fw-500 text-grey-900 d-inline-block ml-0 text-dark">
-                      {course.trainer_name}
+                        {course.trainer_name}
                       </span>
                       <hr />
                       <div className="progress mt-3 h10">
@@ -169,51 +166,66 @@ function CoursesCard({ title }) {
                         ></div>
                       </div>
                       <div className="d-flex justify-content-between">
-                        <div className='d-flex flex-column'>
-                        <h4 className="fw-500 font-xssss mt-2">
-                          Start date: {formatDate(course.start_date)}
-                        </h4>
-                        <h4 className="fw-500 font-xssss mt-2">
-                          End date: { course.results && course.results.length > 0 ? formatDate(course.results[0].created_at) : '-'}
-                        </h4>
+                        <div className="d-flex flex-column">
+                          <h4 className="fw-500 font-xssss mt-2">
+                            Start date: {formatDate(course.start_date)}
+                          </h4>
+                          <h4 className="fw-500 font-xssss mt-2">
+                            End date:{' '}
+                            {course.results && course.results.length > 0
+                              ? formatDate(course.results[0].created_at)
+                              : '-'}
+                          </h4>
                         </div>
-                        
                         <h4 className="fw-500 font-xssss mt-2">
                           Validity: {course.access_validity} days
                         </h4>
                       </div>
                     </div>
                     <div className="card-footer bg-white">
+                    {/* <p className="font-xssss text-grey-700 fw-500">Complete the course and test to get certificate.*</p> */}
                       <div className="d-flex justify-content-around mt-2">
                         {course.results && course.results.length > 0 && (
-                          <Link
-                            className="d-flex flex-column align-items-center"
-                            to={`/student/courses/${course.id}/results`}
-                          >
-                            <MdOutlineAssessment className="font-md text-primary" />
-                            <p className="font-xssss text-grey-900 fw-500">
-                              Result
-                            </p>
-                          </Link>
-                        )}
-                        {/* {course.chapter_completed && */}
-                         {course.latest_test_id && (
-                            <button
+                          <>
+                            <Link
                               className="d-flex flex-column align-items-center"
-                              onClick={() => handleOpenModal(course)}
+                              to={`/student/courses/${course.id}/results`}
                             >
                               <MdOutlineAssessment className="font-md text-primary" />
                               <p className="font-xssss text-grey-900 fw-500">
-                                Test
+                                Result
                               </p>
-                            </button>
-                          )}
-                        <div className="d-flex flex-column align-items-center">
+                            </Link>
+                            <Link
+                              to={`/student/courses/${course.id}/certificate`}
+                              className="d-flex flex-column align-items-center"
+                            >
+                              <PiCertificateBold className="font-md text-success text-center" />
+                              <p className="font-xssss text-grey-900 fw-500">
+                                Certificate
+                              </p>
+                            </Link>
+                          </>
+                        )}
+                        {/* {course.chapter_completed && */}
+                        {course.latest_test_id && (
+                          <button
+                            className="d-flex flex-column align-items-center"
+                            onClick={() => handleOpenModal(course)}
+                          >
+                            <MdOutlineAssessment className="font-md text-primary" />
+                            <p className="font-xssss text-grey-900 fw-500">
+                              Test
+                            </p>
+                          </button>
+                        )}
+                        {/* <button className="d-flex flex-column align-items-center"
+                        onClick={() => handleGenerateCertificate(course)}>
                           <PiCertificateBold className="font-md text-success text-center" />
                           <p className="font-xssss text-grey-900 fw-500">
                             Certificate
                           </p>
-                        </div>
+                        </button> */}
                       </div>
                     </div>
                   </div>

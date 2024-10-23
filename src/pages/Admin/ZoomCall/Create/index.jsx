@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
-import { SaveButton } from '@/components/common/form';
+import { SaveButton, SelectInput } from '@/components/common/form';
 import { createZoomCall } from '@/api/admin';
+import { fetchTrainerSubjects } from '@/api/trainer';
+import { fetchCourses } from '@/api/dropdown';
 
 function Create() {
   const navigate = useNavigate();
+  const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     url: '',
@@ -23,11 +28,16 @@ function Create() {
       date: '',
       time: '',
       password: '',
+      subject: '',
+      course: '',
+      session_type: '',
     });
   };
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
+    console.log(name, value);
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -37,6 +47,7 @@ function Create() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    console.log(formData);
 
     try {
       const submissionData = new FormData();
@@ -44,7 +55,8 @@ function Create() {
       submissionData.append('date', formData.date);
       submissionData.append('time', formData.time);
       submissionData.append('passcode', formData.password); // Passcode
-
+      submissionData.append('subject_id', formData.subject);
+      submissionData.append('course_id', formData.course);
       const response = await createZoomCall(submissionData);
       toast.success(response.message);
 
@@ -63,12 +75,110 @@ function Create() {
     }
   };
 
+  const fetchSubjectData = async () => {
+    try {
+      const response = await fetchTrainerSubjects();
+      setSubjects(response.subjects);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubjectChange = (event) => {
+    const { name, value } = event.target;
+    console.log(name, value);
+
+    setValidationErrors((prevErrors) => ({
+      ...prevErrors,
+      subject: '',
+    }));
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+    fetchCoursesDropdownData(value);
+  };
+
+  const fetchCoursesDropdownData = async (value) => {
+    try {
+      const response = await fetchCourses(value);
+      setCourses(response.courses);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSubjectData();
+  }, []);
+
   return (
     <div>
       <ContentHeader title="Create Live Sessions" />
       <ContentFormWrapper formTitle="New Live Sessions">
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="row">
+            <div className="col-lg-6 col-md-12 mb-3">
+              <div className="form-group">
+                <label className="mont-font fw-600 font-xsss">Subject</label>
+                <SelectInput
+                  className="form-control"
+                  options={subjects}
+                  name="subject"
+                  label="name"
+                  value={formData.subject || ''}
+                  onChange={handleSubjectChange}
+                  placeholder="Select Subject"
+                  required
+                />
+                {validationErrors.url && (
+                  <span className="text-danger">
+                    {validationErrors.subject}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="col-lg-6 col-md-12 mb-3">
+              <div className="form-group">
+                <label className="mont-font fw-600 font-xsss">Course</label>
+                <SelectInput
+                  className="form-control"
+                  options={courses}
+                  name="course"
+                  label="name"
+                  value={formData.course || ''}
+                  onChange={handleFormChange}
+                  placeholder="Select course"
+                  required
+                />
+                {validationErrors.url && (
+                  <span className="text-danger">{validationErrors.course}</span>
+                )}
+              </div>
+            </div>
+            <div className="col-lg-6 col-md-12 mb-3">
+              <div className="form-group">
+                <label className="mont-font fw-600 font-xsss">
+                  Session Type
+                </label>
+                <select className="form-control" name="session_type" id=""
+                value={formData.session_type}
+                onChange={handleFormChange}>
+                  <option value="">select</option>
+                  <option value="1">Qna Session</option>
+                  <option value="2">Live Session</option>
+                </select>
+                {validationErrors.session_type && (
+                  <span className="text-danger">
+                    {validationErrors.session_type}
+                  </span>
+                )}
+              </div>
+            </div>
             <div className="col-lg-6 col-md-12 mb-3">
               <div className="form-group">
                 <label className="mont-font fw-600 font-xsss">Url</label>
@@ -97,7 +207,9 @@ function Create() {
                   placeholder="Enter Password"
                 />
                 {validationErrors.password && (
-                  <span className="text-danger">{validationErrors.password}</span>
+                  <span className="text-danger">
+                    {validationErrors.password}
+                  </span>
                 )}
               </div>
             </div>

@@ -311,3 +311,8 @@ export const updateStudentProfile = async (studentId,data) => {
   const response = await apiService.postData(`/student/${studentId}/update-profile`,data);
   return response.data;
 };
+
+export const generateCertificate = async (courseId) => {
+  const response = await apiService.fetchData(`/student/courses/${courseId}/generate-certificate`);
+  return response.data;
+};

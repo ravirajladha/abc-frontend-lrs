@@ -5,6 +5,7 @@ const SelectInput = ({
   options = [],
   label = 'label',
   value = '',
+  name = '',
   onChange,
   placeholder = 'Select an option',
   fallbackPlaceholder = '',
@@ -15,6 +16,7 @@ const SelectInput = ({
   return (
     <select
       className={`form-control ${className}`}
+      name={name}
       value={scalarValue}
       onChange={onChange}
       required={required}
