@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { fetchMyCourses, startTest } from '@/api/student';
+import { fetchMyCourses, startTest, trackLiveSessionClick } from '@/api/student';
 import { ContentItemCard, ContentLoader } from '@/components/common';
 import { Link, useNavigate } from 'react-router-dom';
 import { PiCertificateBold } from 'react-icons/pi';
-import { MdOutlineAssessment } from 'react-icons/md';
+import { MdLiveTv, MdOutlineAssessment } from 'react-icons/md';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 import StarRatings from 'react-star-ratings';
 import { formatDate } from '@/utils/helpers';
@@ -90,6 +90,11 @@ function CoursesCard({ title }) {
         toast.error('Unable to start the test. Please try again later.');
       }
     }
+  };
+
+  const handleUrlClick = async (item) => {
+    const respsonse = await trackLiveSessionClick(item.id);
+    window.open(item.url, '_blank');
   };
   return (
     <>
@@ -181,9 +186,29 @@ function CoursesCard({ title }) {
                           Validity: {course.access_validity} days
                         </h4>
                       </div>
+                      {course.liveSessions && course.liveSessions.length > 0
+                        ? course.liveSessions.map((item, index) => (
+                            <Link
+                              key={index}
+                              className="d-flex py-2 border-bottom"
+                              onClick={() => handleUrlClick(item)}
+                            >
+                              <MdLiveTv
+                                className="text-danger"
+                              />{' '}
+                              <p className="font-xsss fw-500 ml-2">
+                                {item.session_type === 1
+                                  ? 'Q&A Session'
+                                  : 'Live Session'}{' '}
+                                start at - {item.time.slice(0, 5)}
+                              </p>
+                            </Link>
+                          ))
+                        : ''}
                     </div>
+
                     <div className="card-footer bg-white">
-                    {/* <p className="font-xssss text-grey-700 fw-500">Complete the course and test to get certificate.*</p> */}
+                      {/* <p className="font-xssss text-grey-700 fw-500">Complete the course and test to get certificate.*</p> */}
                       <div className="d-flex justify-content-around mt-2">
                         {course.results && course.results.length > 0 && (
                           <>

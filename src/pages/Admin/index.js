@@ -182,6 +182,8 @@ export { default as DinacharyaLogs } from './DinacharyaLogs';
 export { default as ZoomCall } from './ZoomCall';
 export { default as CreateZoomCall } from './ZoomCall/Create';
 export { default as EditZoomCall } from './ZoomCall/Edit';
+export { default as SessionStudents } from './ZoomCall/Students';
+
 export { default as DinacharyaLogsTable } from './DinacharyaLogs/Components/StudentTable';
 // export { default as StudentCard } from './Students/Components/StudentCard';
 export { default as DinacharyaModal } from './DinacharyaLogs/Components/CustomModal';

@@ -18,6 +18,8 @@ import {
   TrainerCourses,
   TrainerVideoDetails,
   TrainerFAQsEdit,
+  ZoomCall,
+  SessionStudents,
 } from '@/pages';
 
 const TrainerRoutes = [
@@ -68,15 +70,19 @@ const TrainerRoutes = [
   },
   {
     path: 'live-sessions',
-    element: <TrainerLiveQnaSessions title="Live Session" />,
+    element: <ZoomCall title="Live Session" />,
   },
   {
     path: 'live-sessions/create',
-    element: <CreateZoomCall title="Create QnA Session" />,
+    element: <CreateZoomCall title="Create Session" />,
   },
   {
     path: 'live-sessions/:zoomCallId/edit',
-    element: <EditZoomCall title="Create QnA Session" />,
+    element: <EditZoomCall title="Create Session" />,
+  },
+  {
+    path: 'live-sessions/:zoomCallId/students',
+    element: <SessionStudents title="Session Attendies" />,
   },
 ];
 

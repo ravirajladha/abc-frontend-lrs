@@ -1364,6 +1364,11 @@ export const updateZoomCall = async (data, zoomCallId) => {
   return response.data;
 };
 
+export const fetchSessionAttendies = async (zoomCallId) => {
+  const response = await apiService.fetchData(`/admin/zoom-calls/${zoomCallId}/students`);
+  return response.data;
+};
+
 export const sendDinacharyaMessages = async () => {
   const response = await apiService.fetchData(`/admin/send-dinacharya-messages`);
   return response.data;

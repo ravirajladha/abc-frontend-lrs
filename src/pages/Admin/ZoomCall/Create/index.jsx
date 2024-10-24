@@ -4,10 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { ContentFormWrapper, ContentHeader } from '@/components/common';
 import { SaveButton, SelectInput } from '@/components/common/form';
 import { createZoomCall } from '@/api/admin';
-import { fetchTrainerSubjects } from '@/api/trainer';
-import { fetchCourses } from '@/api/dropdown';
+import { fetchTrainerCourses, fetchTrainerSubjects } from '@/api/trainer';
+import { fetchCourses, fetchSubjects } from '@/api/dropdown';
+import { useSelector } from 'react-redux';
+import { selectUserType } from '@/store/authSlice';
+import { USER_TYPES } from '@/utils/constants';
 
 function Create() {
+  const authenticatedUserType = useSelector(selectUserType);
+
   const navigate = useNavigate();
   const [subjects, setSubjects] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -17,7 +22,10 @@ function Create() {
     url: '',
     date: '',
     time: '',
-    password: '', // Assuming you want to use password field for passcode
+    password: '',
+    subject: '',
+    course: '',
+    session_type: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
@@ -57,6 +65,7 @@ function Create() {
       submissionData.append('passcode', formData.password); // Passcode
       submissionData.append('subject_id', formData.subject);
       submissionData.append('course_id', formData.course);
+      submissionData.append('session_type', formData.session_type);
       const response = await createZoomCall(submissionData);
       toast.success(response.message);
 
@@ -77,7 +86,12 @@ function Create() {
 
   const fetchSubjectData = async () => {
     try {
-      const response = await fetchTrainerSubjects();
+      let response;
+      if(authenticatedUserType === USER_TYPES.TRAINER){
+        response = await fetchTrainerSubjects();
+      }else{
+        response = await fetchSubjects();
+      }
       setSubjects(response.subjects);
     } catch (error) {
       toast.error(error.message);
@@ -103,7 +117,12 @@ function Create() {
 
   const fetchCoursesDropdownData = async (value) => {
     try {
-      const response = await fetchCourses(value);
+      let response;
+      if(authenticatedUserType === USER_TYPES.TRAINER){
+        response = await fetchTrainerCourses(value);
+      }else{
+        response = await fetchCourses(value);
+      }
       setCourses(response.courses);
     } catch (error) {
       toast.error(error.message);
@@ -165,11 +184,15 @@ function Create() {
                 <label className="mont-font fw-600 font-xsss">
                   Session Type
                 </label>
-                <select className="form-control" name="session_type" id=""
-                value={formData.session_type}
-                onChange={handleFormChange}>
+                <select
+                  className="form-control"
+                  name="session_type"
+                  id=""
+                  value={formData.session_type}
+                  onChange={handleFormChange}
+                >
                   <option value="">select</option>
-                  <option value="1">Qna Session</option>
+                  <option value="1">Q&A Session</option>
                   <option value="2">Live Session</option>
                 </select>
                 {validationErrors.session_type && (

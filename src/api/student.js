@@ -316,3 +316,8 @@ export const generateCertificate = async (courseId) => {
   const response = await apiService.fetchData(`/student/courses/${courseId}/generate-certificate`);
   return response.data;
 };
+
+export const trackLiveSessionClick = async (sessionId) => {
+  const response = await apiService.fetchData(`/student/track-live-session-click/${sessionId}`);
+  return response.data;
+};

@@ -159,6 +159,7 @@ TestResult,
   Colleges,
   EditCollege,
   CreateCollege,
+  SessionStudents,
 } from '@/pages/Admin';
 import{
 
@@ -892,16 +893,19 @@ const AdminRoutes = [
 
   // Live Qna session
 
-  { path: 'live-sessions', element: <ZoomCall title="Live Q&A Session" /> },
+  { path: 'live-sessions', element: <ZoomCall title="Live Session" /> },
   {
     path: 'live-sessions/create',
-    element: <CreateZoomCall title="Create Q&A Session" />,
+    element: <CreateZoomCall title="Create Session" />,
   },
   {
     path: 'live-sessions/:zoomCallId/edit',
-    element: <EditZoomCall title="Create Q&A Session" />,
+    element: <EditZoomCall title="Create Session" />,
   },
-
+  {
+    path: 'live-sessions/:zoomCallId/students',
+    element: <SessionStudents title="Session Attendies" />,
+  },
   {
     path: 'dinacharya-logs',
     element: <DinacharyaLogs title="All Dinacharya Logs" />,

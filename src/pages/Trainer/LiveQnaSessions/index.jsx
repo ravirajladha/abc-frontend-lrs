@@ -19,7 +19,6 @@ function Index({ title }) {
     try {
       const response = await fetchZoomCalls();
       setZoomCalls(response.zoomCallUrls);
-      console.log(response.zoomCallUrls);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -83,7 +82,7 @@ function Index({ title }) {
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{formatDate(zoomCall.date)}</td>
-                            <td>10:30 Am</td>
+                            <td>{zoomCall.time ? zoomCall.time.slice(0, 5) : 'N/A'}</td>
                             <td>{zoomCall.url}</td>
                             <td className="text-right">
                               <Link
