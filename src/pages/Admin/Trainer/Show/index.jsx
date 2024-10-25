@@ -61,11 +61,17 @@ function Show({ title }) {
                           />
                         </figure>
                         <h4 className="fw-700 font-xs my-3">{trainer?.name}</h4>
+                        <h4 className="fw-500 font-xsss my-2">
+                          {trainer?.expertise}
+                        </h4>
+                        <h4 className="fw-500 font-xsss my-2">
+                          {trainer?.experience} years of experience
+                        </h4>
                       </div>
                     </div>
                     <div className="col-lg-9">
                       <div className="row">
-                        <div className="col-lg-6 mb-3 border-bottom">
+                        <div className="col-lg-6">
                           <div className="form-group">
                             <label className="mont-font fw-500 font-xsss">
                               <span className="fw-600 ">Name: </span>{' '}
@@ -78,24 +84,12 @@ function Show({ title }) {
                               {trainer?.email}
                             </label>
                           </div>
-                          {/* <div className="form-group">
-                            <label className="mont-font fw-500 font-xsss">
-                              <span className="fw-600 ">DOB: </span>{' '}
-                              {trainer?.dob}
-                            </label>
-                          </div>
-                          <div className="form-group">
-                            <label className="mont-font fw-500 font-xsss">
-                              <span className="fw-600 ">Address: </span>{' '}
-                              {trainer?.address}
-                            </label>
-                          </div> */}
                         </div>
-                        <div className="col-lg-6 mb-3 border-bottom">
+                        <div className="col-lg-6">
                           <div className="form-group">
                             <label className="mont-font fw-500 font-xsss">
-                              <span className="fw-600 ">ID: </span>{' '}
-                              {trainer?.username}
+                              <span className="fw-600 ">Emp ID: </span>{' '}
+                              {trainer?.emp_id}
                             </label>
                           </div>
                           <div className="form-group">
@@ -104,19 +98,14 @@ function Show({ title }) {
                               {trainer?.phone_number}
                             </label>
                           </div>
-                          {/* <div className="form-group">
-                            <label className="mont-font fw-500 font-xsss">
-                              <span className="fw-600 ">Location: </span>{' '}
-                              {trainer?.city}
-                              {trainer?.state}
-                            </label>
-                          </div>
+                        </div>
+                        <div className="col-lg-12 mb-3 border-bottom">
                           <div className="form-group">
                             <label className="mont-font fw-500 font-xsss">
-                              <span className="fw-600 ">Pincode: </span>{' '}
-                              {trainer?.pincode}
+                              <span className="fw-600 ">About: </span>{' '}
+                              {trainer?.description}
                             </label>
-                          </div> */}
+                          </div>
                         </div>
                       </div>
                       <div className="row">

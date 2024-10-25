@@ -2,7 +2,7 @@
 
 // const AdminDashboard = lazy(() => import('@/pages'));
 
-import { AdminDashboard, TrainerFAQs, TrainerFAQsCreate, TrainerFAQsEdit, TrainerReviews } from '@/pages';
+import { AdminDashboard, TrainerFAQs, TrainerFAQsCreate, TrainerFAQsEdit, TrainerProfileEdit, TrainerReviews } from '@/pages';
 import {
   Settings,
   Payment,
@@ -322,7 +322,8 @@ const AdminRoutes = [
     path: 'trainers/:trainerId/show',
     element: <ShowTrainer title="Trainer Details" />,
   },
-  { path: 'trainers/:trainerId/edit', element: <EditTrainer /> },
+  // { path: 'trainers/:trainerId/edit', element: <EditTrainer /> },
+  { path: 'trainers/:trainerId/edit', element: <TrainerProfileEdit /> },
   { path: 'trainers/:trainerId/assign', element: <AssignTrainer /> },
   //Assessments
   { path: 'assessments', element: <Assessments title="Assessments List" /> },

@@ -23,3 +23,4 @@ export { default as TrainerFAQsEdit } from './FAQs/Edit';
 export { default as TrainerLiveQnaSessions } from './LiveQnaSessions';
 
 export { default as TrainerProfile } from './Profile';
+export { default as TrainerProfileEdit } from './Profile/Edit';

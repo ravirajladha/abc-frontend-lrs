@@ -16,8 +16,14 @@ import {
 } from '@/components/student/profile';
 import { getStudentDetails, updateStudentProfile } from '@/api/student';
 import { fetchCollegesDropdown } from '@/api/common';
-import { getStudentDataFromLocalStorage, getUserDataFromLocalStorage } from '@/utils/services';
-import { setStudentDataInLocalStorage, setUserDataInLocalStorage } from '@/utils/helpers';
+import {
+  getStudentDataFromLocalStorage,
+  getUserDataFromLocalStorage,
+} from '@/utils/services';
+import {
+  setStudentDataInLocalStorage,
+  setUserDataInLocalStorage,
+} from '@/utils/helpers';
 
 function Index() {
   const navigate = useNavigate();
@@ -74,19 +80,6 @@ function Index() {
     event.preventDefault();
     try {
       const formDataToSend = new FormData();
-      // Object.keys(formData).forEach((key) => {
-      //   const value = formData[key];
-
-      //   if (Array.isArray(value)) {
-      //     // Append each array value as a separate entry with the same field name (Laravel expects this format for arrays)
-      //     value.forEach((item) => {
-      //       formDataToSend.append(`${key}[]`, item);
-      //     });
-      //   } else {
-      //     // Append non-array values normally
-      //     formDataToSend.append(key, value);
-      //   }
-      // });
       Object.keys(formData).forEach((key) => {
         const value = formData[key];
         formDataToSend.append(key, value);
@@ -100,8 +93,8 @@ function Index() {
 
       // Update user data in localStorage (if applicable)
       const updatedUserData = {
-        ...userData,  // existing user data
-        username: formData.name,  // assuming name is in updatedData
+        ...userData, // existing user data
+        username: formData.name, // assuming name is in updatedData
         email: formData.email,
         phone_number: formData.phone_number,
         // Add other relevant fields as needed
@@ -110,7 +103,7 @@ function Index() {
 
       // Update student data in localStorage
       const updatedStudentData = {
-        ...studentData,  // existing student data
+        ...studentData, // existing student data
         student_name: formData.name,
         email: formData.email,
         phone_number: formData.phone_number,

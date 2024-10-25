@@ -101,3 +101,13 @@ export const deleteFaq = async (faqId) => {
   const response = await apiService.deleteData(`/trainer/courses/faq/${faqId}`);
   return response.data;
 };
+
+export const getTrainerDetails = async (trainerId) => {
+  const response = await apiService.fetchData(`/trainer/${trainerId}`);
+  return response.data;
+}
+
+export const updateTrainerProfile = async (trainerId,data) => {
+  const response = await apiService.postData(`/trainer/${trainerId}/update-profile`,data);
+  return response.data;
+};

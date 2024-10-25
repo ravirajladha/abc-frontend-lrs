@@ -20,6 +20,9 @@ import {
   TrainerFAQsEdit,
   ZoomCall,
   SessionStudents,
+  TrainerProfile,
+  TrainerProfileEdit,
+  ShowTrainer,
 } from '@/pages';
 
 const TrainerRoutes = [
@@ -83,6 +86,14 @@ const TrainerRoutes = [
   {
     path: 'live-sessions/:zoomCallId/students',
     element: <SessionStudents title="Session Attendies" />,
+  },
+  {
+    path: 'profile',
+    element: <TrainerProfile title="Profile" />,
+  },
+  {
+    path: 'profile/:trainerId/edit',
+    element: <TrainerProfileEdit title="Profile" />,
   },
 ];
 

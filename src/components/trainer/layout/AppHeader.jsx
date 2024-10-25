@@ -40,7 +40,7 @@ function AppHeader({ toggleNav }) {
           </OverlayTrigger>
         </li>
         <li>
-           <Link to={'#'}>
+           <Link to={'profile'}>
             <img
               src={DefaultProfileImage}
               alt="user"
