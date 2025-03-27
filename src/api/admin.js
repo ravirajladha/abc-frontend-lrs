@@ -1395,3 +1395,11 @@ export const updateStudentStatus = async (data) => {
   const response = await apiService.postData(`/admin/students/update-status`,data);
   return response.data;
 };
+
+
+export const fetchFAQs = async (courseId) => {
+  const response = await apiService.fetchData(
+    `/trainer/faq/${courseId}`
+  );
+  return response.data;
+};
