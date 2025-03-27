@@ -25,6 +25,7 @@ import {
   JobDetail,
 
   StudentProfileEdit,
+  CourseCertificate,
 // Home
 } from '@/pages';
 import {
@@ -47,6 +48,10 @@ const StudentRoutes = [
   {
     path: 'courses/:subjectId/test/:testId/results',
     element: <StudentTestDetails />,
+  },
+  {
+    path: 'courses/:courseId/certificate',
+    element: <CourseCertificate title="Course Certificate"/>,
   },
   //test element
   {

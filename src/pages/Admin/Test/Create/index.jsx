@@ -13,7 +13,7 @@ import {
 } from '@/components/common';
 import { SelectQuestion } from '@/components/admin/test';
 
-import { fetchSubjects, fetchCoursesForTest } from '@/api/dropdown';
+import { fetchSubjects, fetchCoursesForTest, fetchCourses } from '@/api/dropdown';
 
 import {
   createTest,
@@ -96,7 +96,7 @@ function Create({ title }) {
   };
 
   const fetchCoursesDropdownData = useCallback((subjectId) => {
-    fetchCoursesForTest(subjectId)
+    fetchCourses(subjectId)
       .then((data) => {
         console.log(data, 'subject data');
         setCourses(data.courses);

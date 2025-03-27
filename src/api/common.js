@@ -103,3 +103,12 @@ console.log("appId: " + applicationId);
 //   return response.data;
 // };
 
+export const fetchTrainersDropdown = async () => {
+  const response = await apiService.fetchData(`/minimal/trainers`);
+  return response.data.trainers;
+};
+
+export const fetchCollegesDropdown = async () => {
+  const response = await apiService.fetchData(`/minimal/colleges`);
+  return response.data.colleges;
+};

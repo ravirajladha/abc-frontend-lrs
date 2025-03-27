@@ -78,13 +78,11 @@ function Profile({ isAdmin, isStudent }) {
   }, [studentIdFromParams]);
 
   const fetchStudentReportCard = useCallback(async () => {
-    console.log('Fetching student', studentData);
     const studentId = studentData.student_auth_id;
 
     try {
       const data = await fetchReportCard(studentId);
       if (data) {
-        console.log('report card restult', data.report_card);
         setReportCard(data.report_card);
         setLoading(false);
       }
@@ -108,7 +106,6 @@ function Profile({ isAdmin, isStudent }) {
     try {
       const data = await fetchWalletDetails(studentAuthId);
       if (data) {
-        console.log('wallet details', data);
         setWalletData(data.wallet_details);
         setWalletLogs(data.wallet_logs);
         setLoading(false);

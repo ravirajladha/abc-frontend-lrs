@@ -5,7 +5,6 @@ import { formatDateTime, formatNumber } from '@/utils/helpers';
 
 function Wallet({ studentData, walletData, walletLogs, loading }) {
   const baseUrl = import.meta.env.VITE_BASE_URL;
-console.log("studentData from wallet: " + studentData.student_unique_code)
   const shareReferralCode = () => {
     navigator.clipboard.writeText(studentData.student_unique_code);
     alert('Referral code copied to clipboard!');

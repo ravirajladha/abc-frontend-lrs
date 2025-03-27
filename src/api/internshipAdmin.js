@@ -173,7 +173,7 @@ export const fetchTrainer = async (trainerId) => {
 
 export const fetchTrainerSubjectCourse = async (trainerId) => {
   const response = await apiService.fetchData(
-    `/internship-admin/trainers/${trainerId}/assign`
+    `/internship-admin/trainers/${trainerId}/subject-courses`
   );
   return response.data;
 };

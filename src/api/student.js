@@ -9,12 +9,9 @@ export const fetchDashboard = async (studentId) => {
 };
 
 export const fetchWalletDetails  = async (studentAuthId) => {
-  console.log("student auth id for wallet", studentAuthId);
-
   const response = await apiService.fetchData(
     `/student/wallet-details/${studentAuthId}`
   );
-  console.log("wallet api response", response.data);
   return response.data;
 };
 
@@ -296,7 +293,6 @@ export const getResource = async () => {
   return response;
 }
 export const storeRatingReview = async (data) => {
-  console.log("rating data",data);
   const response = await apiService.postData(`/student/courses/rating-review`,data);
   return response.data;
 };
@@ -305,3 +301,23 @@ export const fetchRatingReview = async (courseId) => {
   const response = await apiService.fetchData(`/student/courses/${courseId}/ratings-reviews`);
   return response.data;
 }
+
+export const getStudentDetails = async (studentId) => {
+  const response = await apiService.fetchData(`/student/${studentId}/details`);
+  return response.data;
+}
+
+export const updateStudentProfile = async (studentId,data) => {
+  const response = await apiService.postData(`/student/${studentId}/update-profile`,data);
+  return response.data;
+};
+
+export const generateCertificate = async (courseId) => {
+  const response = await apiService.fetchData(`/student/courses/${courseId}/generate-certificate`);
+  return response.data;
+};
+
+export const trackLiveSessionClick = async (sessionId) => {
+  const response = await apiService.fetchData(`/student/track-live-session-click/${sessionId}`);
+  return response.data;
+};

@@ -11,6 +11,7 @@ const ADMIN_ROUTES = {
     routes: [
       { path: '/admin/dashboard', title: 'Home', icon: 'feather-home' },
     { path: '/admin/public-students', title: 'Students', icon: 'feather-user' },
+    { path: '/admin/colleges', title: 'Colleges', icon: 'feather-user-check' },
     ],
   },
   studySupport: {

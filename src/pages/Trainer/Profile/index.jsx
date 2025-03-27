@@ -1,20 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import DefaultProfileImage from '@/assets/images/default/trainer.png';
-
-import {
-  ContentFallback,
-  ContentHeader,
-  ContentLoader,
-} from '@/components/common';
+import { ContentHeader, ContentLoader } from '@/components/common';
+import { getUserDataFromLocalStorage } from '@/utils/services';
+import { Link } from 'react-router-dom';
 import { fetchTrainer } from '@/api/internshipAdmin';
 
-function Show({ title }) {
+function Index({ title }) {
+  const trainerData = JSON.parse(getUserDataFromLocalStorage());
+  const trainerId = trainerData.id;
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
-  const { trainerId } = useParams();
   const [trainer, setTrainerDetails] = useState(null);
   const [trainerCourses, setTrainerCourses] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,7 +29,6 @@ function Show({ title }) {
   useEffect(() => {
     fetchData();
   }, [trainerId]);
-
   return (
     <div className="px-2">
       <ContentHeader title={title} />
@@ -46,6 +40,12 @@ function Show({ title }) {
             <div className="row">
               <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
                 <div className="card-body p-lg-5 p-4 w-100 border-0 mb-0">
+                  <Link
+                    to={`${trainerId}/edit`}
+                    className="font-xs text-black float-right"
+                  >
+                    <i className="feather-edit" />{' '}
+                  </Link>
                   <div className="row">
                     <div className="col-lg-3">
                       <div className="mb-4 d-block w-100 border-0 text-center">
@@ -60,11 +60,11 @@ function Show({ title }) {
                             className="w-100"
                           />
                         </figure>
-                        <h4 className="fw-700 font-xs my-3">{trainer?.name}</h4>
-                        <h4 className="fw-500 font-xsss my-2">
+                        <h4 className="fw-700 font-xs my-1">{trainer?.name}</h4>
+                        <h4 className="fw-500 font-xsss my-1">
                           {trainer?.expertise}
                         </h4>
-                        <h4 className="fw-500 font-xsss my-2">
+                        <h4 className="fw-500 font-xsss my-1">
                           {trainer?.experience} years of experience
                         </h4>
                       </div>
@@ -140,8 +140,4 @@ function Show({ title }) {
   );
 }
 
-Show.propTypes = {
-  title: PropTypes.string.isRequired,
-};
-
-export default Show;
+export default Index;

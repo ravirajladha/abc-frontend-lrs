@@ -55,6 +55,7 @@ function Learn() {
   const [trainer, setTrainer] = useState(null);
   const [miniProjects, setMiniProjects] = useState([]);
   const [isTrainerAvailable, setIsTrainerAvailable] = useState(false);
+  const [liveSessions, setLiveSessions] = useState([]);
 
   const playerRef = useRef(null);
 
@@ -129,6 +130,7 @@ function Learn() {
       setContent(data.contents.chapters);
       setCourse(data.contents.course);
       setMiniProjects(data.contents.mini_projects);
+      setLiveSessions(data.contents.liveSessions);
       if (data && data.contents.trainer) {
         setTrainer(data.contents.trainer);
         setIsTrainerAvailable(true);
@@ -223,6 +225,7 @@ function Learn() {
             videoPlayer={videoPlayer}
             activeVideoId={activeVideo.id}
             handleVideoClick={handleVideoClick}
+            liveSessions={liveSessions}
           />
         </div>
       </div>

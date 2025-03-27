@@ -120,7 +120,7 @@ function Subjects() {
                   className="react-player"
                   playing
                   // light={`assets/images/${value.videoimage}`}
-                  url={`assets/images/video4.mp4`}
+                  url={baseUrl + courses.video}
                 />
               </div>
               <div className="card d-block border-0 rounded-lg overflow-hidden dark-bg-transparent bg-transparent mt-4 pb-3">
@@ -179,7 +179,7 @@ function Subjects() {
               </div>
 
               <TrainerCard trainer={trainer} />
-              <FAQs />
+              <FAQs courseId={courseId}/>
             </div>
             <div className="col-xl-4 col-xxl-3">
               <div className="card p-4 mb-4 bg-primary border-0 shadow-xss rounded-lg">
@@ -216,12 +216,14 @@ function Subjects() {
                   </div>
                 )}
               </div>
+              
               <div className="card d-block border-0 rounded-lg overflow-hidden mt-3">
                 <h2 className="fw-700 font-sm mb-3 mt-1 pl-1 mb-3">
                   Curriculum
                 </h2>
                 <ChapterAccordion isLoading={loading} chapterData={chapters} />
               </div>
+
               <ReviewCard courseId={courseId}/>
 
               <div className="border-0 rounded-sm mx-1 lh-24 px-2 bg-current">

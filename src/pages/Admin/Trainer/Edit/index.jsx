@@ -59,6 +59,7 @@ function Edit() {
       submissionData.append('_method', 'PUT');
       submissionData.append('name', form.name || '');
       submissionData.append('email', form.email || '');
+      submissionData.append('emp_id', form.emp_id || '');
       submissionData.append('phone_number', form.phone_number || '');
       submissionData.append('password', form.password || '');
       if (form.profile_image) {

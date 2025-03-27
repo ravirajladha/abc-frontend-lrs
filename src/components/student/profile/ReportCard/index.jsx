@@ -7,7 +7,6 @@ import { formatNumber } from '@/utils/helpers';
 import { ContentLoader } from '@/components/common';
 
 function ReportCard({ studentData, reportData, loading }) {
-  console.log(reportData, 'student data inside performance card');
   const baseUrl = import.meta.env.VITE_BASE_URL;
   const d = new Date();
   let year = d.getFullYear();

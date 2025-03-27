@@ -2,7 +2,7 @@
 
 // const AdminDashboard = lazy(() => import('@/pages'));
 
-import { AdminDashboard } from '@/pages';
+import { AdminDashboard, TrainerFAQs, TrainerFAQsCreate, TrainerFAQsEdit, TrainerProfileEdit, TrainerReviews } from '@/pages';
 import {
   Settings,
   Payment,
@@ -156,6 +156,10 @@ TestResult,
   ForumQuestionAnswers,
   StudentsCreate,
   StudentEdit,
+  Colleges,
+  EditCollege,
+  CreateCollege,
+  SessionStudents,
 } from '@/pages/Admin';
 import{
 
@@ -318,7 +322,8 @@ const AdminRoutes = [
     path: 'trainers/:trainerId/show',
     element: <ShowTrainer title="Trainer Details" />,
   },
-  { path: 'trainers/:trainerId/edit', element: <EditTrainer /> },
+  // { path: 'trainers/:trainerId/edit', element: <EditTrainer /> },
+  { path: 'trainers/:trainerId/edit', element: <TrainerProfileEdit /> },
   { path: 'trainers/:trainerId/assign', element: <AssignTrainer /> },
   //Assessments
   { path: 'assessments', element: <Assessments title="Assessments List" /> },
@@ -889,16 +894,19 @@ const AdminRoutes = [
 
   // Live Qna session
 
-  { path: 'live-sessions', element: <ZoomCall title="Live Q&A Session" /> },
+  { path: 'live-sessions', element: <ZoomCall title="Live Session" /> },
   {
     path: 'live-sessions/create',
-    element: <CreateZoomCall title="Create Q&A Session" />,
+    element: <CreateZoomCall title="Create Session" />,
   },
   {
     path: 'live-sessions/:zoomCallId/edit',
-    element: <EditZoomCall title="Create Q&A Session" />,
+    element: <EditZoomCall title="Create Session" />,
   },
-
+  {
+    path: 'live-sessions/:zoomCallId/students',
+    element: <SessionStudents title="Session Attendies" />,
+  },
   {
     path: 'dinacharya-logs',
     element: <DinacharyaLogs title="All Dinacharya Logs" />,
@@ -941,6 +949,36 @@ const AdminRoutes = [
   {
     path: 'forums/:forumId/answers',
     element: <ForumQuestionAnswers title="Forum Answers" />,
+  },
+
+
+  {
+    path: 'subjects/:subjectId/courses/:courseId/reviews',
+    element: <TrainerReviews />,
+  },
+  {
+    path: 'subjects/:subjectId/courses/:courseId/faqs',
+    element: <TrainerFAQs />,
+  },
+  {
+    path: 'subjects/:subjectId/courses/:courseId/faqs/create',
+    element: <TrainerFAQsCreate />,
+  },
+  {
+    path: 'subjects/:subjectId/courses/:courseId/faqs/:faqId/edit',
+    element: <TrainerFAQsEdit />,
+  },
+  {
+    path: 'colleges',
+    element: <Colleges title="Colleges" />,
+  },
+  {
+    path: 'colleges/create',
+    element: <CreateCollege title="Colleges" />,
+  },
+  {
+    path: 'colleges/:collegeId/edit',
+    element: <EditCollege title="Colleges" />,
   },
 ];
 

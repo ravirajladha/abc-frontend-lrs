@@ -17,6 +17,12 @@ import {
   TrainerCourseResults,
   TrainerCourses,
   TrainerVideoDetails,
+  TrainerFAQsEdit,
+  ZoomCall,
+  SessionStudents,
+  TrainerProfile,
+  TrainerProfileEdit,
+  ShowTrainer,
 } from '@/pages';
 
 const TrainerRoutes = [
@@ -42,6 +48,10 @@ const TrainerRoutes = [
     path: 'subjects/:subjectId/courses/:courseId/faqs/create',
     element: <TrainerFAQsCreate />,
   },
+  {
+    path: 'subjects/:subjectId/courses/:courseId/faqs/:faqId/edit',
+    element: <TrainerFAQsEdit />,
+  },
   { path: 'settings', element: <TrainerSettings title="Settings" /> },
   { path: 'subjects/:subjectId/results/:studentId/assessment-result', element: <TrainerAssessmentResult title="Assessment Result" /> },
 
@@ -63,15 +73,27 @@ const TrainerRoutes = [
   },
   {
     path: 'live-sessions',
-    element: <TrainerLiveQnaSessions title="Live QnA Session" />,
+    element: <ZoomCall title="Live Session" />,
   },
   {
     path: 'live-sessions/create',
-    element: <CreateZoomCall title="Create QnA Session" />,
+    element: <CreateZoomCall title="Create Session" />,
   },
   {
     path: 'live-sessions/:zoomCallId/edit',
-    element: <EditZoomCall title="Create QnA Session" />,
+    element: <EditZoomCall title="Create Session" />,
+  },
+  {
+    path: 'live-sessions/:zoomCallId/students',
+    element: <SessionStudents title="Session Attendies" />,
+  },
+  {
+    path: 'profile',
+    element: <TrainerProfile title="Profile" />,
+  },
+  {
+    path: 'profile/:trainerId/edit',
+    element: <TrainerProfileEdit title="Profile" />,
   },
 ];
 

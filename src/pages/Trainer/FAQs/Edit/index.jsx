@@ -1,25 +1,46 @@
-import { storeFaq } from '@/api/trainer';
-import { ContentCardWrapper, ContentHeader } from '@/components/common';
-import React, { useState } from 'react';
+import { fetchFaqById, fetchFaqs, storeFaq, updateFaq } from '@/api/trainer';
+import {
+  ContentCardWrapper,
+  ContentHeader,
+  ContentLoader,
+} from '@/components/common';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 
 const index = () => {
   const navigate = useNavigate();
 
-  let { subjectId, courseId } = useParams();
+  let { subjectId, courseId, faqId } = useParams();
   const [validationErrors, setValidationErrors] = useState({});
+  const [loading, setLoading] = useState({});
 
   const [form, setForm] = useState({
-    course_id: courseId,
     question: '',
     answer: '',
   });
 
+  useEffect(() => {
+    const fetchFaqDetails = async () => {
+      try {
+        const response = await fetchFaqById(faqId);
+        setForm({
+          question: response.faq.question,
+          answer: response.faq.answer,
+        });
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFaqDetails();
+  }, [faqId, courseId]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await storeFaq(form);
+      const response = await updateFaq(faqId, form);
       toast.success(response.message);
       navigate(-1);
     } catch (error) {
@@ -33,7 +54,9 @@ const index = () => {
     setForm((prevState) => ({ ...prevState, [name]: newValue }));
     setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
   };
-  
+
+  if (loading) return <ContentLoader />;
+
   return (
     <>
       <ContentHeader title="Create" subtitle="Faqs" />

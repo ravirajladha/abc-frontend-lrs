@@ -9,8 +9,12 @@ import { toast } from 'react-toastify';
 import { fetchRatingReview, storeRatingReview } from '@/api/student';
 import { ContentLoader } from '@/components/common';
 import { formatDateTime } from '@/utils/helpers';
+import { getStudentDataFromLocalStorage } from '@/utils/services';
 
 const index = ({ courseId }) => {
+  const studentData = JSON.parse(getStudentDataFromLocalStorage());
+  const isPaid = studentData.is_paid;
+
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [rating, setRating] = useState(1);
@@ -52,7 +56,7 @@ const index = ({ courseId }) => {
 
   useEffect(() => {
     fetchRatingReviewCallback();
-  }, [fetchRatingReviewCallback, courseId]);
+  }, [courseId]);
   if (loading) return <ContentLoader />;
   // Create an array representing the star levels
   const starLevels = [
@@ -68,7 +72,10 @@ const index = ({ courseId }) => {
   };
 
   return (
-    <div className="card w-100 border-0 mt-0 mb-4 p-4 shadow-xss position-relative rounded-lg bg-white">
+    <div
+      className="card w-100 border-0 mt-0 mb-4 p-4 shadow-xss position-relative rounded-lg bg-white mt-3"
+      style={{ maxHeight: '600px', overflowY: 'auto' }}
+    >
       <div className="row">
         <div className="col-5 pr-0">
           <h2 className="display3-size lh-1 m-0 text-grey-900 fw-700">
@@ -182,13 +189,18 @@ const index = ({ courseId }) => {
 
       {/* add review */}
       <div className="row">
-        <button
-          type="button"
-          onClick={() => setShowModal(true)}
-          className="d-block p-2 lh-32 w-100 text-center ml-3 mr-3 mt-2 bg-grey fw-600 font-xssss text-grey-900 fw-700"
-        >
-          Add a Review
-        </button>
+        {isPaid ? (
+          <button
+            type="button"
+            onClick={() => setShowModal(true)}
+            className="d-block p-2 lh-32 w-100 text-center ml-3 mr-3 mt-2 bg-grey fw-600 font-xssss text-grey-900 fw-700"
+          >
+            Add a Review
+          </button>
+        ) : (
+          ''
+        )}
+
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header
             closeLabel="Close"

@@ -29,3 +29,5 @@ export { default as StudentReadableCourses } from './ReadableCourses';
 export { default as StudentZoomCall } from './ZoomCall';
 export { default as PaymentStudent } from './PaymentStudent';
 export { default as CertificateViewer } from './CertificateViewer';
+
+export { default as CourseCertificate } from './Subjects/CourseCertificate';

@@ -15,6 +15,8 @@ import {
   getUserDataFromLocalStorage,
   getStudentDataFromLocalStorage,
 } from '@/utils/services';
+import { MdLiveTv } from 'react-icons/md';
+import { trackLiveSessionClick } from '@/api/student';
 
 const VideoTabs = ({
   isLoading,
@@ -26,6 +28,7 @@ const VideoTabs = ({
   videoPlayer,
   activeVideoId,
   handleVideoClick,
+  liveSessions,
 }) => {
   const studentData = useOutletContext();
   const [activeTab, setActiveTab] = useState('learn');
@@ -50,6 +53,10 @@ const VideoTabs = ({
     setShowModal(false);
     localStorage.setItem('is_paid', 'true'); // Ensure this is updated in local storage
   };
+  const handleUrlClick = async (item) => {
+    const respsonse = await trackLiveSessionClick(item.id);
+    window.open(item.url, '_blank');
+  };
   return (
     <>
       <div className="card w-100 d-block chat-body p-0 border-0 shadow-xss rounded-3 mb-3 h500 position-relative">
@@ -68,12 +75,12 @@ const VideoTabs = ({
                 handleVideoClick={handleVideoClick}
               />
             ) : ( */}
-              <ExternalStudentLearnTab
-                isLoading={isLoading}
-                courseData={courseData}
-                activeVideoId={activeVideoId}
-                handleVideoClick={handleVideoClick}
-              />
+            <ExternalStudentLearnTab
+              isLoading={isLoading}
+              courseData={courseData}
+              activeVideoId={activeVideoId}
+              handleVideoClick={handleVideoClick}
+            />
             {/* )} */}
           </Tab>
           <Tab eventKey="chat" title="Q&A" className="list-inline-item">
@@ -110,17 +117,19 @@ const VideoTabs = ({
           )}
         </Tabs>
       </div>
-      <h5 className="font-xs mb-2 text-center rounded-lg bg-white py-3 text-dark fw-400 border  border-size-md">
-        <Link target='_blank' to={`https://zoom.us/join`}>
-        <i
-          className="feather-play text-grey-500 mr-2"
-          style={{ marginTop: '2px' }}
-        ></i>{' '}
-        Live Doubt Clearing
-        </Link>
-      </h5>
-    
-
+      <div className="font-xs mb-2 text-center rounded-lg bg-white p-3 text-dark fw-400 border border-size-md">
+        {liveSessions && liveSessions.length > 0
+          ? liveSessions.map((item, index) => (
+              <Link key={index}  className='d-flex py-2 border-bottom'
+              onClick={() => handleUrlClick(item)}>
+                <MdLiveTv
+                  className="text-danger"
+                />{' '}
+                <p className="font-xsss fw-500 ml-2">{item.session_type == 1 ? "Q&A Session": "Live Session"} start at - {item.time.slice(0, 5)}</p>
+              </Link>
+            ))
+          : 'No Live Classes'}
+      </div>
     </>
   );
 };

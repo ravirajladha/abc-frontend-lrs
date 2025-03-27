@@ -87,12 +87,16 @@ function Index({ title }) {
                             Name
                           </th>
                           <th className="border-0" scope="col">
-                          Subject
+                            Subject
                           </th>
                           <th className="border-0" scope="col">
-                         Course
+                            Course
                           </th>
-                          <th scope="col" className="text-right border-0 pl-1" width="20%">
+                          <th
+                            scope="col"
+                            className="text-right border-0 pl-1"
+                            width="20%"
+                          >
                             Action
                           </th>
                         </tr>
@@ -107,35 +111,34 @@ function Index({ title }) {
                             <td>{ebookItem.subject_name}</td>
                             <td>{ebookItem.course_name}</td>
                             <td className="text-right">
-  <div className="d-flex flex-wrap justify-content-end">
-    <Link
-      to={`/ebooks/${ebookItem.id}/preview`}
-      className="btn btn-outline-warning btn-icon btn-sm mr-2 mb-2"
-    >
-      <i className="feather-eye"></i>
-    </Link>
-    <Link
-      to={`${ebookItem.id}/modules`}
-      className="btn btn-outline-secondary btn-icon btn-sm mr-2 mb-2"
-    >
-      <i className="feather-book"></i>
-    </Link>
-    <Link
-      to={`${ebookItem.id}/edit`}
-      className="btn btn-outline-primary btn-icon btn-sm mr-2 mb-2"
-    >
-      <i className="feather-edit"></i>
-    </Link>
-    <Link
-      to="#"
-      className="btn btn-outline-danger btn-icon btn-sm mb-2"
-      onClick={() => handleDelete(ebookItem.id)}
-    >
-      <i className="feather-trash"></i>
-    </Link>
-  </div>
-</td>
-
+                              <div className="d-flex flex-wrap justify-content-end">
+                                <Link
+                                  to={`/ebooks/${ebookItem.id}/preview`}
+                                  className="btn btn-outline-warning btn-icon btn-sm mr-2 mb-2"
+                                >
+                                  <i className="feather-eye"></i>
+                                </Link>
+                                <Link
+                                  to={`${ebookItem.id}/modules`}
+                                  className="btn btn-outline-secondary btn-icon btn-sm mr-2 mb-2"
+                                >
+                                  <i className="feather-book"></i>
+                                </Link>
+                                <Link
+                                  to={`${ebookItem.id}/edit`}
+                                  className="btn btn-outline-primary btn-icon btn-sm mr-2 mb-2"
+                                >
+                                  <i className="feather-edit"></i>
+                                </Link>
+                                <Link
+                                  to="#"
+                                  className="btn btn-outline-danger btn-icon btn-sm mb-2"
+                                  onClick={() => handleDelete(ebookItem.id)}
+                                >
+                                  <i className="feather-trash"></i>
+                                </Link>
+                              </div>
+                            </td>
                           </tr>
                         ))}
                       </tbody>

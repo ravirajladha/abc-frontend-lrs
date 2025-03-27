@@ -68,7 +68,46 @@ export const fetchUnrepliedQnACount = async (trainerId, studentId) => {
 };
 
 export const storeReviewReply = async (data) => {
-  console.log("rating data",data);
   const response = await apiService.postData(`/trainer/courses/reply-review`,data);
+  return response.data;
+};
+
+export const updateReviewStatus = async (data) => {
+  const response = await apiService.putData(`/trainer/courses/update-review-status`,data);
+  return response.data;
+};
+
+export const storeFaq = async (data) => {
+  const response = await apiService.postData(`/trainer/courses/faq`,data);
+  return response.data;
+};
+
+export const fetchFaqs = async (courseId) => {
+  const response = await apiService.fetchData(`/trainer/courses/${courseId}/faq`);
+  return response.data;
+};
+
+export const fetchFaqById = async (faqId) => {
+  const response = await apiService.fetchData(`/trainer/courses/faq/${faqId}`);
+  return response.data;
+};
+
+export const updateFaq = async (faqId, data) => {
+  const response = await apiService.putData(`/trainer/courses/faq/${faqId}`, data);
+  return response.data;
+};
+
+export const deleteFaq = async (faqId) => {
+  const response = await apiService.deleteData(`/trainer/courses/faq/${faqId}`);
+  return response.data;
+};
+
+export const getTrainerDetails = async (trainerId) => {
+  const response = await apiService.fetchData(`/trainer/${trainerId}`);
+  return response.data;
+}
+
+export const updateTrainerProfile = async (trainerId,data) => {
+  const response = await apiService.postData(`/trainer/${trainerId}/update-profile`,data);
   return response.data;
 };

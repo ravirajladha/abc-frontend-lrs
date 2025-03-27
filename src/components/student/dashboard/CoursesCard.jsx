@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { fetchMyCourses, startTest } from '@/api/student';
+import { fetchMyCourses, startTest, trackLiveSessionClick } from '@/api/student';
 import { ContentItemCard, ContentLoader } from '@/components/common';
 import { Link, useNavigate } from 'react-router-dom';
 import { PiCertificateBold } from 'react-icons/pi';
-import { MdOutlineAssessment } from 'react-icons/md';
+import { MdLiveTv, MdOutlineAssessment } from 'react-icons/md';
 import { getStudentDataFromLocalStorage } from '@/utils/services';
 import StarRatings from 'react-star-ratings';
+import { formatDate } from '@/utils/helpers';
 
 function CoursesCard({ title }) {
   const [courses, setCourses] = useState(null);
@@ -23,7 +24,6 @@ function CoursesCard({ title }) {
     console.error('Student auth ID is not available');
     return;
   }
-
 
   const [loading1, setLoading1] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -74,9 +74,7 @@ function CoursesCard({ title }) {
       console.log(response, ':respsonse');
       if (response.status === 200) {
         setLoading1(false);
-        navigate(
-          `/student/courses/test/${response.token}/${latestTestId}`
-        ); // Adjusted to use response.testSessionId directly
+        navigate(`/student/courses/test/${response.token}/${latestTestId}`); // Adjusted to use response.testSessionId directly
       } else {
         throw new Error('Unexpected response status');
       }
@@ -92,6 +90,11 @@ function CoursesCard({ title }) {
         toast.error('Unable to start the test. Please try again later.');
       }
     }
+  };
+
+  const handleUrlClick = async (item) => {
+    const respsonse = await trackLiveSessionClick(item.id);
+    window.open(item.url, '_blank');
   };
   return (
     <>
@@ -135,16 +138,16 @@ function CoursesCard({ title }) {
                           {course.subject_name}
                         </span>
                         <div>
-                        <StarRatings
-                        rating={Number(course?.average_rating || 0)}
-                        starRatedColor="gold"
-                        numberOfStars={5}
-                        starDimension="15px"
-                        starSpacing="1px"
-                      />
-                      <h4 className="font-xsssss text-grey-600 fw-600 mt-1">
-                      Based on {course.total_ratings} ratings
-                      </h4>
+                          <StarRatings
+                            rating={Number(course?.average_rating || 0)}
+                            starRatedColor="gold"
+                            numberOfStars={5}
+                            starDimension="15px"
+                            starSpacing="1px"
+                          />
+                          <h4 className="font-xsssss text-grey-600 fw-600 mt-1">
+                            Based on {course.total_ratings} ratings
+                          </h4>
                         </div>
                       </div>
                       <h4 className="fw-700 font-xss mt-2 lh-26 mt-0">
@@ -156,7 +159,7 @@ function CoursesCard({ title }) {
                         </Link>
                       </h4>
                       <span className="font-xssss fw-500 text-grey-900 d-inline-block ml-0 text-dark">
-                      {course.trainer_name}
+                        {course.trainer_name}
                       </span>
                       <hr />
                       <div className="progress mt-3 h10">
@@ -168,45 +171,86 @@ function CoursesCard({ title }) {
                         ></div>
                       </div>
                       <div className="d-flex justify-content-between">
+                        <div className="d-flex flex-column">
+                          <h4 className="fw-500 font-xssss mt-2">
+                            Start date: {formatDate(course.start_date)}
+                          </h4>
+                          <h4 className="fw-500 font-xssss mt-2">
+                            End date:{' '}
+                            {course.results && course.results.length > 0
+                              ? formatDate(course.results[0].created_at)
+                              : '-'}
+                          </h4>
+                        </div>
                         <h4 className="fw-500 font-xssss mt-2">
-                          Start date: 16-07-2024
-                        </h4>
-                        <h4 className="fw-500 font-xssss mt-2">
-                          Validity: 45 days
+                          Validity: {course.access_validity} days
                         </h4>
                       </div>
+                      {course.liveSessions && course.liveSessions.length > 0
+                        ? course.liveSessions.map((item, index) => (
+                            <Link
+                              key={index}
+                              className="d-flex py-2 border-bottom"
+                              onClick={() => handleUrlClick(item)}
+                            >
+                              <MdLiveTv
+                                className="text-danger"
+                              />{' '}
+                              <p className="font-xsss fw-500 ml-2">
+                                {item.session_type === 1
+                                  ? 'Q&A Session'
+                                  : 'Live Session'}{' '}
+                                start at - {item.time.slice(0, 5)}
+                              </p>
+                            </Link>
+                          ))
+                        : ''}
                     </div>
+
                     <div className="card-footer bg-white">
+                      {/* <p className="font-xssss text-grey-700 fw-500">Complete the course and test to get certificate.*</p> */}
                       <div className="d-flex justify-content-around mt-2">
                         {course.results && course.results.length > 0 && (
-                          <Link
-                            className="d-flex flex-column align-items-center"
-                            to={`/student/courses/${course.id}/results`}
-                          >
-                            <MdOutlineAssessment className="font-md text-primary" />
-                            <p className="font-xssss text-grey-900 fw-500">
-                              Result
-                            </p>
-                          </Link>
-                        )}
-                        {/* {course.chapter_completed && */}
-                         {course.latest_test_id && (
-                            <button
+                          <>
+                            <Link
                               className="d-flex flex-column align-items-center"
-                              onClick={() => handleOpenModal(course)}
+                              to={`/student/courses/${course.id}/results`}
                             >
                               <MdOutlineAssessment className="font-md text-primary" />
                               <p className="font-xssss text-grey-900 fw-500">
-                                Test
+                                Result
                               </p>
-                            </button>
-                          )}
-                        <div className="d-flex flex-column align-items-center">
+                            </Link>
+                            <Link
+                              to={`/student/courses/${course.id}/certificate`}
+                              className="d-flex flex-column align-items-center"
+                            >
+                              <PiCertificateBold className="font-md text-success text-center" />
+                              <p className="font-xssss text-grey-900 fw-500">
+                                Certificate
+                              </p>
+                            </Link>
+                          </>
+                        )}
+                        {/* {course.chapter_completed && */}
+                        {course.latest_test_id && (
+                          <button
+                            className="d-flex flex-column align-items-center"
+                            onClick={() => handleOpenModal(course)}
+                          >
+                            <MdOutlineAssessment className="font-md text-primary" />
+                            <p className="font-xssss text-grey-900 fw-500">
+                              Test
+                            </p>
+                          </button>
+                        )}
+                        {/* <button className="d-flex flex-column align-items-center"
+                        onClick={() => handleGenerateCertificate(course)}>
                           <PiCertificateBold className="font-md text-success text-center" />
                           <p className="font-xssss text-grey-900 fw-500">
                             Certificate
                           </p>
-                        </div>
+                        </button> */}
                       </div>
                     </div>
                   </div>

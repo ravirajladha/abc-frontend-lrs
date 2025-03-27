@@ -6,6 +6,8 @@ import { Spinner } from 'react-bootstrap';
 
 import { createCourse } from '@/api/admin';
 import { ContentHeader, TextEditor } from '@/components/common';
+import { fetchTrainersDropdown } from '@/api/common';
+import { SelectInput } from '@/components/common/form';
 // import COURSE_TYPES from '@/utils/constants/courseType.constants';
 
 function Create({ title }) {
@@ -14,6 +16,7 @@ function Create({ title }) {
   const fileInputRef = useRef();
   // const [showSuperCourse, setShowSuperCourse] = useState(false);
   // const [superCourses, setSuperCourses] = useState([]);
+  const [trainers, setTrainers] = useState([]);
   const [formData, setFormData] = useState({
     course_name: '',
     course_image: null,
@@ -22,13 +25,16 @@ function Create({ title }) {
     description: '',
     course_video: '',
     course_video_name: '',
-    access_validity: '', 
+    access_validity: '',
+    trainer_id: '',
   });
   const [validationErrors, setValidationErrors] = useState({});
   const [loading, setLoading] = useState(false); // Loader state
-  
+
   const handleFormChange = (event) => {
     const { name, value } = event.target;
+    console.log(name, value);
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -65,26 +71,18 @@ function Create({ title }) {
     }));
   };
 
-  // const handleCourseTypeChange = (event) => {
-  //   const courseType = event.target.value;
-  //   setFormData((prevData) => ({ ...prevData, course_type: courseType }));
-  //   if (courseType === '3') {
-  //     setShowSuperCourse(true);
-  //   } else {
-  //     setShowSuperCourse(false);
-  //   }
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     const submissionData = new FormData();
     submissionData.append('course_name', formData.course_name);
     submissionData.append('course_image', formData.course_image);
+    submissionData.append('course_video', formData.course_video);
     submissionData.append('subject_id', subjectId);
     submissionData.append('benefits', formData.benefits);
     submissionData.append('description', formData.description);
     submissionData.append('access_validity', formData.access_validity);
+    submissionData.append('trainer_id', formData.trainer_id);
 
     try {
       const response = await createCourse(submissionData);
@@ -103,20 +101,18 @@ function Create({ title }) {
     }
   };
 
-  // const fetchData = async () => {
-  //   try {
-  //     const data = await fetchSuperCourses();
-  //     setSuperCourses(data.superCourses);
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      const data = await fetchTrainersDropdown();
+      setTrainers(data);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
-  // useEffect(() => {
-  //   if (formData.course_type === '3') {
-  //     fetchData();
-  //   }
-  // }, [formData.course_type]);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="px-2">
@@ -170,6 +166,7 @@ function Create({ title }) {
                       ref={fileInputRef}
                       style={{ display: 'none' }}
                       id="courseImageInput"
+                      accept='jpeg,png,jpg,gif,image/*'
                     />
                     {validationErrors.course_image && (
                       <span className="text-danger">
@@ -178,7 +175,7 @@ function Create({ title }) {
                     )}
                   </div>
                 </div>
-              <div className="col-lg-6 col-md-12 mb-3">
+                <div className="col-lg-6 col-md-12 mb-3">
                   <div className="form-group">
                     <label className="mont-font fw-600 font-xsss">
                       Course Validity
@@ -220,7 +217,33 @@ function Create({ title }) {
                       onChange={handleVideoChange}
                       style={{ display: 'none' }}
                       id="courseVideoInput"
+                      accept="video/mp4,video/x-m4v,video/*"
                     />
+                  </div>
+                </div>
+                <div className="col-lg-6">
+                  <div className="form-group">
+                    <label className="mont-font fw-600 font-xsss">
+                      Trainer
+                    </label>
+                    <select
+                      className="form-control"
+                      value={formData.trainer_id}
+                      onChange={handleFormChange}
+                      name='trainer_id'
+                    >
+                      <option value="">Select Trainer</option>
+                      {trainers.map((trainer) => (
+                        <option key={trainer.id} value={trainer.id}>
+                          {trainer.username}
+                        </option>
+                      ))}
+                    </select>
+                    {validationErrors.trainer_id && (
+                      <span className="text-danger">
+                        {validationErrors.trainer_id}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="col-lg-12 col-md-12 mb-3">
@@ -229,7 +252,6 @@ function Create({ title }) {
                       Benefits
                     </label>
                     <TextEditor
-                   
                       initialValue={formData.benefits || ''}
                       onContentChange={(html) =>
                         handleTextEditorChange('benefits', html)
