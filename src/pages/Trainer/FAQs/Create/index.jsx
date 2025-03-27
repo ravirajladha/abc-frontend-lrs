@@ -24,6 +24,7 @@ const index = () => {
     setForm((prevState) => ({ ...prevState, [name]: newValue }));
     setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
   };
+  
   return (
     <>
       <ContentHeader title="Create" subtitle="Faqs" />
